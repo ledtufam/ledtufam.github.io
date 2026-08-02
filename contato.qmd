@@ -4,59 +4,58 @@ title: "Contato"
 
 Se você tiver dúvidas, sugestões ou interesse em colaborar com o LEDT, envie uma mensagem utilizando o formulário abaixo.
 
-<form action="https://formspree.io/f/xykrqdln" method="POST">
+<form action="https://formspree.io/f/mjgnnyeq" method="POST">
 
-<div class="mb-3">
-<label class="form-label">Nome</label>
-<input
+::: mb-3
+<label class="form-label">Nome</label> <input
 type="text"
 name="name"
 class="form-control"
 required>
-</div>
+:::
 
-<div class="mb-3">
-<label class="form-label">E-mail</label>
-<input
+::: mb-3
+<label class="form-label">E-mail</label> <input
 type="email"
 name="email"
 class="form-control"
 required>
-</div>
+:::
 
-<div class="mb-3">
-<label class="form-label">Instituição</label>
-<input
+::: mb-3
+<label class="form-label">Instituição</label> <input
 type="text"
 name="institution"
 class="form-control">
-</div>
+:::
 
-<div class="mb-3">
-<label class="form-label">Assunto</label>
-<input
+::: mb-3
+<label class="form-label">Assunto</label> <input
 type="text"
 name="subject"
 class="form-control"
 required>
-</div>
+:::
 
-<div class="mb-3">
+::: mb-3
 <label class="form-label">Mensagem</label>
+
+```{=html}
 <textarea
 name="message"
 rows="6"
 class="form-control"
 required></textarea>
-</div>
+```
+:::
 
 <button class="btn btn-primary" type="submit">
+
 Enviar
+
 </button>
 
 </form>
-
-
 
 ------------------------------------------------------------------------
 
