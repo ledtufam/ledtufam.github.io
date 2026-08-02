@@ -1,0 +1,57 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: ""
+  favicon: assets/images/favicon.ico
+
+  navbar:
+    logo: assets/images/logo.png  
+    right: 
+      - icon: github
+        href: https://github.com/ccvasconcelos/ledt_ufam
+        aria-label: GitHub
+      - icon: instagram
+        href: https://www.instagram.com/ledt_ufam/    
+        aria-label: Quarto Instagram
+    left:
+      - href: index.qmd
+        text: Início
+      - href: pessoas.qmd
+        text: Pessoas
+      - text: Ensino
+        menu:
+          - href: ensino/graduacao/graduacao.qmd
+            text: "Graduação"
+          - href: ensino/posgraduacao/posgraduacao.qmd
+            text: "Pós-graduação"
+      - href: pesquisa.qmd
+        text: Pesquisa
+      - href: publicacoes.qmd
+        text: Publicações
+      - href: extensao.qmd
+        text: Extensão
+      - href: sobre.qmd
+        text: Sobre
+      - href: contato.qmd
+        text: Contato  
+  page-footer:
+    left: "© 2026 LEDT. Todos os direitos reservados."
+    right: 
+      - href: https://ccvasconcelos.github.io/
+        text: Desenvolvido por Caroline C. Vasconcelos
+format:
+  html:
+    theme:
+      light: minty
+      dark: superhero
+    css: styles.css
+    lightbox: true
+    toc: true
+    toc-location: right
+    toc-title: "Nesta página"
+
+
+editor: visual
+

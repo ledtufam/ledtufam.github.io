@@ -1,0 +1,50 @@
+---
+title: "FGD320 - Fitossociologia de Florestas Tropicais (45h)"
+---
+
+
+![](/assets/images/fitossociologia.jpeg){fig-cap="Legenda da figura"}
+
+### Objetivos
+
+**Geral:** Capacitar os alunos a descrever e analisar as formações florestais por meio da Fitossociologia e, avaliar de forma mais detalhada os estudos ecológicos.
+
+**Específicos:**
+
+- Desenvolver no aluno a habilidade na interpretação e compreensão dos métodos de análise qualitativos e quantitativos de estudo da vegetação;
+
+- Despertar no aluno a capacidade de interpretação de dados fitossociológicos que auxiliem na tomada de decisão;
+
+- Capacitar os alunos na utilização de plataformas para os cálculos estatísticos e fitossociológicos.
+
+-----------------------------------------------------------------
+
+### Carga horária
+
+**Teoria:** 15h
+
+**Prática:** 30h
+
+-----------------------------------------------------------------
+
+### Ementa
+
+- Introdução e importância da fitossociologia
+
+- Comportamento das Populações nas Comunidades
+
+- Planejamento do Inventário
+
+- Métodos Usados em Levantamentos Fitossociológicos
+
+- Parâmetros Fitossociológicos
+
+- Índices de Associação e Similaridade
+
+- Índices de Heterogeneidade de Comunidades
+
+- Diversidade da vegetação
+
+------------------------------------------------------------------------
+
+<i class="bi bi-download"></i> Faça o download da **<a href="/assets/pdf/Engenharia Florestal PPC_Fitossociologia.pdf" target="_blank">ementa completa (PDF)</a>**

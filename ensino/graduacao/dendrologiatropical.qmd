@@ -1,0 +1,53 @@
+---
+title: "FGD921 - Dendrologia Tropical (60h)"
+---
+
+![](/assets/images/dendrologia.png){fig-cap="Legenda da figura"}
+
+### Objetivos
+
+**Geral:** Fornecer ao aluno os conhecimentos necessários de dendrologia, taxonomia, nomenclatura, morfologia, fenologia e fitogeografia para o estudo das espécies tropicais. Como também as técnicas de identificação de árvores no campo e a respectiva manipulação das amostras no herbário.
+
+**Específicos:**
+
+-   Apresentar as principais características dendrológicas das principais famílias botânicas que ocorrem na Amazônia Central;
+
+-   Capacitar o aluno de engenharia florestal para o reconhecimento de famílias botânicas e espécies florestais por meio de características dendrológicas de indivíduos arbóreos.
+
+------------------------------------------------------------------------
+
+### Carga horária
+
+**Teoria:** 30h
+
+**Prática:** 30h
+
+------------------------------------------------------------------------
+
+### Ementa
+
+-   Introdução
+
+-   Morfologia e descrição dendrológica
+
+-   Chaves de identificação de espécies florestais
+
+-   Coleta e preparo de material para coleções (herbário, carpotecas, xilotecas)
+
+-   Nomenclatura vegetal
+
+-   Biologia reprodutiva das árvores
+
+-   Grupos ecológicos de árvores
+
+-   Fenologia de espécies florestais
+
+-   Levantamentos dendrológicos
+
+-   Implantação de um arboreto
+
+-   Espécies importantes e suas características morfológicas, ecológicas e econômicas
+
+------------------------------------------------------------------------
+
+<i class="bi bi-download"></i> Faça o download da **<a href="/assets/pdf/Engenharia Florestal PPC_Dendrologia tropical.pdf" target="_blank">ementa completa (PDF)</a>**

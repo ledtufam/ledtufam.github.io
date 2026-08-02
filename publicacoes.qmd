@@ -1,0 +1,7 @@
+---
+title: Publicações
+bibliography: publicacoes/publicacoes.bib
+nocite: |
+  @*
+csl: publicacoes/style.csl
+---

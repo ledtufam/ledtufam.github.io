@@ -1,0 +1,51 @@
+---
+title: "FGD925 - Sementes Florestais (60h)"
+---
+
+![](/assets/images/sementes.png){fig-cap="Legenda da figura"}
+
+### Objetivos
+
+**Geral:** Capacitar o aluno a desenvolver estudos básicos de tecnologia de sementes a partir de rotinas de laboratório com espécies florestais.
+
+-----------------------------------------------------------------
+
+### Carga horária
+
+**Teoria:** 30h
+
+**Prática:** 30h
+
+-----------------------------------------------------------------
+
+### Ementa
+
+- Importância das sementes
+
+- Laboratório de análise de sementes (LAS)
+
+- Regras e procedimentos para utilização do LAS
+
+- Maturação e dispersão de sementes
+
+- Fenologia
+
+- Colheita de sementes
+
+- Beneficiamento de sementes
+
+- Determinação de umidade
+
+- Teste de germinação
+
+- Dormência
+
+- Vigor
+
+- Secagem de sementes e armazenamento
+
+- Regras para análise de sementes de espécies nativas
+
+------------------------------------------------------------------------
+
+<i class="bi bi-download"></i> Faça o download da **<a href="/assets/pdf/Engenharia Florestal PPC_Sementes florestais.pdf" target="_blank">ementa completa (PDF)</a>**

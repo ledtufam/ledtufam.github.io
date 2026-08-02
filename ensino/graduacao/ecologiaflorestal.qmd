@@ -1,0 +1,69 @@
+---
+title: "FGD926 - Ecologia Florestal (60h)"
+---
+
+![](/assets/images/ecologia.jpeg){fig-cap="Legenda da figura"}
+
+### Objetivos
+
+**Geral:** Proporcionar aos estudantes um entendimento profundo dos princípios e processos ecológicos essenciais que regulam os ecossistemas florestais, habilitando-os com o saber indispensável para a implementação eficaz da conservação, do manejo sustentável e da preservação das florestas.
+
+**Específicos:** 
+
+- Compreender a Estrutura e Função dos Ecossistemas Florestais
+
+- Estudar as Interações Bióticas e Abióticas
+
+- Analisar a importância da Biodiversidade Florestal
+
+- Analisar os Impactos das Mudanças Climáticas nos Ecossistemas Florestais
+
+- Desenvolver Habilidades de Pesquisa e Monitoramento Ecológico 
+
+-----------------------------------------------------------------
+
+### Carga horária
+
+**Teoria:** 30h
+
+**Prática:** 30h
+
+-----------------------------------------------------------------
+
+### Ementa
+
+- Introdução
+
+- Definição e importância
+
+- Princípios e conceitos de Ecologia e Ecologia Florestal
+
+- Características de ecossistemas
+
+- Conceito de ecossistema
+
+- Equilíbrios nos ecossistemas
+
+- O Fluxo de energia e a ciclagem de matéria
+
+- Ecossistemas Florestais
+
+- Sucessão ecológica
+
+- Análise da vegetação florestal
+
+- Fatores Ecológicos Abióticos e Bióticos
+
+- Diversidade Biológica
+
+- Os ecossistemas como recursos naturais
+
+- Aspectos da conservação e preservação dos ecossistemas
+
+- Uso dos recursos naturais e Sustentabilidade na Amazônia
+
+- Zoneamento ecológico
+
+------------------------------------------------------------------------
+
+<i class="bi bi-download"></i> Faça o download da **<a href="/assets/pdf/Engenharia Florestal PPC_Ecologia florestal.pdf" target="_blank">ementa completa (PDF)</a>**

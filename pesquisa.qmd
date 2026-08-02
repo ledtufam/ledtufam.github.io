@@ -1,0 +1,39 @@
+---
+title: "Pesquisa"
+---
+
+O **LEDT** desenvolve pesquisas voltadas ao conhecimento, documentação e conservação da biodiversidade amazônica, integrando ecologia, dendrologia, taxonomia e ferramentas inovadoras para o estudo de árvores tropicais.
+
+### Projetos
+
+Atualmente, o laboratório participa dos seguintes projetos de pesquisa:
+
+-   ***Ecclinusa*****:** Building a near-infrared spectral library to reveal new species of *Ecclinusa* (Sapotaceae, Chrysophylloideae) in South America \| 2025-2026 \| IAPT rodada 2025 \| PI: Caroline C. Vasconcelos (UFAM, Brasil).
+
+-   **SpectraPop:** Popularização do uso da Assinatura Espectral da Espécie na identificação das árvores do Manejo Florestal Sustentável na Amazônia \| 2025-2026 \| FAPEAM \| 01.02.016301.04984/2024-17 \| PI: Flávia Machado Durgante (INPA, Brasil).
+
+-   **HerbSpectra-Amazônia:** Rede de Herbários Espectrais da Amazônia: Espectroscopia e inteligência artificial para a identificação automatizada da biodiversidade em herbários amazônicos \| 2025-2027 \| CNPq 385465/2025-4 \| PI: Flávia Machado Durgante (INPA, Brasil).
+
+-   **Tropecolnet:** Characterizing the role of interacting species, the drivers and the structure of plant-frugivore ecological networks along a defaunation gradient in tropical forests \| 2023-2026 \| PID2022-138272NA-I00 \| PI: Ana Benítez-Lopez (MNCN-CSIC, Espanha).
+
+-   **Neoshortfall:** Addressing biodiversity shortfalls in Neotropical hyperdiverse forests to improve our understanding of the effects of defaunation on phenotypic traits, species assemblages and biotic interactions \| PI: Ana Benítez-Lopez (MNCN-CSIC, Espanha).
+
+-   **Revelando os Incógnitos:** epífitas, insetos e fungos associados à flora arbórea de várzea na Amazônia oriental \| 2024-2027 \| CNPq 400738/2024-4 \| PI: Marcelino Carneiro Guedes (Embrapa Amapá, Brasil).
+
+### Parceiros
+
+-   Grupo MAUA Ecologia, Monitoramento e Uso Sustentável de Áreas Úmidas
+-   Herbário INPA
+-   Amazon Tall Tower Observatory (ATTO)
+-   Laboratório de Sementes INPA
+-   Embrapa Amapá
+-   [Ana Benítez-Lopez Lab](https://anabenitezlopez.com/)
+
+### Redes de colaboração
+
+O LEDT integra redes nacionais e internacionais dedicadas ao estudo da biodiversidade vegetal, herbários e espectroscopia:
+
+-   [Amazon Tree Diversity Network (ATDN)](https://sites.google.com/naturalis.nl/amazon-tree-diversity-network/homepage)
+-   [International Herbarium Spectral Digitization Working Group (IHerbSpec)](https://iherbspec.github.io/)
+-   [Sapotaceae Taxonomic Expert Network – World Flora Online (TEN/WFO)](https://about.worldfloraonline.org/tens/sapotaceae)
+-   [Tropical Seed Trait Database (TSTD)](https://eeslufmg.weebly.com/tstd.html)

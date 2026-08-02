@@ -1,0 +1,42 @@
+[
+  {
+    "listing": "/pessoas/index.html",
+    "items": [
+      "/pessoas/Caroline.html"
+    ]
+  },
+  {
+    "listing": "/publicacoes/publicacoes.html",
+    "items": []
+  },
+  {
+    "listing": "/teste/teste.html",
+    "items": [
+      "/teste/lecture3.html",
+      "/teste/lecture1.html",
+      "/teste/lecture2.html"
+    ]
+  },
+  {
+    "listing": "/ensino/disciplinas.html",
+    "items": [
+      "/ensino/graduacao/fitossociologia.html",
+      "/ensino/graduacao/dendrologiatropical.html",
+      "/ensino/graduacao/sementesflorestais.html",
+      "/ensino/graduacao/ecologiaflorestal.html"
+    ]
+  },
+  {
+    "listing": "/ensino/posgraduacao/posgraduacao.html",
+    "items": []
+  },
+  {
+    "listing": "/ensino/graduacao/graduacao.html",
+    "items": [
+      "/ensino/graduacao/fitossociologia.html",
+      "/ensino/graduacao/dendrologiatropical.html",
+      "/ensino/graduacao/sementesflorestais.html",
+      "/ensino/graduacao/ecologiaflorestal.html"
+    ]
+  }
+]

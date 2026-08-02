@@ -1,0 +1,38 @@
+/* css styles */
+
+
+/* Aumentar altura da barra */
+.navbar {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.navbar-brand img {
+  max-height: 100px;
+  max-width: 100px;
+}
+
+/* Layout de icones da pagina Pessoas*/
+.person-links{
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;   /* alinha à esquerda */
+  gap:16px;
+  margin-top:12px;
+}
+
+/* Remove o título "References" da bibliografia */
+
+#references {
+    display: none;
+}
+
+/* espacamento na bibliografia */
+.csl-entry {
+    padding-bottom: 1.2rem;
+}
+
+/* Legenda de figuras centralizadas */
+figcaption {
+    text-align: center !important;
+}
