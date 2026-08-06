@@ -2,15 +2,13 @@
 title: "Contato"
 ---
 
-
-Se você tiver dúvidas, sugestões ou interesse em colaborar com o LEDT, envie uma mensagem utilizando o formulário abaixo.
-
-
-------------------------------------------------------------------------
-
 <div style="text-align:center">
 ### Mensagem
 </div>
+
+
+Se você tiver dúvidas, sugestões ou interesse em colaborar com o LEDT, envie uma mensagem utilizando o formulário abaixo.
+
 
 <form action="https://formspree.io/f/mjgnnyeq" method="POST">
 
@@ -66,11 +64,11 @@ Enviar
 
 </form>
 
-------------------------------------------------------------------------
 
 <div style="text-align:center">
 ### Localização
 </div>
+
 
 <ul class="contact-list">
 
@@ -91,11 +89,11 @@ leaflet() %>%
   setView(lng =  -59.97556672805025, lat = -3.1002004936793623, zoom = 17)
 ```
 
-------------------------------------------------------------------------
 
 <div style="text-align:center">
 ### Redes sociais
 </div>
+
 
 <div class="social-icons">
 
