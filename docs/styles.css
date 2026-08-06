@@ -36,3 +36,36 @@
 figcaption {
     text-align: center !important;
 }
+
+/* Contato */
+
+.contact-list li {
+  list-style: none;
+  margin-bottom: 0.6rem;
+}
+
+.contact-list img {
+  width: 20px;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+
+/* Redes sociais */
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-top: 24px;
+}
+
+.social-icons img {
+  width: 56px;
+  height: 56px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.social-icons a:hover img {
+  transform: scale(1.12);
+  opacity: 0.85;
+}

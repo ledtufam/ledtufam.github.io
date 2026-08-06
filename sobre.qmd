@@ -14,11 +14,11 @@ Nossas pesquisas abrangem diferentes escalas da biodiversidade vegetal, desde a 
 
 ### Atuamos principalmente nas seguintes áreas:
 
-+ Dendrologia, taxonomia e sistemática de árvores tropicais;
-+ Ecologia de comunidades, ecologia funcional e monitoramento de florestas;
-+ Espectroscopia aplicada à identificação de plantas;
-+ Herbários, coleções científicas e documentação da biodiversidade amazônica;
-+ Distribuição de espécies, mudanças climáticas e conservação da flora amazônica.
+-   Dendrologia, taxonomia e sistemática de árvores tropicais;
+-   Ecologia de comunidades, ecologia funcional e monitoramento de florestas;
+-   Espectroscopia aplicada à identificação de plantas;
+-   Herbários, coleções científicas e documentação da biodiversidade amazônica;
+-   Distribuição de espécies, mudanças climáticas e conservação da flora amazônica.
 
 ### Nossa abordagem
 
@@ -26,12 +26,12 @@ Acreditamos que responder aos desafios científicos da Amazônia exige uma abord
 
 Por isso, combinamos diferentes fontes de informação, incluindo:
 
-+ Inventários florísticos;
-+ Parcelas permanentes;
-+ Herbários;
-+ Espectroscopia;
-+ Morfologia e taxonomia;
-+ Estatística, aprendizado de máquina e ciência de dados.
+-   Inventários florísticos;
+-   Parcelas permanentes;
+-   Herbários;
+-   Espectroscopia;
+-   Morfologia e taxonomia;
+-   Estatística, aprendizado de máquina e ciência de dados.
 
 Essa integração permite compreender desde a identidade das espécies até os processos ecológicos responsáveis pela manutenção da biodiversidade amazônica.
 

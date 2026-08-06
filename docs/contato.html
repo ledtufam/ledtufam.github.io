@@ -30,7 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./assets/images/favicon.ico" rel="icon">
+<link href="./assets/images/logos/favicon.ico" rel="icon">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -69,6 +69,26 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<link href="site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+
+<script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+
+<link href="site_libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
+
+<script src="site_libs/leaflet-1.3.1/leaflet.js"></script>
+
+<link href="site_libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
+
+<script src="site_libs/proj4-2.6.2/proj4.min.js"></script>
+
+<script src="site_libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+
+<link href="site_libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
+
+<script src="site_libs/leaflet-binding-2.2.2/leaflet.js"></script>
+
 
 
 <link rel="stylesheet" href="styles.css">
@@ -82,7 +102,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="./index.html" class="navbar-brand navbar-brand-logo">
-    <img src="./assets/images/logo.png" alt="" class="navbar-logo">
+    <img src="./assets/images/logos/logo.png" alt="" class="navbar-logo">
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -127,6 +147,14 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Extensão</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="./divulgacaocientifica.html"> 
+<span class="menu-text">Divulgação científica</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./selecoes.html"> 
+<span class="menu-text">Seleções</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="./sobre.html"> 
 <span class="menu-text">Sobre</span></a>
   </li>  
@@ -137,7 +165,7 @@ ul.task-list li input[type="checkbox"] {
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/ccvasconcelos/ledt_ufam"> <i class="bi bi-github" role="img" aria-label="GitHub">
+    <a class="nav-link" href="https://github.com/ledtufam"> <i class="bi bi-github" role="img" aria-label="GitHub">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -158,8 +186,16 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Nesta página</h2>
+   
+  <ul>
+  <li><a href="#mensagem" id="toc-mensagem" class="nav-link active" data-scroll-target="#mensagem">Mensagem</a></li>
+  <li><a href="#localização" id="toc-localização" class="nav-link" data-scroll-target="#localização">Localização</a></li>
+  <li><a href="#redes-sociais" id="toc-redes-sociais" class="nav-link" data-scroll-target="#redes-sociais">Redes sociais</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -184,7 +220,11 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p>Se você tiver dúvidas, sugestões ou interesse em colaborar com o LEDT, envie uma mensagem utilizando o formulário abaixo.</p>
-<form action="https://formspree.io/f/xykrqdln" method="POST">
+<hr>
+<section id="mensagem" class="level3" style="text-align:center">
+<h3 class="anchored" data-anchor-id="mensagem">Mensagem</h3>
+</section>
+<form action="https://formspree.io/f/mjgnnyeq" method="POST">
 <div class="mb-3">
 <p><label class="form-label">Nome</label> <input type="text" name="name" class="form-control" required=""></p>
 </div>
@@ -198,19 +238,42 @@ ul.task-list li input[type="checkbox"] {
 <p><label class="form-label">Assunto</label> <input type="text" name="subject" class="form-control" required=""></p>
 </div>
 <div class="mb-3">
-<label class="form-label">Mensagem</label>
+<p><label class="form-label">Mensagem</label></p>
 <textarea name="message" rows="6" class="form-control" required=""></textarea>
 </div>
 <button class="btn btn-primary" type="submit">
-Enviar
+<p>Enviar</p>
 </button>
 </form>
 <hr>
-<p>Universidade Federal do Amazonas</p>
-<p>Faculdade de Ciências Agrárias</p>
-<p>Departamento de Ciências Florestais</p>
-<p>Av. Rodrigo Otávio, 6200 (Setor Sul), FCA01, 1º piso</p>
-<p>Manaus, AM 69080900</p>
+<section id="localização" class="level3" style="text-align:center">
+<h3 class="anchored" data-anchor-id="localização">Localização</h3>
+</section>
+<ul class="contact-list">
+<li>
+<img src="assets/images/icons/institution.svg"> Universidade Federal do Amazonas, Faculdade de Ciências Agrárias, Depto. de Ciências Florestais
+</li>
+<li>
+<img src="assets/images/icons/map.svg"> Av. Rodrigo Otávio, 6200 (Setor Sul), FCA01, 1º piso - 69067-375 - Manaus, AM, Brasil
+</li>
+<li>
+<img src="assets/images/icons/email.svg"> <a href="mailto:ledtufam\@gmail.com" target="_blank">ledtufam@gmail.com</a>
+</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-1f88ee0d631d5f1c5f69" style="width:100%;height:325px;"></div>
+<script type="application/json" data-for="htmlwidget-1f88ee0d631d5f1c5f69">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]}],"setView":[[-3.100200493679362,-59.97556672805025],17,[]]},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<hr>
+<section id="redes-sociais" class="level3" style="text-align:center">
+<h3 class="anchored" data-anchor-id="redes-sociais">Redes sociais</h3>
+</section>
+<div class="social-icons">
+<p><a href="https://instagram.com/ledt_ufam/" target="_blank" aria-label="Instagram"> <img src="assets/images/icons/instagram.svg" alt="Instagram"> </a></p>
+<p><a href="https://www.youtube.com/@ledt_ufam" target="_blank" aria-label="YouTube"> <img src="assets/images/icons/youtube.svg" alt="YouTube"> </a></p>
+</div>
 
 
 

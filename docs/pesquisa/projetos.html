@@ -99,10 +99,21 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link" href="../pessoas.html"> 
 <span class="menu-text">Pessoas</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../ensino.html"> 
-<span class="menu-text">Ensino</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ensino" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Ensino</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-ensino">    
+        <li>
+    <a class="dropdown-item" href="../ensino/graduacao/graduacao.html">
+ <span class="dropdown-text">Graduação</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../ensino/posgraduacao/posgraduacao.html">
+ <span class="dropdown-text">Pós-graduação</span></a>
+  </li>  
+    </ul>
+  </li>
   <li class="nav-item">
     <a class="nav-link" href="../pesquisa.html"> 
 <span class="menu-text">Pesquisa</span></a>
@@ -110,6 +121,10 @@ ul.task-list li input[type="checkbox"] {
   <li class="nav-item">
     <a class="nav-link" href="../publicacoes.html"> 
 <span class="menu-text">Publicações</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../extensao.html"> 
+<span class="menu-text">Extensão</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../extensao.html"> 
@@ -126,7 +141,7 @@ ul.task-list li input[type="checkbox"] {
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/ccvasconcelos/ledt_ufam"> <i class="bi bi-github" role="img" aria-label="GitHub">
+    <a class="nav-link" href="https://github.com/ledtufam"> <i class="bi bi-github" role="img" aria-label="GitHub">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -744,7 +759,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>© 2026 Lab Ecologia e Dendrologia Tropical (LEDT). Todos os direitos reservados.</p>
+<p>© 2026 LEDT. Todos os direitos reservados.</p>
 </div>   
     <div class="nav-footer-center">
       &nbsp;

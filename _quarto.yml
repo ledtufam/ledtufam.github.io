@@ -4,13 +4,13 @@ project:
 
 website:
   title: ""
-  favicon: assets/images/favicon.ico
+  favicon: assets/images/logos/favicon.ico
 
   navbar:
-    logo: assets/images/logo.png  
+    logo: assets/images/logos/logo.png  
     right: 
       - icon: github
-        href: https://github.com/ccvasconcelos/ledt_ufam
+        href: https://github.com/ledtufam
         aria-label: GitHub
       - icon: instagram
         href: https://www.instagram.com/ledt_ufam/    
@@ -32,6 +32,10 @@ website:
         text: Publicações
       - href: extensao.qmd
         text: Extensão
+      - href: divulgacaocientifica.qmd
+        text: Divulgação científica
+      - href: selecoes.qmd
+        text: Seleções           
       - href: sobre.qmd
         text: Sobre
       - href: contato.qmd

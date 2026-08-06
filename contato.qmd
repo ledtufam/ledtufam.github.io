@@ -2,7 +2,15 @@
 title: "Contato"
 ---
 
+
 Se você tiver dúvidas, sugestões ou interesse em colaborar com o LEDT, envie uma mensagem utilizando o formulário abaixo.
+
+
+------------------------------------------------------------------------
+
+<div style="text-align:center">
+### Mensagem
+</div>
 
 <form action="https://formspree.io/f/mjgnnyeq" method="POST">
 
@@ -40,6 +48,7 @@ required>
 ::: mb-3
 <label class="form-label">Mensagem</label>
 
+
 ```{=html}
 <textarea
 name="message"
@@ -59,12 +68,43 @@ Enviar
 
 ------------------------------------------------------------------------
 
-Universidade Federal do Amazonas
+<div style="text-align:center">
+### Localização
+</div>
 
-Faculdade de Ciências Agrárias
+<ul class="contact-list">
 
-Departamento de Ciências Florestais
+<li><img src="assets/images/icons/institution.svg"/> Universidade Federal do Amazonas, Faculdade de Ciências Agrárias, Depto. de Ciências Florestais</li>
 
-Av. Rodrigo Otávio, 6200 (Setor Sul), FCA01, 1º piso
+<li><img src="assets/images/icons/map.svg"/> Av. Rodrigo Otávio, 6200 (Setor Sul), FCA01, 1º piso - 69067-375 - Manaus, AM, Brasil</li>
 
-Manaus, AM 69080900
+<li><img src="assets/images/icons/email.svg"/> <a href="mailto:ledtufam\@gmail.com" target="_blank">ledtufam\@gmail.com</a></li>
+
+</ul>
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=3.5}
+library(leaflet)
+
+leaflet() %>%
+  addTiles() %>% 
+  setView(lng =  -59.97556672805025, lat = -3.1002004936793623, zoom = 17)
+```
+
+------------------------------------------------------------------------
+
+<div style="text-align:center">
+### Redes sociais
+</div>
+
+<div class="social-icons">
+
+<a href="https://instagram.com/ledt_ufam/" target="_blank" aria-label="Instagram">
+  <img src="assets/images/icons/instagram.svg" alt="Instagram">
+</a>
+
+<a href="https://www.youtube.com/@ledt_ufam" target="_blank" aria-label="YouTube">
+  <img src="assets/images/icons/youtube.svg" alt="YouTube">
+</a>
+
+</div>
