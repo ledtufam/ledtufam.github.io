@@ -7,7 +7,7 @@ website:
   favicon: assets/images/logos/favicon.ico
 
   navbar:
-    logo: assets/images/logos/logo.png  
+    logo: assets/images/logos/logo_simples.png  
     right: 
       - icon: github
         href: https://github.com/ledtufam
@@ -22,9 +22,9 @@ website:
         text: Pessoas
       - text: Ensino
         menu:
-          - href: ensino/graduacao/graduacao.qmd
+          - href: ensino/graduacao/disciplinas.qmd
             text: "Graduação"
-          - href: ensino/posgraduacao/posgraduacao.qmd
+          - href: ensino/posgraduacao/disciplinas.qmd
             text: "Pós-graduação"
       - href: pesquisa.qmd
         text: Pesquisa

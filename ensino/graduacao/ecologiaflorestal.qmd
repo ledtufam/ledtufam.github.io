@@ -2,25 +2,24 @@
 title: "FGD926 - Ecologia Florestal (60h)"
 ---
 
-![](/assets/images/ecologia.jpeg){fig-cap="Legenda da figura"}
+![](/assets/images/photos/ecologia.jpeg)
 
 ### Objetivos
 
 **Geral:** Proporcionar aos estudantes um entendimento profundo dos princípios e processos ecológicos essenciais que regulam os ecossistemas florestais, habilitando-os com o saber indispensável para a implementação eficaz da conservação, do manejo sustentável e da preservação das florestas.
 
-**Específicos:** 
+**Específicos:**
 
-- Compreender a Estrutura e Função dos Ecossistemas Florestais
+-   Compreender a Estrutura e Função dos Ecossistemas Florestais
 
-- Estudar as Interações Bióticas e Abióticas
+-   Estudar as Interações Bióticas e Abióticas
 
-- Analisar a importância da Biodiversidade Florestal
+-   Analisar a importância da Biodiversidade Florestal
 
-- Analisar os Impactos das Mudanças Climáticas nos Ecossistemas Florestais
+-   Analisar os Impactos das Mudanças Climáticas nos Ecossistemas Florestais
 
-- Desenvolver Habilidades de Pesquisa e Monitoramento Ecológico 
+-   Desenvolver Habilidades de Pesquisa e Monitoramento Ecológico
 
------------------------------------------------------------------
 
 ### Carga horária
 
@@ -28,42 +27,47 @@ title: "FGD926 - Ecologia Florestal (60h)"
 
 **Prática:** 30h
 
------------------------------------------------------------------
 
 ### Ementa
 
-- Introdução
+-   Introdução
 
-- Definição e importância
+-   Definição e importância
 
-- Princípios e conceitos de Ecologia e Ecologia Florestal
+-   Princípios e conceitos de Ecologia e Ecologia Florestal
 
-- Características de ecossistemas
+-   Características de ecossistemas
 
-- Conceito de ecossistema
+-   Conceito de ecossistema
 
-- Equilíbrios nos ecossistemas
+-   Equilíbrios nos ecossistemas
 
-- O Fluxo de energia e a ciclagem de matéria
+-   O Fluxo de energia e a ciclagem de matéria
 
-- Ecossistemas Florestais
+-   Ecossistemas Florestais
 
-- Sucessão ecológica
+-   Sucessão ecológica
 
-- Análise da vegetação florestal
+-   Análise da vegetação florestal
 
-- Fatores Ecológicos Abióticos e Bióticos
+-   Fatores Ecológicos Abióticos e Bióticos
 
-- Diversidade Biológica
+-   Diversidade Biológica
 
-- Os ecossistemas como recursos naturais
+-   Os ecossistemas como recursos naturais
 
-- Aspectos da conservação e preservação dos ecossistemas
+-   Aspectos da conservação e preservação dos ecossistemas
 
-- Uso dos recursos naturais e Sustentabilidade na Amazônia
+-   Uso dos recursos naturais e Sustentabilidade na Amazônia
 
-- Zoneamento ecológico
+-   Zoneamento ecológico
 
 ------------------------------------------------------------------------
 
-<i class="bi bi-download"></i> Faça o download da **<a href="/assets/pdf/Engenharia Florestal PPC_Ecologia florestal.pdf" target="_blank">ementa completa (PDF)</a>**
+> Faça o download da ementa completa <a href="/assets/pdf/Engenharia Florestal PPC_Ecologia Florestal.pdf" target="_blank" class="btn btn-outline-success">
+<i class="bi bi-file-pdf-fill"></i> PDF</a>
+
+### Turmas
+
+> **2026.1 |** Acessar o material da disciplina. Restrito aos alunos matriculados <a href="https://drive.google.com/drive/folders/1SBfiBz0EiBc831hurP3axbzMEFfg8_0n?usp=sharing" target="_blank" class="btn btn-outline-success">
+<i class="bi bi-google"></i> Drive</a>

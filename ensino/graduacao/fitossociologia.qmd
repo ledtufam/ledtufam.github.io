@@ -2,8 +2,7 @@
 title: "FGD320 - Fitossociologia de Florestas Tropicais (45h)"
 ---
 
-
-![](/assets/images/fitossociologia.jpeg){fig-cap="Legenda da figura"}
+![](/assets/images/photos/fitossociologia.jpeg)
 
 ### Objetivos
 
@@ -11,13 +10,12 @@ title: "FGD320 - Fitossociologia de Florestas Tropicais (45h)"
 
 **Específicos:**
 
-- Desenvolver no aluno a habilidade na interpretação e compreensão dos métodos de análise qualitativos e quantitativos de estudo da vegetação;
+-   Desenvolver no aluno a habilidade na interpretação e compreensão dos métodos de análise qualitativos e quantitativos de estudo da vegetação;
 
-- Despertar no aluno a capacidade de interpretação de dados fitossociológicos que auxiliem na tomada de decisão;
+-   Despertar no aluno a capacidade de interpretação de dados fitossociológicos que auxiliem na tomada de decisão;
 
-- Capacitar os alunos na utilização de plataformas para os cálculos estatísticos e fitossociológicos.
+-   Capacitar os alunos na utilização de plataformas para os cálculos estatísticos e fitossociológicos.
 
------------------------------------------------------------------
 
 ### Carga horária
 
@@ -25,26 +23,31 @@ title: "FGD320 - Fitossociologia de Florestas Tropicais (45h)"
 
 **Prática:** 30h
 
------------------------------------------------------------------
-
 ### Ementa
 
-- Introdução e importância da fitossociologia
+-   Introdução e importância da fitossociologia
 
-- Comportamento das Populações nas Comunidades
+-   Comportamento das Populações nas Comunidades
 
-- Planejamento do Inventário
+-   Planejamento do Inventário
 
-- Métodos Usados em Levantamentos Fitossociológicos
+-   Métodos Usados em Levantamentos Fitossociológicos
 
-- Parâmetros Fitossociológicos
+-   Parâmetros Fitossociológicos
 
-- Índices de Associação e Similaridade
+-   Índices de Associação e Similaridade
 
-- Índices de Heterogeneidade de Comunidades
+-   Índices de Heterogeneidade de Comunidades
 
-- Diversidade da vegetação
+-   Diversidade da vegetação
+
 
 ------------------------------------------------------------------------
 
-<i class="bi bi-download"></i> Faça o download da **<a href="/assets/pdf/Engenharia Florestal PPC_Fitossociologia.pdf" target="_blank">ementa completa (PDF)</a>**
+> Faça o download da ementa completa <a href="/assets/pdf/Engenharia Florestal PPC_Fitossociologia.pdf" target="_blank" class="btn btn-outline-success">
+<i class="bi bi-file-pdf-fill"></i> PDF</a>
+
+### Turmas
+
+> **2026.2 |** Acessar o material da disciplina. Restrito aos alunos matriculados <a href="https://drive.google.com/drive/folders/1laWjqVGcZKwJlacb7CDiDLQniQatlKBU?usp=drive_link" class="btn btn-outline-success">
+<i class="bi bi-google"></i> Drive</a>

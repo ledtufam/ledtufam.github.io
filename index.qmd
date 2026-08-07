@@ -6,7 +6,7 @@ No **Laboratório de Ecologia Tropical e Dendrologia (LEDT)**, estudamos a diver
 
 Com sede na Universidade Federal do Amazonas (UFAM), em Manaus, Brasil, nosso grupo colabora com redes de pesquisa nacionais e internacionais para promover a compreensão, a documentação e a conservação da biodiversidade amazônica.
 
-![](assets/images/logos/logo_inicio.png){width="1828"}
+![](assets/images/logos/logo_horizontal.png){width="1828"}
 
 
 <div style="text-align:center">

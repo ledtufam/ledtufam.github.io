@@ -2,7 +2,7 @@
 title: "FGD921 - Dendrologia Tropical (60h)"
 ---
 
-![](/assets/images/dendrologia.png){fig-cap="Legenda da figura"}
+![](/assets/images/photos/dendrologia.png)
 
 ### Objetivos
 
@@ -14,7 +14,6 @@ title: "FGD921 - Dendrologia Tropical (60h)"
 
 -   Capacitar o aluno de engenharia florestal para o reconhecimento de famílias botânicas e espécies florestais por meio de características dendrológicas de indivíduos arbóreos.
 
-------------------------------------------------------------------------
 
 ### Carga horária
 
@@ -22,7 +21,6 @@ title: "FGD921 - Dendrologia Tropical (60h)"
 
 **Prática:** 30h
 
-------------------------------------------------------------------------
 
 ### Ementa
 
@@ -50,4 +48,10 @@ title: "FGD921 - Dendrologia Tropical (60h)"
 
 ------------------------------------------------------------------------
 
-<i class="bi bi-download"></i> Faça o download da **<a href="/assets/pdf/Engenharia Florestal PPC_Dendrologia tropical.pdf" target="_blank">ementa completa (PDF)</a>**
+> Faça o download da ementa completa <a href="/assets/pdf/Engenharia Florestal PPC_Dendrologia Tropical.pdf" target="_blank" class="btn btn-outline-success">
+<i class="bi bi-file-pdf-fill"></i> PDF</a>
+
+### Turmas
+
+> **2026.2 |** Acessar o material da disciplina. Restrito aos alunos matriculados <a href="https://drive.google.com/drive/folders/1cm5WZlNnhHUUuo_Og26-Kj6w4OrEXxIL?usp=drive_link" target="_blank" class="btn btn-outline-success">
+<i class="bi bi-google"></i> Drive</a>
