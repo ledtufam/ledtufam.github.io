@@ -1,5 +1,8 @@
 ---
 title: "FGD926 - Ecologia Florestal (60h)"
+listing:
+  type: table
+  fields: [title]
 ---
 
 ![](/assets/images/photos/ecologia.jpeg)
@@ -20,13 +23,11 @@ title: "FGD926 - Ecologia Florestal (60h)"
 
 -   Desenvolver Habilidades de Pesquisa e Monitoramento Ecológico
 
-
 ### Carga horária
 
 **Teoria:** 30h
 
 **Prática:** 30h
-
 
 ### Ementa
 
@@ -64,10 +65,8 @@ title: "FGD926 - Ecologia Florestal (60h)"
 
 ------------------------------------------------------------------------
 
-> Faça o download da ementa completa <a href="/assets/pdf/Engenharia Florestal PPC_Ecologia Florestal.pdf" target="_blank" class="btn btn-outline-success">
-<i class="bi bi-file-pdf-fill"></i> PDF</a>
+> Faça o download da ementa completa <a href="/assets/pdf/Engenharia Florestal PPC_Ecologia florestal.pdf" target="_blank" class="btn btn-outline-success"> <i class="bi bi-file-pdf-fill"></i> PDF</a>
 
 ### Turmas
 
-> **2026.1 |** Acessar o material da disciplina. Restrito aos alunos matriculados <a href="https://drive.google.com/drive/folders/1SBfiBz0EiBc831hurP3axbzMEFfg8_0n?usp=sharing" target="_blank" class="btn btn-outline-success">
-<i class="bi bi-google"></i> Drive</a>
+> **2026.1 \|** Acessar o material da disciplina. Restrito aos alunos matriculados <a href="https://drive.google.com/drive/folders/1SBfiBz0EiBc831hurP3axbzMEFfg8_0n?usp=sharing" target="_blank" class="btn btn-outline-success"> <i class="bi bi-google"></i> Drive</a>

@@ -1,5 +1,8 @@
 ---
 title: "FGD925 - Sementes Florestais (60h)"
+listing:
+  type: table
+  fields: [title]
 ---
 
 ![](/assets/images/photos/sementes.png)
@@ -7,7 +10,6 @@ title: "FGD925 - Sementes Florestais (60h)"
 ### Objetivos
 
 **Geral:** Capacitar o aluno a desenvolver estudos básicos de tecnologia de sementes a partir de rotinas de laboratório com espécies florestais.
-
 
 ### Carga horária
 
@@ -43,13 +45,10 @@ title: "FGD925 - Sementes Florestais (60h)"
 
 -   Regras para análise de sementes de espécies nativas
 
-
 ------------------------------------------------------------------------
 
-> Faça o download da ementa completa <a href="/assets/pdf/Engenharia Florestal PPC_Sementes florestais.pdf" target="_blank" class="btn btn-outline-success">
-<i class="bi bi-file-pdf-fill"></i> PDF</a>
+> Faça o download da ementa completa <a href="/assets/pdf/Engenharia Florestal PPC_Sementes florestais.pdf" target="_blank" class="btn btn-outline-success"> <i class="bi bi-file-pdf-fill"></i> PDF</a>
 
 ### Turmas
 
-> **2026.2 |** Acessar o material da disciplina. Restrito aos alunos matriculados <a href="https://drive.google.com/drive/folders/1MVReEtZx_bhNMqbf7XyLg1ZZlKM3wUpq?usp=drive_link" target="_blank" class="btn btn-outline-success">
-<i class="bi bi-google"></i> Drive</a>
+> **2026.2 \|** Acessar o material da disciplina. Restrito aos alunos matriculados <a href="https://drive.google.com/drive/folders/1MVReEtZx_bhNMqbf7XyLg1ZZlKM3wUpq?usp=drive_link" target="_blank" class="btn btn-outline-success"> <i class="bi bi-google"></i> Drive</a>

@@ -1,5 +1,8 @@
 ---
 title: "FGD921 - Dendrologia Tropical (60h)"
+listing:
+  type: table
+  fields: [title]
 ---
 
 ![](/assets/images/photos/dendrologia.png)
@@ -48,7 +51,7 @@ title: "FGD921 - Dendrologia Tropical (60h)"
 
 ------------------------------------------------------------------------
 
-> Faça o download da ementa completa <a href="/assets/pdf/Engenharia Florestal PPC_Dendrologia Tropical.pdf" target="_blank" class="btn btn-outline-success">
+> Faça o download da ementa completa <a href="/assets/pdf/Engenharia Florestal PPC_Dendrologia tropical.pdf" target="_blank" class="btn btn-outline-success">
 <i class="bi bi-file-pdf-fill"></i> PDF</a>
 
 ### Turmas

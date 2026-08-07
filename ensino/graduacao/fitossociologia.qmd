@@ -1,5 +1,8 @@
 ---
 title: "FGD320 - Fitossociologia de Florestas Tropicais (45h)"
+listing:
+  type: table
+  fields: [title]
 ---
 
 ![](/assets/images/photos/fitossociologia.jpeg)
@@ -15,7 +18,6 @@ title: "FGD320 - Fitossociologia de Florestas Tropicais (45h)"
 -   Despertar no aluno a capacidade de interpretação de dados fitossociológicos que auxiliem na tomada de decisão;
 
 -   Capacitar os alunos na utilização de plataformas para os cálculos estatísticos e fitossociológicos.
-
 
 ### Carga horária
 
@@ -41,13 +43,10 @@ title: "FGD320 - Fitossociologia de Florestas Tropicais (45h)"
 
 -   Diversidade da vegetação
 
-
 ------------------------------------------------------------------------
 
-> Faça o download da ementa completa <a href="/assets/pdf/Engenharia Florestal PPC_Fitossociologia.pdf" target="_blank" class="btn btn-outline-success">
-<i class="bi bi-file-pdf-fill"></i> PDF</a>
+> Faça o download da ementa completa <a href="/assets/pdf/Engenharia Florestal PPC_Fitossociologia.pdf" target="_blank" class="btn btn-outline-success"> <i class="bi bi-file-pdf-fill"></i> PDF</a>
 
 ### Turmas
 
-> **2026.2 |** Acessar o material da disciplina. Restrito aos alunos matriculados <a href="https://drive.google.com/drive/folders/1laWjqVGcZKwJlacb7CDiDLQniQatlKBU?usp=drive_link" class="btn btn-outline-success">
-<i class="bi bi-google"></i> Drive</a>
+> **2026.2 \|** Acessar o material da disciplina. Restrito aos alunos matriculados <a href="https://drive.google.com/drive/folders/1laWjqVGcZKwJlacb7CDiDLQniQatlKBU?usp=drive_link" class="btn btn-outline-success"> <i class="bi bi-google"></i> Drive</a>

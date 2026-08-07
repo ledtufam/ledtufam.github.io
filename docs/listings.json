@@ -64,5 +64,32 @@
   {
     "listing": "/ensino/posgraduacao/disciplinas.html",
     "items": []
+  },
+  {
+    "listing": "/ensino/graduacao/dendrologiatropical.html",
+    "items": [
+      "/ensino/graduacao/disciplinas.html",
+      "/ensino/graduacao/fitossociologia.html",
+      "/ensino/graduacao/sementesflorestais.html",
+      "/ensino/graduacao/ecologiaflorestal.html"
+    ]
+  },
+  {
+    "listing": "/ensino/graduacao/sementesflorestais.html",
+    "items": [
+      "/ensino/graduacao/disciplinas.html",
+      "/ensino/graduacao/fitossociologia.html",
+      "/ensino/graduacao/dendrologiatropical.html",
+      "/ensino/graduacao/ecologiaflorestal.html"
+    ]
+  },
+  {
+    "listing": "/ensino/graduacao/ecologiaflorestal.html",
+    "items": [
+      "/ensino/graduacao/disciplinas.html",
+      "/ensino/graduacao/fitossociologia.html",
+      "/ensino/graduacao/dendrologiatropical.html",
+      "/ensino/graduacao/sementesflorestais.html"
+    ]
   }
 ]
