@@ -66,6 +66,37 @@ Linhas de pesquisa: Ecologia e Manejo Florestal
 
 :::::: columns
 ::: {.column width="25%"}
+![](assets/images/people/yeda.png){.img-fluid .rounded-circle width="180"}
+:::
+
+:::: {.column width="75%"}
+#### Yêda Maria Boaventura Corrêa Arruda (ela/dela)
+
+**Professora Associada I, Dra. \| Departamento de Biologia do Instituto de Ciências Biológicas**\
+Universidade Federal do Amazonas (UFAM)
+
+Linhas de pesquisa: sementes florestais; espécies florestais; Amazônia; espécies nativas; dormência; silvicultura urbana; gestão e planejamento urbano
+
+::: person-links
+<a href="mailto:yedaarruda@ufam.edu.br" title=""> <img src="/assets/images/icons/email.svg" width="22"/> </a>
+
+<a href="http://lattes.cnpq.br/0546454617072726" title=""> ![](/assets/images/icons/lattes.svg){alt="" width="22"} </a>
+
+<a href="https://orcid.org/0000-0002-9332-552X" title=""> <img src="/assets/images/icons/orcid.svg" width="22"/> </a>
+
+<a href="https://www.researchgate.net/profile/Yeda-Arruda" title=""> ![](/assets/images/icons/rg.svg){alt="" width="22"} </a>
+
+<a href="" title=""> <img src="/assets/images/icons/scholar.svg" width="22"/> </a>
+
+<a href="" title=""> <img src="/assets/images/icons/github.svg" width="22"/> </a>
+:::
+::::
+::::::
+
+
+
+:::::: columns
+::: {.column width="25%"}
 ![](assets/images/people/gaby.png){.img-fluid .rounded-circle width="180"}
 :::
 
