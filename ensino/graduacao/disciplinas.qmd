@@ -1,4 +1,4 @@
 ---
-title: "Disciplinas"
+title: "Disciplinas (UFAM)"
 listing: grid
 ---
