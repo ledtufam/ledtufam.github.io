@@ -75,6 +75,8 @@ IH
 gl <- UT - 1
 c(chi2_75 = qchisq(0.75, gl), chi2_95 = qchisq(0.95, gl), chi2_99 = qchisq(0.99, gl))
 
+
+# ---- Conferindo na tabela impressa ----
 IH > qchisq(0.95, gl)      # não aleatorizado: agregada?
 IH > qchisq(0.99, gl)      # Hazen: agrupada?
 
@@ -247,11 +249,49 @@ barplot(m, beside = TRUE, col = c("grey60", "#6cc3d5", "#78c2ad"), border = NA,
         legend.text = TRUE, args.legend = list(bty = "n"))
 
 
-# ---- 9. E se eu tiver as coordenadas das árvores? ----
-library(spatstat)
-pts <- ppp(arv$x, arv$y, window = owin(c(0, 100), c(0, 100)))  # parcela de 100 x 100 m
-L   <- envelope(pts, Lest, nsim = 99)       # L(r): versão estabilizada de K(r)
-plot(L, . - r ~ r, main = "")                # acima do envelope = agregação
+# ---- 9. E se eu tiver as coordenadas das árvores? A função K de Ripley ----
 
+# ---- Os dados: *Beilschmiedia pendula* em Barro Colorado ----
+library(spatstat)
+data(bei)
+bei                      # um "padrão de pontos" (ppp): coordenadas + janela da parcela
+
+plot(bei, pch = 16, cex = 0.3, main = "")
+
+
+# ---- Ponte com os índices: dividindo a parcela em subparcelas ----
+q <- quadratcount(bei, nx = 20, ny = 10)
+n_ij <- as.vector(q)             # nº de árvores em cada uma das 200 subparcelas
+summary(n_ij)
+
+res_bei <- indices_agregacao(matrix(n_ij, nrow = 1, dimnames = list("B. pendula", NULL)),
+                             UT = length(n_ij))
+res_bei[, c("n_i", "U_i", "M_i", "S2", "P", "IM", "P_cl", "R_cl", "IM_cl")]
+
+tamanhos <- list("100 × 100 m (1 ha)"      = c(10, 5),
+                 "50 × 50 m (0,25 ha)"     = c(20, 10),
+                 "20 × 20 m (0,04 ha)"     = c(50, 25),
+                 "10 × 10 m (0,01 ha)"     = c(100, 50))
+
+escala <- t(sapply(tamanhos, function(g) {
+  n <- as.vector(quadratcount(bei, nx = g[1], ny = g[2]))
+  r <- indices_agregacao(matrix(n, nrow = 1), UT = length(n))
+  c(subparcelas = length(n), media = round(mean(n), 2), Payandeh = r$P, Morisita = r$IM)
+}))
+escala
+
+
+# ---- A função K de Ripley e a função L ----
+set.seed(123)
+env <- envelope(bei, Lest, nsim = 39, rmax = 100, correction = "border", verbose = FALSE)
+
+plot(env, . - r ~ r, main = "", legend = FALSE,
+     xlab = "Distância r (m)", ylab = "L(r) − r", ylim = c(-3, 24))
+legend("topright", bty = "n", lty = c(1, 2, NA), pch = c(NA, NA, 15),
+       col = c("black", "red", "grey75"), pt.cex = 2,
+       legend = c("Observado", "Esperado ao acaso (CSR)", "Envelope (39 simulações)"))
+
+
+# ---- Para pensar ----
 
 # ---- Referências ----

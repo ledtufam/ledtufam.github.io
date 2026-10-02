@@ -474,19 +474,122 @@ barplot(m, beside = TRUE, col = c("grey60", "#6cc3d5", "#78c2ad"), border = NA,
         legend.text = TRUE, args.legend = list(bty = "n"))
 ```
 
-## 9. E se eu tiver as coordenadas das árvores?
+## 9. E se eu tiver as coordenadas das árvores? A função K de Ripley
 
-Com a posição (x, y) de cada árvore, é possível usar a **função K de Ripley**, que avalia o padrão em diferentes distâncias. O pacote **spatstat** faz isso:
+Os dados caixeta **não têm a posição das árvores**: só sabemos em que parcela cada uma está. Quando temos as **coordenadas (x, y)** de cada árvore, podemos usar a **função K de Ripley**, que avalia o padrão espacial em **várias distâncias ao mesmo tempo**, sem depender do tamanho das parcelas.
+
+::: {.callout-note appearance="simple"}
+Esta seção usa o pacote **spatstat**. Instale uma vez com `install.packages("spatstat")`.
+:::
+
+### Os dados: *Beilschmiedia pendula* em Barro Colorado
+
+O **spatstat** traz um conjunto de dados reais muito usado em ecologia florestal: a localização de **3.604 árvores** de *Beilschmiedia pendula* (Lauraceae) na parcela permanente de **50 ha** (1.000 × 500 m) da Ilha de Barro Colorado, no Panamá (Hubbell & Foster 1983; Condit 1998).
 
 ```{r}
-#| eval: false
+#| eval: !expr requireNamespace("spatstat", quietly = TRUE)
 library(spatstat)
-pts <- ppp(arv$x, arv$y, window = owin(c(0, 100), c(0, 100)))  # parcela de 100 x 100 m
-L   <- envelope(pts, Lest, nsim = 99)       # L(r): versão estabilizada de K(r)
-plot(L, . - r ~ r, main = "")                # acima do envelope = agregação
+data(bei)
+bei                      # um "padrão de pontos" (ppp): coordenadas + janela da parcela
 ```
 
+```{r}
+#| eval: !expr requireNamespace("spatstat", quietly = TRUE)
+#| fig-cap: "Posição das 3.604 árvores de *Beilschmiedia pendula* na parcela de 50 ha de Barro Colorado."
+#| fig-width: 9
+#| fig-height: 4.8
+plot(bei, pch = 16, cex = 0.3, main = "")
+```
+
+Olhando o mapa, o que você diria: aleatório, regular ou agregado?
+
+### Ponte com os índices: dividindo a parcela em subparcelas
+
+Para usar os índices das seções anteriores, dividimos a parcela em **subparcelas** e contamos as árvores em cada uma, como num inventário. Com 20 × 10 subparcelas, cada uma tem 50 × 50 m (0,25 ha):
+
+```{r}
+#| eval: !expr requireNamespace("spatstat", quietly = TRUE)
+q <- quadratcount(bei, nx = 20, ny = 10)
+n_ij <- as.vector(q)             # nº de árvores em cada uma das 200 subparcelas
+summary(n_ij)
+
+res_bei <- indices_agregacao(matrix(n_ij, nrow = 1, dimnames = list("B. pendula", NULL)),
+                             UT = length(n_ij))
+res_bei[, c("n_i", "U_i", "M_i", "S2", "P", "IM", "P_cl", "R_cl", "IM_cl")]
+```
+
+E se mudarmos o **tamanho das subparcelas**?
+
+```{r}
+#| eval: !expr requireNamespace("spatstat", quietly = TRUE)
+tamanhos <- list("100 × 100 m (1 ha)"      = c(10, 5),
+                 "50 × 50 m (0,25 ha)"     = c(20, 10),
+                 "20 × 20 m (0,04 ha)"     = c(50, 25),
+                 "10 × 10 m (0,01 ha)"     = c(100, 50))
+
+escala <- t(sapply(tamanhos, function(g) {
+  n <- as.vector(quadratcount(bei, nx = g[1], ny = g[2]))
+  r <- indices_agregacao(matrix(n, nrow = 1), UT = length(n))
+  c(subparcelas = length(n), media = round(mean(n), 2), Payandeh = r$P, Morisita = r$IM)
+}))
+escala
+```
+
+Em todos os tamanhos a espécie é **agregada**, mas o valor dos índices muda bastante com o tamanho da subparcela. Esse é o problema que a função K resolve.
+
+### A função K de Ripley e a função L
+
+Para cada árvore, a função **K(r)** conta quantas outras árvores existem num círculo de raio *r* ao seu redor e compara com o esperado num padrão **aleatório** (completamente aleatório, *CSR*). Na prática usamos a transformação **L(r)**, em que o padrão aleatório vira uma reta: $L(r) - r = 0$.
+
+-   $L(r) - r > 0$: há **mais vizinhos** do que o esperado ao acaso → **agregação** na distância *r*;
+-   $L(r) - r < 0$: há **menos vizinhos** do que o esperado → **regularidade** (inibição) na distância *r*.
+
+Para saber se o desvio é significativo, simulamos vários padrões aleatórios com o mesmo número de árvores na mesma área e construímos um **envelope**. Com 39 simulações, o envelope corresponde a um teste com cerca de 5% de significância:
+
+```{r}
+#| eval: !expr requireNamespace("spatstat", quietly = TRUE)
+set.seed(123)
+env <- envelope(bei, Lest, nsim = 39, rmax = 100, correction = "border", verbose = FALSE)
+```
+
+```{r}
+#| eval: !expr requireNamespace("spatstat", quietly = TRUE)
+#| fig-cap: "Função L(r) − r para *Beilschmiedia pendula*. A linha preta é o padrão observado; a faixa cinza é o envelope de 39 simulações de padrão aleatório; a linha tracejada é o esperado ao acaso (zero)."
+#| fig-width: 7
+#| fig-height: 5
+plot(env, . - r ~ r, main = "", legend = FALSE,
+     xlab = "Distância r (m)", ylab = "L(r) − r", ylim = c(-3, 24))
+legend("topright", bty = "n", lty = c(1, 2, NA), pch = c(NA, NA, 15),
+       col = c("black", "red", "grey75"), pt.cex = 2,
+       legend = c("Observado", "Esperado ao acaso (CSR)", "Envelope (39 simulações)"))
+```
+
+**Interpretação:** a curva observada fica **muito acima do envelope** em todas as distâncias até 100 m: *Beilschmiedia pendula* é **agregada** em várias escalas, com o desvio máximo em torno de 20 a 30 m.
+
+::: {.callout-tip}
+## Para pensar
+
+A agregação pode ter duas origens bem diferentes:
+
+1.  **processos biológicos**, como dispersão de sementes perto da planta-mãe ou regeneração em clareiras; ou
+2.  **heterogeneidade do ambiente**: a espécie só ocorre onde o habitat é favorável.
+
+Em Barro Colorado, *B. pendula* é mais abundante em certas faixas de **altitude e declividade**. O `spatstat` traz esses mapas (`bei.extra`) e a função `Linhom()`, que avalia a agregação **descontando** a variação da densidade causada pelo ambiente:
+
+``` r
+dens <- density(bei, sigma = 50)                 # intensidade local (árvores/m²)
+env_in <- envelope(bei, Linhom, nsim = 39, rmax = 100,
+                   simulate = expression(rpoispp(dens)), verbose = FALSE)
+plot(env_in, . - r ~ r, legend = FALSE)
+```
+:::
+
 ## Referências
+
+-   CONDIT, R. *Tropical Forest Census Plots*. Berlin: Springer, 1998.
+-   HUBBELL, S. P.; FOSTER, R. B. 1983. Diversity of canopy trees in a neotropical forest and implications for conservation. In: SUTTON, S. L. et al. (eds.) *Tropical Rain Forest: Ecology and Management*. Oxford: Blackwell, p. 25-41.
+-   BADDELEY, A.; RUBAK, E.; TURNER, R. *Spatial Point Patterns: Methodology and Applications with R*. Boca Raton: CRC Press, 2015.
+-   RIPLEY, B. D. 1977. Modelling spatial patterns. *Journal of the Royal Statistical Society B* 39: 172-212.
 
 -   KREBS, C. J. *Ecological Methodology*. 2. ed. Menlo Park: Benjamin/Cummings, 1999.
 -   MORISITA, M. Measuring of the dispersion of individuals and analysis of the distributional patterns. *Memoirs of the Faculty of Science, Kyushu University, Series E (Biology)*, v. 2, p. 215-235, 1959.
