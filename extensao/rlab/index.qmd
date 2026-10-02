@@ -1,0 +1,77 @@
+---
+title: "R Lab"
+subtitle: "Rotinas em R para ecologia, dendrologia e espectroscopia"
+listing:
+  contents: rotinas
+  type: table
+  sort: "order"
+  fields: [title, description, categories]
+  field-display-names:
+    title: "Rotina"
+    description: "O que faz"
+    categories: "Tema"
+  categories: true
+  filter-ui: true
+  sort-ui: false
+page-layout: full
+toc: false
+---
+
+O **R Lab** reúne rotinas em R comentadas e reprodutíveis, usadas nas disciplinas e nas pesquisas do LEDT. Cada rotina tem explicação passo a passo, código para copiar e o script `.R` para baixar.
+
+::: {.callout-tip appearance="simple"}
+**Começando agora?** Veja primeiro a rotina [Primeiros passos no R](rotinas/primeiros-passos.qmd).\
+Todos os scripts também estão no GitHub: [github.com/ledtufam](https://github.com/ledtufam).
+:::
+
+## Programas para baixar
+
+::: grid
+::: {.g-col-12 .g-col-md-4}
+<a href="https://cran.r-project.org/" target="_blank" class="btn btn-outline-success w-100"><i class="bi bi-download"></i> R</a>
+:::
+
+::: {.g-col-12 .g-col-md-4}
+<a href="https://posit.co/download/rstudio-desktop/" target="_blank" class="btn btn-outline-success w-100"><i class="bi bi-download"></i> RStudio Desktop</a>
+:::
+
+::: {.g-col-12 .g-col-md-4}
+<a href="https://cran.r-project.org/bin/windows/Rtools/" target="_blank" class="btn btn-outline-success w-100"><i class="bi bi-download"></i> Rtools (Windows)</a>
+:::
+:::
+
+## Ferramentas publicadas
+
+Scripts do LEDT publicados com DOI, prontos para baixar e citar.
+
+::: {.card .mb-3}
+::: card-body
+#### <i class="bi bi-box-seam"></i> Critério B da Lista Vermelha da IUCN com ConR
+
+Script em R e dados de exemplo para calcular os parâmetros espaciais do Critério B da IUCN com o pacote **ConR**: extensão de ocorrência (EOO, polígono convexo mínimo), área de ocupação (AOO, grade de 2 × 2 km), número de localizações (grade de 10 km), raio de dispersão para delimitar subpopulações, número de subpopulações e grau de fragmentação severa.
+
+Vasconcelos, C.C. (2026). *R script and example data to calculate IUCN Red List Criterion B spatial parameters using ConR* (v1.0.0). Zenodo.
+
+<a href="https://doi.org/10.5281/zenodo.22822017" target="_blank" class="btn btn-success btn-sm"><i class="bi bi-download"></i> Baixar no Zenodo</a> <span class="badge text-bg-light">DOI: 10.5281/zenodo.22822017</span>
+
+<small>Usado em: Cunha et al. (2026), *Plant Ecology and Evolution* 159(2): 444–459. A classificação final de ameaça deve seguir as diretrizes oficiais da IUCN.</small>
+:::
+:::
+
+::: {.card .mb-3}
+::: card-body
+#### <i class="bi bi-window"></i> ISC Reader App
+
+Aplicativo web para importar, visualizar e exportar como uma única matriz os arquivos brutos (reflectância ou absorbância) do espectrômetro portátil NIR-S-G1. Desenvolvido no projeto SPECTRA POP por Caroline C. Vasconcelos, Kaio C. M. Cunha e Flávia M. Durgante.
+
+<a href="https://spectrapop.shinyapps.io/iscreaderapp/" target="_blank" class="btn btn-success btn-sm"><i class="bi bi-box-arrow-up-right"></i> Abrir o app</a> <a href="rotinas/nir-especies.qmd" class="btn btn-outline-success btn-sm">Ver tutorial</a>
+:::
+:::
+
+## Rotinas
+
+::: {.callout-note collapse="true"}
+## Como citar ou contribuir
+
+As rotinas podem ser usadas livremente em aulas e pesquisas, citando o LEDT/UFAM. Encontrou um erro ou quer sugerir uma rotina? Escreva para nós pela página de [Contato](../../contato.qmd).
+:::

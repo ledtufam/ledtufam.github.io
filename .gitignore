@@ -4,3 +4,6 @@
 .Ruserdata
 
 /.quarto/
+
+# saída temporária dos idiomas (render_site.R)
+/_idiomas/

@@ -1,0 +1,15 @@
+---
+title: "Publications"
+toc: false
+execute:
+  echo: false
+  warning: false
+---
+
+LEDT scientific output, organized by year. Names in **bold** are lab members. Badges show online attention (Altmetric) and citations (Dimensions) for each work, when available.
+
+```{r}
+#| output: asis
+source("../publicacoes/publicacoes.R", encoding = "UTF-8")
+publicacoes_html("../publicacoes/publicacoes.bib", lang = "en")
+```

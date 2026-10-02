@@ -1,0 +1,11 @@
+---
+title: "Extensión"
+toc: false
+---
+
+El LEDT lleva el conocimiento sobre los árboles y bosques amazónicos más allá del aula, con materiales abiertos, formación en análisis de datos y actividades con la comunidad. Los materiales a continuación están en portugués.
+
+-   **R Lab** – rutinas en R comentadas y reproducibles para fitosociología, espectroscopía NIR, mapas de ocurrencias y más. [Ir al R Lab](../extensao/rlab/index.html){.btn .btn-outline-success .btn-sm}
+-   **Flora del campus de la UFAM** – relevamiento de los árboles del campus de la UFAM realizado por los estudiantes de Dendrología Tropical, que dará origen a un **e-book** sobre la flora arbórea del campus *(en desarrollo)*.
+-   **Divulgación científica** – noticias, trabajo de campo y laboratorio y publicaciones explicadas de forma sencilla. [Ver publicaciones](../divulgacaocientifica.html){.btn .btn-outline-success .btn-sm}
+-   **Cursos y talleres** – los minicursos de R, identificación de árboles y espectroscopía se anunciarán aquí y en [Instagram](https://www.instagram.com/ledt_ufam/).

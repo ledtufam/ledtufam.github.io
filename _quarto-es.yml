@@ -1,0 +1,79 @@
+# Perfil ESPANHOL: menu e rodapé em espanhol. Páginas traduzidas ficam na pasta es/
+# Este perfil é renderizado automaticamente pelo _idiomas.R
+project:
+  output-dir: _idiomas/es
+  render:
+    - "es/*.qmd"
+
+lang: es-ES
+
+website:
+  description: "Laboratorio de Ecología y Dendrología Tropical (LEDT) – Universidad Federal de Amazonas"
+  navbar:
+    title: false
+    logo: assets/images/logos/logo_simples.png
+    logo-alt: "LEDT – Laboratorio de Ecología y Dendrología Tropical"
+    left:
+      - href: es/index.qmd
+        text: Inicio
+      - href: es/pessoas.qmd
+        text: Personas
+      - text: Docencia
+        menu:
+          - href: ensino/graduacao/disciplinas.html
+            text: "Grado (PT)"
+          - href: ensino/posgraduacao/disciplinas.html
+            text: "Posgrado (PT)"
+      - text: Investigación
+        menu:
+          - href: es/pesquisa.qmd
+            text: "Proyectos y socios"
+          - href: es/publicacoes.qmd
+            text: "Publicaciones"
+      - text: Extensión
+        menu:
+          - href: es/extensao.qmd
+            text: "Proyectos de extensión"
+          - href: extensao/rlab/index.html
+            text: "R Lab (PT)"
+          - href: divulgacaocientifica.html
+            text: "Divulgación científica (PT)"
+      - href: es/selecoes.qmd
+        text: Convocatorias
+      - text: Acerca de
+        menu:
+          - href: es/sobre.qmd
+            text: "El LEDT"
+          - href: es/identidade-visual.qmd
+            text: "Identidad visual"
+      - href: es/contato.qmd
+        text: Contacto
+    right:
+      - icon: translate
+        aria-label: "Idioma"
+        menu:
+          - text: "Português"
+            href: https://ledtufam.github.io/
+          - text: "English"
+            href: https://ledtufam.github.io/en/
+          - text: "Español"
+            href: https://ledtufam.github.io/es/
+      - icon: github
+        href: https://github.com/ledtufam
+        aria-label: GitHub
+      - icon: instagram
+        href: https://www.instagram.com/ledt_ufam/
+        aria-label: Instagram
+      - icon: youtube
+        href: https://www.youtube.com/@ledt_ufam
+        aria-label: YouTube
+
+  page-footer:
+    left: "© 2026 LEDT/UFAM. Todos los derechos reservados."
+    right:
+      - href: https://ccvasconcelos.github.io/
+        text: Desarrollado por Caroline C. Vasconcelos
+
+format:
+  html:
+    toc-title: "En esta página"

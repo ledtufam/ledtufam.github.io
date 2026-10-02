@@ -1,0 +1,30 @@
+---
+title: "Join us"
+---
+
+## Open positions
+
+::: {.callout-note}
+## No open calls at the moment
+
+New opportunities will be announced on this page and on [Instagram \@ledt_ufam](https://www.instagram.com/ledt_ufam/).
+:::
+
+## How to join LEDT
+
+LEDT welcomes students at different stages of training:
+
+| Level | How it works |
+|---------------------------|---------------------------------------------|
+| **Undergraduate research** | UFAM undergraduate students, with or without a scholarship (PIBIC/PAIC). Calls are annual. |
+| **Undergraduate thesis (TCC)** | Forest Engineering students interested in dendrology, taxonomy, ecology or spectroscopy. |
+| **Master's and PhD** | Through the graduate programs in which LEDT faculty take part, such as [PPGBOT/INPA](https://www.gov.br/inpa/pt-br/posgrad/ppgbot). Admission follows each program's calls. |
+| **Internships and visits** | Students and researchers from other institutions, by prior arrangement. |
+
+: {.striped}
+
+### Before getting in touch
+
+1.  Learn about our work on the [Research](pesquisa.qmd) and [Publications](publicacoes.qmd) pages.
+2.  Send us a message through the [Contact](contato.qmd) page describing your interests and stage of training, with a link to your CV (Lattes, ORCID or similar).
+3.  For graduate studies, contact us **before** the program's call so we can discuss your project proposal.

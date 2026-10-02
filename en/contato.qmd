@@ -1,0 +1,94 @@
+---
+title: "Contact"
+---
+
+::: {style="text-align:center"}
+### Message
+:::
+
+If you have questions, suggestions or are interested in collaborating with LEDT, please send us a message using the form below.
+
+<form action="https://formspree.io/f/mjgnnyeq" method="POST">
+
+::: mb-3
+<label class="form-label">Name</label> <input
+type="text"
+name="name"
+class="form-control"
+required>
+:::
+
+::: mb-3
+<label class="form-label">Email</label> <input
+type="email"
+name="email"
+class="form-control"
+required>
+:::
+
+::: mb-3
+<label class="form-label">Institution</label> <input
+type="text"
+name="institution"
+class="form-control">
+:::
+
+::: mb-3
+<label class="form-label">Subject</label> <input
+type="text"
+name="subject"
+class="form-control"
+required>
+:::
+
+::: mb-3
+<label class="form-label">Message</label>
+
+```{=html}
+<textarea
+name="message"
+rows="6"
+class="form-control"
+required></textarea>
+```
+:::
+
+<button class="btn btn-primary" type="submit">
+
+Send
+
+</button>
+
+</form>
+
+::: {style="text-align:center"}
+### Location
+:::
+
+<ul class="contact-list">
+
+<li><img src="../assets/images/icons/institution.svg"/> Federal University of Amazonas, Faculty of Agricultural Sciences, Department of Forest Sciences</li>
+
+<li><img src="../assets/images/icons/map.svg"/> Av. Rodrigo Otávio, 6200 (Setor Sul), FCA01, 1st floor - 69080-900 - Manaus, AM, Brazil</li>
+
+<li><img src="../assets/images/icons/email.svg"/> <a href="mailto:ledtufam\@gmail.com" target="_blank">ledtufam\@gmail.com</a></li>
+
+</ul>
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.height=3.5}
+library(leaflet)
+
+leaflet() %>%
+  addTiles() %>% 
+  setView(lng =  -59.97556672805025, lat = -3.1002004936793623, zoom = 17)
+```
+
+::: {style="text-align:center"}
+### Social media
+:::
+
+::: social-icons
+<a href="https://instagram.com/ledt_ufam/" target="_blank" aria-label="Instagram"> <img src="../assets/images/icons/instagram.svg" alt="Instagram"/> </a>
+
+<a href="https://www.youtube.com/@ledt_ufam" target="_blank" aria-label="YouTube"> <img src="../assets/images/icons/youtube.svg" alt="YouTube"/> </a>
+:::

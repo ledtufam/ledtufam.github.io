@@ -1,6 +1,22 @@
 ---
-title: "Disciplinas (UFAM e INPA)"
-listing: grid
+title: "Disciplinas de Pós-graduação (UFAM e INPA)"
+toc: false
 ---
 
-Em construção... 🚧
+Docentes do LEDT colaboram com o **Programa de Pós-Graduação em Ciências Biológicas (Botânica) – PPGBOT/INPA**.
+
+::: {.callout-note}
+## Em breve
+
+As páginas das disciplinas de pós-graduação estão sendo preparadas. Para informações sobre o programa, acesse o site do [PPGBOT/INPA](https://www.gov.br/inpa/pt-br/posgrad/ppgbot).
+:::
+
+<!--
+Modelo de página para cada disciplina de pós (crie um arquivo .qmd nesta pasta, 
+ex.: espectroscopia.qmd, e copie a estrutura de ensino/graduacao/dendrologiatropical.qmd).
+Depois troque o conteúdo desta página por uma listagem:
+
+listing:
+  contents: ["*.qmd", "!disciplinas.qmd"]
+  type: grid
+-->

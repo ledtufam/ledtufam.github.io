@@ -1,5 +1,16 @@
 ---
 title: "Divulgação Científica"
+listing:
+  contents: divulgacao/posts
+  sort: "date desc"
+  type: default
+  categories: true
+  sort-ui: true
+  filter-ui: true
+  date-format: "DD/MM/YYYY"
+  fields: [image, date, title, description, categories]
+page-layout: full
+toc: false
 ---
 
-Em construção... 🚧
+Notícias, bastidores de campo e laboratório, publicações explicadas de forma simples e eventos do LEDT. Acompanhe também no [Instagram \@ledt_ufam](https://www.instagram.com/ledt_ufam/) e no [YouTube](https://www.youtube.com/@ledt_ufam).

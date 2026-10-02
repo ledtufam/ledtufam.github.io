@@ -1,0 +1,7 @@
+# Opções aplicadas a todas as rotinas do R Lab
+execute:
+  freeze: false     # sempre executa o código ao renderizar (evita resultados antigos em cache)
+  warning: false
+  message: false
+code-fold: false
+author: "LEDT/UFAM"

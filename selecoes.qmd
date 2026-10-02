@@ -2,4 +2,42 @@
 title: "Seleções"
 ---
 
-Em construção... 🚧
+## Vagas abertas
+
+::: {.callout-note}
+## Nenhuma seleção aberta no momento
+
+Novas oportunidades serão divulgadas nesta página e no [Instagram \@ledt_ufam](https://www.instagram.com/ledt_ufam/).
+:::
+
+<!--
+MODELO DE VAGA (copie, retire os comentários e preencha):
+
+::: {.callout-tip}
+## Bolsa de Iniciação Científica – Projeto XXXXX
+**Vagas:** 1 · **Bolsa:** PIBIC/CNPq · **Inscrições até:** dd/mm/aaaa
+
+**Requisitos:** aluno(a) de graduação em Engenharia Florestal ou Biologia...
+
+**Como se inscrever:** envie CV Lattes e histórico pelo [formulário de contato](contato.qmd) com o assunto "Seleção IC".
+:::
+-->
+
+## Como fazer parte do LEDT
+
+O LEDT recebe estudantes em diferentes níveis de formação:
+
+| Nível | Como funciona |
+|---------------------------|---------------------------------------------|
+| **Iniciação científica (IC)** | Alunos de graduação da UFAM, com ou sem bolsa (PIBIC/PAIC). Os editais são anuais. |
+| **Trabalho de conclusão de curso (TCC)** | Alunos de Engenharia Florestal interessados em dendrologia, taxonomia, ecologia ou espectroscopia. |
+| **Mestrado e doutorado** | Por meio dos programas de pós-graduação em que os docentes do LEDT atuam, como o [PPGBOT/INPA](https://www.gov.br/inpa/pt-br/posgrad/ppgbot). O ingresso segue os editais de cada programa. |
+| **Estágios e visitas** | Estudantes e pesquisadores de outras instituições, mediante contato prévio. |
+
+: {.striped}
+
+### Antes de entrar em contato
+
+1.  Conheça nossas linhas em [Pesquisa](pesquisa.qmd) e as [Publicações](publicacoes.qmd) do grupo.
+2.  Envie uma mensagem pela página de [Contato](contato.qmd) contando seu interesse, seu nível de formação e anexando o link do seu **Currículo Lattes**.
+3.  Para a pós-graduação, entre em contato **antes** do edital do programa, para conversarmos sobre a proposta de projeto.

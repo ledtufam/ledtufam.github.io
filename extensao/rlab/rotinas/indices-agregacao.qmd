@@ -1,0 +1,495 @@
+---
+title: "Padrão espacial: índices de agregação e distribuições de probabilidade"
+description: "Índices de MacGuinnes, Fracker e Brischle, Payandeh, não aleatorizado, Hazen e Morisita, e ajuste das distribuições de Poisson e binomial negativa."
+categories: [Fitossociologia, Ecologia]
+order: 3
+---
+
+::: {.callout-note appearance="simple"}
+**Nível:** iniciante/intermediário · **Pacotes:** apenas R básico · **Disciplina:** [FGD320 - Fitossociologia](/ensino/graduacao/fitossociologia.qmd) · [Baixar script](../scripts/indices-agregacao.R){download="indices-agregacao.R"} · [Baixar dados caixeta](../dados/caixeta.csv){download="caixeta.csv"}
+:::
+
+Os indivíduos de uma espécie podem estar distribuídos no espaço de forma **aleatória**, **regular (uniforme)** ou **agregada**. Com dados de inventário em parcelas de área fixa, esse padrão pode ser estimado por **índices de agregação**, que comparam o número de árvores por parcela com o esperado se a distribuição fosse aleatória.
+
+O que todos os índices precisam é de uma tabela com **quantas árvores de cada espécie há em cada parcela**.
+
+::: {.callout-tip appearance="simple"}
+## Roteiro da aula prática
+
+1.  Preparar o RStudio e importar os dados **caixeta** (seção 0 e 1);
+2.  Calcular **à mão, no R**, os índices para uma espécie, passo a passo (seção 2);
+3.  Repetir para outra espécie, sozinho(a) (**Sua vez!**);
+4.  Automatizar o cálculo para todas as espécies e interpretar (seções 3 a 5);
+5.  Responder aos **exercícios** (seção 6).
+:::
+
+## 0. Antes de começar
+
+1.  Abra o RStudio e crie um projeto: **File → New Project → New Directory → New Project**, com o nome `pratica_agregacao`.
+2.  Dentro da pasta do projeto, crie uma pasta `dados/` e salve nela o arquivo [caixeta.csv](../dados/caixeta.csv){download="caixeta.csv"}.
+3.  Tenha à mão as [tabelas de qui-quadrado e F](/assets/pdf/Tabelas_F_e_Qui-quadrado.pdf){target="_blank"} usadas em aula, para comparar com os valores calculados no R.
+4.  Crie um script novo (**File → New File → R Script**), salve como `agregacao.R` e vá copiando os blocos de código desta página. Use o botão de copiar no canto de cada bloco.
+
+::: {.callout-note appearance="simple"}
+Nesta prática usamos **apenas o R básico**: não é preciso instalar pacotes.
+:::
+
+## 1. Dados: os caixetais do Vale do Ribeira
+
+Usamos o conjunto de dados **caixeta**, do curso [Ecologia de Comunidades no R (ecoR/USP)](https://ecor.ib.usp.br/doku.php?id=dados:dados-caixeta). Os dados vêm da dissertação de mestrado de Andrea Vanin (1999) sobre os **caixetais**, florestas paludosas de restinga dominadas pela caixeta (*Tabebuia cassinoides*), em três locais do Vale do Ribeira (SP): `chauas`, `jureia` e `retiro`. Em cada local foram instaladas 5 parcelas de 10 × 20 m.
+
+| Coluna | Descrição |
+|-----------|---------------------------------------------------------|
+| `local` | caixetal (3 locais) |
+| `parcela` | número da parcela (repete-se entre os locais) |
+| `arvore` | número da árvore na parcela |
+| `fuste` | número do fuste (uma árvore pode ter vários) |
+| `cap` | circunferência à altura do peito (1,3 m) |
+| `h` | altura do fuste mais alto |
+| `especie` | nome da espécie |
+
+```{r}
+cx <- read.csv("../dados/caixeta.csv")   # no seu projeto: read.csv("dados/caixeta.csv")
+str(cx)
+head(cx)
+```
+
+Algumas perguntas para explorar os dados antes de calcular qualquer índice:
+
+```{r}
+table(cx$local)                       # quantos fustes em cada caixetal?
+length(unique(cx$especie))            # quantos nomes de espécies?
+sort(table(cx$especie), decreasing = TRUE)[1:5]   # as 5 espécies com mais fustes
+```
+
+### Um fuste não é uma árvore
+
+Cada linha da planilha é um **fuste**. Para os índices, precisamos contar **árvores**, então ficamos com uma linha por árvore. Como os números das parcelas e das árvores se repetem entre os locais, criamos também um código único de parcela:
+
+```{r}
+# corrige uma grafia duplicada (veja a rotina de nomes científicos!)
+cx$especie[cx$especie == "Callophyllum brasiliensis"] <- "Calophyllum brasiliensis"
+
+arv <- unique(cx[, c("local", "parcela", "arvore", "especie")])
+arv$parc <- paste(arv$local, arv$parcela, sep = "_")
+
+c(fustes = nrow(cx), arvores = nrow(arv), parcelas = length(unique(arv$parc)))
+```
+
+### Tabela espécie × parcela
+
+O que todos os índices precisam é de uma tabela com **quantas árvores de cada espécie há em cada parcela**:
+
+```{r}
+tab <- unclass(table(arv$especie, arv$parc))
+UT  <- ncol(tab)                       # 15 parcelas
+tab <- tab[order(rowSums(tab), decreasing = TRUE), ]
+tab[1:6, ]
+```
+
+Repare em nomes como `Mela 1` (morfoespécie), `Psidium sp` (identificada só até gênero) e `jussara` (nome popular da palmeira *Euterpe edulis*). Numa análise real, esses nomes devem ser padronizados antes, como mostramos na rotina de [padronização de nomes científicos](nomes-cientificos.qmd).
+
+::: {.callout-warning appearance="simple"}
+**Parcelas vazias também contam!** Se uma parcela não tiver nenhum indivíduo de nenhuma espécie, ela não aparece na tabela. Nesse caso, informe `UT` manualmente com o número real de parcelas e acrescente colunas de zeros.
+:::
+
+## 2. Passo a passo com uma espécie
+
+Antes de automatizar, vamos calcular cada índice "à mão" para ***Myrcia sulfiflora***. Assim fica claro de onde vem cada número.
+
+### Os dados da espécie
+
+```{r}
+n_ij <- tab["Myrcia sulfiflora", ]   # nº de árvores da espécie em cada parcela
+n_ij
+```
+
+### Quantidades básicas
+
+| Símbolo | O que é | No R |
+|---------|-------------------------------------------------|----------------------|
+| $U_T$ | número total de parcelas | `UT` |
+| $n_i$ | número total de árvores da espécie | `sum(n_ij)` |
+| $U_i$ | número de parcelas em que a espécie ocorre | `sum(n_ij > 0)` |
+| $M_i$ | média de árvores por parcela | `mean(n_ij)` |
+| $S_i^2$ | variância do nº de árvores por parcela | `var(n_ij)` |
+
+```{r}
+n_i <- sum(n_ij)
+U_i <- sum(n_ij > 0)
+M_i <- mean(n_ij)
+S2  <- var(n_ij)          # o R já usa (UT - 1) no denominador
+c(UT = UT, n_i = n_i, U_i = U_i, M_i = M_i, S2 = S2)
+```
+
+### Índice de MacGuinnes ($IGA_i$)
+
+Compara a densidade **observada** com a **esperada** se a distribuição fosse aleatória:
+
+$$D_i = \frac{n_i}{U_T} \qquad d_i = -\ln\left(1 - \frac{U_i}{U_T}\right) \qquad IGA_i = \frac{D_i}{d_i}$$
+
+```{r}
+D_i <- n_i / UT
+d_i <- -log(1 - U_i / UT)      # log() no R é o logaritmo natural (ln)
+IGA <- D_i / d_i
+c(D_i = D_i, d_i = d_i, IGA = IGA)
+```
+
+**Interpretação:** $IGA_i$ \< 1 uniforme; = 1 aleatório; entre 1 e 2 tendência ao agrupamento; \> 2 agregado.
+
+### Índice de Fracker e Brischle ($K_i$)
+
+$$K_i = \frac{D_i - d_i}{d_i^2}$$
+
+```{r}
+K <- (D_i - d_i) / d_i^2
+K
+```
+
+**Interpretação:** $K_i$ ≤ 0,15 aleatório; entre 0,15 e 1 tendência ao agrupamento; \> 1 agregado.
+
+### Índice de Payandeh ($P_i$)
+
+Relação entre a variância e a média do número de árvores por parcela:
+
+$$P_i = \frac{S_i^2}{M_i}$$
+
+```{r}
+P <- S2 / M_i
+P
+```
+
+**Interpretação:** $P_i$ ≤ 1 aleatório; entre 1 e 1,5 tendência ao agrupamento; \> 1,5 agregado.
+
+### Índice não aleatorizado ($R_i$) e índice de Hazen ($IH_i$)
+
+O índice não aleatorizado é igual ao de Payandeh ($R_i = S_i^2 / M_i$), mas a decisão é feita por um **teste de qui-quadrado**. A estatística do teste é o próprio índice de Hazen:
+
+$$\chi^2_i = IH_i = \frac{S_i^2}{M_i}(U_T - 1)$$
+
+```{r}
+IH <- P * (UT - 1)
+IH
+```
+
+Em vez de procurar o valor na tabela impressa, usamos a função `qchisq()`, com $U_T - 1$ graus de liberdade:
+
+```{r}
+gl <- UT - 1
+c(chi2_75 = qchisq(0.75, gl), chi2_95 = qchisq(0.95, gl), chi2_99 = qchisq(0.99, gl))
+```
+
+::: {.callout-note collapse="true"}
+## Conferindo na tabela impressa
+
+As tabelas de qui-quadrado e F usadas em aula estão [neste PDF](/assets/pdf/Tabelas_F_e_Qui-quadrado.pdf){target="_blank"} (Santana & Ranal, *Análise da germinação: um enfoque estatístico*; reproduzidas de Rohlf & Sokal 1995). Na tabela de qui-quadrado, procure a linha $\nu = U_T - 1 = 14$ e a coluna do nível de significância $\alpha$ (lembre que 95% de probabilidade corresponde a $\alpha = 0{,}05$):
+
+| Valor crítico | Coluna da tabela | Tabela impressa | R |
+|-----------------------|------------------|-----------------|----------------------------------|
+| $\chi^2$ a 95% | $\alpha = 0{,}05$ | 23,685 | `qchisq(0.95, 14)` = 23,685 |
+| $\chi^2$ a 99% | $\alpha = 0{,}01$ | 29,141 | `qchisq(0.99, 14)` = 29,141 |
+| $\chi^2$ a 75% | $\alpha = 0{,}25$ | não consta | `qchisq(0.75, 14)` = 17,117 |
+| $F$ a 95% (14 e ∞ gl) | $\nu_1 = 14$, $\nu_2 = 240$ (última linha) | ≈ 1,73 | `qf(0.95, 14, Inf)` = 1,692 |
+
+Repare que a tabela não traz a coluna de 75% (usada no índice de Hazen) nem a linha de infinitos graus de liberdade (usada no teste de Morisita). Nesses casos, o R resolve: `qchisq()` e `qf()` dão o valor exato para quaisquer graus de liberdade.
+:::
+
+**Interpretação:**
+
+-   **Não aleatorizado:** se $\chi^2_i$ \> $\chi^2_{95\%}$, o desvio da aleatoriedade é significativo e a espécie é **agregada**; caso contrário, **aleatória**.
+-   **Hazen:** se $IH_i$ \< $\chi^2_{75\%}$, **não agrupada**; se $IH_i$ \> $\chi^2_{99\%}$, **agrupada**; entre os dois, **tendência ao agrupamento**.
+
+```{r}
+IH > qchisq(0.95, gl)      # não aleatorizado: agregada?
+IH > qchisq(0.99, gl)      # Hazen: agrupada?
+```
+
+### Índice de Morisita ($IM_i$) e teste F
+
+$$IM_i = U_T \frac{\sum_j n_{ij}(n_{ij}-1)}{n_i(n_i-1)} \qquad F_i = \frac{IM_i(n_i-1) + U_T - n_i}{U_T - 1}$$
+
+```{r}
+IM  <- UT * sum(n_ij * (n_ij - 1)) / (n_i * (n_i - 1))
+F_i <- (IM * (n_i - 1) + UT - n_i) / (UT - 1)
+F_tab <- qf(0.95, df1 = UT - 1, df2 = Inf)     # F tabelado: UT-1 e infinito gl
+c(IM = IM, F = F_i, F_tabelado = F_tab)
+```
+
+**Interpretação:** $IM_i$ = 1 aleatório; \< 1 uniforme; \> 1 agregado. O desvio é significativo se $F_i$ \> $F$ tabelado.
+
+### Juntando tudo
+
+```{r}
+data.frame(
+  indice = c("MacGuinnes", "Fracker e Brischle", "Payandeh", "Não aleatorizado (χ²)", "Hazen", "Morisita"),
+  valor  = round(c(IGA, K, P, IH, IH, IM), 2)
+)
+```
+
+***Myrcia sulfiflora*** é **agregada** segundo todos os índices. Faz sentido? Volte à tabela da seção 1: em quantos caixetais ela aparece?
+
+### Sua vez!
+
+::: {.callout-important appearance="simple"}
+## Exercício
+
+Repita todos os cálculos acima para ***Calophyllum brasiliensis***. Basta trocar o nome da espécie na primeira linha (`n_ij <- tab["Calophyllum brasiliensis", ]`) e rodar os blocos de novo. Classifique o padrão segundo cada índice antes de abrir a resposta.
+:::
+
+::: {.callout-tip collapse="true"}
+## Resposta
+
+```{r}
+n_ij <- tab["Calophyllum brasiliensis", ]
+n_i <- sum(n_ij); U_i <- sum(n_ij > 0); M_i <- mean(n_ij); S2 <- var(n_ij)
+D_i <- n_i / UT; d_i <- -log(1 - U_i / UT)
+IGA <- D_i / d_i
+K   <- (D_i - d_i) / d_i^2
+P   <- S2 / M_i
+IH  <- P * (UT - 1)
+IM  <- UT * sum(n_ij * (n_ij - 1)) / (n_i * (n_i - 1))
+F_i <- (IM * (n_i - 1) + UT - n_i) / (UT - 1)
+round(c(n_i = n_i, U_i = U_i, IGA = IGA, K = K, P = P, IH = IH, IM = IM, F = F_i), 2)
+```
+
+Compare com os valores críticos: $\chi^2_{75\%}$ = `r round(qchisq(0.75, UT - 1), 2)`, $\chi^2_{95\%}$ = `r round(qchisq(0.95, UT - 1), 2)`, $\chi^2_{99\%}$ = `r round(qchisq(0.99, UT - 1), 2)` e $F$ = `r round(qf(0.95, UT - 1, Inf), 2)`. Aqui os índices **não concordam totalmente**: MacGuinnes, Fracker e Brischle, Payandeh e Hazen indicam **tendência ao agrupamento**, enquanto o teste do índice não aleatorizado e o de Morisita **não detectam** desvio significativo da aleatoriedade.
+:::
+
+## 3. Resumo das fórmulas
+
+Para cada espécie *i*, com $n_{ij}$ = número de árvores na parcela *j*, $n_i$ = total de árvores, $U_i$ = parcelas em que ocorre e $U_T$ = total de parcelas:
+
+| Índice | Fórmula | Interpretação |
+|---------------|-----------------------|-----------------------------------|
+| MacGuinnes | $IGA_i = D_i / d_i$, com $D_i = n_i/U_T$ e $d_i = -\ln(1 - U_i/U_T)$ | \< 1 uniforme; = 1 aleatório; 1–2 tendência ao agrupamento; \> 2 agregado |
+| Fracker e Brischle | $K_i = (D_i - d_i) / d_i^2$ | ≤ 0,15 aleatório; 0,15–1 tendência; \> 1 agregado |
+| Payandeh | $P_i = S_i^2 / M_i$ | ≤ 1 aleatório; 1–1,5 tendência; \> 1,5 agregado |
+| Não aleatorizado | $R_i = S_i^2 / M_i$, testado por $\chi^2_i = R_i (U_T - 1)$ | $\chi^2$ significativo (95%, $U_T-1$ gl): agregado; senão, aleatório |
+| Hazen | $IH_i = \frac{S_i^2}{M_i}(U_T - 1)$ | \< $\chi^2_{0,75}$ não agrupado; \> $\chi^2_{0,99}$ agrupado; entre os dois, tendência |
+| Morisita | $IM_i = U_T \frac{\sum n_{ij}(n_{ij}-1)}{n_i(n_i-1)}$, testado por $F_i = \frac{IM_i(n_i-1) + U_T - n_i}{U_T - 1}$ | = 1 aleatório; \< 1 uniforme; \> 1 agregado (se $F_i$ for significativo) |
+
+em que $M_i$ é a média e $S_i^2$ a variância (com $U_T - 1$ no denominador) do número de árvores por parcela.
+
+::: {.callout-note appearance="simple"}
+No índice de Fracker e Brischle usamos a diferença $D_i - d_i$ **com sinal**, como nas tabelas de Souza e Soares (2014): valores negativos indicam padrão aleatório ou uniforme.
+:::
+
+## 4. Uma função para calcular todas as espécies
+
+Fazer espécie por espécie dá trabalho. A função abaixo reúne **os mesmos cálculos da seção 2** e os aplica a todas as linhas da tabela de uma vez, já classificando o padrão. Copie a função inteira e rode.
+
+```{r}
+indices_agregacao <- function(tab, UT = ncol(tab)) {
+  n_i <- rowSums(tab)                       # total de árvores
+  U_i <- rowSums(tab > 0)                   # parcelas com a espécie
+  M_i <- n_i / UT                           # média por parcela
+  S2  <- apply(tab, 1, function(x) sum((x - mean(x))^2) / (UT - 1))  # variância
+
+  # MacGuinnes e Fracker & Brischle (indefinidos se a espécie ocorre em todas as parcelas)
+  D_i <- n_i / UT
+  d_i <- ifelse(U_i < UT, -log(1 - U_i / UT), NA)
+  IGA <- D_i / d_i
+  K   <- (D_i - d_i) / d_i^2
+
+  # Payandeh / não aleatorizado / Hazen
+  P   <- S2 / M_i
+  qui <- P * (UT - 1)                       # = IH (índice de Hazen)
+
+  # Morisita e teste F
+  IM  <- UT * rowSums(tab * (tab - 1)) / (n_i * (n_i - 1))
+  F_i <- (IM * (n_i - 1) + UT - n_i) / (UT - 1)
+
+  # Valores críticos
+  chi95 <- qchisq(0.95, UT - 1)
+  chi75 <- qchisq(0.75, UT - 1)
+  chi99 <- qchisq(0.99, UT - 1)
+  F95   <- qf(0.95, UT - 1, Inf)
+
+  classe <- function(x, cortes, rotulos) as.character(cut(x, cortes, rotulos, right = TRUE))
+
+  data.frame(
+    n_i, U_i, D_i = round(D_i, 2), d_i = round(d_i, 2),
+    S2 = round(S2, 2), M_i = round(M_i, 2),
+    IGA = round(IGA, 2), K = round(K, 2), P = round(P, 2),
+    IH = round(qui, 2), IM = round(IM, 2), F = round(F_i, 2),
+    IGA_cl = ifelse(is.na(IGA), "-", ifelse(abs(IGA - 1) < 1e-9, "Aleat.",
+             classe(IGA, c(-Inf, 1, 2, Inf), c("Unif.", "T.Agr.", "Agreg.")))),
+    K_cl   = ifelse(is.na(K), "-", classe(K, c(-Inf, 0.15, 1, Inf), c("Aleat.", "T.Agr.", "Agreg."))),
+    P_cl   = classe(P, c(-Inf, 1, 1.5, Inf), c("Aleat.", "T.Agr.", "Agreg.")),
+    R_cl   = ifelse(qui > chi95, "Agreg.", "Aleat."),
+    IH_cl  = ifelse(qui < chi75, "Não agr.", ifelse(qui > chi99, "Agreg.", "T.Agr.")),
+    IM_cl  = ifelse(F_i > F95, "Agreg.", ifelse(IM < 1, "Unif.", "Aleat.")),
+    check.names = FALSE
+  )
+}
+```
+
+## 5. Resultados
+
+Espécies com pouquíssimos indivíduos não permitem avaliar o padrão espacial. Por isso, calculamos os índices só para as espécies com **pelo menos 5 árvores**:
+
+```{r}
+res <- indices_agregacao(tab[rowSums(tab) >= 5, ], UT = UT)
+knitr::kable(res[, 1:12], caption = "Estimativas dos índices por espécie (15 parcelas de 10 × 20 m).")
+```
+
+```{r}
+knitr::kable(res[, c("IGA_cl", "K_cl", "P_cl", "R_cl", "IH_cl", "IM_cl")],
+             col.names = c("MacGuinnes", "Fracker-Brischle", "Payandeh",
+                           "Não aleat.", "Hazen", "Morisita"),
+             caption = "Classificação do padrão espacial (Agreg. = agregado; T.Agr. = tendência ao agrupamento; Aleat. = aleatório; Unif. = uniforme).")
+```
+
+Valores críticos usados nos testes ($U_T - 1$ = `r UT - 1` graus de liberdade): $\chi^2_{0,95}$ = `r round(qchisq(0.95, UT - 1), 3)`, $\chi^2_{0,75}$ = `r round(qchisq(0.75, UT - 1), 3)`, $\chi^2_{0,99}$ = `r round(qchisq(0.99, UT - 1), 3)` e $F_{0,95}$ = `r round(qf(0.95, UT - 1, Inf), 3)`. No R, `qchisq()` e `qf()` substituem a consulta às tabelas impressas.
+
+### A escala importa: a caixeta dentro de cada local
+
+Várias espécies ocorrem em **apenas um dos três locais** (veja a tabela do passo 1). Com as 15 parcelas juntas, parte da "agregação" reflete a diferença **entre caixetais**, e não o arranjo das árvores dentro de cada um. Para a caixeta, que ocorre nos três locais, podemos repetir a análise separadamente:
+
+```{r}
+caixeta_local <- t(sapply(split(arv, arv$local), function(d) {
+  parcelas <- unique(d$parc)                               # 5 parcelas do local
+  n <- sapply(parcelas, function(p) sum(d$parc == p & d$especie == "Tabebuia cassinoides"))
+  r <- indices_agregacao(matrix(n, nrow = 1), UT = length(parcelas))
+  unlist(r[, c("n_i", "M_i", "S2", "P", "IM", "P_cl", "R_cl", "IM_cl")])
+}))
+knitr::kable(caixeta_local, caption = "Índices para *Tabebuia cassinoides* em cada caixetal (5 parcelas por local).")
+```
+
+::: {.callout-tip}
+## Para pensar
+
+-   Os índices nem sempre concordam, principalmente na faixa de "tendência ao agrupamento". O índice de Payandeh tende a classificar mais espécies como agregadas que o de MacGuinnes. Por isso é comum apresentar mais de um índice e discutir as diferenças.
+-   Os índices de MacGuinnes e Fracker e Brischle ficam **indefinidos** quando a espécie ocorre em todas as parcelas ($U_i = U_T$), como na Tabela 1.4 do livro para *Siparuna arianae*.
+-   O índice de Payandeh não tem uma classe "uniforme": espécies regulares aparecem como aleatórias ($P_i \leq 1$).
+-   Compare a caixeta nas 15 parcelas e dentro de cada local. O que muda? O que isso diz sobre o **tamanho e a distribuição das unidades amostrais**?
+:::
+
+## 6. Exercícios
+
+::: {.callout-important appearance="simple"}
+## Para entregar
+
+1.  Quantos **fustes** e quantas **árvores** há nos dados? Por que os índices devem ser calculados com árvores e não com fustes?
+2.  Monte uma tabela com os índices de agregação das espécies com pelo menos 5 árvores e classifique o padrão de cada uma segundo os seis índices.
+3.  Para quais espécies os índices **discordam**? Qual índice você considera mais adequado para esses dados e por quê?
+4.  *Tabebuia cassinoides* ocorre em todas as 15 parcelas. Por que os índices de MacGuinnes e Fracker e Brischle não podem ser calculados para ela?
+5.  Compare o padrão da caixeta considerando as 15 parcelas juntas e cada caixetal separadamente. O que isso revela sobre o **tamanho e a distribuição das unidades amostrais** na avaliação do padrão espacial?
+6.  Proponha uma explicação ecológica (dispersão, regeneração, ambiente) para o padrão encontrado para a caixeta. Use a literatura.
+:::
+
+## 7. Para saber mais: conferindo com o livro
+
+Os índices de MacGuinnes, Fracker e Brischle e Payandeh podem ser calculados só a partir de $n_i$, $U_i$ e $S_i^2$. Vamos conferir com três espécies da Tabela 1.4 de Souza e Soares (2014), inventário da Mata da Silvicultura em Viçosa (MG), com $U_T = 10$ parcelas:
+
+```{r}
+livro <- data.frame(
+  especie = c("Anadenanthera peregrina", "Cecropia hololeuca", "Ocotea pretiosa"),
+  n_i = c(76, 9, 41), U_i = c(8, 6, 9), S2 = c(53.60, 0.77, 10.54)
+)
+UT_livro <- 10
+D <- livro$n_i / UT_livro
+d <- -log(1 - livro$U_i / UT_livro)
+data.frame(livro["especie"],
+           IGA = round(D / d, 2),
+           K   = round((D - d) / d^2, 2),
+           P   = round(livro$S2 / D, 2))
+```
+
+Os valores batem com os do livro: *A. peregrina* (IGA = 4,72; K = 2,31; P = 7,05), *C. hololeuca* (0,98; −0,02; 0,85) e *O. pretiosa* (1,78; 0,34; 2,57). Diferenças na segunda casa decimal vêm do arredondamento de $S_i^2$ na tabela do livro.
+
+## 8. Distribuições de probabilidade
+
+Outra forma de avaliar o padrão é verificar qual distribuição de probabilidade descreve melhor o número de indivíduos por parcela: **Poisson** (padrão aleatório) ou **binomial negativa** (padrão agregado).
+
+Usamos o exemplo de Souza e Soares (2014): uma área de 9 ha dividida em 100 parcelas de 30 × 30 m, com 44 indivíduos da espécie A.
+
+```{r}
+n_ind     <- 0:4                        # nº de indivíduos por parcela
+n_parcelas <- c(73, 18, 3, 4, 2)        # nº de parcelas (Tabela 1.5)
+N  <- sum(n_parcelas)                   # 100 parcelas
+mu <- sum(n_ind * n_parcelas) / N       # média = 0,44 indivíduo/parcela
+mu
+```
+
+### Poisson
+
+$$P(x) = e^{-\mu}\frac{\mu^x}{x!}$$
+
+```{r}
+p_pois <- dpois(n_ind, lambda = mu)
+p_pois <- c(p_pois, 1 - sum(p_pois))    # inclui a classe "> 4"
+esp_pois <- N * p_pois
+data.frame(x = c(n_ind, ">4"), P = round(p_pois, 4), Esperado = round(esp_pois, 2))
+```
+
+### Binomial negativa
+
+A binomial negativa tem dois parâmetros: a média $\mu$ e o expoente $k$, estimado inicialmente por $\hat{k} = \bar{X}^2 / (S^2 - \bar{X})$:
+
+```{r}
+S2 <- (sum(n_ind^2 * n_parcelas) - sum(n_ind * n_parcelas)^2 / N) / N   # como no livro (denominador n)
+k  <- mu^2 / (S2 - mu)
+c(S2 = S2, k = k)
+
+p_bn <- dnbinom(n_ind, size = k, mu = mu)   # mesmo que as fórmulas P(0), P(1)... do livro
+p_bn <- c(p_bn, 1 - sum(p_bn))
+esp_bn <- N * p_bn
+data.frame(x = c(n_ind, ">4"), P = round(p_bn, 4), Esperado = round(esp_bn, 2))
+```
+
+### Teste de aderência (qui-quadrado)
+
+$$\chi^2 = \sum \frac{(FO_i - FE_i)^2}{FE_i}$$
+
+```{r}
+obs <- c(n_parcelas, 0)                 # nenhuma parcela com mais de 4 indivíduos
+
+qui_pois <- sum((obs - esp_pois)^2 / esp_pois)
+qui_bn   <- sum((obs - esp_bn)^2 / esp_bn)
+n_cl     <- length(obs)                 # 6 classes
+
+data.frame(
+  Modelo     = c("Poisson", "Binomial negativa"),
+  qui2_obs   = round(c(qui_pois, qui_bn), 2),
+  gl         = c(n_cl - 2, n_cl - 3),
+  qui2_tab   = round(c(qchisq(0.95, n_cl - 2), qchisq(0.95, n_cl - 3)), 3),
+  Ajuste     = ifelse(c(qui_pois < qchisq(0.95, n_cl - 2),
+                        qui_bn   < qchisq(0.95, n_cl - 3)), "Aceito", "Rejeitado")
+)
+```
+
+A Poisson é rejeitada e a binomial negativa se ajusta aos dados: **a espécie A tem padrão agregado**. Os valores de $\chi^2$ diferem um pouco dos do livro (53,20 e 4,79) porque o R não arredonda as probabilidades intermediárias.
+
+::: {.callout-warning appearance="simple"}
+O qui-quadrado fica instável quando as frequências esperadas são muito pequenas (\< 5). Em trabalhos, é recomendável juntar as últimas classes (por exemplo, "3 ou mais") antes do teste (Krebs 1999).
+:::
+
+```{r}
+#| fig-cap: "Número de parcelas observado e esperado pelos modelos de Poisson e binomial negativa."
+m <- rbind(Observado = obs, Poisson = esp_pois, `Binomial negativa` = esp_bn)
+colnames(m) <- c(n_ind, ">4")
+barplot(m, beside = TRUE, col = c("grey60", "#6cc3d5", "#78c2ad"), border = NA,
+        xlab = "Número de indivíduos por parcela", ylab = "Número de parcelas",
+        legend.text = TRUE, args.legend = list(bty = "n"))
+```
+
+## 9. E se eu tiver as coordenadas das árvores?
+
+Com a posição (x, y) de cada árvore, é possível usar a **função K de Ripley**, que avalia o padrão em diferentes distâncias. O pacote **spatstat** faz isso:
+
+```{r}
+#| eval: false
+library(spatstat)
+pts <- ppp(arv$x, arv$y, window = owin(c(0, 100), c(0, 100)))  # parcela de 100 x 100 m
+L   <- envelope(pts, Lest, nsim = 99)       # L(r): versão estabilizada de K(r)
+plot(L, . - r ~ r, main = "")                # acima do envelope = agregação
+```
+
+## Referências
+
+-   KREBS, C. J. *Ecological Methodology*. 2. ed. Menlo Park: Benjamin/Cummings, 1999.
+-   MORISITA, M. Measuring of the dispersion of individuals and analysis of the distributional patterns. *Memoirs of the Faculty of Science, Kyushu University, Series E (Biology)*, v. 2, p. 215-235, 1959.
+-   VANIN, A. 1999. Dissertação de mestrado sobre os caixetais do Vale do Ribeira (SP). Dados disponibilizados pelo curso Ecologia de Comunidades no R (ecoR/USP): <https://ecor.ib.usp.br/doku.php?id=dados:dados-caixeta>.
+-   PAYANDEH, B. Comparison of methods for assessing spatial distribution of trees. *Forest Science*, v. 16, p. 312-317, 1970.
+-   SOUZA, A. L.; SOARES, C. P. B. *Florestas nativas: estrutura, dinâmica e manejo*. Viçosa: Editora UFV, 2014.

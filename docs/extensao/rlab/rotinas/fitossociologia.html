@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="LEDT/UFAM">
+<meta name="description" content="Densidade, frequência, dominância, IVI, IVC e índices de Shannon, Simpson e Pielou a partir de um inventário em parcelas.">
+
+<title>Parâmetros fitossociológicos e diversidade – LEDT</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../assets/images/logos/favicon.ico" rel="icon">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+<meta property="og:title" content="Parâmetros fitossociológicos e diversidade – LEDT">
+<meta property="og:description" content="Densidade, frequência, dominância, IVI, IVC e índices de Shannon, Simpson e Pielou a partir de um inventário em parcelas.">
+<meta property="og:image" content="https://ledtufam.github.io/extensao/rlab/rotinas/assets/images/logos/logo_horizontal.png">
+<meta property="og:site_name" content="LEDT">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../assets/images/logos/logo_simples.png" alt="LEDT – Laboratório de Ecologia e Dendrologia Tropical" class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Procurar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Alternar de navegação" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html"> 
+<span class="menu-text">Início</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../pessoas.html"> 
+<span class="menu-text">Pessoas</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ensino" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Ensino</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-ensino">    
+        <li>
+    <a class="dropdown-item" href="../../../ensino/graduacao/disciplinas.html">
+ <span class="dropdown-text">Graduação</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../ensino/posgraduacao/disciplinas.html">
+ <span class="dropdown-text">Pós-graduação</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-pesquisa" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Pesquisa</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-pesquisa">    
+        <li>
+    <a class="dropdown-item" href="../../../pesquisa.html">
+ <span class="dropdown-text">Projetos e parcerias</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../publicacoes.html">
+ <span class="dropdown-text">Publicações</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-extensão" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Extensão</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-extensão">    
+        <li>
+    <a class="dropdown-item" href="../../../extensao.html">
+ <span class="dropdown-text">Projetos de extensão</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../extensao/rlab/index.html">
+ <span class="dropdown-text">R Lab</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../divulgacaocientifica.html">
+ <span class="dropdown-text">Divulgação científica</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../selecoes.html"> 
+<span class="menu-text">Seleções</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-sobre" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Sobre</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-sobre">    
+        <li>
+    <a class="dropdown-item" href="../../../sobre.html">
+ <span class="dropdown-text">O LEDT</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../identidade-visual.html">
+ <span class="dropdown-text">Identidade visual</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../contato.html"> 
+<span class="menu-text">Contato</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-bi-translate" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-translate" role="img" aria-label="Idioma">
+</i> 
+ <span class="menu-text"></span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-bi-translate">    
+        <li>
+    <a class="dropdown-item" href="https://ledtufam.github.io/">
+ <span class="dropdown-text">Português</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://ledtufam.github.io/en/">
+ <span class="dropdown-text">English</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://ledtufam.github.io/es/">
+ <span class="dropdown-text">Español</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/ledtufam"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.instagram.com/ledt_ufam/"> <i class="bi bi-instagram" role="img" aria-label="Instagram">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.youtube.com/@ledt_ufam"> <i class="bi bi-youtube" role="img" aria-label="YouTube">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo escuro"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Nesta página</h2>
+   
+  <ul>
+  <li><a href="#dados" id="toc-dados" class="nav-link active" data-scroll-target="#dados">1. Dados</a></li>
+  <li><a href="#definições-da-amostragem" id="toc-definições-da-amostragem" class="nav-link" data-scroll-target="#definições-da-amostragem">2. Definições da amostragem</a></li>
+  <li><a href="#cálculo-dos-parâmetros" id="toc-cálculo-dos-parâmetros" class="nav-link" data-scroll-target="#cálculo-dos-parâmetros">3. Cálculo dos parâmetros</a></li>
+  <li><a href="#gráfico-do-ivi" id="toc-gráfico-do-ivi" class="nav-link" data-scroll-target="#gráfico-do-ivi">4. Gráfico do IVI</a></li>
+  <li><a href="#diversidade" id="toc-diversidade" class="nav-link" data-scroll-target="#diversidade">5. Diversidade</a></li>
+  <li><a href="#exporte-os-resultados" id="toc-exporte-os-resultados" class="nav-link" data-scroll-target="#exporte-os-resultados">6. Exporte os resultados</a></li>
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências">Referências</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Parâmetros fitossociológicos e diversidade</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Fitossociologia</div>
+    <div class="quarto-category">Ecologia</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Densidade, frequência, dominância, IVI, IVC e índices de Shannon, Simpson e Pielou a partir de um inventário em parcelas.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor</div>
+    <div class="quarto-title-meta-contents">
+             <p>LEDT/UFAM </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Nível:</strong> iniciante/intermediário · <strong>Pacotes:</strong> apenas R básico · <strong>Disciplina:</strong> <a href="../../../ensino/graduacao/fitossociologia.html">FGD320 - Fitossociologia</a> · <a href="../scripts/fitossociologia.R" download="fitossociologia.R">Baixar script</a></p>
+</div>
+</div>
+</div>
+<p>Nesta rotina calculamos a <strong>estrutura horizontal</strong> de uma comunidade arbórea a partir de um inventário em parcelas, usando somente funções do R básico, para que cada passo da fórmula fique visível.</p>
+<section id="dados" class="level2">
+<h2 class="anchored" data-anchor-id="dados">1. Dados</h2>
+<p>Usamos um inventário <strong>simulado</strong> com 10 parcelas de 20 × 50 m (0,1 ha cada; 1 ha no total). Para usar seus dados, basta ter uma tabela com uma linha por árvore e as colunas <code>parcela</code>, <code>especie</code> e <code>dap</code> (em cm).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>especies <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Eschweilera coriacea"</span>, <span class="st">"Protium hebetatum"</span>, <span class="st">"Pouteria guianensis"</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>              <span class="st">"Ecclinusa guianensis"</span>, <span class="st">"Licania micrantha"</span>, <span class="st">"Micropholis guyanensis"</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>              <span class="st">"Scleronema micranthum"</span>, <span class="st">"Oenocarpus bataua"</span>, <span class="st">"Goupia glabra"</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>              <span class="st">"Dinizia excelsa"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>prob <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.22</span>, <span class="fl">0.18</span>, <span class="fl">0.12</span>, <span class="fl">0.10</span>, <span class="fl">0.09</span>, <span class="fl">0.08</span>, <span class="fl">0.07</span>, <span class="fl">0.07</span>, <span class="fl">0.05</span>, <span class="fl">0.02</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>n_arv <span class="ot">&lt;-</span> <span class="dv">600</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>inv <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">parcela =</span> <span class="fu">sample</span>(<span class="fu">paste0</span>(<span class="st">"P"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>), n_arv, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">especie =</span> <span class="fu">sample</span>(especies, n_arv, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> prob),</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">dap     =</span> <span class="fu">round</span>(<span class="dv">10</span> <span class="sc">+</span> <span class="fu">rlnorm</span>(n_arv, <span class="at">meanlog =</span> <span class="fl">2.3</span>, <span class="at">sdlog =</span> <span class="fl">0.7</span>), <span class="dv">1</span>)  <span class="co"># DAP &gt;= 10 cm</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(inv)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  parcela              especie  dap
+1      P9 Eschweilera coriacea 28.3
+2      P1  Pouteria guianensis 15.5
+3      P6    Oenocarpus bataua 14.4
+4      P4 Eschweilera coriacea 25.6
+5      P5 Eschweilera coriacea 16.5
+6     P10        Goupia glabra 47.5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Para seus dados, use por exemplo:</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># inv &lt;- read.csv2("dados/inventario.csv")</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="definições-da-amostragem" class="level2">
+<h2 class="anchored" data-anchor-id="definições-da-amostragem">2. Definições da amostragem</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>area_parcela <span class="ot">&lt;-</span> <span class="fl">0.1</span>                          <span class="co"># ha</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>n_parcelas   <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">unique</span>(inv<span class="sc">$</span>parcela))</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>area_total   <span class="ot">&lt;-</span> area_parcela <span class="sc">*</span> n_parcelas    <span class="co"># ha</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="cálculo-dos-parâmetros" class="level2">
+<h2 class="anchored" data-anchor-id="cálculo-dos-parâmetros">3. Cálculo dos parâmetros</h2>
+<p>As fórmulas usadas (Mueller-Dombois &amp; Ellenberg 1974; Felfili et al.&nbsp;2011):</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parâmetro</th>
+<th>Fórmula</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Densidade absoluta</td>
+<td><span class="math inline">\(DA_i = n_i / A\)</span></td>
+</tr>
+<tr class="even">
+<td>Densidade relativa</td>
+<td><span class="math inline">\(DR_i = 100 \cdot n_i / N\)</span></td>
+</tr>
+<tr class="odd">
+<td>Frequência absoluta</td>
+<td><span class="math inline">\(FA_i = 100 \cdot p_i / P\)</span></td>
+</tr>
+<tr class="even">
+<td>Frequência relativa</td>
+<td><span class="math inline">\(FR_i = 100 \cdot FA_i / \sum FA\)</span></td>
+</tr>
+<tr class="odd">
+<td>Área basal</td>
+<td><span class="math inline">\(g = \pi \cdot DAP^2 / 40000\)</span></td>
+</tr>
+<tr class="even">
+<td>Dominância absoluta</td>
+<td><span class="math inline">\(DoA_i = G_i / A\)</span></td>
+</tr>
+<tr class="odd">
+<td>Dominância relativa</td>
+<td><span class="math inline">\(DoR_i = 100 \cdot G_i / \sum G\)</span></td>
+</tr>
+<tr class="even">
+<td>Índice de valor de importância</td>
+<td><span class="math inline">\(IVI_i = DR_i + FR_i + DoR_i\)</span></td>
+</tr>
+<tr class="odd">
+<td>Índice de valor de cobertura</td>
+<td><span class="math inline">\(IVC_i = DR_i + DoR_i\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>em que <span class="math inline">\(n_i\)</span> = número de árvores da espécie <em>i</em>, <span class="math inline">\(N\)</span> = total de árvores, <span class="math inline">\(A\)</span> = área amostrada (ha), <span class="math inline">\(p_i\)</span> = parcelas com a espécie <em>i</em>, <span class="math inline">\(P\)</span> = total de parcelas e <span class="math inline">\(G_i\)</span> = área basal da espécie <em>i</em>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>inv<span class="sc">$</span>g <span class="ot">&lt;-</span> pi <span class="sc">*</span> inv<span class="sc">$</span>dap<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> <span class="dv">40000</span>      <span class="co"># área basal de cada árvore (m²)</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>n_i <span class="ot">&lt;-</span> <span class="fu">tapply</span>(inv<span class="sc">$</span>dap, inv<span class="sc">$</span>especie, length)                         <span class="co"># nº de árvores</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>p_i <span class="ot">&lt;-</span> <span class="fu">tapply</span>(inv<span class="sc">$</span>parcela, inv<span class="sc">$</span>especie, <span class="cf">function</span>(x) <span class="fu">length</span>(<span class="fu">unique</span>(x)))  <span class="co"># nº de parcelas</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>G_i <span class="ot">&lt;-</span> <span class="fu">tapply</span>(inv<span class="sc">$</span>g, inv<span class="sc">$</span>especie, sum)                              <span class="co"># área basal</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>fito <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">especie =</span> <span class="fu">names</span>(n_i),</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">N   =</span> <span class="fu">as.integer</span>(n_i),</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">DA  =</span> n_i <span class="sc">/</span> area_total,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">DR  =</span> <span class="dv">100</span> <span class="sc">*</span> n_i <span class="sc">/</span> <span class="fu">sum</span>(n_i),</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">FA  =</span> <span class="dv">100</span> <span class="sc">*</span> p_i <span class="sc">/</span> n_parcelas,</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">DoA =</span> G_i <span class="sc">/</span> area_total,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">DoR =</span> <span class="dv">100</span> <span class="sc">*</span> G_i <span class="sc">/</span> <span class="fu">sum</span>(G_i)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>fito<span class="sc">$</span>FR  <span class="ot">&lt;-</span> <span class="dv">100</span> <span class="sc">*</span> fito<span class="sc">$</span>FA <span class="sc">/</span> <span class="fu">sum</span>(fito<span class="sc">$</span>FA)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>fito<span class="sc">$</span>IVI <span class="ot">&lt;-</span> fito<span class="sc">$</span>DR <span class="sc">+</span> fito<span class="sc">$</span>FR <span class="sc">+</span> fito<span class="sc">$</span>DoR</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>fito<span class="sc">$</span>IVC <span class="ot">&lt;-</span> fito<span class="sc">$</span>DR <span class="sc">+</span> fito<span class="sc">$</span>DoR</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>fito <span class="ot">&lt;-</span> fito[<span class="fu">order</span>(fito<span class="sc">$</span>IVI, <span class="at">decreasing =</span> <span class="cn">TRUE</span>), ]</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(fito) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(fito, <span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 32%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 8%">
+<col style="width: 5%">
+<col style="width: 7%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">especie</th>
+<th style="text-align: right;">N</th>
+<th style="text-align: right;">DA</th>
+<th style="text-align: right;">DR</th>
+<th style="text-align: right;">FA</th>
+<th style="text-align: right;">DoA</th>
+<th style="text-align: right;">DoR</th>
+<th style="text-align: right;">FR</th>
+<th style="text-align: right;">IVI</th>
+<th style="text-align: right;">IVC</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Protium hebetatum</td>
+<td style="text-align: right;">119</td>
+<td style="text-align: right;">119</td>
+<td style="text-align: right;">19.83</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">6.37</td>
+<td style="text-align: right;">21.66</td>
+<td style="text-align: right;">10.42</td>
+<td style="text-align: right;">51.91</td>
+<td style="text-align: right;">41.49</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Eschweilera coriacea</td>
+<td style="text-align: right;">124</td>
+<td style="text-align: right;">124</td>
+<td style="text-align: right;">20.67</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">4.93</td>
+<td style="text-align: right;">16.76</td>
+<td style="text-align: right;">10.42</td>
+<td style="text-align: right;">47.85</td>
+<td style="text-align: right;">37.43</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ecclinusa guianensis</td>
+<td style="text-align: right;">72</td>
+<td style="text-align: right;">72</td>
+<td style="text-align: right;">12.00</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">4.16</td>
+<td style="text-align: right;">14.15</td>
+<td style="text-align: right;">10.42</td>
+<td style="text-align: right;">36.57</td>
+<td style="text-align: right;">26.15</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pouteria guianensis</td>
+<td style="text-align: right;">67</td>
+<td style="text-align: right;">67</td>
+<td style="text-align: right;">11.17</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">3.78</td>
+<td style="text-align: right;">12.87</td>
+<td style="text-align: right;">10.42</td>
+<td style="text-align: right;">34.45</td>
+<td style="text-align: right;">24.03</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Licania micrantha</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">9.33</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">2.01</td>
+<td style="text-align: right;">6.84</td>
+<td style="text-align: right;">10.42</td>
+<td style="text-align: right;">26.59</td>
+<td style="text-align: right;">16.18</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Oenocarpus bataua</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">6.67</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">2.52</td>
+<td style="text-align: right;">8.58</td>
+<td style="text-align: right;">10.42</td>
+<td style="text-align: right;">25.67</td>
+<td style="text-align: right;">15.25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Micropholis guyanensis</td>
+<td style="text-align: right;">52</td>
+<td style="text-align: right;">52</td>
+<td style="text-align: right;">8.67</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">1.78</td>
+<td style="text-align: right;">6.06</td>
+<td style="text-align: right;">10.42</td>
+<td style="text-align: right;">25.15</td>
+<td style="text-align: right;">14.73</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Scleronema micranthum</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">5.17</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">1.94</td>
+<td style="text-align: right;">6.60</td>
+<td style="text-align: right;">9.38</td>
+<td style="text-align: right;">21.14</td>
+<td style="text-align: right;">11.77</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Goupia glabra</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">3.83</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">1.12</td>
+<td style="text-align: right;">3.82</td>
+<td style="text-align: right;">9.38</td>
+<td style="text-align: right;">17.03</td>
+<td style="text-align: right;">7.66</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dinizia excelsa</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">2.67</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: right;">0.78</td>
+<td style="text-align: right;">2.65</td>
+<td style="text-align: right;">8.33</td>
+<td style="text-align: right;">13.65</td>
+<td style="text-align: right;">5.32</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="gráfico-do-ivi" class="level2">
+<h2 class="anchored" data-anchor-id="gráfico-do-ivi">4. Gráfico do IVI</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>comp <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">as.matrix</span>(fito[, <span class="fu">c</span>(<span class="st">"DR"</span>, <span class="st">"FR"</span>, <span class="st">"DoR"</span>)]))</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(comp) <span class="ot">&lt;-</span> fito<span class="sc">$</span>especie</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">12</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(comp[, <span class="fu">ncol</span>(comp)<span class="sc">:</span><span class="dv">1</span>], <span class="at">horiz =</span> <span class="cn">TRUE</span>, <span class="at">las =</span> <span class="dv">1</span>, <span class="at">font.axis =</span> <span class="dv">3</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"#78c2ad"</span>, <span class="st">"#f3969a"</span>, <span class="st">"#6cc3d5"</span>), <span class="at">border =</span> <span class="cn">NA</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"IVI"</span>, <span class="at">cex.names =</span> <span class="fl">0.8</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"bottomright"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"DR"</span>, <span class="st">"FR"</span>, <span class="st">"DoR"</span>),</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="fu">c</span>(<span class="st">"#78c2ad"</span>, <span class="st">"#f3969a"</span>, <span class="st">"#6cc3d5"</span>), <span class="at">border =</span> <span class="cn">NA</span>, <span class="at">bty =</span> <span class="st">"n"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="fitossociologia_files/figure-html/unnamed-chunk-4-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Índice de valor de importância (IVI) por espécie, decomposto em densidade, frequência e dominância relativas."><img src="fitossociologia_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672" alt="Índice de valor de importância (IVI) por espécie, decomposto em densidade, frequência e dominância relativas."></a></p>
+<figcaption>Índice de valor de importância (IVI) por espécie, decomposto em densidade, frequência e dominância relativas.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="diversidade" class="level2">
+<h2 class="anchored" data-anchor-id="diversidade">5. Diversidade</h2>
+<ul>
+<li><strong>Shannon:</strong> <span class="math inline">\(H' = -\sum p_i \ln p_i\)</span></li>
+<li><strong>Simpson (Gini-Simpson):</strong> <span class="math inline">\(1 - D = 1 - \sum p_i^2\)</span></li>
+<li><strong>Equabilidade de Pielou:</strong> <span class="math inline">\(J = H' / \ln S\)</span></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> fito<span class="sc">$</span>N <span class="sc">/</span> <span class="fu">sum</span>(fito<span class="sc">$</span>N)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span> <span class="fu">nrow</span>(fito)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>H <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">sum</span>(p <span class="sc">*</span> <span class="fu">log</span>(p))</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>simpson <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">sum</span>(p<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>J <span class="ot">&lt;-</span> H <span class="sc">/</span> <span class="fu">log</span>(S)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">Riqueza =</span> S, <span class="at">Shannon =</span> <span class="fu">round</span>(H, <span class="dv">3</span>),</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">Simpson =</span> <span class="fu">round</span>(simpson, <span class="dv">3</span>), <span class="at">Pielou =</span> <span class="fu">round</span>(J, <span class="dv">3</span>))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Riqueza Shannon Simpson Pielou
+1      10   2.135   0.866  0.927</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Conferindo com pacotes
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>O pacote <strong>vegan</strong> calcula os mesmos índices: <code>vegan::diversity(fito$N, "shannon")</code> e <code>vegan::diversity(fito$N, "simpson")</code>. Para comparar várias parcelas, use uma matriz parcela × espécie: <code>table(inv$parcela, inv$especie)</code>.</p>
+</div>
+</div>
+</section>
+<section id="exporte-os-resultados" class="level2">
+<h2 class="anchored" data-anchor-id="exporte-os-resultados">6. Exporte os resultados</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv2</span>(fito, <span class="st">"resultados/fitossociologia.csv"</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="referências" class="level2">
+<h2 class="anchored" data-anchor-id="referências">Referências</h2>
+<ul>
+<li>FELFILI, J. M. et al.&nbsp;<em>Fitossociologia no Brasil: métodos e estudos de caso</em>. Viçosa: Editora UFV, 2011.</li>
+<li>MAGURRAN, A. E. <em>Medindo a diversidade biológica</em>. Curitiba: Ed. UFPR, 2011.</li>
+<li>MUELLER-DOMBOIS, D.; ELLENBERG, H. <em>Aims and Methods of Vegetation Ecology</em>. New York: Wiley, 1974.</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<!-- Seletor de idioma: leva para a mesma página no outro idioma (ou para a página inicial, se ainda não houver tradução) -->
+<script>
+(function () {
+  var SITE = "https://ledtufam.github.io/";
+  var LANGS = ["en", "es"];
+  var lib = document.querySelector('script[src*="site_libs/"]');
+  if (!lib) return;
+  var root = lib.src.split("site_libs/")[0];             // raiz do site (funciona local e online)
+  var rel = location.href.split("#")[0].split("?")[0].slice(root.length);
+  var first = rel.split("/")[0];
+  var cur = LANGS.indexOf(first) >= 0 ? first : "pt";
+  var base = cur === "pt" ? rel : rel.slice(cur.length + 1);
+  if (base === "") base = "index.html";
+
+  // logo leva para a página inicial do idioma atual
+  if (cur !== "pt") {
+    document.querySelectorAll("a.navbar-brand").forEach(function (b) { b.setAttribute("href", root + cur + "/index.html"); });
+  }
+
+  document.querySelectorAll('a[href^="' + SITE + '"]').forEach(function (a) {
+    if (!a.closest(".navbar")) return;
+    var code = a.getAttribute("href").slice(SITE.length).replace(/\/$/, "") || "pt";
+    if (code !== "pt" && LANGS.indexOf(code) < 0) return;
+    var home = root + (code === "pt" ? "" : code + "/");
+    var alvo = home + base;
+    a.setAttribute("href", alvo);
+    a.setAttribute("hreflang", code);
+    if (code === cur) a.classList.add("active");
+    a.addEventListener("click", function (ev) {
+      if (location.protocol === "file:") { a.setAttribute("href", alvo); return; }
+      ev.preventDefault();
+      fetch(alvo, { method: "HEAD" })
+        .then(function (r) { location.href = r.ok ? alvo : home; })
+        .catch(function () { location.href = home; });
+    });
+  });
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiada");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiada");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/ledtufam\.github\.io");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2026 LEDT/UFAM. Todos os direitos reservados.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="https://ccvasconcelos.github.io/">
+<p>Desenvolvido por Caroline C. Vasconcelos</p>
+</a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"loop":false,"selector":".lightbox","descPosition":"bottom","closeEffect":"zoom","openEffect":"zoom"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+</body></html>

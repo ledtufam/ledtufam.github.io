@@ -1,0 +1,30 @@
+---
+title: "Convocatorias"
+---
+
+## Vacantes abiertas
+
+::: {.callout-note}
+## No hay convocatorias abiertas en este momento
+
+Las nuevas oportunidades se publicarán en esta página y en [Instagram \@ledt_ufam](https://www.instagram.com/ledt_ufam/).
+:::
+
+## Cómo formar parte del LEDT
+
+El LEDT recibe estudiantes en diferentes niveles de formación:
+
+| Nivel | Cómo funciona |
+|---------------------------|---------------------------------------------|
+| **Iniciación científica** | Estudiantes de grado de la UFAM, con o sin beca (PIBIC/PAIC). Las convocatorias son anuales. |
+| **Trabajo de fin de grado (TCC)** | Estudiantes de Ingeniería Forestal interesados en dendrología, taxonomía, ecología o espectroscopía. |
+| **Maestría y doctorado** | A través de los programas de posgrado en los que actúan los docentes del LEDT, como el [PPGBOT/INPA](https://www.gov.br/inpa/pt-br/posgrad/ppgbot). El ingreso sigue las convocatorias de cada programa. |
+| **Pasantías y visitas** | Estudiantes e investigadores de otras instituciones, previo contacto. |
+
+: {.striped}
+
+### Antes de contactarnos
+
+1.  Conozca nuestro trabajo en las páginas de [Investigación](pesquisa.qmd) y [Publicaciones](publicacoes.qmd).
+2.  Envíenos un mensaje desde la página de [Contacto](contato.qmd) contando su interés y nivel de formación, con el enlace a su currículum (Lattes, ORCID u otro).
+3.  Para el posgrado, contáctenos **antes** de la convocatoria del programa para conversar sobre la propuesta de proyecto.

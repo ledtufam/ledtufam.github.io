@@ -1,0 +1,481 @@
+---
+title: "Quiénes somos"
+---
+
+### Coordinación
+
+:::::: columns
+::: {.column width="25%"}
+![](../assets/images/people/carol.png){.img-fluid .rounded-circle width="180"}
+:::
+
+:::: {.column width="75%"}
+#### Caroline C. Vasconcelos (ella)
+
+**Profesora Asistente, Dra. \| Departamento de Ciencias Forestales**\
+Universidad Federal de Amazonas (UFAM)
+
+Líneas de investigación: Taxonomía integrativa y sistemática; Flora arbórea de la Amazonía; Sapotaceae; Digitalización espectral; Herbarios; Ecología forestal
+
+::: person-links
+<a href="mailto:vasconcelos.caroline@ufam.edu.br" title=""> <img src="/assets/images/icons/email.svg" width="22"/> </a>
+
+<a href="http://lattes.cnpq.br/1535461703335857" title=""> ![](/assets/images/icons/lattes.svg){alt="" width="22"} </a>
+
+<a href="https://orcid.org/0000-0002-7850-6672" title=""> <img src="/assets/images/icons/orcid.svg" width="22"/> </a>
+
+<a href="https://www.researchgate.net/profile/Caroline-Vasconcelos" title=""> ![](/assets/images/icons/rg.svg){alt="" width="22"} </a>
+
+<a href="https://scholar.google.com.br/citations?hl=en&user=XuZ_h4wAAAAJ" title=""> <img src="/assets/images/icons/scholar.svg" width="22"/> </a>
+
+<a href="https://github.com/ccvasconcelos" title=""> <img src="/assets/images/icons/github.svg" width="22"/> </a>
+:::
+::::
+::::::
+
+### Investigadores colaboradores
+
+:::::: columns
+::: {.column width="25%"}
+![](../assets/images/people/flavia.png){.img-fluid .rounded-circle width="180"}
+:::
+
+:::: {.column width="75%"}
+#### Flávia Machado Durgante (ella)
+
+**Investigadora, Dra. \| Coordinación de Dinámica Ambiental**\
+Instituto Nacional de Investigaciones de la Amazonía (INPA)
+
+Líneas de investigación: Ecología y manejo forestal
+
+::: person-links
+<a href="mailto:flaviamdflorestal@gmail.com" title=""> <img src="/assets/images/icons/email.svg" width="22"/> </a>
+
+<a href="http://lattes.cnpq.br/9866263113578229" title=""> ![](/assets/images/icons/lattes.svg){alt="" width="22"} </a>
+
+<a href="https://orcid.org/0000-0002-5517-8821" title=""> <img src="/assets/images/icons/orcid.svg" width="22"/> </a>
+
+<a href="https://www.researchgate.net/profile/Flavia-Durgante" title=""> ![](/assets/images/icons/rg.svg){alt="" width="22"} </a>
+
+<a href="https://scholar.google.com.br/citations?hl=en&user=s5nOn6sAAAAJ" title=""> <img src="/assets/images/icons/scholar.svg" width="22"/> </a>
+
+<a href="https://github.com/DurganteFM" title=""> <img src="/assets/images/icons/github.svg" width="22"/> </a>
+:::
+::::
+::::::
+
+:::::: columns
+::: {.column width="25%"}
+![](../assets/images/people/yeda.png){.img-fluid .rounded-circle width="180"}
+:::
+
+:::: {.column width="75%"}
+#### Yêda Maria Boaventura Corrêa Arruda (ella)
+
+**Profesora Asociada, Dra. \| Departamento de Biología, Instituto de Ciencias Biológicas**\
+Universidad Federal de Amazonas (UFAM)
+
+Líneas de investigación: semillas forestales; especies forestales; Amazonía; especies nativas; dormancia; silvicultura urbana; gestión y planificación urbana
+
+::: person-links
+<a href="mailto:yedaarruda@ufam.edu.br" title=""> <img src="/assets/images/icons/email.svg" width="22"/> </a>
+
+<a href="http://lattes.cnpq.br/0546454617072726" title=""> ![](/assets/images/icons/lattes.svg){alt="" width="22"} </a>
+
+<a href="https://orcid.org/0000-0002-9332-552X" title=""> <img src="/assets/images/icons/orcid.svg" width="22"/> </a>
+
+<a href="https://www.researchgate.net/profile/Yeda-Arruda" title=""> ![](/assets/images/icons/rg.svg){alt="" width="22"} </a>
+
+<a href="" title=""> <img src="/assets/images/icons/scholar.svg" width="22"/> </a>
+
+<a href="" title=""> <img src="/assets/images/icons/github.svg" width="22"/> </a>
+:::
+::::
+::::::
+
+
+
+:::::: columns
+::: {.column width="25%"}
+![](../assets/images/people/gaby.png){.img-fluid .rounded-circle width="180"}
+:::
+
+:::: {.column width="75%"}
+#### Gabrielly Guabiraba Ribeiro (ella)
+
+**Doctoranda \| Programa de Posgrado en Botánica**\
+Instituto de Pesquisas Jardim Botânico do Rio de Janeiro (JBRJ)
+
+Líneas de investigación: Taxonomía y biogeografía; *Ormosia* (Leguminosae); Ecología forestal
+
+::: person-links
+<a href="mailto:gabrielly.guabiraba@gmail.com" title=""> <img src="/assets/images/icons/email.svg" width="22"/> </a>
+
+<a href="http://lattes.cnpq.br/4435352680317467" title=""> ![](/assets/images/icons/lattes.svg){alt="" width="22"} </a>
+
+<a href="https://orcid.org/0009-0000-5487-0915" title=""> <img src="/assets/images/icons/orcid.svg" width="22"/> </a>
+
+<a href="" title=""> ![](/assets/images/icons/rg.svg){alt="" width="22"} </a>
+
+<a href="" title=""> <img src="/assets/images/icons/scholar.svg" width="22"/> </a>
+
+<a href="" title=""> <img src="/assets/images/icons/github.svg" width="22"/> </a>
+:::
+::::
+::::::
+
+:::::: columns
+::: {.column width="25%"}
+![](../assets/images/people/samyra.png){.img-fluid .rounded-circle width="180"}
+:::
+
+:::: {.column width="75%"}
+#### Samyra Ramos Chaves (ella)
+
+**Investigadora becaria, Dra. \| Grupo MAUA**\
+Instituto Nacional de Investigaciones de la Amazonía (INPA)
+
+Líneas de investigación: Biología reproductiva; *Parkia* (Leguminosae); Digitalización espectral; Herbarios
+
+::: person-links
+<a href="mailto:samyraramos.1@gmail.com" title=""> <img src="/assets/images/icons/email.svg" width="22"/> </a>
+
+<a href="http://lattes.cnpq.br/1333559162162849" title=""> ![](/assets/images/icons/lattes.svg){alt="" width="22"} </a>
+
+<a href="https://orcid.org/0000-0002-8937-1419" title=""> <img src="/assets/images/icons/orcid.svg" width="22"/> </a>
+
+<a href="https://www.researchgate.net/profile/Samyra-Chaves" title=""> ![](/assets/images/icons/rg.svg){alt="" width="22"} </a>
+
+<a href="" title="https://scholar.google.com/citations?user=wwT5kBkAAAAJ&hl=pt-BR"> <img src="/assets/images/icons/scholar.svg" width="22"/> </a>
+
+<a href="" title=""> <img src="/assets/images/icons/github.svg" width="22"/> </a>
+:::
+::::
+::::::
+
+:::::: columns
+::: {.column width="25%"}
+![](../assets/images/people/kaio.png){.img-fluid .rounded-circle width="180"}
+:::
+
+:::: {.column width="75%"}
+#### Kaio Cesar Marinho da Cunha (él)
+
+**Investigador becario, MSc. \| Grupo MAUA**\
+Instituto Nacional de Investigaciones de la Amazonía (INPA)
+
+Líneas de investigación: Taxonomía integrativa y sistemática; Sapotaceae; Digitalización espectral; Herbarios
+
+::: person-links
+<a href="mailto:kaiocesar2013.kc19@gmail.com" title=""> <img src="/assets/images/icons/email.svg" width="22"/> </a>
+
+<a href="http://lattes.cnpq.br/2664299098538335" title=""> ![](/assets/images/icons/lattes.svg){alt="" width="22"} </a>
+
+<a href="https://orcid.org/0000-0003-2197-9687" title=""> <img src="/assets/images/icons/orcid.svg" width="22"/> </a>
+
+<a href="https://www.researchgate.net/profile/Kaio-Da-Cunha" title=""> ![](/assets/images/icons/rg.svg){alt="" width="22"} </a>
+
+<a href="" title=""> <img src="/assets/images/icons/scholar.svg" width="22"/> </a>
+
+<a href="https://github.com/kaiobio21" title=""> <img src="/assets/images/icons/github.svg" width="22"/> </a>
+:::
+::::
+::::::
+
+### Estudiantes
+
+#### Posgrado
+
+:::::: columns
+::: {.column width="25%"}
+![](../assets/images/people/tulio.png){.img-fluid .rounded-circle width="180"}
+:::
+
+:::: {.column width="75%"}
+##### Túlio Alex Martins da Silva (él)
+
+**Doctorando \| Programa de Posgrado en Botánica**\
+Instituto Nacional de Investigaciones de la Amazonía (INPA)
+
+Líneas de investigación: Taxonomía y sistemática; Biología reproductiva; Euphorbiaceae
+
+::: person-links
+<a href="mailto:bio.tam97@gmail.com" title=""> <img src="/assets/images/icons/email.svg" width="22"/> </a>
+
+<a href="http://lattes.cnpq.br/7937040274378072" title=""> ![](/assets/images/icons/lattes.svg){alt="" width="22"} </a>
+
+<a href="https://orcid.org/0009-0008-2315-1932" title=""> <img src="/assets/images/icons/orcid.svg" width="22"/> </a>
+
+<a href="https://www.researchgate.net/profile/Tulio-Martins-Da-Silva" title=""> ![](/assets/images/icons/rg.svg){alt="" width="22"} </a>
+
+<a href="" title=""> <img src="/assets/images/icons/scholar.svg" width="22"/> </a>
+
+<a href="" title=""> <img src="/assets/images/icons/github.svg" width="22"/> </a>
+:::
+::::
+::::::
+
+:::::: columns
+::: {.column width="25%"}
+![](../assets/images/people/maria.png){.img-fluid .rounded-circle width="180"}
+:::
+
+:::: {.column width="75%"}
+##### Maria Clara A. M. de O. Ramos Ferro (ella)
+
+**Estudiante de maestría \| Programa de Posgrado en Botánica**\
+Instituto Nacional de Investigaciones de la Amazonía (INPA)
+
+Líneas de investigación: Espectroscopía NIR como herramienta para la taxonomía botánica
+
+::: person-links
+<a href="mailto:claraferro29@gmail.com" title=""> <img src="/assets/images/icons/email.svg" width="22"/> </a>
+
+<a href="http://lattes.cnpq.br/8490385946321507" title=""> ![](/assets/images/icons/lattes.svg){alt="" width="22"} </a>
+
+<a href="" title=""> <img src="/assets/images/icons/orcid.svg" width="22"/> </a>
+
+<a href="" title=""> ![](/assets/images/icons/rg.svg){alt="" width="22"} </a>
+
+<a href="" title=""> <img src="/assets/images/icons/scholar.svg" width="22"/> </a>
+
+<a href="https://github.com/claraferro29-dotcom" title=""> <img src="/assets/images/icons/github.svg" width="22"/> </a>
+:::
+::::
+::::::
+
+#### Iniciación científica (voluntarios)
+
+:::::: columns
+::: {.column width="25%"}
+![](../assets/images/people/ana.png){.img-fluid .rounded-circle width="180"}
+:::
+
+:::: {.column width="75%"}
+##### Ana Graciela Oliveira Mayo (ella)
+
+**Estudiante de grado \| Ingeniería Forestal**\
+Universidad Federal de Amazonas (UFAM)
+
+Líneas de investigación: Espectroscopía aplicada a la identificación de árboles comerciales; Herbarios
+
+::: person-links
+<a href="mailto:ana.mayo@ufam.edu.br " title=""> <img src="/assets/images/icons/email.svg" width="22"/> </a>
+
+<a href="https://lattes.cnpq.br/1877297301223493" title=""> ![](/assets/images/icons/lattes.svg){alt="" width="22"} </a>
+
+<a href="" title=""> <img src="/assets/images/icons/orcid.svg" width="22"/> </a>
+
+<a href="" title=""> ![](/assets/images/icons/rg.svg){alt="" width="22"} </a>
+
+<a href="" title=""> <img src="/assets/images/icons/scholar.svg" width="22"/> </a>
+
+<a href="" title=""> <img src="/assets/images/icons/github.svg" width="22"/> </a>
+:::
+::::
+::::::
+
+:::::: columns
+::: {.column width="25%"}
+![](../assets/images/people/aynne.png){.img-fluid .rounded-circle width="180"}
+:::
+
+:::: {.column width="75%"}
+##### Aynê Carolyne Silva Sá (ella)
+
+**Estudiante de grado \| Ingeniería Forestal**\
+Universidad Federal de Amazonas (UFAM)
+
+Líneas de investigación: Ecología y dendrología; sendero didáctico; especies forestales
+
+::: person-links
+<a href="ayne.sa@ufam.edu.br" title=""> <img src="/assets/images/icons/email.svg" width="22"/> </a>
+
+<a href="http://lattes.cnpq.br/0238654391031764" title=""> ![](/assets/images/icons/lattes.svg){alt="" width="22"} </a>
+
+<a href="" title=""> <img src="/assets/images/icons/orcid.svg" width="22"/> </a>
+
+<a href="" title=""> ![](/assets/images/icons/rg.svg){alt="" width="22"} </a>
+
+<a href="" title=""> <img src="/assets/images/icons/scholar.svg" width="22"/> </a>
+
+<a href="" title=""> <img src="/assets/images/icons/github.svg" width="22"/> </a>
+:::
+::::
+::::::
+
+:::::: columns
+::: {.column width="25%"}
+![](../assets/images/people/andre.png){.img-fluid .rounded-circle width="180"}
+:::
+
+:::: {.column width="75%"}
+##### André Luiz da Silva Melo (él)
+
+**Estudiante de grado \| Ingeniería Forestal**\
+Universidad Federal de Amazonas (UFAM)
+
+Líneas de investigación: Dendrología
+
+::: person-links
+<a href="andre.melo@ufam.edu.br" title=""> <img src="/assets/images/icons/email.svg" width="22"/> </a>
+
+<a href="http://lattes.cnpq.br/7903256480417228" title=""> ![](/assets/images/icons/lattes.svg){alt="" width="22"} </a>
+
+<a href="" title=""> <img src="/assets/images/icons/orcid.svg" width="22"/> </a>
+
+<a href="" title=""> ![](/assets/images/icons/rg.svg){alt="" width="22"} </a>
+
+<a href="" title=""> <img src="/assets/images/icons/scholar.svg" width="22"/> </a>
+
+<a href="" title=""> <img src="/assets/images/icons/github.svg" width="22"/> </a>
+:::
+::::
+::::::
+
+:::::: columns
+::: {.column width="25%"}
+![](../assets/images/people/heyder.png){.img-fluid .rounded-circle width="180"}
+:::
+
+:::: {.column width="75%"}
+##### Heyder Loureiro Pinagé Neto (él)
+
+**Estudiante de grado \| Ingeniería Forestal**\
+Universidad Federal de Amazonas (UFAM)
+
+Líneas de investigación: Dendrología
+
+::: person-links
+<a href="" title=""> <img src="/assets/images/icons/email.svg" width="22"/> </a>
+
+<a href="" title=""> ![](/assets/images/icons/lattes.svg){alt="" width="22"} </a>
+
+<a href="" title=""> <img src="/assets/images/icons/orcid.svg" width="22"/> </a>
+
+<a href="" title=""> ![](/assets/images/icons/rg.svg){alt="" width="22"} </a>
+
+<a href="" title=""> <img src="/assets/images/icons/scholar.svg" width="22"/> </a>
+
+<a href="" title=""> <img src="/assets/images/icons/github.svg" width="22"/> </a>
+:::
+::::
+::::::
+
+:::::: columns
+::: {.column width="25%"}
+![](../assets/images/people/vitor.png){.img-fluid .rounded-circle width="180"}
+:::
+
+:::: {.column width="75%"}
+##### Vitor Hugo Santos Silva (él)
+
+**Estudiante de grado \| Ingeniería Forestal**\
+Universidad Federal de Amazonas (UFAM)
+
+Líneas de investigación: Dendrología
+
+::: person-links
+<a href="vitor.silva.1@ufam.edu.br" title=""> <img src="/assets/images/icons/email.svg" width="22"/> </a>
+
+<a href="" title=""> ![](/assets/images/icons/lattes.svg){alt="" width="22"} </a>
+
+<a href="" title=""> <img src="/assets/images/icons/orcid.svg" width="22"/> </a>
+
+<a href="" title=""> ![](/assets/images/icons/rg.svg){alt="" width="22"} </a>
+
+<a href="" title=""> <img src="/assets/images/icons/scholar.svg" width="22"/> </a>
+
+<a href="xxx" title=""> <img src="/assets/images/icons/github.svg" width="22"/> </a>
+:::
+::::
+::::::
+
+#### Iniciación científica (becarios)
+
+:::::: columns
+::: {.column width="25%"}
+![](../assets/images/people/eliandra.png){.img-fluid .rounded-circle width="180"}
+:::
+
+:::: {.column width="75%"}
+##### Eliandra Rodrigues Ferreira (ella)
+
+**Estudiante de grado \| Ciencias Biológicas**\
+Universidad Federal de Amazonas (UFAM)
+
+Líneas de investigación: Espectroscopía aplicada a la identificación de plantas; Herbarios; Meliaceae; Fabaceae; Especies CITES
+
+::: person-links
+<a href="mailto:eliandrarodrigues1819@gmail.com" title=""> <img src="/assets/images/icons/email.svg" width="22"/> </a>
+
+<a href="" title="http://lattes.cnpq.br/3358526069960413"> ![](/assets/images/icons/lattes.svg){alt="" width="22"} </a>
+
+<a href="" title=""> <img src="/assets/images/icons/orcid.svg" width="22"/> </a>
+
+<a href="" title=""> ![](/assets/images/icons/rg.svg){alt="" width="22"} </a>
+
+<a href="" title=""> <img src="/assets/images/icons/scholar.svg" width="22"/> </a>
+
+<a href="" title=""> <img src="/assets/images/icons/github.svg" width="22"/> </a>
+:::
+::::
+::::::
+
+:::::: columns
+::: {.column width="25%"}
+![](../assets/images/people/yasmin.png){.img-fluid .rounded-circle width="180"}
+:::
+
+:::: {.column width="75%"}
+##### Yasmin Jéssica G. Guedes (ella)
+
+**Estudiante de grado \| Licenciatura en Ciencias Biológicas**\
+Universidad Federal de Amazonas (UFAM)
+
+Líneas de investigación: Espectroscopía aplicada a la identificación de plantas; Herbarios; Bignoniaceae; Especies CITES
+
+::: person-links
+<a href="mailto:yasmin.guedes@ufam.edu.br" title=""> <img src="/assets/images/icons/email.svg" width="22"/> </a>
+
+<a href="http://lattes.cnpq.br/7129000327997949" title=""> ![](/assets/images/icons/lattes.svg){alt="" width="22"} </a>
+
+<a href="" title=""> <img src="/assets/images/icons/orcid.svg" width="22"/> </a>
+
+<a href="" title=""> ![](/assets/images/icons/rg.svg){alt="" width="22"} </a>
+
+<a href="" title=""> <img src="/assets/images/icons/scholar.svg" width="22"/> </a>
+
+<a href="" title=""> <img src="/assets/images/icons/github.svg" width="22"/> </a>
+:::
+::::
+::::::
+
+:::::: columns
+::: {.column width="25%"}
+![](../assets/images/people/cassia.png){.img-fluid .rounded-circle width="180"}
+:::
+
+:::: {.column width="75%"}
+##### Cassia Sousa Ataide (ella)
+
+**Estudiante de grado \| Ingeniería de Computación**\
+Universidad Federal de Amazonas (UFAM)
+
+Líneas de investigación: Espectroscopía aplicada a la identificación de plantas; Herbarios; *Ecclinusa*; *Machine learning*
+
+::: person-links
+<a href="mailto:cassia.ataide@ufam.edu.br" title=""> <img src="/assets/images/icons/email.svg" width="22"/> </a>
+
+<a href="http://lattes.cnpq.br/6974374662437947" title=""> ![](/assets/images/icons/lattes.svg){alt="" width="22"} </a>
+
+<a href="" title=""> <img src="/assets/images/icons/orcid.svg" width="22"/> </a>
+
+<a href="" title=""> ![](/assets/images/icons/rg.svg){alt="" width="22"} </a>
+
+<a href="" title=""> <img src="/assets/images/icons/scholar.svg" width="22"/> </a>
+
+<a href="" title=""> <img src="/assets/images/icons/github.svg" width="22"/> </a>
+:::
+::::
+::::::

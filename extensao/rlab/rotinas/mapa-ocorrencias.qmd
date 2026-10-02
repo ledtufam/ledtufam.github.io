@@ -1,0 +1,103 @@
+---
+title: "Mapa de ocorrências a partir do GBIF"
+description: "Baixar registros de uma espécie no GBIF, limpar coordenadas problemáticas e fazer um mapa interativo."
+categories: [Herbários e biodiversidade, Mapas]
+order: 5
+---
+
+::: {.callout-note appearance="simple"}
+**Nível:** intermediário · **Pacotes:** rgbif, CoordinateCleaner, leaflet · **Requer internet** · [Baixar script](../scripts/mapa-ocorrencias.R){download="mapa-ocorrencias.R"}
+:::
+
+::: {.callout-important appearance="simple"}
+Os blocos de código desta página **não são executados** no site (dependem de internet e da base do GBIF no momento da consulta). Copie e rode no seu computador.
+:::
+
+## 1. Instale os pacotes
+
+```{r}
+#| eval: false
+install.packages(c("rgbif", "CoordinateCleaner", "leaflet", "dplyr"))
+```
+
+## 2. Baixe os registros
+
+O `occ_search()` é bom para explorar até alguns milhares de registros. Para artigos, use `occ_download()`, que gera um **DOI citável** para o conjunto de dados.
+
+```{r}
+#| eval: false
+library(rgbif)
+library(dplyr)
+
+especie <- "Ecclinusa guianensis"
+
+res <- occ_search(
+  scientificName     = especie,
+  hasCoordinate      = TRUE,
+  hasGeospatialIssue = FALSE,
+  limit              = 5000
+)
+
+occ <- res$data |>
+  select(species, decimalLongitude, decimalLatitude, countryCode,
+         institutionCode, catalogNumber, year, basisOfRecord)
+
+nrow(occ)
+```
+
+## 3. Limpe as coordenadas
+
+O **CoordinateCleaner** marca registros suspeitos: coordenadas em capitais, centroides de países, sedes de instituições (herbários!), coordenadas iguais a zero, no mar etc.
+
+```{r}
+#| eval: false
+library(CoordinateCleaner)
+
+flags <- clean_coordinates(
+  occ,
+  lon = "decimalLongitude", lat = "decimalLatitude",
+  countries = "countryCode", species = "species",
+  tests = c("capitals", "centroids", "equal", "gbif",
+            "institutions", "zeros", "seas")
+)
+
+summary(flags)
+occ_limpo <- occ[flags$.summary, ]       # mantém só os registros aprovados
+
+# Remove duplicatas de coordenadas
+occ_limpo <- distinct(occ_limpo, decimalLongitude, decimalLatitude, .keep_all = TRUE)
+```
+
+::: {.callout-tip}
+A limpeza automática não substitui o olhar do taxonomista: **confira a identificação** dos registros fora da distribuição esperada antes de excluí-los ou mantê-los.
+:::
+
+## 4. Mapa interativo
+
+```{r}
+#| eval: false
+library(leaflet)
+
+leaflet(occ_limpo) |>
+  addProviderTiles("Esri.WorldImagery", group = "Satélite") |>
+  addTiles(group = "Mapa") |>
+  addCircleMarkers(
+    ~decimalLongitude, ~decimalLatitude,
+    radius = 4, stroke = FALSE, fillOpacity = 0.8, color = "#f3969a",
+    popup = ~paste0("<b>", institutionCode, "</b> ", catalogNumber,
+                    "<br>Ano: ", year)
+  ) |>
+  addLayersControl(baseGroups = c("Satélite", "Mapa"))
+```
+
+## 5. Salve os dados
+
+```{r}
+#| eval: false
+write.csv(occ_limpo, "dados/ocorrencias_limpas.csv", row.names = FALSE)
+```
+
+## Referências
+
+-   CHAMBERLAIN, S. et al. *rgbif: Interface to the Global Biodiversity Information Facility API*. <https://CRAN.R-project.org/package=rgbif>
+-   ZIZKA, A. et al. 2019. CoordinateCleaner: standardized cleaning of occurrence records from biological collection databases. *Methods in Ecology and Evolution* 10: 744-751.

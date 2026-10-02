@@ -1,0 +1,30 @@
+---
+# MODELO DE ROTINA: copie este arquivo para a pasta "rotinas/",
+# renomeie (sem o "_" inicial, ex.: rotinas/morfometria.qmd) e preencha.
+# Arquivos que começam com "_" não aparecem no site.
+title: "Título da rotina"
+description: "Uma frase dizendo o que a rotina faz."
+categories: [Tema]       # ex.: Fitossociologia, Espectroscopia NIR, Morfometria
+order: 99                # posição na tabela do R Lab
+---
+
+::: {.callout-note appearance="simple"}
+**Nível:** iniciante · **Pacotes:** ... · [Baixar script](../scripts/NOME.R){download="NOME.R"}
+:::
+
+Introdução: para que serve a análise e quando usar.
+
+## 1. Dados
+
+```{r}
+# Use dados simulados ou já publicados (nunca dados de trabalhos em andamento)
+```
+
+## 2. Análise
+
+```{r}
+#| eval: false
+# Use "#| eval: false" em blocos que dependem de internet ou pacotes pesados
+```
+
+## Referências

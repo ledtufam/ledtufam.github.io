@@ -1,5 +1,54 @@
 ---
 title: "Extensão"
+toc: false
 ---
 
-Em construção... 🚧
+O LEDT leva o conhecimento sobre as árvores e florestas amazônicas para além da sala de aula, com materiais abertos, formação em análise de dados e ações com a comunidade.
+
+::: grid
+::: {.g-col-12 .g-col-md-6}
+::: {.card .h-100}
+::: card-body
+### <i class="bi bi-code-slash"></i> R Lab
+
+Rotinas em R comentadas e reprodutíveis para fitossociologia, espectroscopia NIR, mapas de ocorrência e mais.
+
+[Acessar o R Lab](extensao/rlab/index.qmd){.btn .btn-outline-success .btn-sm}
+:::
+:::
+:::
+
+::: {.g-col-12 .g-col-md-6}
+::: {.card .h-100}
+::: card-body
+### <i class="bi bi-tree"></i> Flórula do campus da UFAM
+
+Levantamento das árvores do campus da UFAM feito pelos alunos de Dendrologia Tropical, com roteiro de campo padronizado. O resultado será um **e-book** sobre a flora arbórea do campus. *(em desenvolvimento)*
+
+[Sobre a disciplina](ensino/graduacao/dendrologiatropical.qmd){.btn .btn-outline-success .btn-sm}
+:::
+:::
+:::
+
+::: {.g-col-12 .g-col-md-6}
+::: {.card .h-100}
+::: card-body
+### <i class="bi bi-megaphone"></i> Divulgação científica
+
+Notícias, bastidores de campo e publicações explicadas de forma simples.
+
+[Ver publicações](divulgacaocientifica.qmd){.btn .btn-outline-success .btn-sm}
+:::
+:::
+:::
+
+::: {.g-col-12 .g-col-md-6}
+::: {.card .h-100}
+::: card-body
+### <i class="bi bi-calendar-event"></i> Cursos e oficinas
+
+Minicursos de R, identificação de árvores e espectroscopia oferecidos pelo LEDT serão divulgados aqui e no [Instagram](https://www.instagram.com/ledt_ufam/).
+:::
+:::
+:::
+:::

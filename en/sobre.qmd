@@ -1,0 +1,48 @@
+---
+title: "About"
+---
+
+### Our mission
+
+The **Laboratory of Tropical Ecology and Dendrology (LEDT)** is affiliated with the Department of Forest Sciences, Faculty of Agricultural Sciences, Federal University of Amazonas (UFAM), based in Manaus, Brazil.
+
+Our laboratory is dedicated to the study of the diversity, ecology, taxonomy and functioning of tropical forests, with an emphasis on the Amazon. We carry out research that integrates fieldwork, biological collections, spectroscopy, ecological monitoring and analytical tools to understand Amazonian biodiversity and its responses to climate change.
+
+### What we do
+
+Our research spans different scales of plant biodiversity, from the taxonomic identification of species to the ecological processes that structure Amazonian forests.
+
+### Main research areas
+
+-   Dendrology, taxonomy and systematics of tropical trees;
+-   Community ecology, functional ecology and forest monitoring;
+-   Spectroscopy applied to plant identification;
+-   Herbaria, scientific collections and documentation of Amazonian biodiversity;
+-   Species distribution, climate change and conservation of the Amazonian flora.
+
+### Our approach
+
+We believe that addressing the scientific challenges of the Amazon requires an interdisciplinary approach.
+
+That is why we combine different sources of information, including:
+
+-   Floristic inventories;
+-   Permanent plots;
+-   Herbaria;
+-   Spectroscopy;
+-   Morphology and taxonomy;
+-   Statistics, machine learning and data science.
+
+This integration allows us to understand everything from species identity to the ecological processes that maintain Amazonian biodiversity.
+
+### Teaching and training
+
+LEDT is actively involved in training at different levels, hosting undergraduate, undergraduate research, master's and PhD students.
+
+Our goal is to train professionals able to integrate classical knowledge of botany and ecology with quantitative tools and emerging technologies.
+
+### Collaboration
+
+The laboratory collaborates with researchers and institutions in Brazil and abroad, contributing to research networks devoted to the knowledge, documentation and conservation of Amazonian biodiversity.
+
+We are always open to new scientific partnerships, collaborative projects and exchanges of students and researchers.

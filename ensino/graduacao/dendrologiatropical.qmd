@@ -1,60 +1,134 @@
 ---
-title: "FGD921 - Dendrologia Tropical (60h)"
-listing:
-  type: table
-  fields: [title]
+title: "FGD921 - Dendrologia Tropical"
+subtitle: "Engenharia Florestal · 4º período · 60h"
+description: "Identificação de árvores tropicais no campo e no herbário: morfologia, nomenclatura, chaves e famílias da Amazônia Central."
+image: /assets/images/photos/dendrologia.png
+categories: [Graduação, Engenharia Florestal]
 ---
 
-![](/assets/images/photos/dendrologia.png)
+![](/assets/images/photos/dendrologia.png){fig-alt="Aula de Dendrologia Tropical"}
 
-### Objetivos
+::: {.callout-note appearance="simple" icon="false"}
+**Código:** FGD921 \| **Créditos:** 3.2.1.0 \| **Carga horária:** 60h (30h teoria + 30h prática)\
+**Período:** 4º \| **Pré-requisito:** IBB619 – Taxonomia Florestal\
+**Departamento:** Ciências Florestais (DCF/FCA/UFAM)
+:::
+
+## Objetivos
 
 **Geral:** Fornecer ao aluno os conhecimentos necessários de dendrologia, taxonomia, nomenclatura, morfologia, fenologia e fitogeografia para o estudo das espécies tropicais. Como também as técnicas de identificação de árvores no campo e a respectiva manipulação das amostras no herbário.
 
 **Específicos:**
 
 -   Apresentar as principais características dendrológicas das principais famílias botânicas que ocorrem na Amazônia Central;
-
 -   Capacitar o aluno de engenharia florestal para o reconhecimento de famílias botânicas e espécies florestais por meio de características dendrológicas de indivíduos arbóreos.
 
-
-### Carga horária
-
-**Teoria:** 30h
-
-**Prática:** 30h
-
-
-### Ementa
+## Ementa
 
 -   Introdução
-
 -   Morfologia e descrição dendrológica
-
 -   Chaves de identificação de espécies florestais
-
 -   Coleta e preparo de material para coleções (herbário, carpotecas, xilotecas)
-
 -   Nomenclatura vegetal
-
 -   Biologia reprodutiva das árvores
-
 -   Grupos ecológicos de árvores
-
 -   Fenologia de espécies florestais
-
 -   Levantamentos dendrológicos
-
 -   Implantação de um arboreto
-
 -   Espécies importantes e suas características morfológicas, ecológicas e econômicas
 
-------------------------------------------------------------------------
+<a href="/assets/pdf/Engenharia Florestal PPC_Dendrologia tropical.pdf" target="_blank" class="btn btn-outline-success btn-sm"><i class="bi bi-file-pdf-fill"></i> Ementa oficial (PPC)</a>
 
-> Faça o download da ementa completa <a href="/assets/pdf/Engenharia Florestal PPC_Dendrologia tropical.pdf" target="_blank" class="btn btn-outline-success">
-<i class="bi bi-file-pdf-fill"></i> PDF</a>
+## Aulas práticas
 
-### Turmas
+As aulas práticas acontecem no campus da UFAM e no herbário. Os alunos aplicam o roteiro de campo padronizado para descrever caracteres dendrológicos das árvores do campus. Esses dados vão compor o **e-book da flórula do campus da UFAM**.
 
-> **2026.2 |** Acessar o material da disciplina. Restrito aos alunos matriculados <a href="https://drive.google.com/drive/folders/1cm5WZlNnhHUUuo_Og26-Kj6w4OrEXxIL?usp=drive_link" target="_blank" class="btn btn-outline-success">
-<i class="bi bi-google"></i> Drive</a>
+::: {.callout-tip collapse="true"}
+## O que levar para o campo
+
+-   Caderneta de campo e lápis
+-   Lupa de mão (10×)
+-   Celular com câmera e GPS
+-   Roupa e calçado adequados, repelente e água
+:::
+
+## Cronograma 2026.2
+
+Aulas às terças-feiras, das 8h às 12h (FCA01 e Laboratório de Ecologia e Dendrologia Tropical). T = teórica; P = prática.
+
+| Data | Conteúdo | Tipo |
+|-------|------------------------------------------------------------|------|
+| 11/08 | Apresentação da disciplina e do plano de ensino. Introdução à Dendrologia Tropical | T |
+| 11/08 | Caminhada de reconhecimento no campus: caracteres dendrológicos | P |
+| 18/08 | Morfologia e descrição dendrológica | T |
+| 18/08 | Descrição morfológica de material botânico | P |
+| 25/08 | Chaves de identificação de espécies florestais | T |
+| 25/08 | **EE1** – Uso de chaves de identificação botânica | P |
+| 01/09 | Coleta e preparo de material para coleções (herbário, carpotecas, xilotecas) | T |
+| 01/09 | Coleta e preparo de espécimes botânicos no campus | P |
+| 08/09 | Nomenclatura vegetal | T |
+| 08/09 | Interpretação e validação de nomes científicos ([rotina no R Lab](/extensao/rlab/rotinas/nomes-cientificos.qmd)) | P |
+| 15/09 | Palestras: Espectroscopia NIR (Dra. Flávia Durgante, INPA) e aplicativos de identificação por imagem (Ma. Gabrielly Guabiraba, JBRJ) | T |
+| 15/09 | A importância da identificação nos inventários florestais: estudos de caso | T |
+| 22/09 | Visita técnica ao Herbário INPA | P |
+| 29/09 | Biologia reprodutiva das árvores | T |
+| 29/09 | Oficina de síndromes de polinização e dispersão (Dra. Samyra Ramos, INPA) | P |
+| 06/10 | Grupos ecológicos de árvores | T |
+| 06/10 | Classificação ecológica de espécies arbóreas em trilhas da UFAM | P |
+| 20/10 | Fenologia de espécies florestais | T |
+| 20/10 | **EE2** – Calendários fenológicos com registros do speciesLink ([rotina no R Lab](/extensao/rlab/rotinas/fenologia-specieslink.qmd)) | P |
+| 27/10 | Levantamentos dendrológicos | T |
+| 27/10 | **EE3** – Levantamento dendrológico em campo | P |
+| 03/11 | Implantação de um arboreto | T |
+| 03/11 | Planejamento de um arboreto didático | P |
+| 10/11 | Espécies importantes e suas características (parte 1) | T |
+| 10/11 | Desafios: desvendando enigmas botânicos (parte 1) | P |
+| 17/11 | Espécies importantes e suas características (parte 2, com Dr. Mike Hopkins, INPA) | T |
+| 17/11 | Desafios: desvendando enigmas botânicos (parte 2) | P |
+| 24/11 | **EE4** – Seminário: ficha técnica de espécie arbórea do campus | T |
+| 01/12 | **EE5** – Avaliação oral (sabatina) de identificação botânica | P |
+| 15/12 | Prova final | – |
+
+: {.striped .hover}
+
+## Avaliação
+
+| Atividade | Formato | Data | Valor |
+|------------------------------------------|------------|-------|-------|
+| **EE1** – Identificação com chaves botânicas | Individual | 25/08 | 10 |
+| **EE2** – Calendários fenológicos (speciesLink) | Equipe | 20/10 | 10 |
+| **EE3** – Levantamento dendrológico no campus | Equipe | 27/10 | 10 |
+| **EE4** – Seminário: ficha técnica de espécie | Equipe | 24/11 | 10 |
+| **EE5** – Sabatina de identificação botânica | Individual | 01/12 | 10 |
+
+: {.striped}
+
+Quem obtiver **média dos exercícios escolares (MEE)** ≥ 8,0 e frequência mínima de 75% está aprovado e dispensado da prova final (Resolução nº 023/2017 – CONSEPE). Os demais fazem a **prova final** (15/12), que abrange todo o conteúdo.
+
+## Bibliografia
+
+**Básica**
+
+-   GENTRY, A. H. *Chave para identificação de plantas da Amazônia Ocidental, baseado em caracteres de material estéril*. 1992. 78 p.
+-   JOLY, A. B. *Introdução à Taxonomia Vegetal*. São Paulo: Editora Nacional, 1985. 777 p.
+-   NEILL, D. A.; KILLEN, T. *Curso de Dendrología Tropical en la Amazonia Boliviana*. 1991. 61 p.
+
+**Complementar**
+
+-   RIBEIRO, J. E. L. S. et al. *Flora da Reserva Ducke: guia de identificação das plantas vasculares de uma floresta de terra-firme na Amazônia Central*. Manaus: INPA, 1999. 816 p.
+-   SOUZA, V. C.; LORENZI, H. *Botânica Sistemática: guia ilustrado para identificação das famílias de fanerógamas nativas e exóticas no Brasil, baseado em APG III*. Nova Odessa: Instituto Plantarum, 2012.
+-   PINHEIRO, A. L. *Fundamentos em Taxonomia Aplicados ao Desenvolvimento da Dendrologia Tropical*. Viçosa: UFV, 2014. 278 p.
+
+**Recursos online**
+
+-   [Flora e Funga do Brasil](https://floradobrasil.jbrj.gov.br/) — nomes aceitos e descrições
+-   [speciesLink](https://specieslink.net/) — registros e imagens de herbários
+-   [Reflora – Herbário Virtual](https://reflora.jbrj.gov.br/reflora/herbarioVirtual/)
+
+## Turmas
+
+| Semestre | Material |
+|----------|----------|
+| **2026.2** | <a href="https://drive.google.com/drive/folders/1cm5WZlNnhHUUuo_Og26-Kj6w4OrEXxIL?usp=drive_link" target="_blank" class="btn btn-outline-success btn-sm"><i class="bi bi-google"></i> Drive</a> |
+
+: Acesso ao material restrito aos alunos matriculados. {.striped}

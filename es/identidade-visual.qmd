@@ -1,0 +1,73 @@
+---
+title: "Identidad visual"
+---
+
+Utilice los archivos de esta página en presentaciones, pósteres, informes y materiales de divulgación vinculados al LEDT. Haga clic en **Descargar** para guardar el archivo en alta resolución.
+
+## Logos del LEDT
+
+::: grid
+::: {.g-col-12 .g-col-md-4}
+::: {.card .h-100 .text-center}
+![](../assets/images/logos/logo_horizontal.png){fig-alt="Logo horizontal del LEDT" .p-3}
+
+::: card-body
+**Horizontal**\
+Uso preferente: diapositivas, pies de página, sitios web.
+
+<a href="../assets/images/logos/logo_horizontal.png" download class="btn btn-outline-success btn-sm"><i class="bi bi-download"></i> Descargar PNG</a>
+:::
+:::
+:::
+
+::: {.g-col-12 .g-col-md-4}
+::: {.card .h-100 .text-center}
+![](../assets/images/logos/logo_vertical.png){fig-alt="Logo vertical del LEDT" .p-3}
+
+::: card-body
+**Vertical**\
+Uso: pósteres, portadas, banners.
+
+<a href="../assets/images/logos/logo_vertical.png" download class="btn btn-outline-success btn-sm"><i class="bi bi-download"></i> Descargar PNG</a>
+:::
+:::
+:::
+
+::: {.g-col-12 .g-col-md-4}
+::: {.card .h-100 .text-center}
+![](../assets/images/logos/logo_simples.png){fig-alt="Símbolo del LEDT" .p-3}
+
+::: card-body
+**Símbolo**\
+Uso: espacios pequeños, íconos, redes sociales.
+
+<a href="../assets/images/logos/logo_simples.png" download class="btn btn-outline-success btn-sm"><i class="bi bi-download"></i> Descargar PNG</a>
+:::
+:::
+:::
+:::
+
+### Color principal
+
+::: {.d-flex .align-items-center .gap-3 .my-3}
+[]{style="display:inline-block;width:56px;height:56px;border-radius:8px;background:#234a18;"}
+
+**Verde LEDT** · HEX `#234A18` · RGB 35, 74, 24
+:::
+
+### Buenas prácticas
+
+-   No distorsione, recorte, gire ni cambie los colores del logo.
+-   Mantenga un margen libre alrededor del logo y úselo sobre fondos claros.
+-   Cuando el LEDT aparezca junto a otras instituciones, mantenga los logos en tamaños visualmente equivalentes.
+
+## Logos institucionales
+
+Logos de las instituciones a las que está vinculado el LEDT y de sus socias, para uso en presentaciones y pósteres.
+
+::: {.callout-note appearance="simple"}
+Cada institución tiene sus propias reglas de uso de marca. En caso de duda, descargue la versión oficial:
+
+-   **UFAM:** [Identidad Visual UFAM](https://www.ufam.edu.br/identidade-visual-ufam.html) · [Manual de Identidad Visual (Edoc)](https://edoc.ufam.edu.br/handle/123456789/1996)
+-   **INPA:** solicítelos a la Asesoría de Comunicación del INPA o consulte el [portal del INPA](https://www.gov.br/inpa/pt-br)
+:::

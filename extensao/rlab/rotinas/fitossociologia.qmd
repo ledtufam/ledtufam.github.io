@@ -1,0 +1,139 @@
+---
+title: "Parâmetros fitossociológicos e diversidade"
+description: "Densidade, frequência, dominância, IVI, IVC e índices de Shannon, Simpson e Pielou a partir de um inventário em parcelas."
+categories: [Fitossociologia, Ecologia]
+order: 2
+---
+
+::: {.callout-note appearance="simple"}
+**Nível:** iniciante/intermediário · **Pacotes:** apenas R básico · **Disciplina:** [FGD320 - Fitossociologia](/ensino/graduacao/fitossociologia.qmd) · [Baixar script](../scripts/fitossociologia.R){download="fitossociologia.R"}
+:::
+
+Nesta rotina calculamos a **estrutura horizontal** de uma comunidade arbórea a partir de um inventário em parcelas, usando somente funções do R básico, para que cada passo da fórmula fique visível.
+
+## 1. Dados
+
+Usamos um inventário **simulado** com 10 parcelas de 20 × 50 m (0,1 ha cada; 1 ha no total). Para usar seus dados, basta ter uma tabela com uma linha por árvore e as colunas `parcela`, `especie` e `dap` (em cm).
+
+```{r}
+set.seed(2026)
+especies <- c("Eschweilera coriacea", "Protium hebetatum", "Pouteria guianensis",
+              "Ecclinusa guianensis", "Licania micrantha", "Micropholis guyanensis",
+              "Scleronema micranthum", "Oenocarpus bataua", "Goupia glabra",
+              "Dinizia excelsa")
+prob <- c(0.22, 0.18, 0.12, 0.10, 0.09, 0.08, 0.07, 0.07, 0.05, 0.02)
+
+n_arv <- 600
+inv <- data.frame(
+  parcela = sample(paste0("P", 1:10), n_arv, replace = TRUE),
+  especie = sample(especies, n_arv, replace = TRUE, prob = prob),
+  dap     = round(10 + rlnorm(n_arv, meanlog = 2.3, sdlog = 0.7), 1)  # DAP >= 10 cm
+)
+head(inv)
+
+# Para seus dados, use por exemplo:
+# inv <- read.csv2("dados/inventario.csv")
+```
+
+## 2. Definições da amostragem
+
+```{r}
+area_parcela <- 0.1                          # ha
+n_parcelas   <- length(unique(inv$parcela))
+area_total   <- area_parcela * n_parcelas    # ha
+```
+
+## 3. Cálculo dos parâmetros
+
+As fórmulas usadas (Mueller-Dombois & Ellenberg 1974; Felfili et al. 2011):
+
+| Parâmetro | Fórmula |
+|------------------------------------|------------------------------------|
+| Densidade absoluta | $DA_i = n_i / A$ |
+| Densidade relativa | $DR_i = 100 \cdot n_i / N$ |
+| Frequência absoluta | $FA_i = 100 \cdot p_i / P$ |
+| Frequência relativa | $FR_i = 100 \cdot FA_i / \sum FA$ |
+| Área basal | $g = \pi \cdot DAP^2 / 40000$ |
+| Dominância absoluta | $DoA_i = G_i / A$ |
+| Dominância relativa | $DoR_i = 100 \cdot G_i / \sum G$ |
+| Índice de valor de importância | $IVI_i = DR_i + FR_i + DoR_i$ |
+| Índice de valor de cobertura | $IVC_i = DR_i + DoR_i$ |
+
+em que $n_i$ = número de árvores da espécie *i*, $N$ = total de árvores, $A$ = área amostrada (ha), $p_i$ = parcelas com a espécie *i*, $P$ = total de parcelas e $G_i$ = área basal da espécie *i*.
+
+```{r}
+inv$g <- pi * inv$dap^2 / 40000      # área basal de cada árvore (m²)
+
+n_i <- tapply(inv$dap, inv$especie, length)                         # nº de árvores
+p_i <- tapply(inv$parcela, inv$especie, function(x) length(unique(x)))  # nº de parcelas
+G_i <- tapply(inv$g, inv$especie, sum)                              # área basal
+
+fito <- data.frame(
+  especie = names(n_i),
+  N   = as.integer(n_i),
+  DA  = n_i / area_total,
+  DR  = 100 * n_i / sum(n_i),
+  FA  = 100 * p_i / n_parcelas,
+  DoA = G_i / area_total,
+  DoR = 100 * G_i / sum(G_i)
+)
+fito$FR  <- 100 * fito$FA / sum(fito$FA)
+fito$IVI <- fito$DR + fito$FR + fito$DoR
+fito$IVC <- fito$DR + fito$DoR
+
+fito <- fito[order(fito$IVI, decreasing = TRUE), ]
+rownames(fito) <- NULL
+knitr::kable(fito, digits = 2)
+```
+
+## 4. Gráfico do IVI
+
+```{r}
+#| fig-cap: "Índice de valor de importância (IVI) por espécie, decomposto em densidade, frequência e dominância relativas."
+#| fig-height: 5
+comp <- t(as.matrix(fito[, c("DR", "FR", "DoR")]))
+colnames(comp) <- fito$especie
+par(mar = c(4, 12, 1, 1))
+barplot(comp[, ncol(comp):1], horiz = TRUE, las = 1, font.axis = 3,
+        col = c("#78c2ad", "#f3969a", "#6cc3d5"), border = NA,
+        xlab = "IVI", cex.names = 0.8)
+legend("bottomright", legend = c("DR", "FR", "DoR"),
+       fill = c("#78c2ad", "#f3969a", "#6cc3d5"), border = NA, bty = "n")
+```
+
+## 5. Diversidade
+
+-   **Shannon:** $H' = -\sum p_i \ln p_i$
+-   **Simpson (Gini-Simpson):** $1 - D = 1 - \sum p_i^2$
+-   **Equabilidade de Pielou:** $J = H' / \ln S$
+
+```{r}
+p <- fito$N / sum(fito$N)
+S <- nrow(fito)
+
+H <- -sum(p * log(p))
+simpson <- 1 - sum(p^2)
+J <- H / log(S)
+
+data.frame(Riqueza = S, Shannon = round(H, 3),
+           Simpson = round(simpson, 3), Pielou = round(J, 3))
+```
+
+::: {.callout-tip}
+## Conferindo com pacotes
+
+O pacote **vegan** calcula os mesmos índices: `vegan::diversity(fito$N, "shannon")` e `vegan::diversity(fito$N, "simpson")`. Para comparar várias parcelas, use uma matriz parcela × espécie: `table(inv$parcela, inv$especie)`.
+:::
+
+## 6. Exporte os resultados
+
+```{r}
+#| eval: false
+write.csv2(fito, "resultados/fitossociologia.csv", row.names = FALSE)
+```
+
+## Referências
+
+-   FELFILI, J. M. et al. *Fitossociologia no Brasil: métodos e estudos de caso*. Viçosa: Editora UFV, 2011.
+-   MAGURRAN, A. E. *Medindo a diversidade biológica*. Curitiba: Ed. UFPR, 2011.
+-   MUELLER-DOMBOIS, D.; ELLENBERG, H. *Aims and Methods of Vegetation Ecology*. New York: Wiley, 1974.

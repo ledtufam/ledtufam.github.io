@@ -1,0 +1,56 @@
+---
+title: "¡Bienvenidos!"
+toc: false
+---
+
+En el **Laboratorio de Ecología y Dendrología Tropical (LEDT)** estudiamos la diversidad, la ecología y la taxonomía de los árboles amazónicos. Combinamos trabajo de campo, colecciones de herbario, espectroscopía, monitoreo ecológico y enfoques analíticos integrativos para investigar la identificación de especies, los patrones de biodiversidad y las respuestas de los bosques tropicales al cambio climático.
+
+Con sede en la Universidad Federal de Amazonas (UFAM), en Manaos, Brasil, nuestro grupo colabora con redes de investigación nacionales e internacionales para promover la comprensión, la documentación y la conservación de la biodiversidad amazónica.
+
+![](../assets/images/logos/logo_horizontal.png){fig-alt="Logo del LEDT" width="100%"}
+
+::: {.grid .home-cards}
+::: {.g-col-12 .g-col-md-4}
+### <i class="bi bi-mortarboard"></i> Docencia
+
+Asignaturas de grado y posgrado, programas y materiales (en portugués).
+
+[Ver asignaturas](../ensino/graduacao/disciplinas.html){.btn .btn-outline-success .btn-sm}
+:::
+
+::: {.g-col-12 .g-col-md-4}
+### <i class="bi bi-search"></i> Investigación
+
+Proyectos, alianzas, redes de colaboración y publicaciones.
+
+[Ver investigación](pesquisa.qmd){.btn .btn-outline-success .btn-sm}
+:::
+
+::: {.g-col-12 .g-col-md-4}
+### <i class="bi bi-code-slash"></i> R Lab
+
+Rutinas en R para ecología, dendrología y espectroscopía (en portugués, con código comentado).
+
+[Ver rutinas](../extensao/rlab/index.html){.btn .btn-outline-success .btn-sm}
+:::
+:::
+
+------------------------------------------------------------------------
+
+::: {style="text-align:center"}
+#### El LEDT cuenta con el apoyo de
+:::
+
+::: columns
+::: {.column width="33%"}
+![](../assets/images/logos/dcf.png){fig-align="center" width="150" fig-alt="Departamento de Ciencias Forestales"}
+:::
+
+::: {.column width="33%"}
+![](../assets/images/logos/fca.png){fig-align="center" width="150" fig-alt="Facultad de Ciencias Agrarias"}
+:::
+
+::: {.column width="33%"}
+![](../assets/images/logos/ufam.png){fig-align="center" width="150" fig-alt="Universidad Federal de Amazonas"}
+:::
+:::

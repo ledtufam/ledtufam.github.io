@@ -4,7 +4,7 @@ title: "Sobre"
 
 ### Nossa missão
 
-O **Laboratório de Ecologia e Dendrologia Tropical (LEDT)** é um grupo de pesquisa vinculado ao Departamento de Ciências Florestais da Faculdade de Ciências Agrárias da Universidade Federal do Amazonas (UFAM), sediado em Manaus, Brasil.
+O **Laboratório de Ecologia e Dendrologia Tropical (LEDT)** está vinculado ao Departamento de Ciências Florestais da Faculdade de Ciências Agrárias da Universidade Federal do Amazonas (UFAM), sediado em Manaus, Brasil.
 
 Nosso laboratório dedica-se ao estudo da diversidade, ecologia, taxonomia e funcionamento das florestas tropicais, com ênfase na Amazônia. Desenvolvemos pesquisas que integram trabalho de campo, coleções biológicas, espectroscopia, monitoramento ecológico e ferramentas analíticas para compreender a biodiversidade amazônica e suas respostas às mudanças climáticas.
 

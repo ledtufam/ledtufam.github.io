@@ -1,0 +1,195 @@
+---
+title: "Calendário fenológico a partir de registros de herbário (speciesLink)"
+description: "Baixar registros de uma espécie no speciesLink, identificar flores e frutos nas anotações das exsicatas e construir calendários fenológicos por mês."
+categories: [Fenologia, Dendrologia, Herbários e biodiversidade]
+order: 7
+---
+
+::: {.callout-note appearance="simple"}
+**Nível:** iniciante/intermediário · **Pacotes:** jsonlite (download); o restante usa R básico · **Disciplina:** [FGD921 - Dendrologia Tropical](/ensino/graduacao/dendrologiatropical.qmd) · [Baixar script](../scripts/fenologia-specieslink.R){download="fenologia-specieslink.R"}
+:::
+
+As exsicatas guardam, na etiqueta, **quando** a planta foi coletada e, muitas vezes, **se tinha flores ou frutos**. Juntando centenas de registros de herbários, é possível montar um **calendário fenológico**, ou seja, os meses em que a espécie floresce e frutifica. Essa informação é útil para planejar a **coleta de sementes** e entender a ecologia reprodutiva da espécie.
+
+Fluxo da rotina: **baixar registros → identificar flor/fruto na etiqueta → contar por mês → calendário**.
+
+## 1. Baixar os registros do speciesLink
+
+O [speciesLink](https://specieslink.net/) tem um serviço web aberto, mas cada consulta exige uma **chave de acesso (API key)**:
+
+1.  Crie uma conta gratuita no [speciesLink](https://specieslink.net/).
+2.  Gere sua chave em [specieslink.net/aut/profile/apikeys](https://specieslink.net/aut/profile/apikeys).
+3.  Guarde a chave no R **sem colocá-la no script** que você vai compartilhar. Por exemplo, rode uma vez `usethis::edit_r_environ()`, escreva `SPLINK_KEY=sua_chave` no arquivo, salve e reinicie o R.
+
+::: {.callout-important appearance="simple"}
+Os blocos desta seção **não são executados** no site (dependem da internet e da sua chave). A partir da seção 2 usamos dados de exemplo.
+:::
+
+```{r}
+#| eval: false
+library(jsonlite)
+
+baixar_splink <- function(especie, chave = Sys.getenv("SPLINK_KEY"), limite = 5000) {
+  url <- paste0("https://specieslink.net/ws/1.0/search?",
+                "scientificname=", URLencode(especie),
+                "&scope=p&limit=", limite,
+                "&apikey=", chave)
+  res <- fromJSON(url)
+  res$features$properties          # tabela com um registro por linha
+}
+
+reg <- baixar_splink("Handroanthus serratifolius")
+nrow(reg)
+names(reg)
+```
+
+As colunas que vamos usar são `monthCollected` (mês da coleta), `occurrenceRemarks` (anotações da etiqueta), `stateProvince` e `scientificName`.
+
+::: {.callout-tip collapse="true"}
+## Prefere baixar pelo site?
+
+Na busca do [speciesLink](https://specieslink.net/), pesquise a espécie, use **Download** para baixar os registros e leia o arquivo no R, por exemplo com `reg <- read.delim("dados/speciesLink.txt")`. Os nomes das colunas podem mudar um pouco (por exemplo, `monthcollected` em vez de `monthCollected`). Confira com `names(reg)` e ajuste a rotina.
+:::
+
+## 2. Dados de exemplo
+
+Para que esta página funcione sem internet, usamos **registros simulados** com a mesma estrutura do speciesLink. São 240 registros de uma espécie hipotética com floração concentrada na estação seca e frutificação logo depois, como ocorre em muitos ipês amazônicos.
+
+```{r}
+set.seed(921)
+n <- 240
+mes_fl <- sample(1:12, n, replace = TRUE, prob = c(1, 1, 1, 1, 2, 4, 9, 12, 8, 3, 1, 1))
+fen <- sample(c("flor", "fruto", "esteril", "ambos"), n, replace = TRUE, prob = c(.40, .25, .25, .10))
+mes <- ifelse(fen == "fruto", (mes_fl + 1) %% 12 + 1, mes_fl)   # frutos ~2 meses depois
+
+modelos <- list(
+  flor    = c("Árvore 15 m, flores amarelas.", "fl. amarelas", "Com flores.", "Botões e flores abertas.", "Floração intensa, sem folhas."),
+  fruto   = c("Frutos imaturos.", "fr. verdes", "Árvore com frutos maduros, deiscentes.", "Frutificando."),
+  ambos   = c("Flores e frutos.", "fl. e fr. jovens"),
+  esteril = c("Material estéril.", "Árvore 20 m, DAP 40 cm.", "", "Ramo estéril, folhas compostas.")
+)
+reg <- data.frame(
+  scientificName    = "Espécie hipotética",
+  monthCollected    = mes,
+  stateProvince     = sample(c("Amazonas", "Pará", "Acre", "Rondônia", "Mato Grosso"), n, replace = TRUE),
+  occurrenceRemarks = vapply(fen, function(f) sample(modelos[[f]], 1), "")
+)
+head(reg)
+```
+
+## 3. Identificar flor e fruto nas etiquetas
+
+As etiquetas não têm um campo padronizado de fenologia. Por isso, procuramos **palavras-chave** nas anotações. Ajuste a lista conforme o idioma e o estilo das etiquetas da sua espécie.
+
+```{r}
+txt <- tolower(reg$occurrenceRemarks)
+
+termos_flor  <- c("\\bflor", "\\bfl\\.", "\\bflower", "\\bbot[aã]o", "\\bbot[oõ]es", "\\bflora[cç][aã]o", "\\bantese")
+termos_fruto <- c("\\bfrut", "\\bfr\\.", "\\bfruit")
+
+reg$flor  <- grepl(paste(termos_flor,  collapse = "|"), txt)
+reg$fruto <- grepl(paste(termos_fruto, collapse = "|"), txt)
+
+# registros sem mês ou sem informação de fenologia não entram no calendário
+reg <- subset(reg, !is.na(monthCollected) & monthCollected %in% 1:12)
+c(total = nrow(reg), com_flor = sum(reg$flor), com_fruto = sum(reg$fruto),
+  sem_info = sum(!reg$flor & !reg$fruto))
+```
+
+::: {.callout-warning appearance="simple"}
+**Confira uma amostra à mão!** Leia algumas dezenas de etiquetas classificadas e veja se a busca por palavras acertou. Expressões como "sem flores" ou "flor-de-ipê" (nome popular) podem gerar falsos positivos.
+:::
+
+## 4. Contar registros por mês
+
+```{r}
+meses <- c("Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez")
+
+calendario <- data.frame(
+  mes   = factor(meses, levels = meses),
+  flor  = tabulate(reg$monthCollected[reg$flor],  nbins = 12),
+  fruto = tabulate(reg$monthCollected[reg$fruto], nbins = 12),
+  total = tabulate(reg$monthCollected,            nbins = 12)
+)
+calendario
+```
+
+Como o número de coletas varia muito entre os meses (há mais expedições na estação seca, por exemplo), vale olhar também a **proporção** de registros férteis em cada mês:
+
+```{r}
+calendario$prop_flor  <- round(calendario$flor  / calendario$total, 2)
+calendario$prop_fruto <- round(calendario$fruto / calendario$total, 2)
+calendario[, c("mes", "prop_flor", "prop_fruto")]
+```
+
+Cuidado com meses com **poucos registros**: uma única exsicata com flor num mês com duas coletas já dá 50%.
+
+## 5. Calendário fenológico
+
+```{r}
+#| fig-cap: "Número de registros de herbário com flores e com frutos em cada mês."
+#| fig-height: 4.5
+cores <- c(flor = "#ffce67", fruto = "#78c2ad")
+barplot(t(as.matrix(calendario[, c("flor", "fruto")])), beside = TRUE,
+        names.arg = meses, col = cores, border = NA, las = 1,
+        ylab = "Número de registros", legend.text = c("Flor", "Fruto"),
+        args.legend = list(x = "topright", bty = "n"))
+```
+
+### Versão circular
+
+O calendário circular deixa claro que dezembro e janeiro são vizinhos:
+
+```{r}
+#| fig-cap: "Calendário fenológico circular: o comprimento de cada barra é proporcional ao número de registros no mês."
+#| fig-width: 9
+#| fig-height: 4.8
+calendario_circular <- function(contagem, cor, titulo = "") {
+  ang <- pi / 2 - (0:11) * 2 * pi / 12            # janeiro no topo, sentido horário
+  r   <- contagem / max(contagem)
+  plot(NA, xlim = c(-1.25, 1.25), ylim = c(-1.25, 1.25), asp = 1, axes = FALSE,
+       xlab = "", ylab = "", main = titulo)
+  for (k in c(.25, .5, .75, 1)) symbols(0, 0, circles = k, inches = FALSE, add = TRUE, fg = "grey85")
+  for (i in 1:12) {
+    a <- seq(ang[i] + pi / 12, ang[i] - pi / 12, length.out = 20)
+    polygon(c(0, r[i] * cos(a), 0), c(0, r[i] * sin(a), 0), col = cor, border = "white")
+  }
+  text(1.15 * cos(ang), 1.15 * sin(ang), meses, cex = 0.8)
+}
+
+par(mfrow = c(1, 2), mar = c(0, 0, 2, 0))
+calendario_circular(calendario$flor,  cores["flor"],  "Floração")
+calendario_circular(calendario$fruto, cores["fruto"], "Frutificação")
+```
+
+## 6. Mês médio e concentração (estatística circular)
+
+Como os meses formam um ciclo, a média comum não funciona (a média entre dezembro e janeiro não é junho!). Usamos a **média circular**: cada registro vira um ângulo, e calculamos o ângulo médio e o comprimento do vetor médio (*r*), que vai de 0 (fenofase espalhada no ano todo) a 1 (todos os registros no mesmo mês).
+
+```{r}
+media_circular <- function(m) {
+  ang <- (m - 0.5) * 2 * pi / 12
+  C <- mean(cos(ang)); S <- mean(sin(ang))
+  ang_medio <- atan2(S, C) %% (2 * pi)
+  c(mes_medio = round(ang_medio * 12 / (2 * pi) + 0.5, 1), r = round(sqrt(C^2 + S^2), 2))
+}
+
+rbind(Floração     = media_circular(reg$monthCollected[reg$flor]),
+      Frutificação = media_circular(reg$monthCollected[reg$fruto]))
+```
+
+Um `mes_medio` de 8,5 corresponde à segunda quinzena de agosto. Valores de *r* acima de 0,5 indicam uma fenofase bem concentrada no ano.
+
+::: {.callout-tip}
+## Para discutir na prática
+
+-   Em que meses você planejaria uma expedição para **coletar sementes** dessa espécie?
+-   O padrão muda entre estados (`stateProvince`)? Repita a análise separando por região.
+-   Que vieses os dados de herbário têm? Pense em quando e onde os coletores costumam ir a campo e em quais plantas eles preferem coletar.
+:::
+
+## Referências
+
+-   MORELLATO, L. P. C. et al. 2016. Linking plant phenology to conservation biology. *Biological Conservation* 195: 60-72.
+-   speciesLink. *API do serviço web v1.0*. <https://specieslink.net/ws/1.0/>
+-   ZAR, J. H. *Biostatistical Analysis*. 5. ed. Upper Saddle River: Prentice Hall, 2010. (capítulos de estatística circular)

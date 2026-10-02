@@ -1,0 +1,73 @@
+---
+title: "Visual identity"
+---
+
+Use the files on this page in presentations, posters, reports and outreach materials related to LEDT. Click **Download** to save the high-resolution file.
+
+## LEDT logos
+
+::: grid
+::: {.g-col-12 .g-col-md-4}
+::: {.card .h-100 .text-center}
+![](../assets/images/logos/logo_horizontal.png){fig-alt="LEDT horizontal logo" .p-3}
+
+::: card-body
+**Horizontal**\
+Preferred use: slides, footers, websites.
+
+<a href="../assets/images/logos/logo_horizontal.png" download class="btn btn-outline-success btn-sm"><i class="bi bi-download"></i> Download PNG</a>
+:::
+:::
+:::
+
+::: {.g-col-12 .g-col-md-4}
+::: {.card .h-100 .text-center}
+![](../assets/images/logos/logo_vertical.png){fig-alt="LEDT vertical logo" .p-3}
+
+::: card-body
+**Vertical**\
+Use: posters, covers, banners.
+
+<a href="../assets/images/logos/logo_vertical.png" download class="btn btn-outline-success btn-sm"><i class="bi bi-download"></i> Download PNG</a>
+:::
+:::
+:::
+
+::: {.g-col-12 .g-col-md-4}
+::: {.card .h-100 .text-center}
+![](../assets/images/logos/logo_simples.png){fig-alt="LEDT symbol" .p-3}
+
+::: card-body
+**Symbol**\
+Use: small spaces, icons, social media.
+
+<a href="../assets/images/logos/logo_simples.png" download class="btn btn-outline-success btn-sm"><i class="bi bi-download"></i> Download PNG</a>
+:::
+:::
+:::
+:::
+
+### Main color
+
+::: {.d-flex .align-items-center .gap-3 .my-3}
+[]{style="display:inline-block;width:56px;height:56px;border-radius:8px;background:#234a18;"}
+
+**LEDT green** · HEX `#234A18` · RGB 35, 74, 24
+:::
+
+### Good practice
+
+-   Do not distort, crop, rotate or recolor the logo.
+-   Keep clear space around the logo and use it on light backgrounds.
+-   When LEDT appears with other institutions, keep the logos at visually equivalent sizes.
+
+## Institutional logos
+
+Logos of LEDT's home and partner institutions, for use in presentations and posters.
+
+::: {.callout-note appearance="simple"}
+Each institution has its own brand guidelines. When in doubt, download the official version:
+
+-   **UFAM:** [UFAM Visual Identity](https://www.ufam.edu.br/identidade-visual-ufam.html) · [Visual Identity Manual (Edoc)](https://edoc.ufam.edu.br/handle/123456789/1996)
+-   **INPA:** contact INPA's Communication Office or visit the [INPA website](https://www.gov.br/inpa/pt-br)
+:::

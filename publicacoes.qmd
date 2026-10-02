@@ -1,7 +1,15 @@
 ---
-title: Publicações
-bibliography: publicacoes/publicacoes.bib
-nocite: |
-  @*
-csl: publicacoes/style.csl
+title: "Publicações"
+toc: false
+execute:
+  echo: false
+  warning: false
 ---
+
+Produção científica do LEDT, organizada por ano. Nomes em **negrito** são membros do laboratório. Os selos mostram a atenção online (Altmetric) e as citações (Dimensions) de cada trabalho, quando houver.
+
+```{r}
+#| output: asis
+source("publicacoes/publicacoes.R", encoding = "UTF-8")
+publicacoes_html("publicacoes/publicacoes.bib", lang = "pt")
+```

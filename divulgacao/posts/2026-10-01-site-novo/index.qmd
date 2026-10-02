@@ -1,0 +1,28 @@
+---
+title: "Site do LEDT de cara nova"
+description: "R Lab com rotinas em R, publicações organizadas por ano, páginas de disciplinas ampliadas, identidade visual e versões em inglês e espanhol."
+date: 2026-10-01
+date-modified: 2026-10-02
+categories: [Notícias]
+image: ../../../assets/images/logos/logo_simples.png
+---
+
+O site do Laboratório de Ecologia e Dendrologia Tropical (LEDT) foi atualizado! As novidades são:
+
+-   **R Lab**: rotinas em R comentadas, com código para copiar e script para baixar:
+    -   Primeiros passos no R (instalação do R, RStudio e Rtools);
+    -   Parâmetros fitossociológicos e diversidade;
+    -   Padrão espacial: índices de agregação e distribuições de probabilidade;
+    -   Espectros NIR: do arquivo bruto à discriminação de espécies, com dados reais de ipês (*Handroanthus*) e o ISC Reader App;
+    -   Mapa de ocorrências a partir do GBIF;
+    -   Padronização de nomes científicos;
+    -   Calendário fenológico a partir de registros do speciesLink.
+
+    Também há uma seção de **ferramentas publicadas**, como o **ISC Reader App** e o script para calcular os parâmetros do Critério B da Lista Vermelha da IUCN com o pacote ConR ([DOI: 10.5281/zenodo.22822017](https://doi.org/10.5281/zenodo.22822017)). Veja em [Extensão → R Lab](../../../extensao/rlab/index.qmd).
+
+-   **Publicações**: agora organizadas por ano, com filtro por tipo (artigos, preprints, livros, guias e software) e selos de atenção online (Altmetric) e de citações (Dimensions). Veja em [Pesquisa → Publicações](../../../publicacoes.qmd).
+-   **Disciplinas**: as páginas trazem objetivos, ementa, bibliografia, aulas práticas e o acesso ao material de cada turma.
+-   **Identidade visual**: logos do LEDT para baixar e usar em apresentações e pôsteres.
+-   **Idiomas**: as principais páginas do site agora têm versões em **inglês** e **espanhol**. Use o ícone de idioma no menu.
+
+Sugestões? Fale com a gente pela página de [Contato](../../../contato.qmd).

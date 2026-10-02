@@ -1,0 +1,38 @@
+<!-- Seletor de idioma: leva para a mesma página no outro idioma (ou para a página inicial, se ainda não houver tradução) -->
+<script>
+(function () {
+  var SITE = "https://ledtufam.github.io/";
+  var LANGS = ["en", "es"];
+  var lib = document.querySelector('script[src*="site_libs/"]');
+  if (!lib) return;
+  var root = lib.src.split("site_libs/")[0];             // raiz do site (funciona local e online)
+  var rel = location.href.split("#")[0].split("?")[0].slice(root.length);
+  var first = rel.split("/")[0];
+  var cur = LANGS.indexOf(first) >= 0 ? first : "pt";
+  var base = cur === "pt" ? rel : rel.slice(cur.length + 1);
+  if (base === "") base = "index.html";
+
+  // logo leva para a página inicial do idioma atual
+  if (cur !== "pt") {
+    document.querySelectorAll("a.navbar-brand").forEach(function (b) { b.setAttribute("href", root + cur + "/index.html"); });
+  }
+
+  document.querySelectorAll('a[href^="' + SITE + '"]').forEach(function (a) {
+    if (!a.closest(".navbar")) return;
+    var code = a.getAttribute("href").slice(SITE.length).replace(/\/$/, "") || "pt";
+    if (code !== "pt" && LANGS.indexOf(code) < 0) return;
+    var home = root + (code === "pt" ? "" : code + "/");
+    var alvo = home + base;
+    a.setAttribute("href", alvo);
+    a.setAttribute("hreflang", code);
+    if (code === cur) a.classList.add("active");
+    a.addEventListener("click", function (ev) {
+      if (location.protocol === "file:") { a.setAttribute("href", alvo); return; }
+      ev.preventDefault();
+      fetch(alvo, { method: "HEAD" })
+        .then(function (r) { location.href = r.ok ? alvo : home; })
+        .catch(function () { location.href = home; });
+    });
+  });
+})();
+</script>

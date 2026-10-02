@@ -69,3 +69,50 @@ figcaption {
   transform: scale(1.12);
   opacity: 0.85;
 }
+
+/* Cards da página inicial */
+.home-cards h3 {
+  font-size: 1.15rem;
+  margin-top: 0.5rem;
+}
+
+/* Cards (Extensão, Identidade visual) */
+.card {
+  border-radius: 12px;
+}
+.card img {
+  max-height: 180px;
+  object-fit: contain;
+}
+
+/* Tabela do R Lab e das disciplinas */
+.quarto-listing-table td {
+  vertical-align: middle;
+}
+
+/* Seletor de idioma no menu */
+#idiomas-menu .dropdown-item.active {
+  font-weight: 600;
+}
+
+/* Imagens dos cards de notícias sem corte */
+.quarto-grid-item .card-img-top img,
+.quarto-grid-item .card-img-top .listing-item-img-placeholder {
+  object-fit: contain;
+}
+
+/* Publicações */
+.pub-total { color: var(--bs-secondary-color, #888); margin-bottom: .3rem; }
+.pub-filtros { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1.5rem; }
+h2.pub-ano { border-bottom: 2px solid #78c2ad; padding-bottom: .2rem; margin-top: 2rem; }
+.pub-item { padding: .9rem 0; border-bottom: 1px solid rgba(128,128,128,.2); }
+.pub-item p { margin-bottom: .4rem; }
+.pub-tipo { font-weight: 500; margin-right: .35rem; color: #fff; }
+.pub-article  { background: #234a18; }
+.pub-preprint { background: #6cc3d5; }
+.pub-book     { background: #f3969a; }
+.pub-guide    { background: #ffce67; color: #333; }
+.pub-software { background: #8a6bbf; }
+.pub-other    { background: #888; }
+.pub-links { display: inline-flex; align-items: center; gap: .6rem; flex-wrap: wrap; }
+.pub-links .btn { font-size: .78rem; padding: .1rem .5rem; }

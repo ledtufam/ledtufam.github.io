@@ -1,4 +1,15 @@
 ---
-title: "Disciplinas (UFAM)"
-listing: grid
+title: "Disciplinas de Graduação (UFAM)"
+listing:
+  contents:
+    - "*.qmd"
+    - "!disciplinas.qmd"
+  type: grid
+  grid-columns: 2
+  sort: "title"
+  fields: [image, title, subtitle, description]
+  image-height: 200px
+toc: false
 ---
+
+Disciplinas ministradas por docentes do LEDT no curso de **Engenharia Florestal** da Faculdade de Ciências Agrárias (FCA/UFAM). Clique em uma disciplina para ver objetivos, ementa, bibliografia e o material da turma.

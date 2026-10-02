@@ -1,0 +1,15 @@
+---
+title: "Publicaciones"
+toc: false
+execute:
+  echo: false
+  warning: false
+---
+
+Producción científica del LEDT, organizada por año. Los nombres en **negrita** son miembros del laboratorio. Las insignias muestran la atención en línea (Altmetric) y las citas (Dimensions) de cada trabajo, cuando las hay.
+
+```{r}
+#| output: asis
+source("../publicacoes/publicacoes.R", encoding = "UTF-8")
+publicacoes_html("../publicacoes/publicacoes.bib", lang = "es")
+```

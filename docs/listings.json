@@ -1,95 +1,35 @@
 [
   {
-    "listing": "/pessoas/index.html",
+    "listing": "/index.html",
     "items": [
-      "/pessoas/Caroline.html"
+      "/divulgacao/posts/2026-10-01-site-novo/index.html"
     ]
   },
   {
-    "listing": "/publicacoes/publicacoes.html",
-    "items": []
-  },
-  {
-    "listing": "/teste/teste.html",
+    "listing": "/extensao/rlab/index.html",
     "items": [
-      "/teste/lecture3.html",
-      "/teste/lecture1.html",
-      "/teste/lecture2.html"
+      "/extensao/rlab/rotinas/primeiros-passos.html",
+      "/extensao/rlab/rotinas/fitossociologia.html",
+      "/extensao/rlab/rotinas/indices-agregacao.html",
+      "/extensao/rlab/rotinas/nir-especies.html",
+      "/extensao/rlab/rotinas/mapa-ocorrencias.html",
+      "/extensao/rlab/rotinas/nomes-cientificos.html",
+      "/extensao/rlab/rotinas/fenologia-specieslink.html"
     ]
-  },
-  {
-    "listing": "/ensino/disciplinas.html",
-    "items": [
-      "/ensino/graduacao/fitossociologia.html",
-      "/ensino/graduacao/dendrologiatropical.html",
-      "/ensino/graduacao/sementesflorestais.html",
-      "/ensino/graduacao/ecologiaflorestal.html"
-    ]
-  },
-  {
-    "listing": "/ensino/posgraduacao/posgraduacao.html",
-    "items": []
-  },
-  {
-    "listing": "/ensino/graduacao/graduacao.html",
-    "items": [
-      "/ensino/graduacao/fitossociologia/fitossociologia.html",
-      "/ensino/graduacao/dendrologiatropical.html",
-      "/ensino/graduacao/sementesflorestais.html",
-      "/ensino/graduacao/ecologiaflorestal.html"
-    ]
-  },
-  {
-    "listing": "/ensino/graduacao/fitossociologia.html",
-    "items": [
-      "/ensino/graduacao/disciplinas.html",
-      "/ensino/graduacao/dendrologiatropical.html",
-      "/ensino/graduacao/sementesflorestais.html",
-      "/ensino/graduacao/ecologiaflorestal.html"
-    ]
-  },
-  {
-    "listing": "/ensino/graduacao/fitossociologia/fitossociologia.html",
-    "items": []
   },
   {
     "listing": "/ensino/graduacao/disciplinas.html",
     "items": [
       "/ensino/graduacao/fitossociologia.html",
       "/ensino/graduacao/dendrologiatropical.html",
-      "/ensino/graduacao/sementesflorestais.html",
-      "/ensino/graduacao/ecologiaflorestal.html"
-    ]
-  },
-  {
-    "listing": "/ensino/posgraduacao/disciplinas.html",
-    "items": []
-  },
-  {
-    "listing": "/ensino/graduacao/dendrologiatropical.html",
-    "items": [
-      "/ensino/graduacao/disciplinas.html",
-      "/ensino/graduacao/fitossociologia.html",
-      "/ensino/graduacao/sementesflorestais.html",
-      "/ensino/graduacao/ecologiaflorestal.html"
-    ]
-  },
-  {
-    "listing": "/ensino/graduacao/sementesflorestais.html",
-    "items": [
-      "/ensino/graduacao/disciplinas.html",
-      "/ensino/graduacao/fitossociologia.html",
-      "/ensino/graduacao/dendrologiatropical.html",
-      "/ensino/graduacao/ecologiaflorestal.html"
-    ]
-  },
-  {
-    "listing": "/ensino/graduacao/ecologiaflorestal.html",
-    "items": [
-      "/ensino/graduacao/disciplinas.html",
-      "/ensino/graduacao/fitossociologia.html",
-      "/ensino/graduacao/dendrologiatropical.html",
+      "/ensino/graduacao/ecologiaflorestal.html",
       "/ensino/graduacao/sementesflorestais.html"
+    ]
+  },
+  {
+    "listing": "/divulgacaocientifica.html",
+    "items": [
+      "/divulgacao/posts/2026-10-01-site-novo/index.html"
     ]
   }
 ]

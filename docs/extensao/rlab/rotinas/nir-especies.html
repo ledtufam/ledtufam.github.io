@@ -1,0 +1,1620 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="LEDT/UFAM">
+<meta name="description" content="Fluxo do curso Herbarium Spectroscopy with MicroNIR: gerar a matriz no ISC Reader App, ajustar e recortar os comprimentos de onda, remover leituras problemáticas, calcular médias por exsicata e discriminar espécies de Handroanthus com LDA e validação leave-one-out.">
+
+<title>Espectros NIR: do arquivo bruto à discriminação de espécies – LEDT</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../assets/images/logos/favicon.ico" rel="icon">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../../styles.css">
+<meta property="og:title" content="Espectros NIR: do arquivo bruto à discriminação de espécies – LEDT">
+<meta property="og:description" content="Fluxo do curso Herbarium Spectroscopy with MicroNIR: gerar a matriz no ISC Reader App, ajustar e recortar os comprimentos de onda, remover leituras problemáticas, calcular médias por exsicata e discriminar espécies de Handroanthus com LDA e validação leave-one-out.">
+<meta property="og:image" content="https://ledtufam.github.io/extensao/rlab/rotinas/assets/images/logos/logo_horizontal.png">
+<meta property="og:site_name" content="LEDT">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../assets/images/logos/logo_simples.png" alt="LEDT – Laboratório de Ecologia e Dendrologia Tropical" class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Procurar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Alternar de navegação" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html"> 
+<span class="menu-text">Início</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../pessoas.html"> 
+<span class="menu-text">Pessoas</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ensino" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Ensino</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-ensino">    
+        <li>
+    <a class="dropdown-item" href="../../../ensino/graduacao/disciplinas.html">
+ <span class="dropdown-text">Graduação</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../ensino/posgraduacao/disciplinas.html">
+ <span class="dropdown-text">Pós-graduação</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-pesquisa" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Pesquisa</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-pesquisa">    
+        <li>
+    <a class="dropdown-item" href="../../../pesquisa.html">
+ <span class="dropdown-text">Projetos e parcerias</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../publicacoes.html">
+ <span class="dropdown-text">Publicações</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-extensão" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Extensão</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-extensão">    
+        <li>
+    <a class="dropdown-item" href="../../../extensao.html">
+ <span class="dropdown-text">Projetos de extensão</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../extensao/rlab/index.html">
+ <span class="dropdown-text">R Lab</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../divulgacaocientifica.html">
+ <span class="dropdown-text">Divulgação científica</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../selecoes.html"> 
+<span class="menu-text">Seleções</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-sobre" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Sobre</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-sobre">    
+        <li>
+    <a class="dropdown-item" href="../../../sobre.html">
+ <span class="dropdown-text">O LEDT</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../identidade-visual.html">
+ <span class="dropdown-text">Identidade visual</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../contato.html"> 
+<span class="menu-text">Contato</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-bi-translate" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-translate" role="img" aria-label="Idioma">
+</i> 
+ <span class="menu-text"></span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-bi-translate">    
+        <li>
+    <a class="dropdown-item" href="https://ledtufam.github.io/">
+ <span class="dropdown-text">Português</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://ledtufam.github.io/en/">
+ <span class="dropdown-text">English</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://ledtufam.github.io/es/">
+ <span class="dropdown-text">Español</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/ledtufam"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.instagram.com/ledt_ufam/"> <i class="bi bi-instagram" role="img" aria-label="Instagram">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.youtube.com/@ledt_ufam"> <i class="bi bi-youtube" role="img" aria-label="YouTube">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo escuro"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Nesta página</h2>
+   
+  <ul>
+  <li><a href="#os-dados" id="toc-os-dados" class="nav-link active" data-scroll-target="#os-dados">Os dados</a></li>
+  <li><a href="#parte-1.-preparação-dos-dados" id="toc-parte-1.-preparação-dos-dados" class="nav-link" data-scroll-target="#parte-1.-preparação-dos-dados">Parte 1. Preparação dos dados</a>
+  <ul class="collapse">
+  <li><a href="#gerar-a-matriz-espectral-no-isc-reader-app" id="toc-gerar-a-matriz-espectral-no-isc-reader-app" class="nav-link" data-scroll-target="#gerar-a-matriz-espectral-no-isc-reader-app">1. Gerar a matriz espectral no ISC Reader App</a></li>
+  <li><a href="#importar-a-matriz-no-r" id="toc-importar-a-matriz-no-r" class="nav-link" data-scroll-target="#importar-a-matriz-no-r">2. Importar a matriz no R</a>
+  <ul class="collapse">
+  <li><a href="#informações-no-nome-do-arquivo" id="toc-informações-no-nome-do-arquivo" class="nav-link" data-scroll-target="#informações-no-nome-do-arquivo">Informações no nome do arquivo</a></li>
+  </ul></li>
+  <li><a href="#ajustar-os-comprimentos-de-onda" id="toc-ajustar-os-comprimentos-de-onda" class="nav-link" data-scroll-target="#ajustar-os-comprimentos-de-onda">3. Ajustar os comprimentos de onda</a></li>
+  <li><a href="#associar-as-espécies" id="toc-associar-as-espécies" class="nav-link" data-scroll-target="#associar-as-espécies">4. Associar as espécies</a></li>
+  <li><a href="#visualizar-os-espectros" id="toc-visualizar-os-espectros" class="nav-link" data-scroll-target="#visualizar-os-espectros">5. Visualizar os espectros</a>
+  <ul class="collapse">
+  <li><a href="#recorte-da-faixa-espectral" id="toc-recorte-da-faixa-espectral" class="nav-link" data-scroll-target="#recorte-da-faixa-espectral">Recorte da faixa espectral</a></li>
+  <li><a href="#controle-de-qualidade-leituras-problemáticas" id="toc-controle-de-qualidade-leituras-problemáticas" class="nav-link" data-scroll-target="#controle-de-qualidade-leituras-problemáticas">Controle de qualidade: leituras problemáticas</a></li>
+  </ul></li>
+  <li><a href="#médias-por-exsicata-três-conjuntos-de-dados" id="toc-médias-por-exsicata-três-conjuntos-de-dados" class="nav-link" data-scroll-target="#médias-por-exsicata-três-conjuntos-de-dados">6. Médias por exsicata: três conjuntos de dados</a></li>
+  </ul></li>
+  <li><a href="#parte-2.-análise-discriminante" id="toc-parte-2.-análise-discriminante" class="nav-link" data-scroll-target="#parte-2.-análise-discriminante">Parte 2. Análise discriminante</a>
+  <ul class="collapse">
+  <li><a href="#lda-com-validação-leave-one-out" id="toc-lda-com-validação-leave-one-out" class="nav-link" data-scroll-target="#lda-com-validação-leave-one-out">7. LDA com validação leave-one-out</a>
+  <ul class="collapse">
+  <li><a href="#abaxial-adaxial" id="toc-abaxial-adaxial" class="nav-link" data-scroll-target="#abaxial-adaxial">Abaxial + adaxial</a></li>
+  <li><a href="#comparando-as-faces-da-folha" id="toc-comparando-as-faces-da-folha" class="nav-link" data-scroll-target="#comparando-as-faces-da-folha">Comparando as faces da folha</a></li>
+  <li><a href="#interpretação" id="toc-interpretação" class="nav-link" data-scroll-target="#interpretação">Interpretação</a></li>
+  <li><a href="#exportar-os-resultados" id="toc-exportar-os-resultados" class="nav-link" data-scroll-target="#exportar-os-resultados">Exportar os resultados</a></li>
+  </ul></li>
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências">Referências</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Espectros NIR: do arquivo bruto à discriminação de espécies</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Espectroscopia NIR</div>
+    <div class="quarto-category">Taxonomia</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Fluxo do curso Herbarium Spectroscopy with MicroNIR: gerar a matriz no ISC Reader App, ajustar e recortar os comprimentos de onda, remover leituras problemáticas, calcular médias por exsicata e discriminar espécies de Handroanthus com LDA e validação leave-one-out.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor</div>
+    <div class="quarto-title-meta-contents">
+             <p>LEDT/UFAM </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Nível:</strong> intermediário · <strong>Pacotes:</strong> MASS (já vem com o R) · <a href="../scripts/nir-especies.R" download="nir-especies.R">Baixar script</a> · <a href="../dados/matriz_isc_handroanthus.csv" download="matriz_isc_handroanthus.csv">Baixar a matriz espectral</a> · <a href="../dados/handroanthus_metadados.csv" download="handroanthus_metadados.csv">Baixar os metadados</a></p>
+</div>
+</div>
+</div>
+<p>Esta rotina reproduz o fluxo de trabalho do curso <strong><a href="https://minicurso-micronir.netlify.app/inicio">Herbarium Spectroscopy with MicroNIR: theory and practice</a></strong>, realizado em abril de 2025 no Herbário do INPA pelo projeto SPECTRA POP. A rotina usa os <strong>dados reais do curso</strong>: espectros NIR de exsicatas de ipês (<em>Handroanthus</em>, Bignoniaceae), gênero com espécies listadas na CITES.</p>
+<p>O fluxo tem duas partes, como no curso:</p>
+<ol type="1">
+<li><strong>Preparação dos dados:</strong> arquivos brutos → matriz espectral → ajuste dos comprimentos de onda → recorte → controle de qualidade → médias por exsicata;</li>
+<li><strong>Análise discriminante:</strong> LDA com validação cruzada <em>leave-one-out</em> (LOO), matriz de confusão e acurácia com intervalo de confiança.</li>
+</ol>
+<div class="callout callout-style-simple callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Dados e scripts originais
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<blockquote class="blockquote">
+<p>Vasconcelos, C. &amp; Durgante, F. (2025). <em>R codes and datasets used in the course “Herbarium Spectroscopy with MicroNIR: theory and practice”</em> (v1.0.0). Zenodo. <a href="https://doi.org/10.5281/zenodo.15531968" class="uri">https://doi.org/10.5281/zenodo.15531968</a> (licença CC BY-SA 4.0)</p>
+</blockquote>
+<p>Os scripts originais do curso (com <code>ggplot2</code>, <code>dplyr</code> e <code>caret</code>) estão no <a href="https://github.com/ccvasconcelos/spectrapop-course-workflow">GitHub</a>. Aqui o mesmo fluxo foi reescrito em <strong>R básico</strong>, passo a passo, e os resultados são idênticos.</p>
+</div>
+</div>
+<section id="os-dados" class="level2">
+<h2 class="anchored" data-anchor-id="os-dados">Os dados</h2>
+<ul>
+<li><strong>59 exsicatas</strong> do Herbário INPA de cinco espécies: <em>Handroanthus barbatus</em>, <em>H. impetiginosus</em>, <em>H. incanus</em>, <em>H. ochraceus</em> e <em>H. serratifolius</em>;</li>
+<li>espectrômetro portátil <strong>NIR-S-G1</strong> (InnoSpectra), faixa de <strong>900 a 1700 nm</strong>, medindo <strong>reflectância</strong>;</li>
+<li>cerca de 4 leituras por face da folha, <strong>abaxial</strong> (<code>ab</code>) e <strong>adaxial</strong> (<code>ad</code>), num total de <strong>474 arquivos</strong> <code>_r.csv</code>.</li>
+</ul>
+</section>
+<section id="parte-1.-preparação-dos-dados" class="level1">
+<h1>Parte 1. Preparação dos dados</h1>
+<section id="gerar-a-matriz-espectral-no-isc-reader-app" class="level2">
+<h2 class="anchored" data-anchor-id="gerar-a-matriz-espectral-no-isc-reader-app">1. Gerar a matriz espectral no ISC Reader App</h2>
+<p>Cada leitura do NIR-S-G1 gera um arquivo <code>.csv</code> com um cabeçalho de configuração (modelo, número de série, data, temperatura etc.) e uma tabela de comprimento de onda × reflectância. O <strong><a href="https://spectrapop.shinyapps.io/iscreaderapp/">ISC Reader App</a></strong> junta todos esses arquivos numa única tabela.</p>
+<ol type="1">
+<li>Baixe o arquivo <code>spectrapop-course-workflow.zip</code> no <a href="https://doi.org/10.5281/zenodo.15531968">Zenodo</a> e descompacte. Os arquivos brutos estão em <code>Datasets/Readings_from_micronir/</code>.</li>
+<li>Abra o <a href="https://spectrapop.shinyapps.io/iscreaderapp/">ISC Reader App</a> e marque <strong>Tipo de dado: Reflectância</strong>.</li>
+<li>Em <strong>Selecione os arquivos brutos (.csv)</strong>, clique em <em>Browse…</em> e selecione <strong>todos</strong> os arquivos <code>_r.csv</code> (Ctrl + A). Aguarde até aparecer <em>Upload complete</em>.</li>
+<li>Confira os espectros nas abas <strong>Tabela</strong>, <strong>Espectros</strong> e <strong>PCA</strong>.</li>
+<li>Clique em <strong>Download CSV</strong> e salve o arquivo na pasta <code>dados/</code> do seu projeto do RStudio, com o nome <code>matriz_isc_handroanthus.csv</code>.</li>
+</ol>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Se preferir pular esta etapa, baixe a matriz já pronta no topo desta página. Ela é exatamente a saída do app para os 474 arquivos.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="importar-a-matriz-no-r" class="level2">
+<h2 class="anchored" data-anchor-id="importar-a-matriz-no-r">2. Importar a matriz no R</h2>
+<p>A matriz tem <strong>uma linha por leitura</strong> (coluna <code>File</code>) e <strong>uma coluna por comprimento de onda</strong>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>m    <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../dados/matriz_isc_handroanthus.csv"</span>, <span class="at">check.names =</span> <span class="cn">FALSE</span>)   <span class="co"># no seu projeto: "dados/..."</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>meta <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../dados/handroanthus_metadados.csv"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(m)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 474 913</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>m[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                              File 900.860912737931
+1 INPA0145168_ab_FolHerbario_20250403_110028_r.csv               NA
+2 INPA0145168_ab_FolHerbario_20250403_110107_r.csv               NA
+3 INPA0145168_ab_FolHerbario_20250403_110128_r.csv               NA
+  900.868887283122 901.114121469303 901.701099874012 904.747472781646
+1               NA               NA        0.2830460               NA
+2               NA               NA        0.2900928               NA
+3               NA               NA        0.2798360               NA</code></pre>
+</div>
+</div>
+<section id="informações-no-nome-do-arquivo" class="level3">
+<h3 class="anchored" data-anchor-id="informações-no-nome-do-arquivo">Informações no nome do arquivo</h3>
+<p>O nome de cada arquivo segue o padrão <code>TOMBO_FACE_CONFIGURAÇÃO_DATA_HORA_r.csv</code>, por exemplo <code>INPA0145168_ab_FolHerbario_20250403_110028_r.csv</code>. Separamos essas partes:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>partes <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, <span class="fu">strsplit</span>(<span class="fu">sub</span>(<span class="st">"_r</span><span class="sc">\\</span><span class="st">.csv$"</span>, <span class="st">""</span>, m<span class="sc">$</span>File), <span class="st">"_"</span>))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>info <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">barcode =</span> partes[, <span class="dv">1</span>],     <span class="co"># código de barras da exsicata</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">face    =</span> partes[, <span class="dv">2</span>],     <span class="co"># ab = abaxial; ad = adaxial</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">config  =</span> partes[, <span class="dv">3</span>],</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">data    =</span> partes[, <span class="dv">4</span>],</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">hora    =</span> partes[, <span class="dv">5</span>]</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>info<span class="sc">$</span>leitura <span class="ot">&lt;-</span> <span class="fu">paste</span>(info<span class="sc">$</span>barcode, info<span class="sc">$</span>face, info<span class="sc">$</span>hora, <span class="at">sep =</span> <span class="st">"_"</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(info, <span class="dv">3</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      barcode face      config     data   hora               leitura
+1 INPA0145168   ab FolHerbario 20250403 110028 INPA0145168_ab_110028
+2 INPA0145168   ab FolHerbario 20250403 110107 INPA0145168_ab_110107
+3 INPA0145168   ab FolHerbario 20250403 110128 INPA0145168_ab_110128</code></pre>
+</div>
+</div>
+<p>Quantas leituras temos por exsicata e por face?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(info<span class="sc">$</span>face)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ ab  ad 
+223 251 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">table</span>(info<span class="sc">$</span>barcode, info<span class="sc">$</span>face))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             
+              ab ad
+  INPA0145168  8  0
+  INPA0205825  4  4
+  INPA0205827  4  4
+  INPA0205828  0  8
+  INPA0205832  4  4
+  INPA0205833  4  4</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="ajustar-os-comprimentos-de-onda" class="level2">
+<h2 class="anchored" data-anchor-id="ajustar-os-comprimentos-de-onda">3. Ajustar os comprimentos de onda</h2>
+<p>Repare nas <strong>células vazias</strong> (<code>NA</code>) da matriz. Cada aparelho tem uma calibração própria e mede em comprimentos de onda ligeiramente diferentes (por exemplo, 901,70 nm em um e 900,86 nm em outro). Como as leituras do curso foram feitas com mais de um NIR-S-G1, o app junta todos os comprimentos de onda, e cada leitura só tem valores nas colunas do seu aparelho.</p>
+<p>Mas <strong>todas as leituras têm o mesmo número de pontos</strong>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>wl_bruto <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">colnames</span>(m)[<span class="sc">-</span><span class="dv">1</span>])</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>R_bruto  <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(m[, <span class="sc">-</span><span class="dv">1</span>])</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">rowSums</span>(<span class="sc">!</span><span class="fu">is.na</span>(R_bruto)))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+228 
+474 </code></pre>
+</div>
+</div>
+<p>Como no curso, atribuímos a todas as leituras a mesma <strong>grade de referência</strong>: 228 pontos de 900 a 1700 nm, a cada 3,52 nm. Para cada leitura, pegamos os 228 valores na ordem e os colocamos nessa grade:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>wl_ref <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">900</span>, <span class="dv">1700</span>, <span class="at">by =</span> <span class="fl">3.52</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(wl_ref)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 228</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">apply</span>(R_bruto, <span class="dv">1</span>, <span class="cf">function</span>(r) r[<span class="sc">!</span><span class="fu">is.na</span>(r)]))   <span class="co"># 228 valores de cada leitura, em ordem</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(X) <span class="ot">&lt;-</span> wl_ref</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(X)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 474 228</code></pre>
+</div>
+</div>
+</section>
+<section id="associar-as-espécies" class="level2">
+<h2 class="anchored" data-anchor-id="associar-as-espécies">4. Associar as espécies</h2>
+<p>Os metadados das exsicatas vêm da base do Herbário INPA (BRAHMS). Ligamos as espécies às leituras pelo código de barras:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>info<span class="sc">$</span>especie <span class="ot">&lt;-</span> meta<span class="sc">$</span>especie[<span class="fu">match</span>(info<span class="sc">$</span>barcode, meta<span class="sc">$</span>barcode)]</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(info<span class="sc">$</span>especie, info<span class="sc">$</span>face)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                            
+                             ab ad
+  Handroanthus barbatus      52 72
+  Handroanthus impetiginosus 34 36
+  Handroanthus incanus       60 59
+  Handroanthus ochraceus     24 32
+  Handroanthus serratifolius 53 52</code></pre>
+</div>
+</div>
+</section>
+<section id="visualizar-os-espectros" class="level2">
+<h2 class="anchored" data-anchor-id="visualizar-os-espectros">5. Visualizar os espectros</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (f <span class="cf">in</span> <span class="fu">c</span>(<span class="st">"ab"</span>, <span class="st">"ad"</span>)) {</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  sel <span class="ot">&lt;-</span> info<span class="sc">$</span>face <span class="sc">==</span> f</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">matplot</span>(wl_ref, <span class="fu">t</span>(X[sel, ]), <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="fu">adjustcolor</span>(<span class="st">"firebrick"</span>, <span class="fl">0.5</span>),</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">xlab =</span> <span class="st">"Comprimento de onda (nm)"</span>, <span class="at">ylab =</span> <span class="st">"Reflectância"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">1.05</span>),</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">main =</span> <span class="fu">ifelse</span>(f <span class="sc">==</span> <span class="st">"ab"</span>, <span class="st">"Abaxial"</span>, <span class="st">"Adaxial"</span>))</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="nir-especies_files/figure-html/unnamed-chunk-7-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Espectros de reflectância brutos (474 leituras), por face da folha."><img src="nir-especies_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672" alt="Espectros de reflectância brutos (474 leituras), por face da folha."></a></p>
+<figcaption>Espectros de reflectância brutos (474 leituras), por face da folha.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<section id="recorte-da-faixa-espectral" class="level3">
+<h3 class="anchored" data-anchor-id="recorte-da-faixa-espectral">Recorte da faixa espectral</h3>
+<p>As extremidades da faixa do aparelho (abaixo de 950 nm e acima de 1650 nm) são mais ruidosas. Como no curso, ficamos com a faixa de <strong>950 a 1650 nm</strong>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>manter <span class="ot">&lt;-</span> wl_ref <span class="sc">&gt;=</span> <span class="dv">950</span> <span class="sc">&amp;</span> wl_ref <span class="sc">&lt;=</span> <span class="dv">1650</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> X[, manter]</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>wl <span class="ot">&lt;-</span> wl_ref[manter]</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(X)       <span class="co"># 199 comprimentos de onda</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 199</code></pre>
+</div>
+</div>
+</section>
+<section id="controle-de-qualidade-leituras-problemáticas" class="level3">
+<h3 class="anchored" data-anchor-id="controle-de-qualidade-leituras-problemáticas">Controle de qualidade: leituras problemáticas</h3>
+<p>No curso, as leituras problemáticas foram identificadas olhando o <strong>gráfico interativo</strong> e passando o mouse sobre as curvas fora do padrão. Você pode fazer o mesmo no seu computador com o pacote <strong>plotly</strong>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plotly)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>longo <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">leitura =</span> <span class="fu">rep</span>(info<span class="sc">$</span>leitura, <span class="fu">ncol</span>(X)),</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">wl =</span> <span class="fu">rep</span>(wl, <span class="at">each =</span> <span class="fu">nrow</span>(X)), <span class="at">refl =</span> <span class="fu">as.vector</span>(X))</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_ly</span>(longo, <span class="at">x =</span> <span class="sc">~</span>wl, <span class="at">y =</span> <span class="sc">~</span>refl, <span class="at">split =</span> <span class="sc">~</span>leitura, <span class="at">type =</span> <span class="st">"scatter"</span>, <span class="at">mode =</span> <span class="st">"lines"</span>,</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">line =</span> <span class="fu">list</span>(<span class="at">width =</span> <span class="dv">1</span>), <span class="at">showlegend =</span> <span class="cn">FALSE</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Seis leituras foram excluídas:</p>
+<ul>
+<li><code>INPA0206014_ad_112909</code>: reflectância “chapada” perto de 1,0 em toda a faixa (provavelmente a referência branca salva por engano);</li>
+<li><code>INPA0206017_ab_102412</code>: leitura muito escura (sensor mal posicionado sobre a folha);</li>
+<li>quatro leituras adaxiais de <code>INPA0206027</code>, todas muito abaixo das demais.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>remover <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"INPA0206017_ab_102412"</span>, <span class="st">"INPA0206014_ad_112909"</span>,</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>             <span class="st">"INPA0206027_ad_105717"</span>, <span class="st">"INPA0206027_ad_105558"</span>,</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>             <span class="st">"INPA0206027_ad_105646"</span>, <span class="st">"INPA0206027_ad_105620"</span>)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co"># como essas leituras se comparam às demais?</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">rowMeans</span>(X[info<span class="sc">$</span>leitura <span class="sc">%in%</span> remover, ]), <span class="dv">3</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.999 0.097 0.234 0.223 0.218 0.293</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">rowMeans</span>(X[<span class="sc">!</span>info<span class="sc">$</span>leitura <span class="sc">%in%</span> remover, ]))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.3487  0.5470  0.5949  0.5898  0.6392  0.7392 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>ok <span class="ot">&lt;-</span> <span class="sc">!</span>info<span class="sc">$</span>leitura <span class="sc">%in%</span> remover</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> X[ok, ]</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>info <span class="ot">&lt;-</span> info[ok, ]</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(X)       <span class="co"># 468 leituras</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 468</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (f <span class="cf">in</span> <span class="fu">c</span>(<span class="st">"ab"</span>, <span class="st">"ad"</span>)) {</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  sel <span class="ot">&lt;-</span> info<span class="sc">$</span>face <span class="sc">==</span> f</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">matplot</span>(wl, <span class="fu">t</span>(X[sel, ]), <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="fu">adjustcolor</span>(<span class="st">"firebrick"</span>, <span class="fl">0.5</span>),</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">xlab =</span> <span class="st">"Comprimento de onda (nm)"</span>, <span class="at">ylab =</span> <span class="st">"Reflectância"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.85</span>),</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">main =</span> <span class="fu">ifelse</span>(f <span class="sc">==</span> <span class="st">"ab"</span>, <span class="st">"Abaxial"</span>, <span class="st">"Adaxial"</span>))</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="nir-especies_files/figure-html/unnamed-chunk-11-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Espectros de reflectância após o recorte (950–1650 nm) e a remoção das leituras problemáticas."><img src="nir-especies_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672" alt="Espectros de reflectância após o recorte (950–1650 nm) e a remoção das leituras problemáticas."></a></p>
+<figcaption>Espectros de reflectância após o recorte (950–1650 nm) e a remoção das leituras problemáticas.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Os vales em torno de <strong>1200 nm</strong> e <strong>1450 nm</strong> correspondem à absorção pelas ligações O–H (água residual e celulose) e, perto de <strong>1650 nm</strong>, pelas ligações C–H.</p>
+<div class="callout callout-style-simple callout-important">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Sempre olhe os espectros antes de analisar.</strong> Registre quais leituras foram excluídas e por quê: isso faz parte da metodologia do seu trabalho.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="médias-por-exsicata-três-conjuntos-de-dados" class="level2">
+<h2 class="anchored" data-anchor-id="médias-por-exsicata-três-conjuntos-de-dados">6. Médias por exsicata: três conjuntos de dados</h2>
+<p>As várias leituras de uma mesma folha <strong>não são independentes</strong>: a unidade de análise é a <strong>exsicata</strong>. Calculamos o espectro médio de cada exsicata em três conjuntos de dados, como no curso:</p>
+<ol type="1">
+<li><strong>abaxial + adaxial</strong> (todas as leituras);</li>
+<li><strong>só abaxial</strong>;</li>
+<li><strong>só adaxial</strong>.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>media_exsicata <span class="ot">&lt;-</span> <span class="cf">function</span>(sel) {</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  g <span class="ot">&lt;-</span> <span class="fu">factor</span>(info<span class="sc">$</span>barcode[sel])</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  M <span class="ot">&lt;-</span> <span class="fu">rowsum</span>(X[sel, ], g) <span class="sc">/</span> <span class="fu">as.vector</span>(<span class="fu">table</span>(g))</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">especie =</span> meta<span class="sc">$</span>especie[<span class="fu">match</span>(<span class="fu">rownames</span>(M), meta<span class="sc">$</span>barcode)],</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">barcode =</span> <span class="fu">rownames</span>(M), M, <span class="at">check.names =</span> <span class="cn">FALSE</span>, <span class="at">row.names =</span> <span class="cn">NULL</span>)</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>dados <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Abaxial + Adaxial"</span> <span class="ot">=</span> <span class="fu">media_exsicata</span>(<span class="fu">rep</span>(<span class="cn">TRUE</span>, <span class="fu">nrow</span>(X))),</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Abaxial"</span>           <span class="ot">=</span> <span class="fu">media_exsicata</span>(info<span class="sc">$</span>face <span class="sc">==</span> <span class="st">"ab"</span>),</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Adaxial"</span>           <span class="ot">=</span> <span class="fu">media_exsicata</span>(info<span class="sc">$</span>face <span class="sc">==</span> <span class="st">"ad"</span>)</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(dados, nrow)                       <span class="co"># nº de exsicatas em cada conjunto</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Abaxial + Adaxial           Abaxial           Adaxial 
+               59                53                56 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(dados[[<span class="st">"Abaxial + Adaxial"</span>]]<span class="sc">$</span>especie)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+     Handroanthus barbatus Handroanthus impetiginosus 
+                        15                          9 
+      Handroanthus incanus     Handroanthus ochraceus 
+                        15                          7 
+Handroanthus serratifolius 
+                        13 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>especies <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unique</span>(info<span class="sc">$</span>especie))</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>cores <span class="ot">&lt;-</span> <span class="fu">setNames</span>(<span class="fu">c</span>(<span class="st">"#1b9e77"</span>, <span class="st">"#d95f02"</span>, <span class="st">"#7570b3"</span>, <span class="st">"#e7298a"</span>, <span class="st">"#66a61e"</span>), especies)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (nm <span class="cf">in</span> <span class="fu">names</span>(dados)) {</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  d <span class="ot">&lt;-</span> dados[[nm]]</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  medias <span class="ot">&lt;-</span> <span class="fu">rowsum</span>(<span class="fu">as.matrix</span>(d[, <span class="sc">-</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)]), d<span class="sc">$</span>especie) <span class="sc">/</span> <span class="fu">as.vector</span>(<span class="fu">table</span>(d<span class="sc">$</span>especie))</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">matplot</span>(wl, <span class="fu">t</span>(medias), <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">lty =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> cores[<span class="fu">rownames</span>(medias)],</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">xlab =</span> <span class="st">"Comprimento de onda (nm)"</span>, <span class="at">ylab =</span> <span class="st">"Reflectância"</span>, <span class="at">main =</span> nm, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">0.45</span>, <span class="fl">0.7</span>))</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"bottomright"</span>, <span class="at">legend =</span> especies, <span class="at">col =</span> cores, <span class="at">lty =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">bty =</span> <span class="st">"n"</span>,</span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">text.font =</span> <span class="dv">3</span>, <span class="at">cex =</span> <span class="fl">0.8</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="nir-especies_files/figure-html/unnamed-chunk-13-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Reflectância média por espécie nos três conjuntos de dados."><img src="nir-especies_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="1056" alt="Reflectância média por espécie nos três conjuntos de dados."></a></p>
+<figcaption>Reflectância média por espécie nos três conjuntos de dados.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="parte-2.-análise-discriminante" class="level1">
+<h1>Parte 2. Análise discriminante</h1>
+<section id="lda-com-validação-leave-one-out" class="level2">
+<h2 class="anchored" data-anchor-id="lda-com-validação-leave-one-out">7. LDA com validação leave-one-out</h2>
+<p>A <strong>análise discriminante linear (LDA)</strong> encontra as combinações de comprimentos de onda que melhor separam as espécies. Para saber se o modelo funciona com exsicatas <strong>novas</strong>, usamos a validação <strong>leave-one-out (LOO)</strong>: retiramos uma exsicata, ajustamos o modelo com as demais, classificamos a exsicata retirada e repetimos para todas.</p>
+<p>Além da espécie prevista, a LDA dá a <strong>probabilidade posterior</strong> de cada espécie. Como no curso, cada previsão é classificada em quatro tipos:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 38%">
+<col style="width: 61%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tipo</th>
+<th>Significado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Correta (significativa)</td>
+<td>espécie certa, com probabilidade &gt; 0,95</td>
+</tr>
+<tr class="even">
+<td>Correta (não significativa)</td>
+<td>espécie certa, com probabilidade ≤ 0,95</td>
+</tr>
+<tr class="odd">
+<td>Incorreta (significativa)</td>
+<td>espécie errada, com probabilidade &gt; 0,95</td>
+</tr>
+<tr class="even">
+<td>Incorreta (não significativa)</td>
+<td>espécie errada, com probabilidade ≤ 0,95</td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>lda_loo <span class="ot">&lt;-</span> <span class="cf">function</span>(d) {</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  Xd <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(d[, <span class="sc">-</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)])               <span class="co"># só as colunas espectrais</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  y  <span class="ot">&lt;-</span> <span class="fu">factor</span>(d<span class="sc">$</span>especie)</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>  res <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">barcode =</span> d<span class="sc">$</span>barcode, <span class="at">observada =</span> y, <span class="at">prevista =</span> <span class="cn">NA</span>, <span class="at">prob =</span> <span class="cn">NA</span>)</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>  post <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="fu">nrow</span>(d), <span class="fu">nlevels</span>(y), <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="cn">NULL</span>, <span class="fu">levels</span>(y)))</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_len</span>(<span class="fu">nrow</span>(d))) {</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>    modelo   <span class="ot">&lt;-</span> <span class="fu">suppressWarnings</span>(<span class="fu">lda</span>(Xd[<span class="sc">-</span>i, ], <span class="at">grouping =</span> y[<span class="sc">-</span>i]))   <span class="co"># ajusta sem a exsicata i</span></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>    previsao <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo, Xd[i, , <span class="at">drop =</span> <span class="cn">FALSE</span>])              <span class="co"># classifica a exsicata i</span></span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>    res<span class="sc">$</span>prevista[i] <span class="ot">&lt;-</span> <span class="fu">as.character</span>(previsao<span class="sc">$</span>class)</span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>    res<span class="sc">$</span>prob[i]     <span class="ot">&lt;-</span> <span class="fu">max</span>(previsao<span class="sc">$</span>posterior)</span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>    post[i, ]       <span class="ot">&lt;-</span> previsao<span class="sc">$</span>posterior</span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>  res<span class="sc">$</span>tipo <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="fu">ifelse</span>(res<span class="sc">$</span>prevista <span class="sc">==</span> res<span class="sc">$</span>observada, <span class="st">"Correta"</span>, <span class="st">"Incorreta"</span>),</span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">ifelse</span>(res<span class="sc">$</span>prob <span class="sc">&gt;</span> <span class="fl">0.95</span>, <span class="st">" (significativa)"</span>, <span class="st">" (não significativa)"</span>))</span>
+<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a>  res<span class="sc">$</span>prevista <span class="ot">&lt;-</span> <span class="fu">factor</span>(res<span class="sc">$</span>prevista, <span class="at">levels =</span> <span class="fu">levels</span>(y))</span>
+<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cbind</span>(res, <span class="fu">round</span>(post, <span class="dv">4</span>))</span>
+<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>O <code>suppressWarnings()</code> esconde o aviso de <em>variáveis colineares</em>: comprimentos de onda vizinhos são muito correlacionados. O curso usa a LDA diretamente sobre os 199 comprimentos de onda, sem pré-processamento.</p>
+</div>
+</div>
+</div>
+<section id="abaxial-adaxial" class="level3">
+<h3 class="anchored" data-anchor-id="abaxial-adaxial">Abaxial + adaxial</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>loo <span class="ot">&lt;-</span> <span class="fu">lda_loo</span>(dados[[<span class="st">"Abaxial + Adaxial"</span>]])</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(loo[, <span class="fu">c</span>(<span class="st">"barcode"</span>, <span class="st">"observada"</span>, <span class="st">"prevista"</span>, <span class="st">"prob"</span>, <span class="st">"tipo"</span>)])</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      barcode                  observada                   prevista      prob
+1 INPA0145168 Handroanthus impetiginosus Handroanthus impetiginosus 0.9978121
+2 INPA0205825      Handroanthus barbatus      Handroanthus barbatus 0.9999997
+3 INPA0205827      Handroanthus barbatus Handroanthus serratifolius 0.9999716
+4 INPA0205828      Handroanthus barbatus      Handroanthus barbatus 0.8416973
+5 INPA0205832      Handroanthus barbatus      Handroanthus barbatus 1.0000000
+6 INPA0205833      Handroanthus barbatus      Handroanthus barbatus 1.0000000
+                         tipo
+1     Correta (significativa)
+2     Correta (significativa)
+3   Incorreta (significativa)
+4 Correta (não significativa)
+5     Correta (significativa)
+6     Correta (significativa)</code></pre>
+</div>
+</div>
+<section id="matriz-de-confusão-e-acurácia" class="level4">
+<h4 class="anchored" data-anchor-id="matriz-de-confusão-e-acurácia">Matriz de confusão e acurácia</h4>
+<p>A <strong>acurácia</strong> é a proporção de exsicatas classificadas corretamente. O <strong>intervalo de confiança de 95%</strong> vem do teste binomial exato (o mesmo que a função <code>confusionMatrix()</code> do pacote <strong>caret</strong>, usada no curso, calcula):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>acuracia <span class="ot">&lt;-</span> <span class="cf">function</span>(loo) {</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  acertos <span class="ot">&lt;-</span> <span class="fu">sum</span>(loo<span class="sc">$</span>prevista <span class="sc">==</span> loo<span class="sc">$</span>observada)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  ic <span class="ot">&lt;-</span> <span class="fu">binom.test</span>(acertos, <span class="fu">nrow</span>(loo))<span class="sc">$</span>conf.int</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="at">acuracia =</span> <span class="dv">100</span> <span class="sc">*</span> acertos <span class="sc">/</span> <span class="fu">nrow</span>(loo), <span class="at">IC_inf =</span> <span class="dv">100</span> <span class="sc">*</span> ic[<span class="dv">1</span>], <span class="at">IC_sup =</span> <span class="dv">100</span> <span class="sc">*</span> ic[<span class="dv">2</span>])</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>conf <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="at">Observada =</span> loo<span class="sc">$</span>observada, <span class="at">Prevista =</span> loo<span class="sc">$</span>prevista)</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="fu">dimnames</span>(conf) <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="fu">dimnames</span>(conf), <span class="cf">function</span>(x) <span class="fu">sub</span>(<span class="st">"Handroanthus"</span>, <span class="st">"H."</span>, x))</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>conf</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                  Prevista
+Observada          H. barbatus H. impetiginosus H. incanus H. ochraceus
+  H. barbatus               14                0          0            0
+  H. impetiginosus           0                8          0            0
+  H. incanus                 0                1         14            0
+  H. ochraceus               1                0          0            3
+  H. serratifolius           0                0          0            0
+                  Prevista
+Observada          H. serratifolius
+  H. barbatus                     1
+  H. impetiginosus                1
+  H. incanus                      0
+  H. ochraceus                    3
+  H. serratifolius               13</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">acuracia</span>(loo), <span class="dv">2</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>acuracia   IC_inf   IC_sup 
+   88.14    77.07    95.09 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(loo<span class="sc">$</span>tipo)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  Correta (não significativa)       Correta (significativa) 
+                            9                            43 
+Incorreta (não significativa)     Incorreta (significativa) 
+                            2                             5 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>plot_confusao <span class="ot">&lt;-</span> <span class="cf">function</span>(conf, <span class="at">titulo =</span> <span class="st">""</span>) {</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  k <span class="ot">&lt;-</span> <span class="fu">nrow</span>(conf)</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">3</span>, <span class="dv">1</span>))</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">image</span>(<span class="dv">1</span><span class="sc">:</span>k, <span class="dv">1</span><span class="sc">:</span>k, <span class="fu">t</span>(conf[k<span class="sc">:</span><span class="dv">1</span>, ]), <span class="at">col =</span> <span class="fu">colorRampPalette</span>(<span class="fu">c</span>(<span class="st">"white"</span>, <span class="st">"firebrick"</span>))(<span class="dv">20</span>),</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">axes =</span> <span class="cn">FALSE</span>, <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">main =</span> titulo, <span class="at">cex.main =</span> <span class="fl">0.95</span>)</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">axis</span>(<span class="dv">1</span>, <span class="dv">1</span><span class="sc">:</span>k, <span class="fu">colnames</span>(conf), <span class="at">las =</span> <span class="dv">2</span>, <span class="at">font =</span> <span class="dv">3</span>, <span class="at">cex.axis =</span> <span class="fl">0.85</span>)</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">axis</span>(<span class="dv">2</span>, <span class="dv">1</span><span class="sc">:</span>k, <span class="fu">rev</span>(<span class="fu">rownames</span>(conf)), <span class="at">las =</span> <span class="dv">1</span>, <span class="at">font =</span> <span class="dv">3</span>, <span class="at">cex.axis =</span> <span class="fl">0.85</span>)</span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mtext</span>(<span class="st">"Prevista"</span>, <span class="at">side =</span> <span class="dv">1</span>, <span class="at">line =</span> <span class="fl">6.5</span>); <span class="fu">mtext</span>(<span class="st">"Observada"</span>, <span class="at">side =</span> <span class="dv">2</span>, <span class="at">line =</span> <span class="fl">7.5</span>)</span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>k) <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>k) <span class="fu">text</span>(j, k <span class="sc">-</span> i <span class="sc">+</span> <span class="dv">1</span>, conf[i, j], <span class="at">cex =</span> <span class="fl">1.2</span>)</span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">box</span>()</span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>ac <span class="ot">&lt;-</span> <span class="fu">acuracia</span>(loo)</span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_confusao</span>(conf, <span class="fu">sprintf</span>(<span class="st">"Abaxial + Adaxial | %.1f%% (IC 95%%: %.1f–%.1f)"</span>, ac[<span class="dv">1</span>], ac[<span class="dv">2</span>], ac[<span class="dv">3</span>]))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="nir-especies_files/figure-html/unnamed-chunk-17-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Matriz de confusão (abaxial + adaxial). Na diagonal, as exsicatas classificadas corretamente."><img src="nir-especies_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="624" alt="Matriz de confusão (abaxial + adaxial). Na diagonal, as exsicatas classificadas corretamente."></a></p>
+<figcaption>Matriz de confusão (abaxial + adaxial). Na diagonal, as exsicatas classificadas corretamente.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="comparando-as-faces-da-folha" class="level3">
+<h3 class="anchored" data-anchor-id="comparando-as-faces-da-folha">Comparando as faces da folha</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>resultados <span class="ot">&lt;-</span> <span class="fu">lapply</span>(dados, lda_loo)</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>tabela <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">sapply</span>(resultados, <span class="cf">function</span>(r) {</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>  a <span class="ot">&lt;-</span> <span class="fu">acuracia</span>(r)</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="at">Exsicatas =</span> <span class="fu">nrow</span>(r),</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Acurácia (%)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">round</span>(a[[<span class="dv">1</span>]], <span class="dv">1</span>),</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">IC 95% (%)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">paste0</span>(<span class="fu">round</span>(a[[<span class="dv">2</span>]], <span class="dv">1</span>), <span class="st">"–"</span>, <span class="fu">round</span>(a[[<span class="dv">3</span>]], <span class="dv">1</span>)),</span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Corretas p &gt; 0,95</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(r<span class="sc">$</span>tipo <span class="sc">==</span> <span class="st">"Correta (significativa)"</span>),</span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Incorretas p &gt; 0,95</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(r<span class="sc">$</span>tipo <span class="sc">==</span> <span class="st">"Incorreta (significativa)"</span>))</span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>}))</span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tabela)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 11%">
+<col style="width: 14%">
+<col style="width: 12%">
+<col style="width: 20%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Exsicatas</th>
+<th style="text-align: left;">Acurácia (%)</th>
+<th style="text-align: left;">IC 95% (%)</th>
+<th style="text-align: left;">Corretas p &gt; 0,95</th>
+<th style="text-align: left;">Incorretas p &gt; 0,95</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Abaxial + Adaxial</td>
+<td style="text-align: left;">59</td>
+<td style="text-align: left;">88.1</td>
+<td style="text-align: left;">77.1–95.1</td>
+<td style="text-align: left;">43</td>
+<td style="text-align: left;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Abaxial</td>
+<td style="text-align: left;">53</td>
+<td style="text-align: left;">75.5</td>
+<td style="text-align: left;">61.7–86.2</td>
+<td style="text-align: left;">36</td>
+<td style="text-align: left;">7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Adaxial</td>
+<td style="text-align: left;">56</td>
+<td style="text-align: left;">85.7</td>
+<td style="text-align: left;">73.8–93.6</td>
+<td style="text-align: left;">37</td>
+<td style="text-align: left;">5</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (nm <span class="cf">in</span> <span class="fu">c</span>(<span class="st">"Abaxial"</span>, <span class="st">"Adaxial"</span>)) {</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  r <span class="ot">&lt;-</span> resultados[[nm]]</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  cf <span class="ot">&lt;-</span> <span class="fu">table</span>(r<span class="sc">$</span>observada, r<span class="sc">$</span>prevista)</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dimnames</span>(cf) <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="fu">dimnames</span>(cf), <span class="cf">function</span>(x) <span class="fu">sub</span>(<span class="st">"Handroanthus"</span>, <span class="st">"H."</span>, x))</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>  ac <span class="ot">&lt;-</span> <span class="fu">acuracia</span>(r)</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_confusao</span>(cf, <span class="fu">sprintf</span>(<span class="st">"%s | %.1f%%"</span>, nm, ac[<span class="dv">1</span>]))</span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="nir-especies_files/figure-html/unnamed-chunk-19-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Matrizes de confusão para cada face da folha."><img src="nir-especies_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="1056" alt="Matrizes de confusão para cada face da folha."></a></p>
+<figcaption>Matrizes de confusão para cada face da folha.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="interpretação" class="level3">
+<h3 class="anchored" data-anchor-id="interpretação">Interpretação</h3>
+<p>Usando as duas faces juntas, cerca de <strong>88% das exsicatas</strong> são classificadas corretamente, contra cerca de 75% só com a face abaxial e 86% só com a adaxial. Combinar as leituras das duas faces dá a melhor discriminação.</p>
+<p>Veja também os <strong>tipos de previsão</strong>: a maior parte dos acertos tem probabilidade alta (&gt; 0,95), e as previsões com probabilidade baixa concentram os erros. Na prática, exsicatas classificadas com baixa probabilidade, ou incorretamente com alta probabilidade, merecem uma <strong>revisão da identificação</strong>.</p>
+</section>
+<section id="exportar-os-resultados" class="level3">
+<h3 class="anchored" data-anchor-id="exportar-os-resultados">Exportar os resultados</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(resultados[[<span class="st">"Abaxial + Adaxial"</span>]], <span class="st">"resultados/loo_abaxial_adaxial.csv"</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(resultados[[<span class="st">"Abaxial"</span>]],           <span class="st">"resultados/loo_abaxial.csv"</span>,         <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(resultados[[<span class="st">"Adaxial"</span>]],           <span class="st">"resultados/loo_adaxial.csv"</span>,         <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Cuidados
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Valide sempre no nível da <strong>exsicata</strong> (ou do indivíduo), nunca da leitura. Se leituras da mesma folha caem no treino e no teste ao mesmo tempo, a acurácia fica inflada.</li>
+<li>Com poucas exsicatas por espécie (como <em>H. ochraceus</em>, com 7), os resultados variam bastante. Amostre mais indivíduos sempre que possível.</li>
+<li>Para ir além, teste <strong>pré-processamentos</strong> (SNV, derivadas de Savitzky-Golay, com o pacote <strong>prospectr</strong>) e outros classificadores (PLS-DA, <em>random forest</em>), sempre com a mesma validação.</li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<section id="referências" class="level2">
+<h2 class="anchored" data-anchor-id="referências">Referências</h2>
+<ul>
+<li>DURGANTE, F. M. et al.&nbsp;2013. Species spectral signature: discriminating closely related plant species in the Amazon with near-infrared leaf-spectroscopy. <em>Forest Ecology and Management</em> 291: 240-248.</li>
+<li>VASCONCELOS, C.; DURGANTE, F. 2025. <em>R codes and datasets used in the course “Herbarium Spectroscopy with MicroNIR: theory and practice”</em> (v1.0.0). Zenodo. <a href="https://doi.org/10.5281/zenodo.15531968" class="uri">https://doi.org/10.5281/zenodo.15531968</a></li>
+<li>Minicurso MicroNIR: <a href="https://minicurso-micronir.netlify.app/inicio" class="uri">https://minicurso-micronir.netlify.app/inicio</a></li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<!-- Seletor de idioma: leva para a mesma página no outro idioma (ou para a página inicial, se ainda não houver tradução) -->
+<script>
+(function () {
+  var SITE = "https://ledtufam.github.io/";
+  var LANGS = ["en", "es"];
+  var lib = document.querySelector('script[src*="site_libs/"]');
+  if (!lib) return;
+  var root = lib.src.split("site_libs/")[0];             // raiz do site (funciona local e online)
+  var rel = location.href.split("#")[0].split("?")[0].slice(root.length);
+  var first = rel.split("/")[0];
+  var cur = LANGS.indexOf(first) >= 0 ? first : "pt";
+  var base = cur === "pt" ? rel : rel.slice(cur.length + 1);
+  if (base === "") base = "index.html";
+
+  // logo leva para a página inicial do idioma atual
+  if (cur !== "pt") {
+    document.querySelectorAll("a.navbar-brand").forEach(function (b) { b.setAttribute("href", root + cur + "/index.html"); });
+  }
+
+  document.querySelectorAll('a[href^="' + SITE + '"]').forEach(function (a) {
+    if (!a.closest(".navbar")) return;
+    var code = a.getAttribute("href").slice(SITE.length).replace(/\/$/, "") || "pt";
+    if (code !== "pt" && LANGS.indexOf(code) < 0) return;
+    var home = root + (code === "pt" ? "" : code + "/");
+    var alvo = home + base;
+    a.setAttribute("href", alvo);
+    a.setAttribute("hreflang", code);
+    if (code === cur) a.classList.add("active");
+    a.addEventListener("click", function (ev) {
+      if (location.protocol === "file:") { a.setAttribute("href", alvo); return; }
+      ev.preventDefault();
+      fetch(alvo, { method: "HEAD" })
+        .then(function (r) { location.href = r.ok ? alvo : home; })
+        .catch(function () { location.href = home; });
+    });
+  });
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiada");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiada");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/ledtufam\.github\.io");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2026 LEDT/UFAM. Todos os direitos reservados.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="https://ccvasconcelos.github.io/">
+<p>Desenvolvido por Caroline C. Vasconcelos</p>
+</a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","descPosition":"bottom","loop":false,"closeEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+</body></html>

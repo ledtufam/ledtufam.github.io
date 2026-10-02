@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="Identificação de árvores tropicais no campo e no herbário: morfologia, nomenclatura, chaves e famílias da Amazônia Central.">
 
-<title>FGD921 - Dendrologia Tropical (60h)</title>
+<title>FGD921 - Dendrologia Tropical – LEDT</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,8 +32,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
 <link href="../../assets/images/logos/favicon.ico" rel="icon">
-<script src="../../site_libs/quarto-listing/list.min.js"></script>
-<script src="../../site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -61,80 +60,28 @@ ul.task-list li input[type="checkbox"] {
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
     "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-title',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="FGD921 - Dendrologia Tropical – LEDT">
+<meta property="og:description" content="Identificação de árvores tropicais no campo e no herbário: morfologia, nomenclatura, chaves e famílias da Amazônia Central.">
+<meta property="og:image" content="https://ledtufam.github.io/assets/images/photos/dendrologia.png">
+<meta property="og:site_name" content="LEDT">
+<meta property="og:image:height" content="623">
+<meta property="og:image:width" content="632">
 </head>
 
 <body class="nav-fixed">
@@ -145,11 +92,11 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../../assets/images/logos/logo_simples.png" alt="" class="navbar-logo">
+    <img src="../../assets/images/logos/logo_simples.png" alt="LEDT – Laboratório de Ecologia e Dendrologia Tropical" class="navbar-logo">
     </a>
   </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+            <div id="quarto-search" class="" title="Procurar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Alternar de navegação" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -177,50 +124,105 @@ window.Quarto = {
   </li>  
     </ul>
   </li>
-  <li class="nav-item">
-    <a class="nav-link" href="../../pesquisa.html"> 
-<span class="menu-text">Pesquisa</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-pesquisa" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Pesquisa</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-pesquisa">    
+        <li>
+    <a class="dropdown-item" href="../../pesquisa.html">
+ <span class="dropdown-text">Projetos e parcerias</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../publicacoes.html"> 
-<span class="menu-text">Publicações</span></a>
+        <li>
+    <a class="dropdown-item" href="../../publicacoes.html">
+ <span class="dropdown-text">Publicações</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../extensao.html"> 
-<span class="menu-text">Extensão</span></a>
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-extensão" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Extensão</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-extensão">    
+        <li>
+    <a class="dropdown-item" href="../../extensao.html">
+ <span class="dropdown-text">Projetos de extensão</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../divulgacaocientifica.html"> 
-<span class="menu-text">Divulgação Científica</span></a>
+        <li>
+    <a class="dropdown-item" href="../../extensao/rlab/index.html">
+ <span class="dropdown-text">R Lab</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../../divulgacaocientifica.html">
+ <span class="dropdown-text">Divulgação científica</span></a>
+  </li>  
+    </ul>
+  </li>
   <li class="nav-item">
     <a class="nav-link" href="../../selecoes.html"> 
 <span class="menu-text">Seleções</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../sobre.html"> 
-<span class="menu-text">Sobre</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-sobre" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Sobre</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-sobre">    
+        <li>
+    <a class="dropdown-item" href="../../sobre.html">
+ <span class="dropdown-text">O LEDT</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../../identidade-visual.html">
+ <span class="dropdown-text">Identidade visual</span></a>
+  </li>  
+    </ul>
+  </li>
   <li class="nav-item">
     <a class="nav-link" href="../../contato.html"> 
 <span class="menu-text">Contato</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-bi-translate" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-translate" role="img" aria-label="Idioma">
+</i> 
+ <span class="menu-text"></span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-bi-translate">    
+        <li>
+    <a class="dropdown-item" href="https://ledtufam.github.io/">
+ <span class="dropdown-text">Português</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://ledtufam.github.io/en/">
+ <span class="dropdown-text">English</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://ledtufam.github.io/es/">
+ <span class="dropdown-text">Español</span></a>
+  </li>  
+    </ul>
+  </li>
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/ledtufam"> <i class="bi bi-github" role="img" aria-label="GitHub">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.instagram.com/ledt_ufam/"> <i class="bi bi-instagram" role="img" aria-label="Quarto Instagram">
+    <a class="nav-link" href="https://www.instagram.com/ledt_ufam/"> <i class="bi bi-instagram" role="img" aria-label="Instagram">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.youtube.com/@ledt_ufam"> <i class="bi bi-youtube" role="img" aria-label="YouTube">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
-  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo escuro"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -235,8 +237,11 @@ window.Quarto = {
    
   <ul>
   <li><a href="#objetivos" id="toc-objetivos" class="nav-link active" data-scroll-target="#objetivos">Objetivos</a></li>
-  <li><a href="#carga-horária" id="toc-carga-horária" class="nav-link" data-scroll-target="#carga-horária">Carga horária</a></li>
   <li><a href="#ementa" id="toc-ementa" class="nav-link" data-scroll-target="#ementa">Ementa</a></li>
+  <li><a href="#aulas-práticas" id="toc-aulas-práticas" class="nav-link" data-scroll-target="#aulas-práticas">Aulas práticas</a></li>
+  <li><a href="#cronograma-2026.2" id="toc-cronograma-2026.2" class="nav-link" data-scroll-target="#cronograma-2026.2">Cronograma 2026.2</a></li>
+  <li><a href="#avaliação" id="toc-avaliação" class="nav-link" data-scroll-target="#avaliação">Avaliação</a></li>
+  <li><a href="#bibliografia" id="toc-bibliografia" class="nav-link" data-scroll-target="#bibliografia">Bibliografia</a></li>
   <li><a href="#turmas" id="toc-turmas" class="nav-link" data-scroll-target="#turmas">Turmas</a></li>
   </ul>
 </nav>
@@ -246,9 +251,19 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">FGD921 - Dendrologia Tropical (60h)</h1>
-</div>
+<h1 class="title">FGD921 - Dendrologia Tropical</h1>
+<p class="subtitle lead">Engenharia Florestal · 4º período · 60h</p>
+  <div class="quarto-categories">
+    <div class="quarto-category">Graduação</div>
+    <div class="quarto-category">Engenharia Florestal</div>
+  </div>
+  </div>
 
+<div>
+  <div class="description">
+    Identificação de árvores tropicais no campo e no herbário: morfologia, nomenclatura, chaves e famílias da Amazônia Central.
+  </div>
+</div>
 
 
 <div class="quarto-title-meta">
@@ -263,103 +278,372 @@ window.Quarto = {
 </header>
 
 
-<p><a href="../..\assets/images/photos/dendrologia.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../..\assets/images/photos/dendrologia.png" class="img-fluid"></a></p>
-<section id="objetivos" class="level3">
-<h3 class="anchored" data-anchor-id="objetivos">Objetivos</h3>
+<p><a href="../..\assets/images/photos/dendrologia.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../..\assets/images/photos/dendrologia.png" class="img-fluid" alt="Aula de Dendrologia Tropical"></a></p>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Código:</strong> FGD921 | <strong>Créditos:</strong> 3.2.1.0 | <strong>Carga horária:</strong> 60h (30h teoria + 30h prática)<br>
+<strong>Período:</strong> 4º | <strong>Pré-requisito:</strong> IBB619 – Taxonomia Florestal<br>
+<strong>Departamento:</strong> Ciências Florestais (DCF/FCA/UFAM)</p>
+</div>
+</div>
+</div>
+<section id="objetivos" class="level2">
+<h2 class="anchored" data-anchor-id="objetivos">Objetivos</h2>
 <p><strong>Geral:</strong> Fornecer ao aluno os conhecimentos necessários de dendrologia, taxonomia, nomenclatura, morfologia, fenologia e fitogeografia para o estudo das espécies tropicais. Como também as técnicas de identificação de árvores no campo e a respectiva manipulação das amostras no herbário.</p>
 <p><strong>Específicos:</strong></p>
 <ul>
-<li><p>Apresentar as principais características dendrológicas das principais famílias botânicas que ocorrem na Amazônia Central;</p></li>
-<li><p>Capacitar o aluno de engenharia florestal para o reconhecimento de famílias botânicas e espécies florestais por meio de características dendrológicas de indivíduos arbóreos.</p></li>
+<li>Apresentar as principais características dendrológicas das principais famílias botânicas que ocorrem na Amazônia Central;</li>
+<li>Capacitar o aluno de engenharia florestal para o reconhecimento de famílias botânicas e espécies florestais por meio de características dendrológicas de indivíduos arbóreos.</li>
 </ul>
 </section>
-<section id="carga-horária" class="level3">
-<h3 class="anchored" data-anchor-id="carga-horária">Carga horária</h3>
-<p><strong>Teoria:</strong> 30h</p>
-<p><strong>Prática:</strong> 30h</p>
-</section>
-<section id="ementa" class="level3">
-<h3 class="anchored" data-anchor-id="ementa">Ementa</h3>
+<section id="ementa" class="level2">
+<h2 class="anchored" data-anchor-id="ementa">Ementa</h2>
 <ul>
-<li><p>Introdução</p></li>
-<li><p>Morfologia e descrição dendrológica</p></li>
-<li><p>Chaves de identificação de espécies florestais</p></li>
-<li><p>Coleta e preparo de material para coleções (herbário, carpotecas, xilotecas)</p></li>
-<li><p>Nomenclatura vegetal</p></li>
-<li><p>Biologia reprodutiva das árvores</p></li>
-<li><p>Grupos ecológicos de árvores</p></li>
-<li><p>Fenologia de espécies florestais</p></li>
-<li><p>Levantamentos dendrológicos</p></li>
-<li><p>Implantação de um arboreto</p></li>
-<li><p>Espécies importantes e suas características morfológicas, ecológicas e econômicas</p></li>
+<li>Introdução</li>
+<li>Morfologia e descrição dendrológica</li>
+<li>Chaves de identificação de espécies florestais</li>
+<li>Coleta e preparo de material para coleções (herbário, carpotecas, xilotecas)</li>
+<li>Nomenclatura vegetal</li>
+<li>Biologia reprodutiva das árvores</li>
+<li>Grupos ecológicos de árvores</li>
+<li>Fenologia de espécies florestais</li>
+<li>Levantamentos dendrológicos</li>
+<li>Implantação de um arboreto</li>
+<li>Espécies importantes e suas características morfológicas, ecológicas e econômicas</li>
 </ul>
-<hr>
-<blockquote class="blockquote">
-<p>Faça o download da ementa completa <a href="../../assets/pdf/Engenharia Florestal PPC_Dendrologia tropical.pdf" target="_blank" class="btn btn-outline-success"> <i class="bi bi-file-pdf-fill"></i> PDF</a></p>
-</blockquote>
+<p><a href="../../assets/pdf/Engenharia Florestal PPC_Dendrologia tropical.pdf" target="_blank" class="btn btn-outline-success btn-sm"><i class="bi bi-file-pdf-fill"></i> Ementa oficial (PPC)</a></p>
 </section>
-<section id="turmas" class="level3">
-<h3 class="anchored" data-anchor-id="turmas">Turmas</h3>
-<blockquote class="blockquote">
-<p><strong>2026.2 |</strong> Acessar o material da disciplina. Restrito aos alunos matriculados <a href="https://drive.google.com/drive/folders/1cm5WZlNnhHUUuo_Og26-Kj6w4OrEXxIL?usp=drive_link" target="_blank" class="btn btn-outline-success"> <i class="bi bi-google"></i> Drive</a></p>
-</blockquote>
-
-
-
-</section>
-
-<div class="quarto-listing quarto-listing-container-table" id="listing-listing">
-<div class="listing-actions-group">
-   <div class="input-group input-group-sm quarto-listing-sort">
-     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
-     <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
-       <option value="" disabled="" selected="" hidden="">Order By</option>
-       <option value="index" data-direction="asc">Default</option>
-         <option value="listing-title-sort" data-direction="asc">
-          Title
-        </option>
-     </select>
-  </div>
-    <div class="input-group input-group-sm quarto-listing-filter">
-      <span class="input-group-text"><i class="bi bi-search"></i></span>
-      <input type="text" class="search form-control" placeholder="Filter">
-    </div>
+<section id="aulas-práticas" class="level2">
+<h2 class="anchored" data-anchor-id="aulas-práticas">Aulas práticas</h2>
+<p>As aulas práticas acontecem no campus da UFAM e no herbário. Os alunos aplicam o roteiro de campo padronizado para descrever caracteres dendrológicos das árvores do campus. Esses dados vão compor o <strong>e-book da flórula do campus da UFAM</strong>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<table class="quarto-listing-table table">
+<div class="callout-title-container flex-fill">
+O que levar para o campo
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li>Caderneta de campo e lápis</li>
+<li>Lupa de mão (10×)</li>
+<li>Celular com câmera e GPS</li>
+<li>Roupa e calçado adequados, repelente e água</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="cronograma-2026.2" class="level2">
+<h2 class="anchored" data-anchor-id="cronograma-2026.2">Cronograma 2026.2</h2>
+<p>Aulas às terças-feiras, das 8h às 12h (FCA01 e Laboratório de Ecologia e Dendrologia Tropical). T = teórica; P = prática.</p>
+<table class="table-striped table-hover caption-top table">
 <thead>
-<tr>
-<th>
-<a class="sort" data-sort="listing-title-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Title</a>
-</th>
+<tr class="header">
+<th>Data</th>
+<th>Conteúdo</th>
+<th>Tipo</th>
 </tr>
 </thead>
-<tbody class="list">
-<tr data-index="0" data-listing-file-modified-sort="1785716041710" data-listing-reading-time-sort="1" data-listing-word-count-sort="1" data-listing-title-sort="Disciplinas" data-listing-filename-sort="disciplinas.qmd">
-<td>
-<a href="../../ensino/graduacao/disciplinas.html" class="title listing-title">Disciplinas</a>
-</td>
+<tbody>
+<tr class="odd">
+<td>11/08</td>
+<td>Apresentação da disciplina e do plano de ensino. Introdução à Dendrologia Tropical</td>
+<td>T</td>
 </tr>
-<tr data-index="1" data-listing-file-modified-sort="1786168088557" data-listing-reading-time-sort="1" data-listing-word-count-sort="170" data-listing-title-sort="FGD320 - Fitossociologia de Florestas Tropicais (45h)" data-listing-filename-sort="fitossociologia.qmd">
-<td>
-<a href="../../ensino/graduacao/fitossociologia.html" class="title listing-title">FGD320 - Fitossociologia de Florestas Tropicais (45h)</a>
-</td>
+<tr class="even">
+<td>11/08</td>
+<td>Caminhada de reconhecimento no campus: caracteres dendrológicos</td>
+<td>P</td>
 </tr>
-<tr data-index="2" data-listing-file-modified-sort="1786168097158" data-listing-reading-time-sort="1" data-listing-word-count-sort="140" data-listing-title-sort="FGD925 - Sementes Florestais (60h)" data-listing-filename-sort="sementesflorestais.qmd">
-<td>
-<a href="../../ensino/graduacao/sementesflorestais.html" class="title listing-title">FGD925 - Sementes Florestais (60h)</a>
-</td>
+<tr class="odd">
+<td>18/08</td>
+<td>Morfologia e descrição dendrológica</td>
+<td>T</td>
 </tr>
-<tr data-index="3" data-listing-file-modified-sort="1786168078027" data-listing-reading-time-sort="2" data-listing-word-count-sort="226" data-listing-title-sort="FGD926 - Ecologia Florestal (60h)" data-listing-filename-sort="ecologiaflorestal.qmd">
-<td>
-<a href="../../ensino/graduacao/ecologiaflorestal.html" class="title listing-title">FGD926 - Ecologia Florestal (60h)</a>
-</td>
+<tr class="even">
+<td>18/08</td>
+<td>Descrição morfológica de material botânico</td>
+<td>P</td>
+</tr>
+<tr class="odd">
+<td>25/08</td>
+<td>Chaves de identificação de espécies florestais</td>
+<td>T</td>
+</tr>
+<tr class="even">
+<td>25/08</td>
+<td><strong>EE1</strong> – Uso de chaves de identificação botânica</td>
+<td>P</td>
+</tr>
+<tr class="odd">
+<td>01/09</td>
+<td>Coleta e preparo de material para coleções (herbário, carpotecas, xilotecas)</td>
+<td>T</td>
+</tr>
+<tr class="even">
+<td>01/09</td>
+<td>Coleta e preparo de espécimes botânicos no campus</td>
+<td>P</td>
+</tr>
+<tr class="odd">
+<td>08/09</td>
+<td>Nomenclatura vegetal</td>
+<td>T</td>
+</tr>
+<tr class="even">
+<td>08/09</td>
+<td>Interpretação e validação de nomes científicos (<a href="../../extensao/rlab/rotinas/nomes-cientificos.html">rotina no R Lab</a>)</td>
+<td>P</td>
+</tr>
+<tr class="odd">
+<td>15/09</td>
+<td>Palestras: Espectroscopia NIR (Dra. Flávia Durgante, INPA) e aplicativos de identificação por imagem (Ma. Gabrielly Guabiraba, JBRJ)</td>
+<td>T</td>
+</tr>
+<tr class="even">
+<td>15/09</td>
+<td>A importância da identificação nos inventários florestais: estudos de caso</td>
+<td>T</td>
+</tr>
+<tr class="odd">
+<td>22/09</td>
+<td>Visita técnica ao Herbário INPA</td>
+<td>P</td>
+</tr>
+<tr class="even">
+<td>29/09</td>
+<td>Biologia reprodutiva das árvores</td>
+<td>T</td>
+</tr>
+<tr class="odd">
+<td>29/09</td>
+<td>Oficina de síndromes de polinização e dispersão (Dra. Samyra Ramos, INPA)</td>
+<td>P</td>
+</tr>
+<tr class="even">
+<td>06/10</td>
+<td>Grupos ecológicos de árvores</td>
+<td>T</td>
+</tr>
+<tr class="odd">
+<td>06/10</td>
+<td>Classificação ecológica de espécies arbóreas em trilhas da UFAM</td>
+<td>P</td>
+</tr>
+<tr class="even">
+<td>20/10</td>
+<td>Fenologia de espécies florestais</td>
+<td>T</td>
+</tr>
+<tr class="odd">
+<td>20/10</td>
+<td><strong>EE2</strong> – Calendários fenológicos com registros do speciesLink (<a href="../../extensao/rlab/rotinas/fenologia-specieslink.html">rotina no R Lab</a>)</td>
+<td>P</td>
+</tr>
+<tr class="even">
+<td>27/10</td>
+<td>Levantamentos dendrológicos</td>
+<td>T</td>
+</tr>
+<tr class="odd">
+<td>27/10</td>
+<td><strong>EE3</strong> – Levantamento dendrológico em campo</td>
+<td>P</td>
+</tr>
+<tr class="even">
+<td>03/11</td>
+<td>Implantação de um arboreto</td>
+<td>T</td>
+</tr>
+<tr class="odd">
+<td>03/11</td>
+<td>Planejamento de um arboreto didático</td>
+<td>P</td>
+</tr>
+<tr class="even">
+<td>10/11</td>
+<td>Espécies importantes e suas características (parte 1)</td>
+<td>T</td>
+</tr>
+<tr class="odd">
+<td>10/11</td>
+<td>Desafios: desvendando enigmas botânicos (parte 1)</td>
+<td>P</td>
+</tr>
+<tr class="even">
+<td>17/11</td>
+<td>Espécies importantes e suas características (parte 2, com Dr.&nbsp;Mike Hopkins, INPA)</td>
+<td>T</td>
+</tr>
+<tr class="odd">
+<td>17/11</td>
+<td>Desafios: desvendando enigmas botânicos (parte 2)</td>
+<td>P</td>
+</tr>
+<tr class="even">
+<td>24/11</td>
+<td><strong>EE4</strong> – Seminário: ficha técnica de espécie arbórea do campus</td>
+<td>T</td>
+</tr>
+<tr class="odd">
+<td>01/12</td>
+<td><strong>EE5</strong> – Avaliação oral (sabatina) de identificação botânica</td>
+<td>P</td>
+</tr>
+<tr class="even">
+<td>15/12</td>
+<td>Prova final</td>
+<td>–</td>
 </tr>
 </tbody>
 </table>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+</section>
+<section id="avaliação" class="level2">
+<h2 class="anchored" data-anchor-id="avaliação">Avaliação</h2>
+<table class="table-striped caption-top table">
+<colgroup>
+<col style="width: 61%">
+<col style="width: 17%">
+<col style="width: 10%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Atividade</th>
+<th>Formato</th>
+<th>Data</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>EE1</strong> – Identificação com chaves botânicas</td>
+<td>Individual</td>
+<td>25/08</td>
+<td>10</td>
+</tr>
+<tr class="even">
+<td><strong>EE2</strong> – Calendários fenológicos (speciesLink)</td>
+<td>Equipe</td>
+<td>20/10</td>
+<td>10</td>
+</tr>
+<tr class="odd">
+<td><strong>EE3</strong> – Levantamento dendrológico no campus</td>
+<td>Equipe</td>
+<td>27/10</td>
+<td>10</td>
+</tr>
+<tr class="even">
+<td><strong>EE4</strong> – Seminário: ficha técnica de espécie</td>
+<td>Equipe</td>
+<td>24/11</td>
+<td>10</td>
+</tr>
+<tr class="odd">
+<td><strong>EE5</strong> – Sabatina de identificação botânica</td>
+<td>Individual</td>
+<td>01/12</td>
+<td>10</td>
+</tr>
+</tbody>
+</table>
+<p>Quem obtiver <strong>média dos exercícios escolares (MEE)</strong> ≥ 8,0 e frequência mínima de 75% está aprovado e dispensado da prova final (Resolução nº 023/2017 – CONSEPE). Os demais fazem a <strong>prova final</strong> (15/12), que abrange todo o conteúdo.</p>
+</section>
+<section id="bibliografia" class="level2">
+<h2 class="anchored" data-anchor-id="bibliografia">Bibliografia</h2>
+<p><strong>Básica</strong></p>
+<ul>
+<li>GENTRY, A. H. <em>Chave para identificação de plantas da Amazônia Ocidental, baseado em caracteres de material estéril</em>. 1992. 78 p.</li>
+<li>JOLY, A. B. <em>Introdução à Taxonomia Vegetal</em>. São Paulo: Editora Nacional, 1985. 777 p.</li>
+<li>NEILL, D. A.; KILLEN, T. <em>Curso de Dendrología Tropical en la Amazonia Boliviana</em>. 1991. 61 p.</li>
+</ul>
+<p><strong>Complementar</strong></p>
+<ul>
+<li>RIBEIRO, J. E. L. S. et al.&nbsp;<em>Flora da Reserva Ducke: guia de identificação das plantas vasculares de uma floresta de terra-firme na Amazônia Central</em>. Manaus: INPA, 1999. 816 p.</li>
+<li>SOUZA, V. C.; LORENZI, H. <em>Botânica Sistemática: guia ilustrado para identificação das famílias de fanerógamas nativas e exóticas no Brasil, baseado em APG III</em>. Nova Odessa: Instituto Plantarum, 2012.</li>
+<li>PINHEIRO, A. L. <em>Fundamentos em Taxonomia Aplicados ao Desenvolvimento da Dendrologia Tropical</em>. Viçosa: UFV, 2014. 278 p.</li>
+</ul>
+<p><strong>Recursos online</strong></p>
+<ul>
+<li><a href="https://floradobrasil.jbrj.gov.br/">Flora e Funga do Brasil</a> — nomes aceitos e descrições</li>
+<li><a href="https://specieslink.net/">speciesLink</a> — registros e imagens de herbários</li>
+<li><a href="https://reflora.jbrj.gov.br/reflora/herbarioVirtual/">Reflora – Herbário Virtual</a></li>
+</ul>
+</section>
+<section id="turmas" class="level2">
+<h2 class="anchored" data-anchor-id="turmas">Turmas</h2>
+<table class="table-striped caption-top table">
+<caption>Acesso ao material restrito aos alunos matriculados.</caption>
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Semestre</th>
+<th>Material</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>2026.2</strong></td>
+<td><a href="https://drive.google.com/drive/folders/1cm5WZlNnhHUUuo_Og26-Kj6w4OrEXxIL?usp=drive_link" target="_blank" class="btn btn-outline-success btn-sm"><i class="bi bi-google"></i> Drive</a></td>
+</tr>
+</tbody>
+</table>
+
+
+</section>
+
+</main> <!-- /main -->
+<!-- Seletor de idioma: leva para a mesma página no outro idioma (ou para a página inicial, se ainda não houver tradução) -->
+<script>
+(function () {
+  var SITE = "https://ledtufam.github.io/";
+  var LANGS = ["en", "es"];
+  var lib = document.querySelector('script[src*="site_libs/"]');
+  if (!lib) return;
+  var root = lib.src.split("site_libs/")[0];             // raiz do site (funciona local e online)
+  var rel = location.href.split("#")[0].split("?")[0].slice(root.length);
+  var first = rel.split("/")[0];
+  var cur = LANGS.indexOf(first) >= 0 ? first : "pt";
+  var base = cur === "pt" ? rel : rel.slice(cur.length + 1);
+  if (base === "") base = "index.html";
+
+  // logo leva para a página inicial do idioma atual
+  if (cur !== "pt") {
+    document.querySelectorAll("a.navbar-brand").forEach(function (b) { b.setAttribute("href", root + cur + "/index.html"); });
+  }
+
+  document.querySelectorAll('a[href^="' + SITE + '"]').forEach(function (a) {
+    if (!a.closest(".navbar")) return;
+    var code = a.getAttribute("href").slice(SITE.length).replace(/\/$/, "") || "pt";
+    if (code !== "pt" && LANGS.indexOf(code) < 0) return;
+    var home = root + (code === "pt" ? "" : code + "/");
+    var alvo = home + base;
+    a.setAttribute("href", alvo);
+    a.setAttribute("hreflang", code);
+    if (code === cur) a.classList.add("active");
+    a.addEventListener("click", function (ev) {
+      if (location.protocol === "file:") { a.setAttribute("href", alvo); return; }
+      ev.preventDefault();
+      fetch(alvo, { method: "HEAD" })
+        .then(function (r) { location.href = r.ok ? alvo : home; })
+        .catch(function () { location.href = home; });
+    });
+  });
+})();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -547,12 +831,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // flash "checked"
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
+    button.setAttribute("title", "Copiada");
     let tooltip;
     if (window.bootstrap) {
       button.setAttribute("data-bs-toggle", "tooltip");
       button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
+      button.setAttribute("data-bs-title", "Copiada");
       tooltip = new bootstrap.Tooltip(button, 
         { trigger: "manual", 
           customClass: "code-copy-button-tooltip",
@@ -596,7 +880,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
+      var filterRegex = new RegExp("https:\/\/ledtufam\.github\.io");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -928,7 +1212,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>© 2026 LEDT. Todos os direitos reservados.</p>
+<p>© 2026 LEDT/UFAM. Todos os direitos reservados.</p>
 </div>   
     <div class="nav-footer-center">
       &nbsp;
@@ -944,7 +1228,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","selector":".lightbox","closeEffect":"zoom","openEffect":"zoom","loop":false});
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","selector":".lightbox","descPosition":"bottom","loop":false,"closeEffect":"zoom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {

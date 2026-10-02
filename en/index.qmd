@@ -1,0 +1,56 @@
+---
+title: "Welcome!"
+toc: false
+---
+
+At the **Laboratory of Tropical Ecology and Dendrology (LEDT)**, we study the diversity, ecology and taxonomy of Amazonian trees. We combine fieldwork, herbarium collections, spectroscopy, ecological monitoring and integrative analytical approaches to investigate species identification, biodiversity patterns and the responses of tropical forests to climate change.
+
+Based at the Federal University of Amazonas (UFAM) in Manaus, Brazil, our group collaborates with national and international research networks to advance the understanding, documentation and conservation of Amazonian biodiversity.
+
+![](../assets/images/logos/logo_horizontal.png){fig-alt="LEDT logo" width="100%"}
+
+::: {.grid .home-cards}
+::: {.g-col-12 .g-col-md-4}
+### <i class="bi bi-mortarboard"></i> Teaching
+
+Undergraduate and graduate courses, syllabi and materials (in Portuguese).
+
+[See courses](../ensino/graduacao/disciplinas.html){.btn .btn-outline-success .btn-sm}
+:::
+
+::: {.g-col-12 .g-col-md-4}
+### <i class="bi bi-search"></i> Research
+
+Projects, partnerships, collaboration networks and publications.
+
+[See research](pesquisa.qmd){.btn .btn-outline-success .btn-sm}
+:::
+
+::: {.g-col-12 .g-col-md-4}
+### <i class="bi bi-code-slash"></i> R Lab
+
+R routines for ecology, dendrology and spectroscopy (in Portuguese, with commented code).
+
+[See routines](../extensao/rlab/index.html){.btn .btn-outline-success .btn-sm}
+:::
+:::
+
+------------------------------------------------------------------------
+
+::: {style="text-align:center"}
+#### LEDT is supported by
+:::
+
+::: columns
+::: {.column width="33%"}
+![](../assets/images/logos/dcf.png){fig-align="center" width="150" fig-alt="Department of Forest Sciences"}
+:::
+
+::: {.column width="33%"}
+![](../assets/images/logos/fca.png){fig-align="center" width="150" fig-alt="Faculty of Agricultural Sciences"}
+:::
+
+::: {.column width="33%"}
+![](../assets/images/logos/ufam.png){fig-align="center" width="150" fig-alt="Federal University of Amazonas"}
+:::
+:::

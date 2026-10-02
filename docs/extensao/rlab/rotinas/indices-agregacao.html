@@ -1,0 +1,2197 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="LEDT/UFAM">
+<meta name="description" content="Índices de MacGuinnes, Fracker e Brischle, Payandeh, não aleatorizado, Hazen e Morisita, e ajuste das distribuições de Poisson e binomial negativa.">
+
+<title>Padrão espacial: índices de agregação e distribuições de probabilidade – LEDT</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../assets/images/logos/favicon.ico" rel="icon">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+<meta property="og:title" content="Padrão espacial: índices de agregação e distribuições de probabilidade – LEDT">
+<meta property="og:description" content="Índices de MacGuinnes, Fracker e Brischle, Payandeh, não aleatorizado, Hazen e Morisita, e ajuste das distribuições de Poisson e binomial negativa.">
+<meta property="og:image" content="https://ledtufam.github.io/extensao/rlab/rotinas/assets/images/logos/logo_horizontal.png">
+<meta property="og:site_name" content="LEDT">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../assets/images/logos/logo_simples.png" alt="LEDT – Laboratório de Ecologia e Dendrologia Tropical" class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Procurar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Alternar de navegação" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html"> 
+<span class="menu-text">Início</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../pessoas.html"> 
+<span class="menu-text">Pessoas</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ensino" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Ensino</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-ensino">    
+        <li>
+    <a class="dropdown-item" href="../../../ensino/graduacao/disciplinas.html">
+ <span class="dropdown-text">Graduação</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../ensino/posgraduacao/disciplinas.html">
+ <span class="dropdown-text">Pós-graduação</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-pesquisa" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Pesquisa</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-pesquisa">    
+        <li>
+    <a class="dropdown-item" href="../../../pesquisa.html">
+ <span class="dropdown-text">Projetos e parcerias</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../publicacoes.html">
+ <span class="dropdown-text">Publicações</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-extensão" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Extensão</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-extensão">    
+        <li>
+    <a class="dropdown-item" href="../../../extensao.html">
+ <span class="dropdown-text">Projetos de extensão</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../extensao/rlab/index.html">
+ <span class="dropdown-text">R Lab</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../divulgacaocientifica.html">
+ <span class="dropdown-text">Divulgação científica</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../selecoes.html"> 
+<span class="menu-text">Seleções</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-sobre" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Sobre</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-sobre">    
+        <li>
+    <a class="dropdown-item" href="../../../sobre.html">
+ <span class="dropdown-text">O LEDT</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../identidade-visual.html">
+ <span class="dropdown-text">Identidade visual</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../contato.html"> 
+<span class="menu-text">Contato</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-bi-translate" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-translate" role="img" aria-label="Idioma">
+</i> 
+ <span class="menu-text"></span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-bi-translate">    
+        <li>
+    <a class="dropdown-item" href="https://ledtufam.github.io/">
+ <span class="dropdown-text">Português</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://ledtufam.github.io/en/">
+ <span class="dropdown-text">English</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://ledtufam.github.io/es/">
+ <span class="dropdown-text">Español</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/ledtufam"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.instagram.com/ledt_ufam/"> <i class="bi bi-instagram" role="img" aria-label="Instagram">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.youtube.com/@ledt_ufam"> <i class="bi bi-youtube" role="img" aria-label="YouTube">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo escuro"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Nesta página</h2>
+   
+  <ul>
+  <li><a href="#antes-de-começar" id="toc-antes-de-começar" class="nav-link active" data-scroll-target="#antes-de-começar">0. Antes de começar</a></li>
+  <li><a href="#dados-os-caixetais-do-vale-do-ribeira" id="toc-dados-os-caixetais-do-vale-do-ribeira" class="nav-link" data-scroll-target="#dados-os-caixetais-do-vale-do-ribeira">1. Dados: os caixetais do Vale do Ribeira</a>
+  <ul class="collapse">
+  <li><a href="#um-fuste-não-é-uma-árvore" id="toc-um-fuste-não-é-uma-árvore" class="nav-link" data-scroll-target="#um-fuste-não-é-uma-árvore">Um fuste não é uma árvore</a></li>
+  <li><a href="#tabela-espécie-parcela" id="toc-tabela-espécie-parcela" class="nav-link" data-scroll-target="#tabela-espécie-parcela">Tabela espécie × parcela</a></li>
+  </ul></li>
+  <li><a href="#passo-a-passo-com-uma-espécie" id="toc-passo-a-passo-com-uma-espécie" class="nav-link" data-scroll-target="#passo-a-passo-com-uma-espécie">2. Passo a passo com uma espécie</a>
+  <ul class="collapse">
+  <li><a href="#os-dados-da-espécie" id="toc-os-dados-da-espécie" class="nav-link" data-scroll-target="#os-dados-da-espécie">Os dados da espécie</a></li>
+  <li><a href="#quantidades-básicas" id="toc-quantidades-básicas" class="nav-link" data-scroll-target="#quantidades-básicas">Quantidades básicas</a></li>
+  <li><a href="#índice-de-macguinnes-iga_i" id="toc-índice-de-macguinnes-iga_i" class="nav-link" data-scroll-target="#índice-de-macguinnes-iga_i">Índice de MacGuinnes (<span class="math inline">\(IGA_i\)</span>)</a></li>
+  <li><a href="#índice-de-fracker-e-brischle-k_i" id="toc-índice-de-fracker-e-brischle-k_i" class="nav-link" data-scroll-target="#índice-de-fracker-e-brischle-k_i">Índice de Fracker e Brischle (<span class="math inline">\(K_i\)</span>)</a></li>
+  <li><a href="#índice-de-payandeh-p_i" id="toc-índice-de-payandeh-p_i" class="nav-link" data-scroll-target="#índice-de-payandeh-p_i">Índice de Payandeh (<span class="math inline">\(P_i\)</span>)</a></li>
+  <li><a href="#índice-não-aleatorizado-r_i-e-índice-de-hazen-ih_i" id="toc-índice-não-aleatorizado-r_i-e-índice-de-hazen-ih_i" class="nav-link" data-scroll-target="#índice-não-aleatorizado-r_i-e-índice-de-hazen-ih_i">Índice não aleatorizado (<span class="math inline">\(R_i\)</span>) e índice de Hazen (<span class="math inline">\(IH_i\)</span>)</a></li>
+  <li><a href="#índice-de-morisita-im_i-e-teste-f" id="toc-índice-de-morisita-im_i-e-teste-f" class="nav-link" data-scroll-target="#índice-de-morisita-im_i-e-teste-f">Índice de Morisita (<span class="math inline">\(IM_i\)</span>) e teste F</a></li>
+  <li><a href="#juntando-tudo" id="toc-juntando-tudo" class="nav-link" data-scroll-target="#juntando-tudo">Juntando tudo</a></li>
+  <li><a href="#sua-vez" id="toc-sua-vez" class="nav-link" data-scroll-target="#sua-vez">Sua vez!</a></li>
+  </ul></li>
+  <li><a href="#resumo-das-fórmulas" id="toc-resumo-das-fórmulas" class="nav-link" data-scroll-target="#resumo-das-fórmulas">3. Resumo das fórmulas</a></li>
+  <li><a href="#uma-função-para-calcular-todas-as-espécies" id="toc-uma-função-para-calcular-todas-as-espécies" class="nav-link" data-scroll-target="#uma-função-para-calcular-todas-as-espécies">4. Uma função para calcular todas as espécies</a></li>
+  <li><a href="#resultados" id="toc-resultados" class="nav-link" data-scroll-target="#resultados">5. Resultados</a>
+  <ul class="collapse">
+  <li><a href="#a-escala-importa-a-caixeta-dentro-de-cada-local" id="toc-a-escala-importa-a-caixeta-dentro-de-cada-local" class="nav-link" data-scroll-target="#a-escala-importa-a-caixeta-dentro-de-cada-local">A escala importa: a caixeta dentro de cada local</a></li>
+  </ul></li>
+  <li><a href="#exercícios" id="toc-exercícios" class="nav-link" data-scroll-target="#exercícios">6. Exercícios</a></li>
+  <li><a href="#para-saber-mais-conferindo-com-o-livro" id="toc-para-saber-mais-conferindo-com-o-livro" class="nav-link" data-scroll-target="#para-saber-mais-conferindo-com-o-livro">7. Para saber mais: conferindo com o livro</a></li>
+  <li><a href="#distribuições-de-probabilidade" id="toc-distribuições-de-probabilidade" class="nav-link" data-scroll-target="#distribuições-de-probabilidade">8. Distribuições de probabilidade</a>
+  <ul class="collapse">
+  <li><a href="#poisson" id="toc-poisson" class="nav-link" data-scroll-target="#poisson">Poisson</a></li>
+  <li><a href="#binomial-negativa" id="toc-binomial-negativa" class="nav-link" data-scroll-target="#binomial-negativa">Binomial negativa</a></li>
+  <li><a href="#teste-de-aderência-qui-quadrado" id="toc-teste-de-aderência-qui-quadrado" class="nav-link" data-scroll-target="#teste-de-aderência-qui-quadrado">Teste de aderência (qui-quadrado)</a></li>
+  </ul></li>
+  <li><a href="#e-se-eu-tiver-as-coordenadas-das-árvores" id="toc-e-se-eu-tiver-as-coordenadas-das-árvores" class="nav-link" data-scroll-target="#e-se-eu-tiver-as-coordenadas-das-árvores">9. E se eu tiver as coordenadas das árvores?</a></li>
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências">Referências</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Padrão espacial: índices de agregação e distribuições de probabilidade</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Fitossociologia</div>
+    <div class="quarto-category">Ecologia</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Índices de MacGuinnes, Fracker e Brischle, Payandeh, não aleatorizado, Hazen e Morisita, e ajuste das distribuições de Poisson e binomial negativa.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor</div>
+    <div class="quarto-title-meta-contents">
+             <p>LEDT/UFAM </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Nível:</strong> iniciante/intermediário · <strong>Pacotes:</strong> apenas R básico · <strong>Disciplina:</strong> <a href="../../../ensino/graduacao/fitossociologia.html">FGD320 - Fitossociologia</a> · <a href="../scripts/indices-agregacao.R" download="indices-agregacao.R">Baixar script</a> · <a href="../dados/caixeta.csv" download="caixeta.csv">Baixar dados caixeta</a></p>
+</div>
+</div>
+</div>
+<p>Os indivíduos de uma espécie podem estar distribuídos no espaço de forma <strong>aleatória</strong>, <strong>regular (uniforme)</strong> ou <strong>agregada</strong>. Com dados de inventário em parcelas de área fixa, esse padrão pode ser estimado por <strong>índices de agregação</strong>, que comparam o número de árvores por parcela com o esperado se a distribuição fosse aleatória.</p>
+<p>O que todos os índices precisam é de uma tabela com <strong>quantas árvores de cada espécie há em cada parcela</strong>.</p>
+<div class="callout callout-style-simple callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Roteiro da aula prática
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Preparar o RStudio e importar os dados <strong>caixeta</strong> (seção 0 e 1);</li>
+<li>Calcular <strong>à mão, no R</strong>, os índices para uma espécie, passo a passo (seção 2);</li>
+<li>Repetir para outra espécie, sozinho(a) (<strong>Sua vez!</strong>);</li>
+<li>Automatizar o cálculo para todas as espécies e interpretar (seções 3 a 5);</li>
+<li>Responder aos <strong>exercícios</strong> (seção 6).</li>
+</ol>
+</div>
+</div>
+<section id="antes-de-começar" class="level2">
+<h2 class="anchored" data-anchor-id="antes-de-começar">0. Antes de começar</h2>
+<ol type="1">
+<li>Abra o RStudio e crie um projeto: <strong>File → New Project → New Directory → New Project</strong>, com o nome <code>pratica_agregacao</code>.</li>
+<li>Dentro da pasta do projeto, crie uma pasta <code>dados/</code> e salve nela o arquivo <a href="../dados/caixeta.csv" download="caixeta.csv">caixeta.csv</a>.</li>
+<li>Tenha à mão as <a href="../../..\assets/pdf/Tabelas_F_e_Qui-quadrado.pdf" target="_blank">tabelas de qui-quadrado e F</a> usadas em aula, para comparar com os valores calculados no R.</li>
+<li>Crie um script novo (<strong>File → New File → R Script</strong>), salve como <code>agregacao.R</code> e vá copiando os blocos de código desta página. Use o botão de copiar no canto de cada bloco.</li>
+</ol>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Nesta prática usamos <strong>apenas o R básico</strong>: não é preciso instalar pacotes.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="dados-os-caixetais-do-vale-do-ribeira" class="level2">
+<h2 class="anchored" data-anchor-id="dados-os-caixetais-do-vale-do-ribeira">1. Dados: os caixetais do Vale do Ribeira</h2>
+<p>Usamos o conjunto de dados <strong>caixeta</strong>, do curso <a href="https://ecor.ib.usp.br/doku.php?id=dados:dados-caixeta">Ecologia de Comunidades no R (ecoR/USP)</a>. Os dados vêm da dissertação de mestrado de Andrea Vanin (1999) sobre os <strong>caixetais</strong>, florestas paludosas de restinga dominadas pela caixeta (<em>Tabebuia cassinoides</em>), em três locais do Vale do Ribeira (SP): <code>chauas</code>, <code>jureia</code> e <code>retiro</code>. Em cada local foram instaladas 5 parcelas de 10 × 20 m.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Coluna</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>local</code></td>
+<td>caixetal (3 locais)</td>
+</tr>
+<tr class="even">
+<td><code>parcela</code></td>
+<td>número da parcela (repete-se entre os locais)</td>
+</tr>
+<tr class="odd">
+<td><code>arvore</code></td>
+<td>número da árvore na parcela</td>
+</tr>
+<tr class="even">
+<td><code>fuste</code></td>
+<td>número do fuste (uma árvore pode ter vários)</td>
+</tr>
+<tr class="odd">
+<td><code>cap</code></td>
+<td>circunferência à altura do peito (1,3 m)</td>
+</tr>
+<tr class="even">
+<td><code>h</code></td>
+<td>altura do fuste mais alto</td>
+</tr>
+<tr class="odd">
+<td><code>especie</code></td>
+<td>nome da espécie</td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>cx <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../dados/caixeta.csv"</span>)   <span class="co"># no seu projeto: read.csv("dados/caixeta.csv")</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(cx)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   1027 obs. of  7 variables:
+ $ local  : chr  "chauas" "chauas" "chauas" "chauas" ...
+ $ parcela: int  1 1 1 1 1 1 1 1 1 1 ...
+ $ arvore : int  1 3 4 5 6 7 8 9 10 10 ...
+ $ fuste  : int  1 1 1 1 1 1 1 1 1 2 ...
+ $ cap    : int  210 170 720 200 750 320 480 240 290 310 ...
+ $ h      : int  80 80 70 80 170 80 160 140 120 120 ...
+ $ especie: chr  "Myrcia sulfiflora" "Myrcia sulfiflora" "Syagrus romanzoffianus" "Tabebuia cassinoides" ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cx)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   local parcela arvore fuste cap   h                especie
+1 chauas       1      1     1 210  80      Myrcia sulfiflora
+2 chauas       1      3     1 170  80      Myrcia sulfiflora
+3 chauas       1      4     1 720  70 Syagrus romanzoffianus
+4 chauas       1      5     1 200  80   Tabebuia cassinoides
+5 chauas       1      6     1 750 170                indet.1
+6 chauas       1      7     1 320  80      Myrcia sulfiflora</code></pre>
+</div>
+</div>
+<p>Algumas perguntas para explorar os dados antes de calcular qualquer índice:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(cx<span class="sc">$</span>local)                       <span class="co"># quantos fustes em cada caixetal?</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+chauas jureia retiro 
+   426    241    360 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(cx<span class="sc">$</span>especie))            <span class="co"># quantos nomes de espécies?</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 43</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">table</span>(cx<span class="sc">$</span>especie), <span class="at">decreasing =</span> <span class="cn">TRUE</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]   <span class="co"># as 5 espécies com mais fustes</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Tabebuia cassinoides    Myrcia sulfiflora               Mela 1 
+                 698                   96                   63 
+             jussara           Psidium sp 
+                  37                   20 </code></pre>
+</div>
+</div>
+<section id="um-fuste-não-é-uma-árvore" class="level3">
+<h3 class="anchored" data-anchor-id="um-fuste-não-é-uma-árvore">Um fuste não é uma árvore</h3>
+<p>Cada linha da planilha é um <strong>fuste</strong>. Para os índices, precisamos contar <strong>árvores</strong>, então ficamos com uma linha por árvore. Como os números das parcelas e das árvores se repetem entre os locais, criamos também um código único de parcela:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># corrige uma grafia duplicada (veja a rotina de nomes científicos!)</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>cx<span class="sc">$</span>especie[cx<span class="sc">$</span>especie <span class="sc">==</span> <span class="st">"Callophyllum brasiliensis"</span>] <span class="ot">&lt;-</span> <span class="st">"Calophyllum brasiliensis"</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>arv <span class="ot">&lt;-</span> <span class="fu">unique</span>(cx[, <span class="fu">c</span>(<span class="st">"local"</span>, <span class="st">"parcela"</span>, <span class="st">"arvore"</span>, <span class="st">"especie"</span>)])</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>arv<span class="sc">$</span>parc <span class="ot">&lt;-</span> <span class="fu">paste</span>(arv<span class="sc">$</span>local, arv<span class="sc">$</span>parcela, <span class="at">sep =</span> <span class="st">"_"</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="at">fustes =</span> <span class="fu">nrow</span>(cx), <span class="at">arvores =</span> <span class="fu">nrow</span>(arv), <span class="at">parcelas =</span> <span class="fu">length</span>(<span class="fu">unique</span>(arv<span class="sc">$</span>parc)))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  fustes  arvores parcelas 
+    1027      672       15 </code></pre>
+</div>
+</div>
+</section>
+<section id="tabela-espécie-parcela" class="level3">
+<h3 class="anchored" data-anchor-id="tabela-espécie-parcela">Tabela espécie × parcela</h3>
+<p>O que todos os índices precisam é de uma tabela com <strong>quantas árvores de cada espécie há em cada parcela</strong>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">unclass</span>(<span class="fu">table</span>(arv<span class="sc">$</span>especie, arv<span class="sc">$</span>parc))</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>UT  <span class="ot">&lt;-</span> <span class="fu">ncol</span>(tab)                       <span class="co"># 15 parcelas</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> tab[<span class="fu">order</span>(<span class="fu">rowSums</span>(tab), <span class="at">decreasing =</span> <span class="cn">TRUE</span>), ]</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>tab[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, ]</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                          
+                           chauas_1 chauas_2 chauas_3 chauas_4 chauas_5
+  Tabebuia cassinoides           28       33       55       25       50
+  Myrcia sulfiflora              11       17        9       24       18
+  Mela 1                          0        0        0        0        0
+  jussara                         0        0        0        0        0
+  Calophyllum brasiliensis        0        1        3        2        1
+  Psidium sp                      1        0        0        0        0
+                          
+                           jureia_1 jureia_2 jureia_3 jureia_4 jureia_5
+  Tabebuia cassinoides           15       13       12       18       29
+  Myrcia sulfiflora               0        0        0        0        0
+  Mela 1                          0        0        0        0        0
+  jussara                        14       11        0       12        0
+  Calophyllum brasiliensis        1        0        2        1        0
+  Psidium sp                      1        1        0        1        6
+                          
+                           retiro_1 retiro_2 retiro_3 retiro_4 retiro_5
+  Tabebuia cassinoides           51       11       30       36        4
+  Myrcia sulfiflora               0        0        0        0        0
+  Mela 1                          3        3       18       17        6
+  jussara                         0        0        0        0        0
+  Calophyllum brasiliensis        0        0        0        0        0
+  Psidium sp                      0        0        0        0        0</code></pre>
+</div>
+</div>
+<p>Repare em nomes como <code>Mela 1</code> (morfoespécie), <code>Psidium sp</code> (identificada só até gênero) e <code>jussara</code> (nome popular da palmeira <em>Euterpe edulis</em>). Numa análise real, esses nomes devem ser padronizados antes, como mostramos na rotina de <a href="../../../extensao/rlab/rotinas/nomes-cientificos.html">padronização de nomes científicos</a>.</p>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Parcelas vazias também contam!</strong> Se uma parcela não tiver nenhum indivíduo de nenhuma espécie, ela não aparece na tabela. Nesse caso, informe <code>UT</code> manualmente com o número real de parcelas e acrescente colunas de zeros.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="passo-a-passo-com-uma-espécie" class="level2">
+<h2 class="anchored" data-anchor-id="passo-a-passo-com-uma-espécie">2. Passo a passo com uma espécie</h2>
+<p>Antes de automatizar, vamos calcular cada índice “à mão” para <strong><em>Myrcia sulfiflora</em></strong>. Assim fica claro de onde vem cada número.</p>
+<section id="os-dados-da-espécie" class="level3">
+<h3 class="anchored" data-anchor-id="os-dados-da-espécie">Os dados da espécie</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>n_ij <span class="ot">&lt;-</span> tab[<span class="st">"Myrcia sulfiflora"</span>, ]   <span class="co"># nº de árvores da espécie em cada parcela</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>n_ij</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>chauas_1 chauas_2 chauas_3 chauas_4 chauas_5 jureia_1 jureia_2 jureia_3 
+      11       17        9       24       18        0        0        0 
+jureia_4 jureia_5 retiro_1 retiro_2 retiro_3 retiro_4 retiro_5 
+       0        0        0        0        0        0        0 </code></pre>
+</div>
+</div>
+</section>
+<section id="quantidades-básicas" class="level3">
+<h3 class="anchored" data-anchor-id="quantidades-básicas">Quantidades básicas</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 61%">
+<col style="width: 27%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Símbolo</th>
+<th>O que é</th>
+<th>No R</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(U_T\)</span></td>
+<td>número total de parcelas</td>
+<td><code>UT</code></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(n_i\)</span></td>
+<td>número total de árvores da espécie</td>
+<td><code>sum(n_ij)</code></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(U_i\)</span></td>
+<td>número de parcelas em que a espécie ocorre</td>
+<td><code>sum(n_ij &gt; 0)</code></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(M_i\)</span></td>
+<td>média de árvores por parcela</td>
+<td><code>mean(n_ij)</code></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(S_i^2\)</span></td>
+<td>variância do nº de árvores por parcela</td>
+<td><code>var(n_ij)</code></td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>n_i <span class="ot">&lt;-</span> <span class="fu">sum</span>(n_ij)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>U_i <span class="ot">&lt;-</span> <span class="fu">sum</span>(n_ij <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>M_i <span class="ot">&lt;-</span> <span class="fu">mean</span>(n_ij)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>S2  <span class="ot">&lt;-</span> <span class="fu">var</span>(n_ij)          <span class="co"># o R já usa (UT - 1) no denominador</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="at">UT =</span> UT, <span class="at">n_i =</span> n_i, <span class="at">U_i =</span> U_i, <span class="at">M_i =</span> M_i, <span class="at">S2 =</span> S2)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       UT       n_i       U_i       M_i        S2 
+15.000000 79.000000  5.000000  5.266667 69.638095 </code></pre>
+</div>
+</div>
+</section>
+<section id="índice-de-macguinnes-iga_i" class="level3">
+<h3 class="anchored" data-anchor-id="índice-de-macguinnes-iga_i">Índice de MacGuinnes (<span class="math inline">\(IGA_i\)</span>)</h3>
+<p>Compara a densidade <strong>observada</strong> com a <strong>esperada</strong> se a distribuição fosse aleatória:</p>
+<p><span class="math display">\[D_i = \frac{n_i}{U_T} \qquad d_i = -\ln\left(1 - \frac{U_i}{U_T}\right) \qquad IGA_i = \frac{D_i}{d_i}\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>D_i <span class="ot">&lt;-</span> n_i <span class="sc">/</span> UT</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>d_i <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> U_i <span class="sc">/</span> UT)      <span class="co"># log() no R é o logaritmo natural (ln)</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>IGA <span class="ot">&lt;-</span> D_i <span class="sc">/</span> d_i</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="at">D_i =</span> D_i, <span class="at">d_i =</span> d_i, <span class="at">IGA =</span> IGA)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       D_i        d_i        IGA 
+ 5.2666667  0.4054651 12.9891982 </code></pre>
+</div>
+</div>
+<p><strong>Interpretação:</strong> <span class="math inline">\(IGA_i\)</span> &lt; 1 uniforme; = 1 aleatório; entre 1 e 2 tendência ao agrupamento; &gt; 2 agregado.</p>
+</section>
+<section id="índice-de-fracker-e-brischle-k_i" class="level3">
+<h3 class="anchored" data-anchor-id="índice-de-fracker-e-brischle-k_i">Índice de Fracker e Brischle (<span class="math inline">\(K_i\)</span>)</h3>
+<p><span class="math display">\[K_i = \frac{D_i - d_i}{d_i^2}\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>K <span class="ot">&lt;-</span> (D_i <span class="sc">-</span> d_i) <span class="sc">/</span> d_i<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>K</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 29.569</code></pre>
+</div>
+</div>
+<p><strong>Interpretação:</strong> <span class="math inline">\(K_i\)</span> ≤ 0,15 aleatório; entre 0,15 e 1 tendência ao agrupamento; &gt; 1 agregado.</p>
+</section>
+<section id="índice-de-payandeh-p_i" class="level3">
+<h3 class="anchored" data-anchor-id="índice-de-payandeh-p_i">Índice de Payandeh (<span class="math inline">\(P_i\)</span>)</h3>
+<p>Relação entre a variância e a média do número de árvores por parcela:</p>
+<p><span class="math display">\[P_i = \frac{S_i^2}{M_i}\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>P <span class="ot">&lt;-</span> S2 <span class="sc">/</span> M_i</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>P</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 13.22242</code></pre>
+</div>
+</div>
+<p><strong>Interpretação:</strong> <span class="math inline">\(P_i\)</span> ≤ 1 aleatório; entre 1 e 1,5 tendência ao agrupamento; &gt; 1,5 agregado.</p>
+</section>
+<section id="índice-não-aleatorizado-r_i-e-índice-de-hazen-ih_i" class="level3">
+<h3 class="anchored" data-anchor-id="índice-não-aleatorizado-r_i-e-índice-de-hazen-ih_i">Índice não aleatorizado (<span class="math inline">\(R_i\)</span>) e índice de Hazen (<span class="math inline">\(IH_i\)</span>)</h3>
+<p>O índice não aleatorizado é igual ao de Payandeh (<span class="math inline">\(R_i = S_i^2 / M_i\)</span>), mas a decisão é feita por um <strong>teste de qui-quadrado</strong>. A estatística do teste é o próprio índice de Hazen:</p>
+<p><span class="math display">\[\chi^2_i = IH_i = \frac{S_i^2}{M_i}(U_T - 1)\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>IH <span class="ot">&lt;-</span> P <span class="sc">*</span> (UT <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>IH</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 185.1139</code></pre>
+</div>
+</div>
+<p>Em vez de procurar o valor na tabela impressa, usamos a função <code>qchisq()</code>, com <span class="math inline">\(U_T - 1\)</span> graus de liberdade:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>gl <span class="ot">&lt;-</span> UT <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="at">chi2_75 =</span> <span class="fu">qchisq</span>(<span class="fl">0.75</span>, gl), <span class="at">chi2_95 =</span> <span class="fu">qchisq</span>(<span class="fl">0.95</span>, gl), <span class="at">chi2_99 =</span> <span class="fu">qchisq</span>(<span class="fl">0.99</span>, gl))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> chi2_75  chi2_95  chi2_99 
+17.11693 23.68479 29.14124 </code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Conferindo na tabela impressa
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>As tabelas de qui-quadrado e F usadas em aula estão <a href="../../..\assets/pdf/Tabelas_F_e_Qui-quadrado.pdf" target="_blank">neste PDF</a> (Santana &amp; Ranal, <em>Análise da germinação: um enfoque estatístico</em>; reproduzidas de Rohlf &amp; Sokal 1995). Na tabela de qui-quadrado, procure a linha <span class="math inline">\(\nu = U_T - 1 = 14\)</span> e a coluna do nível de significância <span class="math inline">\(\alpha\)</span> (lembre que 95% de probabilidade corresponde a <span class="math inline">\(\alpha = 0{,}05\)</span>):</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 19%">
+<col style="width: 18%">
+<col style="width: 36%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Valor crítico</th>
+<th>Coluna da tabela</th>
+<th>Tabela impressa</th>
+<th>R</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(\chi^2\)</span> a 95%</td>
+<td><span class="math inline">\(\alpha = 0{,}05\)</span></td>
+<td>23,685</td>
+<td><code>qchisq(0.95, 14)</code> = 23,685</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\chi^2\)</span> a 99%</td>
+<td><span class="math inline">\(\alpha = 0{,}01\)</span></td>
+<td>29,141</td>
+<td><code>qchisq(0.99, 14)</code> = 29,141</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\chi^2\)</span> a 75%</td>
+<td><span class="math inline">\(\alpha = 0{,}25\)</span></td>
+<td>não consta</td>
+<td><code>qchisq(0.75, 14)</code> = 17,117</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(F\)</span> a 95% (14 e ∞ gl)</td>
+<td><span class="math inline">\(\nu_1 = 14\)</span>, <span class="math inline">\(\nu_2 = 240\)</span> (última linha)</td>
+<td>≈ 1,73</td>
+<td><code>qf(0.95, 14, Inf)</code> = 1,692</td>
+</tr>
+</tbody>
+</table>
+<p>Repare que a tabela não traz a coluna de 75% (usada no índice de Hazen) nem a linha de infinitos graus de liberdade (usada no teste de Morisita). Nesses casos, o R resolve: <code>qchisq()</code> e <code>qf()</code> dão o valor exato para quaisquer graus de liberdade.</p>
+</div>
+</div>
+</div>
+<p><strong>Interpretação:</strong></p>
+<ul>
+<li><strong>Não aleatorizado:</strong> se <span class="math inline">\(\chi^2_i\)</span> &gt; <span class="math inline">\(\chi^2_{95\%}\)</span>, o desvio da aleatoriedade é significativo e a espécie é <strong>agregada</strong>; caso contrário, <strong>aleatória</strong>.</li>
+<li><strong>Hazen:</strong> se <span class="math inline">\(IH_i\)</span> &lt; <span class="math inline">\(\chi^2_{75\%}\)</span>, <strong>não agrupada</strong>; se <span class="math inline">\(IH_i\)</span> &gt; <span class="math inline">\(\chi^2_{99\%}\)</span>, <strong>agrupada</strong>; entre os dois, <strong>tendência ao agrupamento</strong>.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>IH <span class="sc">&gt;</span> <span class="fu">qchisq</span>(<span class="fl">0.95</span>, gl)      <span class="co"># não aleatorizado: agregada?</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>IH <span class="sc">&gt;</span> <span class="fu">qchisq</span>(<span class="fl">0.99</span>, gl)      <span class="co"># Hazen: agrupada?</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+</section>
+<section id="índice-de-morisita-im_i-e-teste-f" class="level3">
+<h3 class="anchored" data-anchor-id="índice-de-morisita-im_i-e-teste-f">Índice de Morisita (<span class="math inline">\(IM_i\)</span>) e teste F</h3>
+<p><span class="math display">\[IM_i = U_T \frac{\sum_j n_{ij}(n_{ij}-1)}{n_i(n_i-1)} \qquad F_i = \frac{IM_i(n_i-1) + U_T - n_i}{U_T - 1}\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>IM  <span class="ot">&lt;-</span> UT <span class="sc">*</span> <span class="fu">sum</span>(n_ij <span class="sc">*</span> (n_ij <span class="sc">-</span> <span class="dv">1</span>)) <span class="sc">/</span> (n_i <span class="sc">*</span> (n_i <span class="sc">-</span> <span class="dv">1</span>))</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>F_i <span class="ot">&lt;-</span> (IM <span class="sc">*</span> (n_i <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">+</span> UT <span class="sc">-</span> n_i) <span class="sc">/</span> (UT <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>F_tab <span class="ot">&lt;-</span> <span class="fu">qf</span>(<span class="fl">0.95</span>, <span class="at">df1 =</span> UT <span class="sc">-</span> <span class="dv">1</span>, <span class="at">df2 =</span> <span class="cn">Inf</span>)     <span class="co"># F tabelado: UT-1 e infinito gl</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="at">IM =</span> IM, <span class="at">F =</span> F_i, <span class="at">F_tabelado =</span> F_tab)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        IM          F F_tabelado 
+  3.193768  13.222423   1.691771 </code></pre>
+</div>
+</div>
+<p><strong>Interpretação:</strong> <span class="math inline">\(IM_i\)</span> = 1 aleatório; &lt; 1 uniforme; &gt; 1 agregado. O desvio é significativo se <span class="math inline">\(F_i\)</span> &gt; <span class="math inline">\(F\)</span> tabelado.</p>
+</section>
+<section id="juntando-tudo" class="level3">
+<h3 class="anchored" data-anchor-id="juntando-tudo">Juntando tudo</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">indice =</span> <span class="fu">c</span>(<span class="st">"MacGuinnes"</span>, <span class="st">"Fracker e Brischle"</span>, <span class="st">"Payandeh"</span>, <span class="st">"Não aleatorizado (χ²)"</span>, <span class="st">"Hazen"</span>, <span class="st">"Morisita"</span>),</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">valor  =</span> <span class="fu">round</span>(<span class="fu">c</span>(IGA, K, P, IH, IH, IM), <span class="dv">2</span>)</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 indice  valor
+1            MacGuinnes  12.99
+2    Fracker e Brischle  29.57
+3              Payandeh  13.22
+4 Não aleatorizado (χ²) 185.11
+5                 Hazen 185.11
+6              Morisita   3.19</code></pre>
+</div>
+</div>
+<p><strong><em>Myrcia sulfiflora</em></strong> é <strong>agregada</strong> segundo todos os índices. Faz sentido? Volte à tabela da seção 1: em quantos caixetais ela aparece?</p>
+</section>
+<section id="sua-vez" class="level3">
+<h3 class="anchored" data-anchor-id="sua-vez">Sua vez!</h3>
+<div class="callout callout-style-simple callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercício
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Repita todos os cálculos acima para <strong><em>Calophyllum brasiliensis</em></strong>. Basta trocar o nome da espécie na primeira linha (<code>n_ij &lt;- tab["Calophyllum brasiliensis", ]</code>) e rodar os blocos de novo. Classifique o padrão segundo cada índice antes de abrir a resposta.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Resposta
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>n_ij <span class="ot">&lt;-</span> tab[<span class="st">"Calophyllum brasiliensis"</span>, ]</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>n_i <span class="ot">&lt;-</span> <span class="fu">sum</span>(n_ij); U_i <span class="ot">&lt;-</span> <span class="fu">sum</span>(n_ij <span class="sc">&gt;</span> <span class="dv">0</span>); M_i <span class="ot">&lt;-</span> <span class="fu">mean</span>(n_ij); S2 <span class="ot">&lt;-</span> <span class="fu">var</span>(n_ij)</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>D_i <span class="ot">&lt;-</span> n_i <span class="sc">/</span> UT; d_i <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> U_i <span class="sc">/</span> UT)</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>IGA <span class="ot">&lt;-</span> D_i <span class="sc">/</span> d_i</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>K   <span class="ot">&lt;-</span> (D_i <span class="sc">-</span> d_i) <span class="sc">/</span> d_i<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>P   <span class="ot">&lt;-</span> S2 <span class="sc">/</span> M_i</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>IH  <span class="ot">&lt;-</span> P <span class="sc">*</span> (UT <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>IM  <span class="ot">&lt;-</span> UT <span class="sc">*</span> <span class="fu">sum</span>(n_ij <span class="sc">*</span> (n_ij <span class="sc">-</span> <span class="dv">1</span>)) <span class="sc">/</span> (n_i <span class="sc">*</span> (n_i <span class="sc">-</span> <span class="dv">1</span>))</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>F_i <span class="ot">&lt;-</span> (IM <span class="sc">*</span> (n_i <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">+</span> UT <span class="sc">-</span> n_i) <span class="sc">/</span> (UT <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">c</span>(<span class="at">n_i =</span> n_i, <span class="at">U_i =</span> U_i, <span class="at">IGA =</span> IGA, <span class="at">K =</span> K, <span class="at">P =</span> P, <span class="at">IH =</span> IH, <span class="at">IM =</span> IM, <span class="at">F =</span> F_i), <span class="dv">2</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  n_i   U_i   IGA     K     P    IH    IM     F 
+11.00  7.00  1.17  0.27  1.26 17.64  1.36  1.26 </code></pre>
+</div>
+</div>
+<p>Compare com os valores críticos: <span class="math inline">\(\chi^2_{75\%}\)</span> = 17.12, <span class="math inline">\(\chi^2_{95\%}\)</span> = 23.68, <span class="math inline">\(\chi^2_{99\%}\)</span> = 29.14 e <span class="math inline">\(F\)</span> = 1.69. Aqui os índices <strong>não concordam totalmente</strong>: MacGuinnes, Fracker e Brischle, Payandeh e Hazen indicam <strong>tendência ao agrupamento</strong>, enquanto o teste do índice não aleatorizado e o de Morisita <strong>não detectam</strong> desvio significativo da aleatoriedade.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="resumo-das-fórmulas" class="level2">
+<h2 class="anchored" data-anchor-id="resumo-das-fórmulas">3. Resumo das fórmulas</h2>
+<p>Para cada espécie <em>i</em>, com <span class="math inline">\(n_{ij}\)</span> = número de árvores na parcela <em>j</em>, <span class="math inline">\(n_i\)</span> = total de árvores, <span class="math inline">\(U_i\)</span> = parcelas em que ocorre e <span class="math inline">\(U_T\)</span> = total de parcelas:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 31%">
+<col style="width: 47%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Índice</th>
+<th>Fórmula</th>
+<th>Interpretação</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>MacGuinnes</td>
+<td><span class="math inline">\(IGA_i = D_i / d_i\)</span>, com <span class="math inline">\(D_i = n_i/U_T\)</span> e <span class="math inline">\(d_i = -\ln(1 - U_i/U_T)\)</span></td>
+<td>&lt; 1 uniforme; = 1 aleatório; 1–2 tendência ao agrupamento; &gt; 2 agregado</td>
+</tr>
+<tr class="even">
+<td>Fracker e Brischle</td>
+<td><span class="math inline">\(K_i = (D_i - d_i) / d_i^2\)</span></td>
+<td>≤ 0,15 aleatório; 0,15–1 tendência; &gt; 1 agregado</td>
+</tr>
+<tr class="odd">
+<td>Payandeh</td>
+<td><span class="math inline">\(P_i = S_i^2 / M_i\)</span></td>
+<td>≤ 1 aleatório; 1–1,5 tendência; &gt; 1,5 agregado</td>
+</tr>
+<tr class="even">
+<td>Não aleatorizado</td>
+<td><span class="math inline">\(R_i = S_i^2 / M_i\)</span>, testado por <span class="math inline">\(\chi^2_i = R_i (U_T - 1)\)</span></td>
+<td><span class="math inline">\(\chi^2\)</span> significativo (95%, <span class="math inline">\(U_T-1\)</span> gl): agregado; senão, aleatório</td>
+</tr>
+<tr class="odd">
+<td>Hazen</td>
+<td><span class="math inline">\(IH_i = \frac{S_i^2}{M_i}(U_T - 1)\)</span></td>
+<td>&lt; <span class="math inline">\(\chi^2_{0,75}\)</span> não agrupado; &gt; <span class="math inline">\(\chi^2_{0,99}\)</span> agrupado; entre os dois, tendência</td>
+</tr>
+<tr class="even">
+<td>Morisita</td>
+<td><span class="math inline">\(IM_i = U_T \frac{\sum n_{ij}(n_{ij}-1)}{n_i(n_i-1)}\)</span>, testado por <span class="math inline">\(F_i = \frac{IM_i(n_i-1) + U_T - n_i}{U_T - 1}\)</span></td>
+<td>= 1 aleatório; &lt; 1 uniforme; &gt; 1 agregado (se <span class="math inline">\(F_i\)</span> for significativo)</td>
+</tr>
+</tbody>
+</table>
+<p>em que <span class="math inline">\(M_i\)</span> é a média e <span class="math inline">\(S_i^2\)</span> a variância (com <span class="math inline">\(U_T - 1\)</span> no denominador) do número de árvores por parcela.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>No índice de Fracker e Brischle usamos a diferença <span class="math inline">\(D_i - d_i\)</span> <strong>com sinal</strong>, como nas tabelas de Souza e Soares (2014): valores negativos indicam padrão aleatório ou uniforme.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="uma-função-para-calcular-todas-as-espécies" class="level2">
+<h2 class="anchored" data-anchor-id="uma-função-para-calcular-todas-as-espécies">4. Uma função para calcular todas as espécies</h2>
+<p>Fazer espécie por espécie dá trabalho. A função abaixo reúne <strong>os mesmos cálculos da seção 2</strong> e os aplica a todas as linhas da tabela de uma vez, já classificando o padrão. Copie a função inteira e rode.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>indices_agregacao <span class="ot">&lt;-</span> <span class="cf">function</span>(tab, <span class="at">UT =</span> <span class="fu">ncol</span>(tab)) {</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  n_i <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(tab)                       <span class="co"># total de árvores</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  U_i <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(tab <span class="sc">&gt;</span> <span class="dv">0</span>)                   <span class="co"># parcelas com a espécie</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  M_i <span class="ot">&lt;-</span> n_i <span class="sc">/</span> UT                           <span class="co"># média por parcela</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  S2  <span class="ot">&lt;-</span> <span class="fu">apply</span>(tab, <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="fu">sum</span>((x <span class="sc">-</span> <span class="fu">mean</span>(x))<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> (UT <span class="sc">-</span> <span class="dv">1</span>))  <span class="co"># variância</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># MacGuinnes e Fracker &amp; Brischle (indefinidos se a espécie ocorre em todas as parcelas)</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>  D_i <span class="ot">&lt;-</span> n_i <span class="sc">/</span> UT</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>  d_i <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(U_i <span class="sc">&lt;</span> UT, <span class="sc">-</span><span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> U_i <span class="sc">/</span> UT), <span class="cn">NA</span>)</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>  IGA <span class="ot">&lt;-</span> D_i <span class="sc">/</span> d_i</span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>  K   <span class="ot">&lt;-</span> (D_i <span class="sc">-</span> d_i) <span class="sc">/</span> d_i<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Payandeh / não aleatorizado / Hazen</span></span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>  P   <span class="ot">&lt;-</span> S2 <span class="sc">/</span> M_i</span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>  qui <span class="ot">&lt;-</span> P <span class="sc">*</span> (UT <span class="sc">-</span> <span class="dv">1</span>)                       <span class="co"># = IH (índice de Hazen)</span></span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Morisita e teste F</span></span>
+<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a>  IM  <span class="ot">&lt;-</span> UT <span class="sc">*</span> <span class="fu">rowSums</span>(tab <span class="sc">*</span> (tab <span class="sc">-</span> <span class="dv">1</span>)) <span class="sc">/</span> (n_i <span class="sc">*</span> (n_i <span class="sc">-</span> <span class="dv">1</span>))</span>
+<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a>  F_i <span class="ot">&lt;-</span> (IM <span class="sc">*</span> (n_i <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">+</span> UT <span class="sc">-</span> n_i) <span class="sc">/</span> (UT <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-21"><a href="#cb39-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Valores críticos</span></span>
+<span id="cb39-22"><a href="#cb39-22" aria-hidden="true" tabindex="-1"></a>  chi95 <span class="ot">&lt;-</span> <span class="fu">qchisq</span>(<span class="fl">0.95</span>, UT <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb39-23"><a href="#cb39-23" aria-hidden="true" tabindex="-1"></a>  chi75 <span class="ot">&lt;-</span> <span class="fu">qchisq</span>(<span class="fl">0.75</span>, UT <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb39-24"><a href="#cb39-24" aria-hidden="true" tabindex="-1"></a>  chi99 <span class="ot">&lt;-</span> <span class="fu">qchisq</span>(<span class="fl">0.99</span>, UT <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb39-25"><a href="#cb39-25" aria-hidden="true" tabindex="-1"></a>  F95   <span class="ot">&lt;-</span> <span class="fu">qf</span>(<span class="fl">0.95</span>, UT <span class="sc">-</span> <span class="dv">1</span>, <span class="cn">Inf</span>)</span>
+<span id="cb39-26"><a href="#cb39-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-27"><a href="#cb39-27" aria-hidden="true" tabindex="-1"></a>  classe <span class="ot">&lt;-</span> <span class="cf">function</span>(x, cortes, rotulos) <span class="fu">as.character</span>(<span class="fu">cut</span>(x, cortes, rotulos, <span class="at">right =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb39-28"><a href="#cb39-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-29"><a href="#cb39-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(</span>
+<span id="cb39-30"><a href="#cb39-30" aria-hidden="true" tabindex="-1"></a>    n_i, U_i, <span class="at">D_i =</span> <span class="fu">round</span>(D_i, <span class="dv">2</span>), <span class="at">d_i =</span> <span class="fu">round</span>(d_i, <span class="dv">2</span>),</span>
+<span id="cb39-31"><a href="#cb39-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">S2 =</span> <span class="fu">round</span>(S2, <span class="dv">2</span>), <span class="at">M_i =</span> <span class="fu">round</span>(M_i, <span class="dv">2</span>),</span>
+<span id="cb39-32"><a href="#cb39-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">IGA =</span> <span class="fu">round</span>(IGA, <span class="dv">2</span>), <span class="at">K =</span> <span class="fu">round</span>(K, <span class="dv">2</span>), <span class="at">P =</span> <span class="fu">round</span>(P, <span class="dv">2</span>),</span>
+<span id="cb39-33"><a href="#cb39-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">IH =</span> <span class="fu">round</span>(qui, <span class="dv">2</span>), <span class="at">IM =</span> <span class="fu">round</span>(IM, <span class="dv">2</span>), <span class="at">F =</span> <span class="fu">round</span>(F_i, <span class="dv">2</span>),</span>
+<span id="cb39-34"><a href="#cb39-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">IGA_cl =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(IGA), <span class="st">"-"</span>, <span class="fu">ifelse</span>(<span class="fu">abs</span>(IGA <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">&lt;</span> <span class="fl">1e-9</span>, <span class="st">"Aleat."</span>,</span>
+<span id="cb39-35"><a href="#cb39-35" aria-hidden="true" tabindex="-1"></a>             <span class="fu">classe</span>(IGA, <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="cn">Inf</span>), <span class="fu">c</span>(<span class="st">"Unif."</span>, <span class="st">"T.Agr."</span>, <span class="st">"Agreg."</span>)))),</span>
+<span id="cb39-36"><a href="#cb39-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">K_cl   =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(K), <span class="st">"-"</span>, <span class="fu">classe</span>(K, <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="fl">0.15</span>, <span class="dv">1</span>, <span class="cn">Inf</span>), <span class="fu">c</span>(<span class="st">"Aleat."</span>, <span class="st">"T.Agr."</span>, <span class="st">"Agreg."</span>))),</span>
+<span id="cb39-37"><a href="#cb39-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">P_cl   =</span> <span class="fu">classe</span>(P, <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">1</span>, <span class="fl">1.5</span>, <span class="cn">Inf</span>), <span class="fu">c</span>(<span class="st">"Aleat."</span>, <span class="st">"T.Agr."</span>, <span class="st">"Agreg."</span>)),</span>
+<span id="cb39-38"><a href="#cb39-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">R_cl   =</span> <span class="fu">ifelse</span>(qui <span class="sc">&gt;</span> chi95, <span class="st">"Agreg."</span>, <span class="st">"Aleat."</span>),</span>
+<span id="cb39-39"><a href="#cb39-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">IH_cl  =</span> <span class="fu">ifelse</span>(qui <span class="sc">&lt;</span> chi75, <span class="st">"Não agr."</span>, <span class="fu">ifelse</span>(qui <span class="sc">&gt;</span> chi99, <span class="st">"Agreg."</span>, <span class="st">"T.Agr."</span>)),</span>
+<span id="cb39-40"><a href="#cb39-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">IM_cl  =</span> <span class="fu">ifelse</span>(F_i <span class="sc">&gt;</span> F95, <span class="st">"Agreg."</span>, <span class="fu">ifelse</span>(IM <span class="sc">&lt;</span> <span class="dv">1</span>, <span class="st">"Unif."</span>, <span class="st">"Aleat."</span>)),</span>
+<span id="cb39-41"><a href="#cb39-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">check.names =</span> <span class="cn">FALSE</span></span>
+<span id="cb39-42"><a href="#cb39-42" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb39-43"><a href="#cb39-43" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="resultados" class="level2">
+<h2 class="anchored" data-anchor-id="resultados">5. Resultados</h2>
+<p>Espécies com pouquíssimos indivíduos não permitem avaliar o padrão espacial. Por isso, calculamos os índices só para as espécies com <strong>pelo menos 5 árvores</strong>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">indices_agregacao</span>(tab[<span class="fu">rowSums</span>(tab) <span class="sc">&gt;=</span> <span class="dv">5</span>, ], <span class="at">UT =</span> UT)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(res[, <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>], <span class="at">caption =</span> <span class="st">"Estimativas dos índices por espécie (15 parcelas de 10 × 20 m)."</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Estimativas dos índices por espécie (15 parcelas de 10 × 20 m).</caption>
+<colgroup>
+<col style="width: 26%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 6%">
+<col style="width: 5%">
+<col style="width: 7%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 7%">
+<col style="width: 6%">
+<col style="width: 6%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">n_i</th>
+<th style="text-align: right;">U_i</th>
+<th style="text-align: right;">D_i</th>
+<th style="text-align: right;">d_i</th>
+<th style="text-align: right;">S2</th>
+<th style="text-align: right;">M_i</th>
+<th style="text-align: right;">IGA</th>
+<th style="text-align: right;">K</th>
+<th style="text-align: right;">P</th>
+<th style="text-align: right;">IH</th>
+<th style="text-align: right;">IM</th>
+<th style="text-align: right;">F</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Tabebuia cassinoides</td>
+<td style="text-align: right;">410</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">27.33</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">246.67</td>
+<td style="text-align: right;">27.33</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">9.02</td>
+<td style="text-align: right;">126.34</td>
+<td style="text-align: right;">1.27</td>
+<td style="text-align: right;">9.02</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Myrcia sulfiflora</td>
+<td style="text-align: right;">79</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">5.27</td>
+<td style="text-align: right;">0.41</td>
+<td style="text-align: right;">69.64</td>
+<td style="text-align: right;">5.27</td>
+<td style="text-align: right;">12.99</td>
+<td style="text-align: right;">29.57</td>
+<td style="text-align: right;">13.22</td>
+<td style="text-align: right;">185.11</td>
+<td style="text-align: right;">3.19</td>
+<td style="text-align: right;">13.22</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mela 1</td>
+<td style="text-align: right;">47</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">3.13</td>
+<td style="text-align: right;">0.41</td>
+<td style="text-align: right;">37.12</td>
+<td style="text-align: right;">3.13</td>
+<td style="text-align: right;">7.73</td>
+<td style="text-align: right;">16.59</td>
+<td style="text-align: right;">11.85</td>
+<td style="text-align: right;">165.87</td>
+<td style="text-align: right;">4.30</td>
+<td style="text-align: right;">11.85</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">jussara</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.47</td>
+<td style="text-align: right;">0.22</td>
+<td style="text-align: right;">26.41</td>
+<td style="text-align: right;">2.47</td>
+<td style="text-align: right;">11.05</td>
+<td style="text-align: right;">45.06</td>
+<td style="text-align: right;">10.71</td>
+<td style="text-align: right;">149.89</td>
+<td style="text-align: right;">4.77</td>
+<td style="text-align: right;">10.71</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Calophyllum brasiliensis</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">0.73</td>
+<td style="text-align: right;">0.63</td>
+<td style="text-align: right;">0.92</td>
+<td style="text-align: right;">0.73</td>
+<td style="text-align: right;">1.17</td>
+<td style="text-align: right;">0.27</td>
+<td style="text-align: right;">1.26</td>
+<td style="text-align: right;">17.64</td>
+<td style="text-align: right;">1.36</td>
+<td style="text-align: right;">1.26</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Psidium sp</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0.67</td>
+<td style="text-align: right;">0.41</td>
+<td style="text-align: right;">2.38</td>
+<td style="text-align: right;">0.67</td>
+<td style="text-align: right;">1.64</td>
+<td style="text-align: right;">1.59</td>
+<td style="text-align: right;">3.57</td>
+<td style="text-align: right;">50.00</td>
+<td style="text-align: right;">5.00</td>
+<td style="text-align: right;">3.57</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Alchornea triplinervia</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0.47</td>
+<td style="text-align: right;">0.51</td>
+<td style="text-align: right;">0.41</td>
+<td style="text-align: right;">0.47</td>
+<td style="text-align: right;">0.91</td>
+<td style="text-align: right;">-0.17</td>
+<td style="text-align: right;">0.88</td>
+<td style="text-align: right;">12.29</td>
+<td style="text-align: right;">0.71</td>
+<td style="text-align: right;">0.88</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Coussapoa micropoda</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.47</td>
+<td style="text-align: right;">0.31</td>
+<td style="text-align: right;">0.84</td>
+<td style="text-align: right;">0.47</td>
+<td style="text-align: right;">1.50</td>
+<td style="text-align: right;">1.63</td>
+<td style="text-align: right;">1.80</td>
+<td style="text-align: right;">25.14</td>
+<td style="text-align: right;">2.86</td>
+<td style="text-align: right;">1.80</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ilex durosa</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.40</td>
+<td style="text-align: right;">0.14</td>
+<td style="text-align: right;">1.69</td>
+<td style="text-align: right;">0.40</td>
+<td style="text-align: right;">2.80</td>
+<td style="text-align: right;">12.55</td>
+<td style="text-align: right;">4.21</td>
+<td style="text-align: right;">59.00</td>
+<td style="text-align: right;">10.00</td>
+<td style="text-align: right;">4.21</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(res[, <span class="fu">c</span>(<span class="st">"IGA_cl"</span>, <span class="st">"K_cl"</span>, <span class="st">"P_cl"</span>, <span class="st">"R_cl"</span>, <span class="st">"IH_cl"</span>, <span class="st">"IM_cl"</span>)],</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"MacGuinnes"</span>, <span class="st">"Fracker-Brischle"</span>, <span class="st">"Payandeh"</span>,</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"Não aleat."</span>, <span class="st">"Hazen"</span>, <span class="st">"Morisita"</span>),</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">caption =</span> <span class="st">"Classificação do padrão espacial (Agreg. = agregado; T.Agr. = tendência ao agrupamento; Aleat. = aleatório; Unif. = uniforme)."</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Classificação do padrão espacial (Agreg. = agregado; T.Agr. = tendência ao agrupamento; Aleat. = aleatório; Unif. = uniforme).</caption>
+<colgroup>
+<col style="width: 27%">
+<col style="width: 12%">
+<col style="width: 18%">
+<col style="width: 9%">
+<col style="width: 12%">
+<col style="width: 9%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">MacGuinnes</th>
+<th style="text-align: left;">Fracker-Brischle</th>
+<th style="text-align: left;">Payandeh</th>
+<th style="text-align: left;">Não aleat.</th>
+<th style="text-align: left;">Hazen</th>
+<th style="text-align: left;">Morisita</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Tabebuia cassinoides</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">Agreg.</td>
+<td style="text-align: left;">Agreg.</td>
+<td style="text-align: left;">Agreg.</td>
+<td style="text-align: left;">Agreg.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Myrcia sulfiflora</td>
+<td style="text-align: left;">Agreg.</td>
+<td style="text-align: left;">Agreg.</td>
+<td style="text-align: left;">Agreg.</td>
+<td style="text-align: left;">Agreg.</td>
+<td style="text-align: left;">Agreg.</td>
+<td style="text-align: left;">Agreg.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mela 1</td>
+<td style="text-align: left;">Agreg.</td>
+<td style="text-align: left;">Agreg.</td>
+<td style="text-align: left;">Agreg.</td>
+<td style="text-align: left;">Agreg.</td>
+<td style="text-align: left;">Agreg.</td>
+<td style="text-align: left;">Agreg.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">jussara</td>
+<td style="text-align: left;">Agreg.</td>
+<td style="text-align: left;">Agreg.</td>
+<td style="text-align: left;">Agreg.</td>
+<td style="text-align: left;">Agreg.</td>
+<td style="text-align: left;">Agreg.</td>
+<td style="text-align: left;">Agreg.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Calophyllum brasiliensis</td>
+<td style="text-align: left;">T.Agr.</td>
+<td style="text-align: left;">T.Agr.</td>
+<td style="text-align: left;">T.Agr.</td>
+<td style="text-align: left;">Aleat.</td>
+<td style="text-align: left;">T.Agr.</td>
+<td style="text-align: left;">Aleat.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Psidium sp</td>
+<td style="text-align: left;">T.Agr.</td>
+<td style="text-align: left;">Agreg.</td>
+<td style="text-align: left;">Agreg.</td>
+<td style="text-align: left;">Agreg.</td>
+<td style="text-align: left;">Agreg.</td>
+<td style="text-align: left;">Agreg.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Alchornea triplinervia</td>
+<td style="text-align: left;">Unif.</td>
+<td style="text-align: left;">Aleat.</td>
+<td style="text-align: left;">Aleat.</td>
+<td style="text-align: left;">Aleat.</td>
+<td style="text-align: left;">Não agr.</td>
+<td style="text-align: left;">Unif.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Coussapoa micropoda</td>
+<td style="text-align: left;">T.Agr.</td>
+<td style="text-align: left;">Agreg.</td>
+<td style="text-align: left;">Agreg.</td>
+<td style="text-align: left;">Agreg.</td>
+<td style="text-align: left;">T.Agr.</td>
+<td style="text-align: left;">Agreg.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ilex durosa</td>
+<td style="text-align: left;">Agreg.</td>
+<td style="text-align: left;">Agreg.</td>
+<td style="text-align: left;">Agreg.</td>
+<td style="text-align: left;">Agreg.</td>
+<td style="text-align: left;">Agreg.</td>
+<td style="text-align: left;">Agreg.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Valores críticos usados nos testes (<span class="math inline">\(U_T - 1\)</span> = 14 graus de liberdade): <span class="math inline">\(\chi^2_{0,95}\)</span> = 23.685, <span class="math inline">\(\chi^2_{0,75}\)</span> = 17.117, <span class="math inline">\(\chi^2_{0,99}\)</span> = 29.141 e <span class="math inline">\(F_{0,95}\)</span> = 1.692. No R, <code>qchisq()</code> e <code>qf()</code> substituem a consulta às tabelas impressas.</p>
+<section id="a-escala-importa-a-caixeta-dentro-de-cada-local" class="level3">
+<h3 class="anchored" data-anchor-id="a-escala-importa-a-caixeta-dentro-de-cada-local">A escala importa: a caixeta dentro de cada local</h3>
+<p>Várias espécies ocorrem em <strong>apenas um dos três locais</strong> (veja a tabela do passo 1). Com as 15 parcelas juntas, parte da “agregação” reflete a diferença <strong>entre caixetais</strong>, e não o arranjo das árvores dentro de cada um. Para a caixeta, que ocorre nos três locais, podemos repetir a análise separadamente:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>caixeta_local <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">sapply</span>(<span class="fu">split</span>(arv, arv<span class="sc">$</span>local), <span class="cf">function</span>(d) {</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  parcelas <span class="ot">&lt;-</span> <span class="fu">unique</span>(d<span class="sc">$</span>parc)                               <span class="co"># 5 parcelas do local</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">sapply</span>(parcelas, <span class="cf">function</span>(p) <span class="fu">sum</span>(d<span class="sc">$</span>parc <span class="sc">==</span> p <span class="sc">&amp;</span> d<span class="sc">$</span>especie <span class="sc">==</span> <span class="st">"Tabebuia cassinoides"</span>))</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  r <span class="ot">&lt;-</span> <span class="fu">indices_agregacao</span>(<span class="fu">matrix</span>(n, <span class="at">nrow =</span> <span class="dv">1</span>), <span class="at">UT =</span> <span class="fu">length</span>(parcelas))</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlist</span>(r[, <span class="fu">c</span>(<span class="st">"n_i"</span>, <span class="st">"M_i"</span>, <span class="st">"S2"</span>, <span class="st">"P"</span>, <span class="st">"IM"</span>, <span class="st">"P_cl"</span>, <span class="st">"R_cl"</span>, <span class="st">"IM_cl"</span>)])</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>}))</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(caixeta_local, <span class="at">caption =</span> <span class="st">"Índices para *Tabebuia cassinoides* em cada caixetal (5 parcelas por local)."</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Índices para <em>Tabebuia cassinoides</em> em cada caixetal (5 parcelas por local).</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">n_i</th>
+<th style="text-align: left;">M_i</th>
+<th style="text-align: left;">S2</th>
+<th style="text-align: left;">P</th>
+<th style="text-align: left;">IM</th>
+<th style="text-align: left;">P_cl</th>
+<th style="text-align: left;">R_cl</th>
+<th style="text-align: left;">IM_cl</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">chauas</td>
+<td style="text-align: left;">191</td>
+<td style="text-align: left;">38.2</td>
+<td style="text-align: left;">181.7</td>
+<td style="text-align: left;">4.76</td>
+<td style="text-align: left;">1.08</td>
+<td style="text-align: left;">Agreg.</td>
+<td style="text-align: left;">Agreg.</td>
+<td style="text-align: left;">Agreg.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">jureia</td>
+<td style="text-align: left;">87</td>
+<td style="text-align: left;">17.4</td>
+<td style="text-align: left;">47.3</td>
+<td style="text-align: left;">2.72</td>
+<td style="text-align: left;">1.08</td>
+<td style="text-align: left;">Agreg.</td>
+<td style="text-align: left;">Agreg.</td>
+<td style="text-align: left;">Agreg.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">retiro</td>
+<td style="text-align: left;">132</td>
+<td style="text-align: left;">26.4</td>
+<td style="text-align: left;">362.3</td>
+<td style="text-align: left;">13.72</td>
+<td style="text-align: left;">1.39</td>
+<td style="text-align: left;">Agreg.</td>
+<td style="text-align: left;">Agreg.</td>
+<td style="text-align: left;">Agreg.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Para pensar
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Os índices nem sempre concordam, principalmente na faixa de “tendência ao agrupamento”. O índice de Payandeh tende a classificar mais espécies como agregadas que o de MacGuinnes. Por isso é comum apresentar mais de um índice e discutir as diferenças.</li>
+<li>Os índices de MacGuinnes e Fracker e Brischle ficam <strong>indefinidos</strong> quando a espécie ocorre em todas as parcelas (<span class="math inline">\(U_i = U_T\)</span>), como na Tabela 1.4 do livro para <em>Siparuna arianae</em>.</li>
+<li>O índice de Payandeh não tem uma classe “uniforme”: espécies regulares aparecem como aleatórias (<span class="math inline">\(P_i \leq 1\)</span>).</li>
+<li>Compare a caixeta nas 15 parcelas e dentro de cada local. O que muda? O que isso diz sobre o <strong>tamanho e a distribuição das unidades amostrais</strong>?</li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<section id="exercícios" class="level2">
+<h2 class="anchored" data-anchor-id="exercícios">6. Exercícios</h2>
+<div class="callout callout-style-simple callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Para entregar
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Quantos <strong>fustes</strong> e quantas <strong>árvores</strong> há nos dados? Por que os índices devem ser calculados com árvores e não com fustes?</li>
+<li>Monte uma tabela com os índices de agregação das espécies com pelo menos 5 árvores e classifique o padrão de cada uma segundo os seis índices.</li>
+<li>Para quais espécies os índices <strong>discordam</strong>? Qual índice você considera mais adequado para esses dados e por quê?</li>
+<li><em>Tabebuia cassinoides</em> ocorre em todas as 15 parcelas. Por que os índices de MacGuinnes e Fracker e Brischle não podem ser calculados para ela?</li>
+<li>Compare o padrão da caixeta considerando as 15 parcelas juntas e cada caixetal separadamente. O que isso revela sobre o <strong>tamanho e a distribuição das unidades amostrais</strong> na avaliação do padrão espacial?</li>
+<li>Proponha uma explicação ecológica (dispersão, regeneração, ambiente) para o padrão encontrado para a caixeta. Use a literatura.</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="para-saber-mais-conferindo-com-o-livro" class="level2">
+<h2 class="anchored" data-anchor-id="para-saber-mais-conferindo-com-o-livro">7. Para saber mais: conferindo com o livro</h2>
+<p>Os índices de MacGuinnes, Fracker e Brischle e Payandeh podem ser calculados só a partir de <span class="math inline">\(n_i\)</span>, <span class="math inline">\(U_i\)</span> e <span class="math inline">\(S_i^2\)</span>. Vamos conferir com três espécies da Tabela 1.4 de Souza e Soares (2014), inventário da Mata da Silvicultura em Viçosa (MG), com <span class="math inline">\(U_T = 10\)</span> parcelas:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>livro <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">especie =</span> <span class="fu">c</span>(<span class="st">"Anadenanthera peregrina"</span>, <span class="st">"Cecropia hololeuca"</span>, <span class="st">"Ocotea pretiosa"</span>),</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">n_i =</span> <span class="fu">c</span>(<span class="dv">76</span>, <span class="dv">9</span>, <span class="dv">41</span>), <span class="at">U_i =</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">6</span>, <span class="dv">9</span>), <span class="at">S2 =</span> <span class="fu">c</span>(<span class="fl">53.60</span>, <span class="fl">0.77</span>, <span class="fl">10.54</span>)</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>UT_livro <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>D <span class="ot">&lt;-</span> livro<span class="sc">$</span>n_i <span class="sc">/</span> UT_livro</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> livro<span class="sc">$</span>U_i <span class="sc">/</span> UT_livro)</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(livro[<span class="st">"especie"</span>],</span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">IGA =</span> <span class="fu">round</span>(D <span class="sc">/</span> d, <span class="dv">2</span>),</span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">K   =</span> <span class="fu">round</span>((D <span class="sc">-</span> d) <span class="sc">/</span> d<span class="sc">^</span><span class="dv">2</span>, <span class="dv">2</span>),</span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">P   =</span> <span class="fu">round</span>(livro<span class="sc">$</span>S2 <span class="sc">/</span> D, <span class="dv">2</span>))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                  especie  IGA     K    P
+1 Anadenanthera peregrina 4.72  2.31 7.05
+2      Cecropia hololeuca 0.98 -0.02 0.86
+3         Ocotea pretiosa 1.78  0.34 2.57</code></pre>
+</div>
+</div>
+<p>Os valores batem com os do livro: <em>A. peregrina</em> (IGA = 4,72; K = 2,31; P = 7,05), <em>C. hololeuca</em> (0,98; −0,02; 0,85) e <em>O. pretiosa</em> (1,78; 0,34; 2,57). Diferenças na segunda casa decimal vêm do arredondamento de <span class="math inline">\(S_i^2\)</span> na tabela do livro.</p>
+</section>
+<section id="distribuições-de-probabilidade" class="level2">
+<h2 class="anchored" data-anchor-id="distribuições-de-probabilidade">8. Distribuições de probabilidade</h2>
+<p>Outra forma de avaliar o padrão é verificar qual distribuição de probabilidade descreve melhor o número de indivíduos por parcela: <strong>Poisson</strong> (padrão aleatório) ou <strong>binomial negativa</strong> (padrão agregado).</p>
+<p>Usamos o exemplo de Souza e Soares (2014): uma área de 9 ha dividida em 100 parcelas de 30 × 30 m, com 44 indivíduos da espécie A.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>n_ind     <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">4</span>                        <span class="co"># nº de indivíduos por parcela</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>n_parcelas <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">73</span>, <span class="dv">18</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">2</span>)        <span class="co"># nº de parcelas (Tabela 1.5)</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>N  <span class="ot">&lt;-</span> <span class="fu">sum</span>(n_parcelas)                   <span class="co"># 100 parcelas</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">sum</span>(n_ind <span class="sc">*</span> n_parcelas) <span class="sc">/</span> N       <span class="co"># média = 0,44 indivíduo/parcela</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>mu</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.44</code></pre>
+</div>
+</div>
+<section id="poisson" class="level3">
+<h3 class="anchored" data-anchor-id="poisson">Poisson</h3>
+<p><span class="math display">\[P(x) = e^{-\mu}\frac{\mu^x}{x!}\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>p_pois <span class="ot">&lt;-</span> <span class="fu">dpois</span>(n_ind, <span class="at">lambda =</span> mu)</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>p_pois <span class="ot">&lt;-</span> <span class="fu">c</span>(p_pois, <span class="dv">1</span> <span class="sc">-</span> <span class="fu">sum</span>(p_pois))    <span class="co"># inclui a classe "&gt; 4"</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>esp_pois <span class="ot">&lt;-</span> N <span class="sc">*</span> p_pois</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(n_ind, <span class="st">"&gt;4"</span>), <span class="at">P =</span> <span class="fu">round</span>(p_pois, <span class="dv">4</span>), <span class="at">Esperado =</span> <span class="fu">round</span>(esp_pois, <span class="dv">2</span>))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   x      P Esperado
+1  0 0.6440    64.40
+2  1 0.2834    28.34
+3  2 0.0623     6.23
+4  3 0.0091     0.91
+5  4 0.0010     0.10
+6 &gt;4 0.0001     0.01</code></pre>
+</div>
+</div>
+</section>
+<section id="binomial-negativa" class="level3">
+<h3 class="anchored" data-anchor-id="binomial-negativa">Binomial negativa</h3>
+<p>A binomial negativa tem dois parâmetros: a média <span class="math inline">\(\mu\)</span> e o expoente <span class="math inline">\(k\)</span>, estimado inicialmente por <span class="math inline">\(\hat{k} = \bar{X}^2 / (S^2 - \bar{X})\)</span>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>S2 <span class="ot">&lt;-</span> (<span class="fu">sum</span>(n_ind<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> n_parcelas) <span class="sc">-</span> <span class="fu">sum</span>(n_ind <span class="sc">*</span> n_parcelas)<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> N) <span class="sc">/</span> N   <span class="co"># como no livro (denominador n)</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>k  <span class="ot">&lt;-</span> mu<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> (S2 <span class="sc">-</span> mu)</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="at">S2 =</span> S2, <span class="at">k =</span> k)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       S2         k 
+0.7864000 0.5588915 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>p_bn <span class="ot">&lt;-</span> <span class="fu">dnbinom</span>(n_ind, <span class="at">size =</span> k, <span class="at">mu =</span> mu)   <span class="co"># mesmo que as fórmulas P(0), P(1)... do livro</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>p_bn <span class="ot">&lt;-</span> <span class="fu">c</span>(p_bn, <span class="dv">1</span> <span class="sc">-</span> <span class="fu">sum</span>(p_bn))</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>esp_bn <span class="ot">&lt;-</span> N <span class="sc">*</span> p_bn</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(n_ind, <span class="st">"&gt;4"</span>), <span class="at">P =</span> <span class="fu">round</span>(p_bn, <span class="dv">4</span>), <span class="at">Esperado =</span> <span class="fu">round</span>(esp_bn, <span class="dv">2</span>))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   x      P Esperado
+1  0 0.7229    72.29
+2  1 0.1780    17.80
+3  2 0.0611     6.11
+4  3 0.0230     2.30
+5  4 0.0090     0.90
+6 &gt;4 0.0061     0.61</code></pre>
+</div>
+</div>
+</section>
+<section id="teste-de-aderência-qui-quadrado" class="level3">
+<h3 class="anchored" data-anchor-id="teste-de-aderência-qui-quadrado">Teste de aderência (qui-quadrado)</h3>
+<p><span class="math display">\[\chi^2 = \sum \frac{(FO_i - FE_i)^2}{FE_i}\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>obs <span class="ot">&lt;-</span> <span class="fu">c</span>(n_parcelas, <span class="dv">0</span>)                 <span class="co"># nenhuma parcela com mais de 4 indivíduos</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>qui_pois <span class="ot">&lt;-</span> <span class="fu">sum</span>((obs <span class="sc">-</span> esp_pois)<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> esp_pois)</span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>qui_bn   <span class="ot">&lt;-</span> <span class="fu">sum</span>((obs <span class="sc">-</span> esp_bn)<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> esp_bn)</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>n_cl     <span class="ot">&lt;-</span> <span class="fu">length</span>(obs)                 <span class="co"># 6 classes</span></span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">Modelo     =</span> <span class="fu">c</span>(<span class="st">"Poisson"</span>, <span class="st">"Binomial negativa"</span>),</span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">qui2_obs   =</span> <span class="fu">round</span>(<span class="fu">c</span>(qui_pois, qui_bn), <span class="dv">2</span>),</span>
+<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">gl         =</span> <span class="fu">c</span>(n_cl <span class="sc">-</span> <span class="dv">2</span>, n_cl <span class="sc">-</span> <span class="dv">3</span>),</span>
+<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">qui2_tab   =</span> <span class="fu">round</span>(<span class="fu">c</span>(<span class="fu">qchisq</span>(<span class="fl">0.95</span>, n_cl <span class="sc">-</span> <span class="dv">2</span>), <span class="fu">qchisq</span>(<span class="fl">0.95</span>, n_cl <span class="sc">-</span> <span class="dv">3</span>)), <span class="dv">3</span>),</span>
+<span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">Ajuste     =</span> <span class="fu">ifelse</span>(<span class="fu">c</span>(qui_pois <span class="sc">&lt;</span> <span class="fu">qchisq</span>(<span class="fl">0.95</span>, n_cl <span class="sc">-</span> <span class="dv">2</span>),</span>
+<span id="cb53-13"><a href="#cb53-13" aria-hidden="true" tabindex="-1"></a>                        qui_bn   <span class="sc">&lt;</span> <span class="fu">qchisq</span>(<span class="fl">0.95</span>, n_cl <span class="sc">-</span> <span class="dv">3</span>)), <span class="st">"Aceito"</span>, <span class="st">"Rejeitado"</span>)</span>
+<span id="cb53-14"><a href="#cb53-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             Modelo qui2_obs gl qui2_tab    Ajuste
+1           Poisson    52.89  4    9.488 Rejeitado
+2 Binomial negativa     4.82  3    7.815    Aceito</code></pre>
+</div>
+</div>
+<p>A Poisson é rejeitada e a binomial negativa se ajusta aos dados: <strong>a espécie A tem padrão agregado</strong>. Os valores de <span class="math inline">\(\chi^2\)</span> diferem um pouco dos do livro (53,20 e 4,79) porque o R não arredonda as probabilidades intermediárias.</p>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>O qui-quadrado fica instável quando as frequências esperadas são muito pequenas (&lt; 5). Em trabalhos, é recomendável juntar as últimas classes (por exemplo, “3 ou mais”) antes do teste (Krebs 1999).</p>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="at">Observado =</span> obs, <span class="at">Poisson =</span> esp_pois, <span class="st">`</span><span class="at">Binomial negativa</span><span class="st">`</span> <span class="ot">=</span> esp_bn)</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(m) <span class="ot">&lt;-</span> <span class="fu">c</span>(n_ind, <span class="st">"&gt;4"</span>)</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(m, <span class="at">beside =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"grey60"</span>, <span class="st">"#6cc3d5"</span>, <span class="st">"#78c2ad"</span>), <span class="at">border =</span> <span class="cn">NA</span>,</span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Número de indivíduos por parcela"</span>, <span class="at">ylab =</span> <span class="st">"Número de parcelas"</span>,</span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.text =</span> <span class="cn">TRUE</span>, <span class="at">args.legend =</span> <span class="fu">list</span>(<span class="at">bty =</span> <span class="st">"n"</span>))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="indices-agregacao_files/figure-html/unnamed-chunk-25-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Número de parcelas observado e esperado pelos modelos de Poisson e binomial negativa."><img src="indices-agregacao_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672" alt="Número de parcelas observado e esperado pelos modelos de Poisson e binomial negativa."></a></p>
+<figcaption>Número de parcelas observado e esperado pelos modelos de Poisson e binomial negativa.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="e-se-eu-tiver-as-coordenadas-das-árvores" class="level2">
+<h2 class="anchored" data-anchor-id="e-se-eu-tiver-as-coordenadas-das-árvores">9. E se eu tiver as coordenadas das árvores?</h2>
+<p>Com a posição (x, y) de cada árvore, é possível usar a <strong>função K de Ripley</strong>, que avalia o padrão em diferentes distâncias. O pacote <strong>spatstat</strong> faz isso:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spatstat)</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>pts <span class="ot">&lt;-</span> <span class="fu">ppp</span>(arv<span class="sc">$</span>x, arv<span class="sc">$</span>y, <span class="at">window =</span> <span class="fu">owin</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>), <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>)))  <span class="co"># parcela de 100 x 100 m</span></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>L   <span class="ot">&lt;-</span> <span class="fu">envelope</span>(pts, Lest, <span class="at">nsim =</span> <span class="dv">99</span>)       <span class="co"># L(r): versão estabilizada de K(r)</span></span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(L, . <span class="sc">-</span> r <span class="sc">~</span> r, <span class="at">main =</span> <span class="st">""</span>)                <span class="co"># acima do envelope = agregação</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="referências" class="level2">
+<h2 class="anchored" data-anchor-id="referências">Referências</h2>
+<ul>
+<li>KREBS, C. J. <em>Ecological Methodology</em>. 2. ed.&nbsp;Menlo Park: Benjamin/Cummings, 1999.</li>
+<li>MORISITA, M. Measuring of the dispersion of individuals and analysis of the distributional patterns. <em>Memoirs of the Faculty of Science, Kyushu University, Series E (Biology)</em>, v. 2, p.&nbsp;215-235, 1959.</li>
+<li>VANIN, A. 1999. Dissertação de mestrado sobre os caixetais do Vale do Ribeira (SP). Dados disponibilizados pelo curso Ecologia de Comunidades no R (ecoR/USP): <a href="https://ecor.ib.usp.br/doku.php?id=dados:dados-caixeta" class="uri">https://ecor.ib.usp.br/doku.php?id=dados:dados-caixeta</a>.</li>
+<li>PAYANDEH, B. Comparison of methods for assessing spatial distribution of trees. <em>Forest Science</em>, v. 16, p.&nbsp;312-317, 1970.</li>
+<li>SOUZA, A. L.; SOARES, C. P. B. <em>Florestas nativas: estrutura, dinâmica e manejo</em>. Viçosa: Editora UFV, 2014.</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<!-- Seletor de idioma: leva para a mesma página no outro idioma (ou para a página inicial, se ainda não houver tradução) -->
+<script>
+(function () {
+  var SITE = "https://ledtufam.github.io/";
+  var LANGS = ["en", "es"];
+  var lib = document.querySelector('script[src*="site_libs/"]');
+  if (!lib) return;
+  var root = lib.src.split("site_libs/")[0];             // raiz do site (funciona local e online)
+  var rel = location.href.split("#")[0].split("?")[0].slice(root.length);
+  var first = rel.split("/")[0];
+  var cur = LANGS.indexOf(first) >= 0 ? first : "pt";
+  var base = cur === "pt" ? rel : rel.slice(cur.length + 1);
+  if (base === "") base = "index.html";
+
+  // logo leva para a página inicial do idioma atual
+  if (cur !== "pt") {
+    document.querySelectorAll("a.navbar-brand").forEach(function (b) { b.setAttribute("href", root + cur + "/index.html"); });
+  }
+
+  document.querySelectorAll('a[href^="' + SITE + '"]').forEach(function (a) {
+    if (!a.closest(".navbar")) return;
+    var code = a.getAttribute("href").slice(SITE.length).replace(/\/$/, "") || "pt";
+    if (code !== "pt" && LANGS.indexOf(code) < 0) return;
+    var home = root + (code === "pt" ? "" : code + "/");
+    var alvo = home + base;
+    a.setAttribute("href", alvo);
+    a.setAttribute("hreflang", code);
+    if (code === cur) a.classList.add("active");
+    a.addEventListener("click", function (ev) {
+      if (location.protocol === "file:") { a.setAttribute("href", alvo); return; }
+      ev.preventDefault();
+      fetch(alvo, { method: "HEAD" })
+        .then(function (r) { location.href = r.ok ? alvo : home; })
+        .catch(function () { location.href = home; });
+    });
+  });
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiada");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiada");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/ledtufam\.github\.io");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2026 LEDT/UFAM. Todos os direitos reservados.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="https://ccvasconcelos.github.io/">
+<p>Desenvolvido por Caroline C. Vasconcelos</p>
+</a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","descPosition":"bottom","closeEffect":"zoom","loop":false,"openEffect":"zoom"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+</body></html>

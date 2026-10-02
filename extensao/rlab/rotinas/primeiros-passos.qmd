@@ -1,0 +1,91 @@
+---
+title: "Primeiros passos no R"
+description: "Instalar R, RStudio e Rtools, criar um projeto, instalar pacotes e importar uma planilha."
+categories: [Iniciante]
+order: 1
+---
+
+::: {.callout-note appearance="simple"}
+**Nível:** iniciante · **Pacotes:** nenhum além do R básico · [Baixar script](../scripts/primeiros-passos.R){download="primeiros-passos.R"}
+:::
+
+## 1. Instale o R e o RStudio
+
+1.  Baixe e instale o **R**: <https://cran.r-project.org/>
+2.  Baixe e instale o **RStudio Desktop**: <https://posit.co/download/rstudio-desktop/>
+3.  **Só no Windows:** instale também o **Rtools**, na versão correspondente ao seu R (ex.: R 4.5 → Rtools 4.5): <https://cran.r-project.org/bin/windows/Rtools/>. Ele é necessário para instalar pacotes que precisam ser compilados, como os instalados direto do GitHub.
+4.  Abra sempre o **RStudio** (ele usa o R por trás).
+
+::: {.callout-tip appearance="simple"}
+Para saber sua versão do R, digite `R.version.string` no Console. Para conferir se o Rtools foi reconhecido, instale o pacote **pkgbuild** e rode `pkgbuild::has_build_tools(debug = TRUE)`.
+:::
+
+## 2. Trabalhe com projetos
+
+No RStudio, vá em **File → New Project → New Directory**. Crie uma pasta para cada trabalho (ex.: `dendrologia_2026`) com a estrutura:
+
+```         
+dendrologia_2026/
+├── dados/      # planilhas originais (nunca edite à mão depois de salvar!)
+├── scripts/    # seus arquivos .R
+└── figuras/    # gráficos exportados
+```
+
+Assim, os caminhos ficam curtos e o projeto funciona em qualquer computador.
+
+## 3. O básico da linguagem
+
+```{r}
+# Comentários começam com #
+x <- c(12.5, 30.2, 18.7, 45.0)   # vetor com DAP (cm) de 4 árvores
+mean(x)                          # média
+sd(x)                            # desvio padrão
+
+# Área basal (m²) de cada árvore a partir do DAP em cm
+g <- pi * x^2 / 40000
+round(g, 4)
+```
+
+## 4. Instale e carregue pacotes
+
+Pacotes só precisam ser instalados **uma vez**; depois, carregue-os em cada sessão com `library()`.
+
+```{r}
+#| eval: false
+install.packages(c("readxl", "ggplot2", "dplyr"))
+
+library(readxl)
+library(ggplot2)
+```
+
+## 5. Importe uma planilha
+
+Salve a planilha do Excel como `.csv` (separador `;` no Brasil) ou leia o `.xlsx` diretamente:
+
+```{r}
+#| eval: false
+# CSV com ; e vírgula decimal (padrão do Excel em português)
+dados <- read.csv2("dados/inventario.csv")
+
+# Ou o arquivo do Excel
+dados <- readxl::read_excel("dados/inventario.xlsx", sheet = 1)
+
+head(dados)     # primeiras linhas
+str(dados)      # tipo de cada coluna
+summary(dados)  # resumo
+```
+
+## 6. Seu primeiro gráfico
+
+```{r}
+#| fig-cap: "Histograma de DAP de 200 árvores simuladas."
+set.seed(42)
+dap <- rlnorm(200, meanlog = log(20), sdlog = 0.5)
+hist(dap, breaks = 20, col = "#78c2ad", border = "white",
+     main = "", xlab = "DAP (cm)", ylab = "Número de árvores")
+```
+
+## Para continuar estudando
+
+-   [R for Data Science (2ª ed., em português)](https://cienciadedatos.github.io/pt-r4ds/)
+-   [Análises Ecológicas no R](https://analises-ecologicas.com/) — livro em português com exemplos de ecologia

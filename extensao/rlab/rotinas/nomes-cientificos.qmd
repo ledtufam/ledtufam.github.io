@@ -1,0 +1,191 @@
+---
+title: "Padronização de nomes científicos"
+description: "Organizar a lista de espécies de um levantamento florístico, contar famílias, gêneros, espécies, cf., aff. e indeterminadas, e validar os nomes no TNRS (WFO e WCVP) e na Flora e Funga do Brasil."
+categories: [Taxonomia, Dendrologia]
+order: 6
+---
+
+::: {.callout-note appearance="simple"}
+**Nível:** iniciante/intermediário · **Pacotes:** R básico; TNRS e flora (validação online) · **Disciplina:** [FGD921 - Dendrologia Tropical](/ensino/graduacao/dendrologiatropical.qmd) · [Baixar script](../scripts/nomes-cientificos.R){download="nomes-cientificos.R"} · [Baixar a lista de espécies](../dados/especies_oliveira_amaral2004.csv){download="especies_oliveira_amaral2004.csv"}
+:::
+
+Listas de espécies de inventários florestais costumam ter erros de grafia, nomes desatualizados (sinônimos), famílias de sistemas de classificação antigos e identificações incompletas (*sp.*, *cf.*, *aff.*). Antes de qualquer análise, é preciso **padronizar e validar** esses nomes.
+
+Esta rotina faz em R o mesmo que a prática da aula faz com o [Plant Miner](http://www.plantminer.com/) e o [Global Names Verifier](https://verifier.globalnames.org/): **organizar a lista → contar → validar em bases de referência → comparar com a lista original**.
+
+## 1. Os dados
+
+Usamos a lista de **240 espécies** do levantamento de Oliveira & Amaral (2004), numa floresta de vertente na Amazônia Central, **adaptada para a prática** da disciplina. As colunas são:
+
+| Coluna | Descrição |
+|-----------------|-------------------------------------------------------|
+| `familia` | família, como no artigo original (2004) |
+| `nome_cientifico` | gênero e epíteto (com *cf.* ou *aff.*, quando houver) |
+| `rank` | nível de identificação: espécie, gênero, família ou indeterminada |
+| `status` | *sp.*, *sp.1*, *sp.2*, *cf.* ou *aff.* |
+| `habito` | árvore, palmeira ou liana |
+
+```{r}
+sp <- read.csv("../dados/especies_oliveira_amaral2004.csv")
+str(sp)
+head(sp)
+```
+
+## 2. Limpeza básica
+
+Planilhas digitadas à mão quase sempre têm **espaços sobrando** (por exemplo, `"Astronium "` e `"Rinorea guianensis "`). Eles parecem invisíveis, mas fazem o R tratar nomes iguais como diferentes:
+
+```{r}
+sum(grepl("^\\s|\\s$", sp$nome_cientifico))      # nomes com espaço no início ou no fim
+
+sp$nome_cientifico <- trimws(gsub("\\s+", " ", sp$nome_cientifico))
+sp$status[is.na(sp$status)] <- ""
+```
+
+Também montamos o **nome completo**, juntando o *sp.* aos registros identificados só até gênero ou família:
+
+```{r}
+sp$nome <- ifelse(sp$rank %in% c("gênero", "família", "indeterminada"),
+                  paste(sp$nome_cientifico, sp$status), sp$nome_cientifico)
+sp$genero <- ifelse(sp$rank %in% c("espécie", "gênero"), sub(" .*", "", sp$nome_cientifico), NA)
+exemplos <- c(which(sp$rank == "gênero")[1:2], which(sp$status == "cf.")[1],
+              which(sp$rank %in% c("família", "indeterminada")))
+sp[exemplos, c("familia", "nome", "rank", "status")]
+```
+
+### Nomes repetidos
+
+Uma lista de espécies não deveria ter o mesmo nome duas vezes:
+
+```{r}
+dup <- sp$nome[duplicated(sp$nome)]
+sp[sp$nome %in% dup, c("familia", "nome")]
+```
+
+## 3. Respondendo às perguntas da prática (lista original)
+
+Com a lista organizada, as contagens são diretas:
+
+```{r}
+c(
+  familias           = length(unique(sp$familia[sp$familia != "Indeterminada"])),
+  generos            = length(unique(na.omit(sp$genero))),
+  especies           = sum(sp$rank == "espécie"),
+  ate_genero         = sum(sp$rank == "gênero"),
+  ate_familia        = sum(sp$rank == "família"),
+  indeterminadas     = sum(sp$rank == "indeterminada"),
+  com_cf             = sum(sp$status == "cf."),
+  com_aff            = sum(sp$status == "aff.")
+)
+```
+
+```{r}
+#| fig-cap: "Número de espécies por família na lista original (as 15 famílias mais ricas)."
+#| fig-height: 5
+riqueza <- sort(table(sp$familia), decreasing = TRUE)[1:15]
+par(mar = c(4, 10, 1, 1))
+barplot(rev(riqueza), horiz = TRUE, las = 1, col = "#78c2ad", border = NA,
+        xlab = "Número de espécies")
+```
+
+## 4. Validar os nomes no TNRS
+
+As perguntas mais interessantes da prática dependem de comparar a lista com uma **base atualizada**: quais nomes mudaram, quais são sinônimos, quais estavam com erro de grafia e quais famílias deixaram de existir (por exemplo, Caesalpiniaceae e Mimosaceae hoje estão em Fabaceae).
+
+O **TNRS** (*Taxonomic Name Resolution Service*) compara os nomes com a **WFO** (*World Flora Online*) e a **WCVP** (Kew), corrige erros de grafia e indica se o nome é **aceito** ou **sinônimo**.
+
+::: {.callout-important appearance="simple"}
+Os blocos abaixo **não são executados** no site, porque dependem da internet e da versão atual das bases. Rode no seu computador.
+:::
+
+Enviamos só os nomes identificados até espécie, **sem** o *cf.* e o *aff.* (que indicam dúvida na identificação e não fazem parte do nome):
+
+```{r}
+#| eval: false
+install.packages("TNRS")
+library(TNRS)
+
+sp$busca <- gsub("\\s(cf|aff)\\.\\s", " ", sp$nome_cientifico)
+nomes_especie <- unique(sp$busca[sp$rank == "espécie"])
+
+res <- TNRS(nomes_especie, sources = c("wfo", "wcvp"))
+
+res[, c("Name_submitted", "Name_matched", "Overall_score",
+        "Taxonomic_status", "Accepted_name", "Accepted_family")]
+```
+
+Como ler o resultado:
+
+| Coluna | O que significa |
+|-----------------------|-------------------------------------------------|
+| `Name_matched` | nome encontrado na base (já com a grafia corrigida) |
+| `Overall_score` | semelhança com o nome enviado (1 = idêntico); valores menores indicam erro de grafia |
+| `Taxonomic_status` | `Accepted` (aceito), `Synonym` (sinônimo) ou `No opinion` |
+| `Accepted_name` | nome que deve ser usado |
+| `Accepted_family` | família segundo a classificação atual (APG) |
+
+### Comparando com a lista original
+
+```{r}
+#| eval: false
+comp <- merge(sp[sp$rank == "espécie", c("familia", "nome_cientifico", "busca")],
+              res[, c("Name_submitted", "Name_matched", "Overall_score",
+                      "Taxonomic_status", "Accepted_name", "Accepted_family")],
+              by.x = "busca", by.y = "Name_submitted", all.x = TRUE)
+
+# Quantas espécies tiveram o nome alterado desde 2004 (sinônimos)?
+sinonimos <- subset(comp, Taxonomic_status == "Synonym", c(nome_cientifico, Accepted_name))
+nrow(sinonimos); sinonimos
+
+# Quais estavam escritas incorretamente?
+subset(comp, Overall_score < 1, c(nome_cientifico, Name_matched, Overall_score))
+
+# Quais não foram encontradas?
+subset(comp, is.na(Accepted_name) | Accepted_name == "", nome_cientifico)
+
+# Alguma espécie mudou de família?
+mudou_familia <- subset(comp, familia != Accepted_family,
+                        c(nome_cientifico, familia, Accepted_family))
+table(paste(mudou_familia$familia, "→", mudou_familia$Accepted_family))
+
+# Alguma mudou de gênero?
+subset(comp, sub(" .*", "", busca) != sub(" .*", "", Accepted_name),
+       c(nome_cientifico, Accepted_name))
+```
+
+Por fim, salvamos a lista padronizada:
+
+```{r}
+#| eval: false
+write.csv(comp, "resultados/lista_padronizada.csv", row.names = FALSE)
+```
+
+## 5. Conferir na Flora e Funga do Brasil
+
+Para espécies brasileiras, a referência oficial é a [Flora e Funga do Brasil](https://floradobrasil.jbrj.gov.br/). O pacote **flora** consulta essa base:
+
+```{r}
+#| eval: false
+install.packages("flora")
+library(flora)
+
+ffb <- get.taxa(nomes_especie, life.form = TRUE, habitat = TRUE, domain = TRUE)
+ffb[, c("original.search", "search.str", "family", "taxon.status", "notes")]
+```
+
+::: {.callout-tip appearance="simple"}
+Quando as bases discordam, a decisão é **taxonômica**: consulte a literatura recente (revisões, monografias) e o especialista do grupo. Use outras bases quando for preciso (Tropicos, POWO, IPNI, WFO) e registre sempre **qual base e qual data de consulta** você usou.
+:::
+
+## Boas práticas na escrita de nomes científicos
+
+-   Gênero e epíteto em **itálico**; autor, *cf.*, *aff.*, *sp.*, *spp.*, *subsp.*, *var.* e *f.* em fonte **normal**.
+-   Na primeira citação, escreva o nome **por extenso** (com autor, se for o caso); depois, o gênero pode ser abreviado (*E. coriacea*), exceto no início de frases.
+-   Com *sp.* e *spp.*, o gênero nunca é abreviado: *Pouteria* sp.
+
+## Referências
+
+-   BOYLE, B. et al. 2013. The taxonomic name resolution service: an online tool for automated standardization of plant names. *BMC Bioinformatics* 14: 16.
+-   CARVALHO, G. *flora: tools for interacting with the Brazilian Flora 2020*. Pacote R. <https://CRAN.R-project.org/package=flora>
+-   OLIVEIRA, A. N.; AMARAL, I. L. 2004. Florística e fitossociologia de uma floresta de vertente na Amazônia Central, Amazonas, Brasil. *Acta Amazonica* 34(1): 21-34.
+-   *International Code of Nomenclature for algae, fungi, and plants* (Código de Madri), 18ª edição, 2025.

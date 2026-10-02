@@ -1,0 +1,48 @@
+---
+title: "Acerca de"
+---
+
+### Nuestra misión
+
+El **Laboratorio de Ecología y Dendrología Tropical (LEDT)** está vinculado al Departamento de Ciencias Forestales de la Facultad de Ciencias Agrarias de la Universidad Federal de Amazonas (UFAM), con sede en Manaos, Brasil.
+
+Nuestro laboratorio se dedica al estudio de la diversidad, la ecología, la taxonomía y el funcionamiento de los bosques tropicales, con énfasis en la Amazonía. Desarrollamos investigaciones que integran trabajo de campo, colecciones biológicas, espectroscopía, monitoreo ecológico y herramientas analíticas para comprender la biodiversidad amazónica y sus respuestas al cambio climático.
+
+### Qué hacemos
+
+Nuestras investigaciones abarcan diferentes escalas de la biodiversidad vegetal, desde la identificación taxonómica de especies hasta los procesos ecológicos que estructuran los bosques amazónicos.
+
+### Principales áreas de trabajo
+
+-   Dendrología, taxonomía y sistemática de árboles tropicales;
+-   Ecología de comunidades, ecología funcional y monitoreo de bosques;
+-   Espectroscopía aplicada a la identificación de plantas;
+-   Herbarios, colecciones científicas y documentación de la biodiversidad amazónica;
+-   Distribución de especies, cambio climático y conservación de la flora amazónica.
+
+### Nuestro enfoque
+
+Creemos que responder a los desafíos científicos de la Amazonía exige un enfoque interdisciplinario.
+
+Por eso combinamos diferentes fuentes de información, entre ellas:
+
+-   Inventarios florísticos;
+-   Parcelas permanentes;
+-   Herbarios;
+-   Espectroscopía;
+-   Morfología y taxonomía;
+-   Estadística, aprendizaje automático y ciencia de datos.
+
+Esta integración permite comprender desde la identidad de las especies hasta los procesos ecológicos responsables del mantenimiento de la biodiversidad amazónica.
+
+### Docencia y formación
+
+El LEDT participa activamente en la formación de recursos humanos en diferentes niveles, recibiendo estudiantes de grado, iniciación científica, maestría y doctorado.
+
+Nuestro objetivo es formar profesionales capaces de integrar los conocimientos clásicos de la botánica y la ecología con herramientas cuantitativas y tecnologías emergentes.
+
+### Colaboración
+
+El laboratorio mantiene colaboraciones con investigadores e instituciones nacionales e internacionales, contribuyendo a redes de investigación dedicadas al conocimiento, la documentación y la conservación de la biodiversidad amazónica.
+
+Estamos siempre abiertos a nuevas alianzas científicas, proyectos colaborativos e intercambio de estudiantes e investigadores.

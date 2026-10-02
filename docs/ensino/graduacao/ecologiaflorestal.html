@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="Estrutura e funcionamento dos ecossistemas florestais, sucessão, biodiversidade e conservação na Amazônia.">
 
-<title>FGD926 - Ecologia Florestal (60h)</title>
+<title>FGD926 - Ecologia Florestal – LEDT</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,8 +32,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
 <link href="../../assets/images/logos/favicon.ico" rel="icon">
-<script src="../../site_libs/quarto-listing/list.min.js"></script>
-<script src="../../site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -61,80 +60,26 @@ ul.task-list li input[type="checkbox"] {
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
     "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-title',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="FGD926 - Ecologia Florestal – LEDT">
+<meta property="og:description" content="Estrutura e funcionamento dos ecossistemas florestais, sucessão, biodiversidade e conservação na Amazônia.">
+<meta property="og:image" content="https://ledtufam.github.io/assets/images/photos/ecologia.jpeg">
+<meta property="og:site_name" content="LEDT">
 </head>
 
 <body class="nav-fixed">
@@ -145,11 +90,11 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../../assets/images/logos/logo_simples.png" alt="" class="navbar-logo">
+    <img src="../../assets/images/logos/logo_simples.png" alt="LEDT – Laboratório de Ecologia e Dendrologia Tropical" class="navbar-logo">
     </a>
   </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+            <div id="quarto-search" class="" title="Procurar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Alternar de navegação" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -177,50 +122,105 @@ window.Quarto = {
   </li>  
     </ul>
   </li>
-  <li class="nav-item">
-    <a class="nav-link" href="../../pesquisa.html"> 
-<span class="menu-text">Pesquisa</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-pesquisa" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Pesquisa</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-pesquisa">    
+        <li>
+    <a class="dropdown-item" href="../../pesquisa.html">
+ <span class="dropdown-text">Projetos e parcerias</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../publicacoes.html"> 
-<span class="menu-text">Publicações</span></a>
+        <li>
+    <a class="dropdown-item" href="../../publicacoes.html">
+ <span class="dropdown-text">Publicações</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../extensao.html"> 
-<span class="menu-text">Extensão</span></a>
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-extensão" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Extensão</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-extensão">    
+        <li>
+    <a class="dropdown-item" href="../../extensao.html">
+ <span class="dropdown-text">Projetos de extensão</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../divulgacaocientifica.html"> 
-<span class="menu-text">Divulgação Científica</span></a>
+        <li>
+    <a class="dropdown-item" href="../../extensao/rlab/index.html">
+ <span class="dropdown-text">R Lab</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../../divulgacaocientifica.html">
+ <span class="dropdown-text">Divulgação científica</span></a>
+  </li>  
+    </ul>
+  </li>
   <li class="nav-item">
     <a class="nav-link" href="../../selecoes.html"> 
 <span class="menu-text">Seleções</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../sobre.html"> 
-<span class="menu-text">Sobre</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-sobre" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Sobre</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-sobre">    
+        <li>
+    <a class="dropdown-item" href="../../sobre.html">
+ <span class="dropdown-text">O LEDT</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../../identidade-visual.html">
+ <span class="dropdown-text">Identidade visual</span></a>
+  </li>  
+    </ul>
+  </li>
   <li class="nav-item">
     <a class="nav-link" href="../../contato.html"> 
 <span class="menu-text">Contato</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-bi-translate" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-translate" role="img" aria-label="Idioma">
+</i> 
+ <span class="menu-text"></span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-bi-translate">    
+        <li>
+    <a class="dropdown-item" href="https://ledtufam.github.io/">
+ <span class="dropdown-text">Português</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://ledtufam.github.io/en/">
+ <span class="dropdown-text">English</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://ledtufam.github.io/es/">
+ <span class="dropdown-text">Español</span></a>
+  </li>  
+    </ul>
+  </li>
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/ledtufam"> <i class="bi bi-github" role="img" aria-label="GitHub">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.instagram.com/ledt_ufam/"> <i class="bi bi-instagram" role="img" aria-label="Quarto Instagram">
+    <a class="nav-link" href="https://www.instagram.com/ledt_ufam/"> <i class="bi bi-instagram" role="img" aria-label="Instagram">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.youtube.com/@ledt_ufam"> <i class="bi bi-youtube" role="img" aria-label="YouTube">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
-  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo escuro"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -235,8 +235,8 @@ window.Quarto = {
    
   <ul>
   <li><a href="#objetivos" id="toc-objetivos" class="nav-link active" data-scroll-target="#objetivos">Objetivos</a></li>
-  <li><a href="#carga-horária" id="toc-carga-horária" class="nav-link" data-scroll-target="#carga-horária">Carga horária</a></li>
   <li><a href="#ementa" id="toc-ementa" class="nav-link" data-scroll-target="#ementa">Ementa</a></li>
+  <li><a href="#bibliografia" id="toc-bibliografia" class="nav-link" data-scroll-target="#bibliografia">Bibliografia</a></li>
   <li><a href="#turmas" id="toc-turmas" class="nav-link" data-scroll-target="#turmas">Turmas</a></li>
   </ul>
 </nav>
@@ -246,9 +246,19 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">FGD926 - Ecologia Florestal (60h)</h1>
-</div>
+<h1 class="title">FGD926 - Ecologia Florestal</h1>
+<p class="subtitle lead">Engenharia Florestal · 5º período · 60h</p>
+  <div class="quarto-categories">
+    <div class="quarto-category">Graduação</div>
+    <div class="quarto-category">Engenharia Florestal</div>
+  </div>
+  </div>
 
+<div>
+  <div class="description">
+    Estrutura e funcionamento dos ecossistemas florestais, sucessão, biodiversidade e conservação na Amazônia.
+  </div>
+</div>
 
 
 <div class="quarto-title-meta">
@@ -263,111 +273,145 @@ window.Quarto = {
 </header>
 
 
-<p><a href="../..\assets/images/photos/ecologia.jpeg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../..\assets/images/photos/ecologia.jpeg" class="img-fluid"></a></p>
-<section id="objetivos" class="level3">
-<h3 class="anchored" data-anchor-id="objetivos">Objetivos</h3>
+<p><a href="../..\assets/images/photos/ecologia.jpeg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../..\assets/images/photos/ecologia.jpeg" class="img-fluid" alt="Aula de Ecologia Florestal"></a></p>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Código:</strong> FGD926 | <strong>Créditos:</strong> 3.2.1.0 | <strong>Carga horária:</strong> 60h (30h teoria + 30h prática)<br>
+<strong>Período:</strong> 5º | <strong>Pré-requisito:</strong> não há<br>
+<strong>Departamento:</strong> Ciências Florestais (DCF/FCA/UFAM)</p>
+</div>
+</div>
+</div>
+<section id="objetivos" class="level2">
+<h2 class="anchored" data-anchor-id="objetivos">Objetivos</h2>
 <p><strong>Geral:</strong> Proporcionar aos estudantes um entendimento profundo dos princípios e processos ecológicos essenciais que regulam os ecossistemas florestais, habilitando-os com o saber indispensável para a implementação eficaz da conservação, do manejo sustentável e da preservação das florestas.</p>
 <p><strong>Específicos:</strong></p>
 <ul>
-<li><p>Compreender a Estrutura e Função dos Ecossistemas Florestais</p></li>
-<li><p>Estudar as Interações Bióticas e Abióticas</p></li>
-<li><p>Analisar a importância da Biodiversidade Florestal</p></li>
-<li><p>Analisar os Impactos das Mudanças Climáticas nos Ecossistemas Florestais</p></li>
-<li><p>Desenvolver Habilidades de Pesquisa e Monitoramento Ecológico</p></li>
+<li>Compreender a estrutura e função dos ecossistemas florestais;</li>
+<li>Estudar as interações bióticas e abióticas;</li>
+<li>Analisar a importância da biodiversidade florestal;</li>
+<li>Analisar os impactos das mudanças climáticas nos ecossistemas florestais;</li>
+<li>Desenvolver habilidades de pesquisa e monitoramento ecológico.</li>
 </ul>
 </section>
-<section id="carga-horária" class="level3">
-<h3 class="anchored" data-anchor-id="carga-horária">Carga horária</h3>
-<p><strong>Teoria:</strong> 30h</p>
-<p><strong>Prática:</strong> 30h</p>
-</section>
-<section id="ementa" class="level3">
-<h3 class="anchored" data-anchor-id="ementa">Ementa</h3>
+<section id="ementa" class="level2">
+<h2 class="anchored" data-anchor-id="ementa">Ementa</h2>
 <ul>
-<li><p>Introdução</p></li>
-<li><p>Definição e importância</p></li>
-<li><p>Princípios e conceitos de Ecologia e Ecologia Florestal</p></li>
-<li><p>Características de ecossistemas</p></li>
-<li><p>Conceito de ecossistema</p></li>
-<li><p>Equilíbrios nos ecossistemas</p></li>
-<li><p>O Fluxo de energia e a ciclagem de matéria</p></li>
-<li><p>Ecossistemas Florestais</p></li>
-<li><p>Sucessão ecológica</p></li>
-<li><p>Análise da vegetação florestal</p></li>
-<li><p>Fatores Ecológicos Abióticos e Bióticos</p></li>
-<li><p>Diversidade Biológica</p></li>
-<li><p>Os ecossistemas como recursos naturais</p></li>
-<li><p>Aspectos da conservação e preservação dos ecossistemas</p></li>
-<li><p>Uso dos recursos naturais e Sustentabilidade na Amazônia</p></li>
-<li><p>Zoneamento ecológico</p></li>
+<li>Introdução: definição e importância</li>
+<li>Princípios e conceitos de Ecologia e Ecologia Florestal</li>
+<li>Características de ecossistemas; conceito de ecossistema; equilíbrios nos ecossistemas</li>
+<li>O fluxo de energia e a ciclagem de matéria</li>
+<li>Ecossistemas florestais e sucessão ecológica</li>
+<li>Análise da vegetação florestal</li>
+<li>Fatores ecológicos abióticos e bióticos</li>
+<li>Diversidade biológica</li>
+<li>Os ecossistemas como recursos naturais</li>
+<li>Aspectos da conservação e preservação dos ecossistemas</li>
+<li>Uso dos recursos naturais e sustentabilidade na Amazônia</li>
+<li>Zoneamento ecológico</li>
 </ul>
-<hr>
-<blockquote class="blockquote">
-<p>Faça o download da ementa completa <a href="../../assets/pdf/Engenharia Florestal PPC_Ecologia florestal.pdf" target="_blank" class="btn btn-outline-success"> <i class="bi bi-file-pdf-fill"></i> PDF</a></p>
-</blockquote>
+<p><a href="../../assets/pdf/Engenharia Florestal PPC_Ecologia florestal.pdf" target="_blank" class="btn btn-outline-success btn-sm"><i class="bi bi-file-pdf-fill"></i> Ementa oficial (PPC)</a></p>
+<!--
+## Aulas práticas (descreva aqui as saídas de campo, ex.: parcelas, medições, visitas)
+
+## Cronograma (modelo)
+
+| Semana | Data  | Tema | Tipo |
+|--------|-------|------|------|
+| 1      | dd/mm |      |      |
+
+## Avaliação (modelo)
+
+| Atividade | Peso |
+|-----------|------|
+|           |  %   |
+-->
 </section>
-<section id="turmas" class="level3">
-<h3 class="anchored" data-anchor-id="turmas">Turmas</h3>
-<blockquote class="blockquote">
-<p><strong>2026.1 |</strong> Acessar o material da disciplina. Restrito aos alunos matriculados <a href="https://drive.google.com/drive/folders/1SBfiBz0EiBc831hurP3axbzMEFfg8_0n?usp=sharing" target="_blank" class="btn btn-outline-success"> <i class="bi bi-google"></i> Drive</a></p>
-</blockquote>
-
-
-
+<section id="bibliografia" class="level2">
+<h2 class="anchored" data-anchor-id="bibliografia">Bibliografia</h2>
+<p><strong>Básica</strong></p>
+<ul>
+<li>ODUM, E. P.; BARRETT, G. W. <em>Fundamentals of Ecology</em>. 5. ed.&nbsp;Brooks Cole, 2005.</li>
+<li>KIMMINS, J. P. <em>Forest Ecology: A Foundation for Sustainable Forest Management and Environmental Ethics in Forestry</em>. 3. ed.&nbsp;Prentice Hall, 2004.</li>
+<li>FISHER, R. F.; BINKLEY, D. <em>Ecology and Management of Forest Soils</em>. 3. ed.&nbsp;John Wiley &amp; Sons, 2000.</li>
+</ul>
+<p><strong>Complementar</strong></p>
+<ul>
+<li>AMARAL, W. A. N. <em>Políticas Públicas em Biodiversidade: Conservação e uso sustentado no país da megadiversidade</em>.</li>
+<li>BASKIN, C. C.; BASKIN, J. M. <em>Seeds: Ecology, Biogeography, and Evolution of Dormancy and Germination</em>. Academic Press, 1998.</li>
+<li>BEGON, M.; TOWNSEND, C. R.; HARPER, J. L. <em>Ecologia: de indivíduos a ecossistemas</em>. 4. ed.&nbsp;Porto Alegre: Artmed, 2007.</li>
+<li>PINTO-COELHO, R. M. <em>Fundamentos em Ecologia</em>. Porto Alegre: Artmed, 2000.</li>
+<li>PRIMACK, R. B.; RODRIGUES, E. <em>Biologia da Conservação</em>. Londrina: Ed. dos Autores, 2008.</li>
+</ul>
 </section>
-
-<div class="quarto-listing quarto-listing-container-table" id="listing-listing">
-<div class="listing-actions-group">
-   <div class="input-group input-group-sm quarto-listing-sort">
-     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
-     <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
-       <option value="" disabled="" selected="" hidden="">Order By</option>
-       <option value="index" data-direction="asc">Default</option>
-         <option value="listing-title-sort" data-direction="asc">
-          Title
-        </option>
-     </select>
-  </div>
-    <div class="input-group input-group-sm quarto-listing-filter">
-      <span class="input-group-text"><i class="bi bi-search"></i></span>
-      <input type="text" class="search form-control" placeholder="Filter">
-    </div>
-</div>
-<table class="quarto-listing-table table">
+<section id="turmas" class="level2">
+<h2 class="anchored" data-anchor-id="turmas">Turmas</h2>
+<table class="table-striped caption-top table">
+<caption>Acesso ao material restrito aos alunos matriculados.</caption>
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
-<tr>
-<th>
-<a class="sort" data-sort="listing-title-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Title</a>
-</th>
+<tr class="header">
+<th>Semestre</th>
+<th>Material</th>
 </tr>
 </thead>
-<tbody class="list">
-<tr data-index="0" data-listing-file-modified-sort="1785716041710" data-listing-reading-time-sort="1" data-listing-word-count-sort="1" data-listing-title-sort="Disciplinas" data-listing-filename-sort="disciplinas.qmd">
-<td>
-<a href="../../ensino/graduacao/disciplinas.html" class="title listing-title">Disciplinas</a>
-</td>
-</tr>
-<tr data-index="1" data-listing-file-modified-sort="1786168088557" data-listing-reading-time-sort="1" data-listing-word-count-sort="170" data-listing-title-sort="FGD320 - Fitossociologia de Florestas Tropicais (45h)" data-listing-filename-sort="fitossociologia.qmd">
-<td>
-<a href="../../ensino/graduacao/fitossociologia.html" class="title listing-title">FGD320 - Fitossociologia de Florestas Tropicais (45h)</a>
-</td>
-</tr>
-<tr data-index="2" data-listing-file-modified-sort="1786168106223" data-listing-reading-time-sort="1" data-listing-word-count-sort="194" data-listing-title-sort="FGD921 - Dendrologia Tropical (60h)" data-listing-filename-sort="dendrologiatropical.qmd">
-<td>
-<a href="../../ensino/graduacao/dendrologiatropical.html" class="title listing-title">FGD921 - Dendrologia Tropical (60h)</a>
-</td>
-</tr>
-<tr data-index="3" data-listing-file-modified-sort="1786168097158" data-listing-reading-time-sort="1" data-listing-word-count-sort="140" data-listing-title-sort="FGD925 - Sementes Florestais (60h)" data-listing-filename-sort="sementesflorestais.qmd">
-<td>
-<a href="../../ensino/graduacao/sementesflorestais.html" class="title listing-title">FGD925 - Sementes Florestais (60h)</a>
-</td>
+<tbody>
+<tr class="odd">
+<td><strong>2026.1</strong></td>
+<td><a href="https://drive.google.com/drive/folders/1SBfiBz0EiBc831hurP3axbzMEFfg8_0n?usp=sharing" target="_blank" class="btn btn-outline-success btn-sm"><i class="bi bi-google"></i> Drive</a></td>
 </tr>
 </tbody>
 </table>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+
+
+</section>
+
+</main> <!-- /main -->
+<!-- Seletor de idioma: leva para a mesma página no outro idioma (ou para a página inicial, se ainda não houver tradução) -->
+<script>
+(function () {
+  var SITE = "https://ledtufam.github.io/";
+  var LANGS = ["en", "es"];
+  var lib = document.querySelector('script[src*="site_libs/"]');
+  if (!lib) return;
+  var root = lib.src.split("site_libs/")[0];             // raiz do site (funciona local e online)
+  var rel = location.href.split("#")[0].split("?")[0].slice(root.length);
+  var first = rel.split("/")[0];
+  var cur = LANGS.indexOf(first) >= 0 ? first : "pt";
+  var base = cur === "pt" ? rel : rel.slice(cur.length + 1);
+  if (base === "") base = "index.html";
+
+  // logo leva para a página inicial do idioma atual
+  if (cur !== "pt") {
+    document.querySelectorAll("a.navbar-brand").forEach(function (b) { b.setAttribute("href", root + cur + "/index.html"); });
+  }
+
+  document.querySelectorAll('a[href^="' + SITE + '"]').forEach(function (a) {
+    if (!a.closest(".navbar")) return;
+    var code = a.getAttribute("href").slice(SITE.length).replace(/\/$/, "") || "pt";
+    if (code !== "pt" && LANGS.indexOf(code) < 0) return;
+    var home = root + (code === "pt" ? "" : code + "/");
+    var alvo = home + base;
+    a.setAttribute("href", alvo);
+    a.setAttribute("hreflang", code);
+    if (code === cur) a.classList.add("active");
+    a.addEventListener("click", function (ev) {
+      if (location.protocol === "file:") { a.setAttribute("href", alvo); return; }
+      ev.preventDefault();
+      fetch(alvo, { method: "HEAD" })
+        .then(function (r) { location.href = r.ok ? alvo : home; })
+        .catch(function () { location.href = home; });
+    });
+  });
+})();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -555,12 +599,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // flash "checked"
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
+    button.setAttribute("title", "Copiada");
     let tooltip;
     if (window.bootstrap) {
       button.setAttribute("data-bs-toggle", "tooltip");
       button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
+      button.setAttribute("data-bs-title", "Copiada");
       tooltip = new bootstrap.Tooltip(button, 
         { trigger: "manual", 
           customClass: "code-copy-button-tooltip",
@@ -604,7 +648,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
+      var filterRegex = new RegExp("https:\/\/ledtufam\.github\.io");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -936,7 +980,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>© 2026 LEDT. Todos os direitos reservados.</p>
+<p>© 2026 LEDT/UFAM. Todos os direitos reservados.</p>
 </div>   
     <div class="nav-footer-center">
       &nbsp;
@@ -952,7 +996,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","descPosition":"bottom","openEffect":"zoom","loop":false,"closeEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","openEffect":"zoom","descPosition":"bottom","selector":".lightbox","loop":false});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
