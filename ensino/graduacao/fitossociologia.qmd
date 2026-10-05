@@ -1,7 +1,7 @@
 ---
 title: "FGD320 - Fitossociologia de Florestas Tropicais"
 subtitle: "Engenharia Florestal · 45h"
-description: "Métodos de levantamento e análise da vegetação: parâmetros fitossociológicos, similaridade e diversidade."
+description: "Métodos de levantamento e análise da vegetação, com todas as práticas em R usando os dados abertos dos caixetais e um relatório final em formato de artigo."
 image: /assets/images/photos/fitossociologia.jpeg
 categories: [Graduação, Engenharia Florestal]
 ---
@@ -37,28 +37,58 @@ categories: [Graduação, Engenharia Florestal]
 
 <a href="/assets/pdf/Engenharia Florestal PPC_Fitossociologia.pdf" target="_blank" class="btn btn-outline-success btn-sm"><i class="bi bi-file-pdf-fill"></i> Ementa oficial (PPC)</a>
 
-## Cálculos no R
+## Projeto do semestre: os caixetais em formato de artigo
+
+Em 2026.2, todas as aulas práticas usam **um único banco de dados aberto**: os levantamentos de **caixetais** (florestas paludosas dominadas pela caixeta, *Tabebuia cassinoides*) do Vale do Ribeira, SP, com 3 locais × 5 parcelas de 10 × 20 m (Vanin 1999; dados do curso [ecoR/USP](https://ecor.ib.usp.br/doku.php?id=dados:dados-caixeta)).
+
+Cada prática responde a uma pergunta sobre os caixetais e gera **uma tabela ou figura e um parágrafo** do relatório final. Nas oficinas de 06 e 13/11, essas peças são reunidas num **relatório em formato de artigo**, apresentado no seminário de 20/11 (EE8).
+
+<a href="/extensao/rlab/dados/caixeta.csv" download="caixeta.csv" class="btn btn-outline-success btn-sm"><i class="bi bi-table"></i> Baixar dados caixeta</a> <a href="/extensao/rlab/rotinas/primeiros-passos.qmd" class="btn btn-outline-success btn-sm"><i class="bi bi-play-circle"></i> Primeiros passos no R</a>
+
+## Cronograma 2026.2
+
+Atualizado em 25/09/2026. T = teoria; P = prática.
+
+| Data | Tipo | Tema | Atividade | Roteiro no R Lab |
+|-------|:----:|---------------------------------|:-----:|------------------------------|
+| 21/08 | T | Apresentação da disciplina. Introdução e importância da fitossociologia | | |
+| 28/08 | T/P | Comportamento das populações nas comunidades. Observações nas trilhas da UFAM | | |
+| 04/09 | T | Planejamento do inventário: instruções gerais | | |
+| 11/09 | P | Planejamento do inventário: elaboração | | |
+| 18/09 | P | Planejamento do inventário: seminário | EE1 | |
+| 25/09 | T | Métodos usados em levantamentos fitossociológicos | EE2 | |
+| 02/10 | P | Distribuição espacial de árvores | EE3 | [Índices de agregação](/extensao/rlab/rotinas/indices-agregacao.qmd) |
+| 09/10 | T/P | Parâmetros fitossociológicos (Excel e R) | EE4 | [Parâmetros e estrutura](/extensao/rlab/rotinas/fitossociologia.qmd) |
+| 16/10 | T/P | Índices de associação e similaridade | EE5 | [Associação e similaridade](/extensao/rlab/rotinas/associacao-similaridade.qmd) |
+| 23/10 | T/P | Índices de heterogeneidade de comunidades | EE6 | [Heterogeneidade](/extensao/rlab/rotinas/heterogeneidade.qmd) |
+| 30/10 | T/P | Diversidade da vegetação | EE7 | [Rarefação e diversidade beta](/extensao/rlab/rotinas/diversidade.qmd) |
+| 06/11 | P | Oficina: elaboração do relatório (formato de artigo) | | |
+| 13/11 | P | Oficina: elaboração do relatório (formato de artigo) | | |
+| 20/11 | T | Seminário: apresentação do relatório | EE8 | |
+
+: {.striped .hover}
+
+## Do roteiro ao artigo
+
+Cada prática alimenta uma parte do relatório final:
+
+| Prática | Pergunta sobre os caixetais | Peça do relatório |
+|--------------|-------------------------------------|----------------------------|
+| Antes de tudo | Os dados estão prontos? Fustes ou árvores? Os nomes estão padronizados? | Material e métodos; [padronização de nomes](/extensao/rlab/rotinas/nomes-cientificos.qmd) |
+| Distribuição espacial (EE3) | As espécies são agregadas? O padrão depende da escala? | Tabela 1 |
+| Parâmetros (EE4) | Quem domina cada caixetal? Como é a estrutura diamétrica? | Tabela 2 e Figura 2 |
+| Associação e similaridade (EE5) | Quais espécies ocorrem juntas? Os caixetais são parecidos? | Tabela 3 e Figura 3 |
+| Heterogeneidade (EE6) | Qual caixetal é mais diverso? Qual o peso da caixeta? | Tabela 4 e Figura 4 |
+| Diversidade (EE7) | A amostragem foi suficiente? Onde está a diversidade: dentro ou entre os caixetais? | Tabela 5, Figura 5 e parágrafo-síntese |
+| Oficinas | Como juntar tudo numa história? | Introdução, Discussão, Resumo |
 
 ::: {.callout-tip appearance="simple"}
-Os cálculos vistos em aula (densidade, frequência, dominância, IVI, diversidade e índices de agregação) estão disponíveis como rotinas comentadas no **R Lab**:
+## Estrutura do relatório
 
--   [Parâmetros fitossociológicos e diversidade](/extensao/rlab/rotinas/fitossociologia.qmd)
--   [Padrão espacial: índices de agregação e distribuições de probabilidade](/extensao/rlab/rotinas/indices-agregacao.qmd)
+**Título** · **Resumo** (até 250 palavras) · **Introdução** (o que são caixetais; por que estudar sua estrutura; objetivo) · **Material e métodos** (área e dados; tratamento dos dados; análises, com os pacotes e a versão do R) · **Resultados** (Tabelas 1-5 e Figuras 2-5) · **Discussão** (compare com a literatura) · **Conclusões** · **Referências** · **Material suplementar** (o script em R usado).
+
+Cada estudante entrega também o **script** que gera todas as tabelas e figuras, para que qualquer pessoa consiga reproduzir os resultados.
 :::
-
-<!--
-## Cronograma (modelo)
-
-| Semana | Data  | Tema | Tipo |
-|--------|-------|------|------|
-| 1      | dd/mm |      |      |
-
-## Avaliação (modelo)
-
-| Atividade | Peso |
-|-----------|------|
-|           |  %   |
--->
 
 ## Bibliografia
 

@@ -1,0 +1,245 @@
+---
+title: "Associação entre espécies e similaridade entre áreas"
+description: "Tabelas 2 × 2, teste qui-quadrado e exato de Fisher para associação entre espécies; índices de Jaccard, Sørensen e Bray-Curtis e dendrograma de similaridade, com os dados abertos caixeta."
+categories: [Fitossociologia, Ecologia]
+order: 4
+---
+
+::: {.callout-note appearance="simple"}
+**Nível:** intermediário · **Pacotes:** apenas R básico · **Disciplina:** [FGD320 - Fitossociologia](/ensino/graduacao/fitossociologia.qmd) · [Baixar script](../scripts/associacao-similaridade.R){download="associacao-similaridade.R"} · [Baixar dados caixeta](../dados/caixeta.csv){download="caixeta.csv"}
+:::
+
+Duas perguntas diferentes, com ferramentas parecidas:
+
+-   **Associação:** duas **espécies** tendem a ocorrer nas mesmas parcelas (associação positiva), em parcelas diferentes (negativa) ou de forma independente?
+-   **Similaridade:** duas **áreas** (parcelas ou caixetais) têm composição de espécies parecida?
+
+Em ambos os casos, partimos de uma tabela **espécie × parcela**, montada com os dados **caixeta** (3 caixetais × 5 parcelas de 10 × 20 m).
+
+::: {.callout-tip appearance="simple"}
+## Roteiro da aula prática (16/10 · EE5)
+
+1.  Montar a tabela 2 × 2 de um par de espécies e testar a associação à mão (seção 2);
+2.  Testar todos os pares de espécies com pelo menos 5 árvores (seção 3);
+3.  Calcular a similaridade entre os caixetais e entre as parcelas (seções 4 e 5);
+4.  Interpretar o dendrograma e responder aos exercícios (seção 6).
+:::
+
+## 1. Dados
+
+```{r}
+cx <- read.csv("../dados/caixeta.csv")   # no seu projeto: read.csv("dados/caixeta.csv")
+cx$especie[cx$especie == "Callophyllum brasiliensis"] <- "Calophyllum brasiliensis"
+
+arv <- unique(cx[, c("local", "parcela", "arvore", "especie")])   # uma linha por árvore
+arv$parc <- paste(arv$local, arv$parcela, sep = "_")
+
+ab <- unclass(table(arv$especie, arv$parc))   # abundância: espécie × parcela
+pa <- (ab > 0) * 1                            # presença (1) e ausência (0)
+dim(pa)
+```
+
+## 2. Associação entre duas espécies
+
+Para um par de espécies A e B, contamos as parcelas em cada situação:
+
+|  | B presente | B ausente |
+|-------------|:-----------:|:-----------:|
+| **A presente** | $a$ | $b$ |
+| **A ausente** | $c$ | $d$ |
+
+com $N = a + b + c + d$ parcelas. Se as espécies forem **independentes**, o valor esperado de $a$ é $E(a) = (a+b)(a+c)/N$. Se $a > E(a)$, a associação é **positiva**; se $a < E(a)$, **negativa**.
+
+O teste qui-quadrado com correção de Yates (1 grau de liberdade) é:
+
+$$\chi^2 = \frac{N\,(|ad - bc| - N/2)^2}{(a+b)(c+d)(a+c)(b+d)}$$
+
+Vamos testar *Calophyllum brasiliensis* e *Psidium* sp:
+
+```{r}
+A <- pa["Calophyllum brasiliensis", ]
+B <- pa["Psidium sp", ]
+
+a <- sum(A == 1 & B == 1); b <- sum(A == 1 & B == 0)
+c <- sum(A == 0 & B == 1); d <- sum(A == 0 & B == 0)
+N <- a + b + c + d
+c(a = a, b = b, c = c, d = d, N = N)
+
+Ea  <- (a + b) * (a + c) / N
+qui <- N * (abs(a * d - b * c) - N / 2)^2 / ((a + b) * (c + d) * (a + c) * (b + d))
+c(a_observado = a, a_esperado = round(Ea, 2), qui2 = round(qui, 3),
+  qui2_critico = round(qchisq(0.95, 1), 3))
+```
+
+O $\chi^2$ calculado é menor que o crítico (3,841): **não há associação significativa**.
+
+### Quando as frequências esperadas são pequenas
+
+Com só 15 parcelas, várias caselas da tabela 2 × 2 têm frequência esperada menor que 5, e o $\chi^2$ deixa de ser confiável. Nesse caso, usamos o **teste exato de Fisher**:
+
+```{r}
+tab22 <- matrix(c(a, c, b, d), 2, dimnames = list(Calophyllum = c("pres", "aus"),
+                                                  Psidium = c("pres", "aus")))
+tab22
+chisq.test(tab22)$p.value        # mesma conta da fórmula acima (com Yates)
+fisher.test(tab22)$p.value
+```
+
+### Coeficientes de associação
+
+Além do teste, medimos a **intensidade** da associação. Os mais usados são:
+
+-   **Jaccard:** $J = a / (a + b + c)$, de 0 (nunca juntas) a 1 (sempre juntas);
+-   **Ochiai:** $O = a / \sqrt{(a+b)(a+c)}$;
+
+```{r}
+c(Jaccard = a / (a + b + c), Ochiai = a / sqrt((a + b) * (a + c)))
+```
+
+## 3. Todos os pares de espécies
+
+Testamos os pares entre as espécies com pelo menos 5 árvores, com o teste de Fisher:
+
+```{r}
+sp  <- names(which(rowSums(ab) >= 5))
+par_sp <- t(combn(sp, 2))
+
+assoc <- data.frame(A = par_sp[, 1], B = par_sp[, 2])
+assoc[, c("a", "b", "c", "d", "Jaccard", "sinal", "p_Fisher")] <- NA
+for (k in seq_len(nrow(assoc))) {
+  x <- pa[assoc$A[k], ]; y <- pa[assoc$B[k], ]
+  a <- sum(x & y); b <- sum(x & !y); c <- sum(!x & y); d <- sum(!x & !y)
+  Ea <- (a + b) * (a + c) / (a + b + c + d)
+  assoc[k, c("a", "b", "c", "d")] <- c(a, b, c, d)
+  assoc$Jaccard[k]  <- round(a / (a + b + c), 2)
+  assoc$sinal[k]    <- ifelse(a > Ea, "+", ifelse(a < Ea, "−", "0"))
+  assoc$p_Fisher[k] <- round(fisher.test(matrix(c(a, c, b, d), 2))$p.value, 4)
+}
+knitr::kable(assoc[assoc$p_Fisher < 0.05, ], row.names = FALSE,
+             caption = "Pares de espécies com associação significativa (Fisher, p < 0,05).")
+```
+
+```{r}
+#| fig-cap: "Matriz de associação entre as espécies com pelo menos 5 árvores. Azul: positiva; vermelho: negativa; * = significativa (p < 0,05). O número é o índice de Jaccard."
+#| fig-height: 6
+M <- matrix(NA, length(sp), length(sp), dimnames = list(sp, sp))
+for (k in seq_len(nrow(assoc))) {
+  v <- ifelse(assoc$sinal[k] == "+", 1, -1) * (1 - assoc$p_Fisher[k])
+  M[assoc$A[k], assoc$B[k]] <- M[assoc$B[k], assoc$A[k]] <- v
+}
+par(mar = c(10, 12, 1, 1))
+image(1:length(sp), 1:length(sp), M, col = hcl.colors(20, "Blue-Red 2", rev = TRUE),
+      zlim = c(-1, 1), axes = FALSE, xlab = "", ylab = "")
+axis(1, 1:length(sp), sp, las = 2, font = 3, cex.axis = 0.8)
+axis(2, 1:length(sp), sp, las = 1, font = 3, cex.axis = 0.8)
+for (k in seq_len(nrow(assoc))) {
+  i <- match(assoc$A[k], sp); j <- match(assoc$B[k], sp)
+  rot <- paste0(assoc$Jaccard[k], ifelse(assoc$p_Fisher[k] < 0.05, "*", ""))
+  text(i, j, rot, cex = 0.7); text(j, i, rot, cex = 0.7)
+}
+```
+
+::: {.callout-warning appearance="simple"}
+**Associação ou ambiente?** *Psidium* sp e jussara aparecem **positivamente associadas**, mas quase todas as suas ocorrências estão em jureia. Já *Calophyllum brasiliensis* e Mela 1 aparecem **negativamente associadas** porque Mela 1 só ocorre em retiro, onde não há *Calophyllum*. Isso pode refletir a diferença entre os locais (ambiente, história, distância), e não uma interação entre as espécies. É o mesmo efeito de escala que vimos nos [índices de agregação](indices-agregacao.qmd).
+:::
+
+## 4. Similaridade entre os caixetais
+
+Para comparar **áreas**, trocamos os papéis: $a$ = espécies presentes nas duas áreas, $b$ = só na primeira, $c$ = só na segunda.
+
+| Índice | Fórmula | Tipo de dado |
+|-----------------|--------------------------------------|----------------|
+| Jaccard | $S_J = a / (a + b + c)$ | presença/ausência |
+| Sørensen | $S_S = 2a / (2a + b + c)$ | presença/ausência |
+| Bray-Curtis (similaridade) | $S_{BC} = 2\sum \min(x_{ij}, x_{ik}) / \sum (x_{ij} + x_{ik})$ | abundância |
+
+```{r}
+ab_local <- unclass(table(arv$local, arv$especie))   # local × espécie
+pa_local <- (ab_local > 0) * 1
+
+similaridade <- function(x, y) {
+  a <- sum(x > 0 & y > 0); b <- sum(x > 0 & y == 0); c <- sum(x == 0 & y > 0)
+  c(Jaccard  = a / (a + b + c),
+    Sorensen = 2 * a / (2 * a + b + c),
+    BrayCurtis = 2 * sum(pmin(x, y)) / sum(x + y),
+    comuns = a)
+}
+
+pares <- combn(rownames(ab_local), 2)
+sim_local <- t(apply(pares, 2, function(p) similaridade(ab_local[p[1], ], ab_local[p[2], ])))
+rownames(sim_local) <- apply(pares, 2, paste, collapse = " × ")
+knitr::kable(round(sim_local, 2), caption = "Similaridade entre os caixetais.")
+```
+
+A similaridade **florística** (Jaccard, Sørensen) é muito baixa: os caixetais compartilham poucos nomes de espécies. Já o Bray-Curtis é bem mais alto, porque a caixeta, presente nos três, domina a abundância.
+
+::: {.callout-important appearance="simple"}
+**Cuidado com os nomes!** Morfoespécies como `myrtaceae1`, `Mela 1` ou `indet.1` receberam rótulos em cada local e **podem ser a mesma espécie** em locais diferentes. Como só nomes idênticos contam como "comuns", a similaridade florística pode estar **subestimada**. Este é um bom exemplo de por que [padronizar os nomes](nomes-cientificos.qmd) antes da análise.
+:::
+
+## 5. Similaridade entre parcelas e dendrograma
+
+Com 15 parcelas, uma tabela de similaridade fica difícil de ler. O **dendrograma** (agrupamento por UPGMA, a média das distâncias) resume a matriz. Usamos a **distância** = 1 − similaridade:
+
+```{r}
+dist_matriz <- function(m, indice) {
+  n <- nrow(m); D <- matrix(0, n, n, dimnames = list(rownames(m), rownames(m)))
+  for (i in 1:n) for (j in 1:n) D[i, j] <- 1 - similaridade(m[i, ], m[j, ])[indice]
+  as.dist(D)
+}
+
+ab_parc <- t(ab)                                       # parcela × espécie
+d_jac <- dist_matriz(ab_parc, "Jaccard")
+d_bc  <- dist_matriz(ab_parc, "BrayCurtis")
+```
+
+```{r}
+#| fig-cap: "Dendrogramas (UPGMA) das 15 parcelas pela distância de Jaccard (presença/ausência) e de Bray-Curtis (abundância)."
+#| fig-height: 5
+par(mfrow = c(1, 2), mar = c(7, 4, 2, 1))
+distancias <- list(Jaccard = d_jac, `Bray-Curtis` = d_bc)
+for (nm in names(distancias)) {
+  h <- hclust(distancias[[nm]], method = "average")
+  plot(h, hang = -1, main = nm, xlab = "", sub = "", ylab = "Distância", cex = 0.8)
+}
+```
+
+Para conferir se o dendrograma representa bem a matriz original, calculamos a **correlação cofenética** (valores acima de 0,7 indicam boa representação):
+
+```{r}
+c(Jaccard     = cor(d_jac, cophenetic(hclust(d_jac, "average"))),
+  Bray_Curtis = cor(d_bc,  cophenetic(hclust(d_bc,  "average"))))
+```
+
+::: {.callout-tip}
+## Conferindo com pacotes
+
+O pacote **vegan** calcula as mesmas distâncias: `vegan::vegdist(ab_parc, "jaccard", binary = TRUE)` e `vegan::vegdist(ab_parc, "bray")`. O resultado deve ser igual ao da nossa função.
+:::
+
+## 6. Exercícios
+
+::: {.callout-important appearance="simple"}
+## Para entregar (EE5)
+
+1.  Monte à mão a tabela 2 × 2 de *Myrcia sulfiflora* × *Tabebuia cassinoides*. Por que não é possível testar a associação entre elas?
+2.  Quais pares de espécies têm associação significativa? Ela é positiva ou negativa? Proponha uma explicação para cada caso.
+3.  Por que o teste de Fisher é mais adequado que o $\chi^2$ para estes dados?
+4.  Compare Jaccard, Sørensen e Bray-Curtis entre os caixetais. Por que o Bray-Curtis é tão maior?
+5.  No dendrograma, as parcelas se agrupam por caixetal? O que isso indica sobre a composição de espécies dos três locais?
+6.  Escolha duas morfoespécies que possam ser a mesma espécie em locais diferentes. Junte-as (renomeie no R) e recalcule a similaridade. O que muda?
+:::
+
+::: {.callout-note appearance="simple"}
+## Para o relatório (formato de artigo)
+
+Esta prática gera a **Tabela 3** (similaridade entre os caixetais) e a **Figura 3** (dendrogramas das parcelas). Escreva um parágrafo comparando a similaridade florística e a quantitativa.
+:::
+
+## Referências
+
+-   FELFILI, J. M. et al. *Fitossociologia no Brasil: métodos e estudos de caso*. Viçosa: Editora UFV, 2011.
+-   LEGENDRE, P.; LEGENDRE, L. *Numerical ecology*. 3. ed. Amsterdam: Elsevier, 2012.
+-   MAGURRAN, A. E. *Medindo a diversidade biológica*. Curitiba: Ed. UFPR, 2011.
+-   MUELLER-DOMBOIS, D.; ELLENBERG, H. *Aims and Methods of Vegetation Ecology*. New York: Wiley, 1974.
+-   VANIN, A. 1999. Dissertação de mestrado (dados caixeta). Dados disponíveis em: <https://ecor.ib.usp.br/doku.php?id=dados:dados-caixeta>.

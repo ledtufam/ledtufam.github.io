@@ -5,7 +5,7 @@
 # ======================================================================
 
 
-# ---- Roteiro da aula prática ----
+# ---- Roteiro da aula prática (02/10 · EE3) ----
 
 # ---- 0. Antes de começar ----
 
@@ -184,7 +184,9 @@ knitr::kable(caixeta_local, caption = "Índices para *Tabebuia cassinoides* em c
 
 # ---- 6. Exercícios ----
 
-# ---- Para entregar ----
+# ---- Para entregar (EE3) ----
+
+# ---- Para o relatório (formato de artigo) ----
 
 # ---- 7. Para saber mais: conferindo com o livro ----
 livro <- data.frame(

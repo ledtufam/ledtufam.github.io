@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Métodos de levantamento e análise da vegetação: parâmetros fitossociológicos, similaridade e diversidade.">
+<meta name="description" content="Métodos de levantamento e análise da vegetação, com todas as práticas em R usando os dados abertos dos caixetais e um relatório final em formato de artigo.">
 
 <title>FGD320 - Fitossociologia de Florestas Tropicais – LEDT</title>
 <style>
@@ -77,7 +77,7 @@ ul.task-list li input[type="checkbox"] {
 
 <link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="FGD320 - Fitossociologia de Florestas Tropicais – LEDT">
-<meta property="og:description" content="Métodos de levantamento e análise da vegetação: parâmetros fitossociológicos, similaridade e diversidade.">
+<meta property="og:description" content="Métodos de levantamento e análise da vegetação, com todas as práticas em R usando os dados abertos dos caixetais e um relatório final em formato de artigo.">
 <meta property="og:image" content="https://ledtufam.github.io/assets/images/photos/fitossociologia.jpeg">
 <meta property="og:site_name" content="LEDT">
 </head>
@@ -236,7 +236,9 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#objetivos" id="toc-objetivos" class="nav-link active" data-scroll-target="#objetivos">Objetivos</a></li>
   <li><a href="#ementa" id="toc-ementa" class="nav-link" data-scroll-target="#ementa">Ementa</a></li>
-  <li><a href="#cálculos-no-r" id="toc-cálculos-no-r" class="nav-link" data-scroll-target="#cálculos-no-r">Cálculos no R</a></li>
+  <li><a href="#projeto-do-semestre-os-caixetais-em-formato-de-artigo" id="toc-projeto-do-semestre-os-caixetais-em-formato-de-artigo" class="nav-link" data-scroll-target="#projeto-do-semestre-os-caixetais-em-formato-de-artigo">Projeto do semestre: os caixetais em formato de artigo</a></li>
+  <li><a href="#cronograma-2026.2" id="toc-cronograma-2026.2" class="nav-link" data-scroll-target="#cronograma-2026.2">Cronograma 2026.2</a></li>
+  <li><a href="#do-roteiro-ao-artigo" id="toc-do-roteiro-ao-artigo" class="nav-link" data-scroll-target="#do-roteiro-ao-artigo">Do roteiro ao artigo</a></li>
   <li><a href="#bibliografia" id="toc-bibliografia" class="nav-link" data-scroll-target="#bibliografia">Bibliografia</a></li>
   <li><a href="#turmas" id="toc-turmas" class="nav-link" data-scroll-target="#turmas">Turmas</a></li>
   </ul>
@@ -257,7 +259,7 @@ ul.task-list li input[type="checkbox"] {
 
 <div>
   <div class="description">
-    Métodos de levantamento e análise da vegetação: parâmetros fitossociológicos, similaridade e diversidade.
+    Métodos de levantamento e análise da vegetação, com todas as práticas em R usando os dados abertos dos caixetais e um relatório final em formato de artigo.
   </div>
 </div>
 
@@ -311,35 +313,190 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 <p><a href="../../assets/pdf/Engenharia Florestal PPC_Fitossociologia.pdf" target="_blank" class="btn btn-outline-success btn-sm"><i class="bi bi-file-pdf-fill"></i> Ementa oficial (PPC)</a></p>
 </section>
-<section id="cálculos-no-r" class="level2">
-<h2 class="anchored" data-anchor-id="cálculos-no-r">Cálculos no R</h2>
-<div class="callout callout-style-simple callout-tip">
-<div class="callout-body d-flex">
+<section id="projeto-do-semestre-os-caixetais-em-formato-de-artigo" class="level2">
+<h2 class="anchored" data-anchor-id="projeto-do-semestre-os-caixetais-em-formato-de-artigo">Projeto do semestre: os caixetais em formato de artigo</h2>
+<p>Em 2026.2, todas as aulas práticas usam <strong>um único banco de dados aberto</strong>: os levantamentos de <strong>caixetais</strong> (florestas paludosas dominadas pela caixeta, <em>Tabebuia cassinoides</em>) do Vale do Ribeira, SP, com 3 locais × 5 parcelas de 10 × 20 m (Vanin 1999; dados do curso <a href="https://ecor.ib.usp.br/doku.php?id=dados:dados-caixeta">ecoR/USP</a>).</p>
+<p>Cada prática responde a uma pergunta sobre os caixetais e gera <strong>uma tabela ou figura e um parágrafo</strong> do relatório final. Nas oficinas de 06 e 13/11, essas peças são reunidas num <strong>relatório em formato de artigo</strong>, apresentado no seminário de 20/11 (EE8).</p>
+<p><a href="../../extensao/rlab/dados/caixeta.csv" download="caixeta.csv" class="btn btn-outline-success btn-sm"><i class="bi bi-table"></i> Baixar dados caixeta</a> <a href="../../extensao/rlab/rotinas/primeiros-passos.html" class="btn btn-outline-success btn-sm"><i class="bi bi-play-circle"></i> Primeiros passos no R</a></p>
+</section>
+<section id="cronograma-2026.2" class="level2">
+<h2 class="anchored" data-anchor-id="cronograma-2026.2">Cronograma 2026.2</h2>
+<p>Atualizado em 25/09/2026. T = teoria; P = prática.</p>
+<table class="table-striped table-hover caption-top table">
+<thead>
+<tr class="header">
+<th>Data</th>
+<th style="text-align: center;">Tipo</th>
+<th>Tema</th>
+<th style="text-align: center;">Atividade</th>
+<th>Roteiro no R Lab</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>21/08</td>
+<td style="text-align: center;">T</td>
+<td>Apresentação da disciplina. Introdução e importância da fitossociologia</td>
+<td style="text-align: center;"></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>28/08</td>
+<td style="text-align: center;">T/P</td>
+<td>Comportamento das populações nas comunidades. Observações nas trilhas da UFAM</td>
+<td style="text-align: center;"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>04/09</td>
+<td style="text-align: center;">T</td>
+<td>Planejamento do inventário: instruções gerais</td>
+<td style="text-align: center;"></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>11/09</td>
+<td style="text-align: center;">P</td>
+<td>Planejamento do inventário: elaboração</td>
+<td style="text-align: center;"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>18/09</td>
+<td style="text-align: center;">P</td>
+<td>Planejamento do inventário: seminário</td>
+<td style="text-align: center;">EE1</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>25/09</td>
+<td style="text-align: center;">T</td>
+<td>Métodos usados em levantamentos fitossociológicos</td>
+<td style="text-align: center;">EE2</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>02/10</td>
+<td style="text-align: center;">P</td>
+<td>Distribuição espacial de árvores</td>
+<td style="text-align: center;">EE3</td>
+<td><a href="../../extensao/rlab/rotinas/indices-agregacao.html">Índices de agregação</a></td>
+</tr>
+<tr class="even">
+<td>09/10</td>
+<td style="text-align: center;">T/P</td>
+<td>Parâmetros fitossociológicos (Excel e R)</td>
+<td style="text-align: center;">EE4</td>
+<td><a href="../../extensao/rlab/rotinas/fitossociologia.html">Parâmetros e estrutura</a></td>
+</tr>
+<tr class="odd">
+<td>16/10</td>
+<td style="text-align: center;">T/P</td>
+<td>Índices de associação e similaridade</td>
+<td style="text-align: center;">EE5</td>
+<td><a href="../../extensao/rlab/rotinas/associacao-similaridade.html">Associação e similaridade</a></td>
+</tr>
+<tr class="even">
+<td>23/10</td>
+<td style="text-align: center;">T/P</td>
+<td>Índices de heterogeneidade de comunidades</td>
+<td style="text-align: center;">EE6</td>
+<td><a href="../../extensao/rlab/rotinas/heterogeneidade.html">Heterogeneidade</a></td>
+</tr>
+<tr class="odd">
+<td>30/10</td>
+<td style="text-align: center;">T/P</td>
+<td>Diversidade da vegetação</td>
+<td style="text-align: center;">EE7</td>
+<td><a href="../../extensao/rlab/rotinas/diversidade.html">Rarefação e diversidade beta</a></td>
+</tr>
+<tr class="even">
+<td>06/11</td>
+<td style="text-align: center;">P</td>
+<td>Oficina: elaboração do relatório (formato de artigo)</td>
+<td style="text-align: center;"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>13/11</td>
+<td style="text-align: center;">P</td>
+<td>Oficina: elaboração do relatório (formato de artigo)</td>
+<td style="text-align: center;"></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>20/11</td>
+<td style="text-align: center;">T</td>
+<td>Seminário: apresentação do relatório</td>
+<td style="text-align: center;">EE8</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="do-roteiro-ao-artigo" class="level2">
+<h2 class="anchored" data-anchor-id="do-roteiro-ao-artigo">Do roteiro ao artigo</h2>
+<p>Cada prática alimenta uma parte do relatório final:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Prática</th>
+<th>Pergunta sobre os caixetais</th>
+<th>Peça do relatório</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Antes de tudo</td>
+<td>Os dados estão prontos? Fustes ou árvores? Os nomes estão padronizados?</td>
+<td>Material e métodos; <a href="../../extensao/rlab/rotinas/nomes-cientificos.html">padronização de nomes</a></td>
+</tr>
+<tr class="even">
+<td>Distribuição espacial (EE3)</td>
+<td>As espécies são agregadas? O padrão depende da escala?</td>
+<td>Tabela 1</td>
+</tr>
+<tr class="odd">
+<td>Parâmetros (EE4)</td>
+<td>Quem domina cada caixetal? Como é a estrutura diamétrica?</td>
+<td>Tabela 2 e Figura 2</td>
+</tr>
+<tr class="even">
+<td>Associação e similaridade (EE5)</td>
+<td>Quais espécies ocorrem juntas? Os caixetais são parecidos?</td>
+<td>Tabela 3 e Figura 3</td>
+</tr>
+<tr class="odd">
+<td>Heterogeneidade (EE6)</td>
+<td>Qual caixetal é mais diverso? Qual o peso da caixeta?</td>
+<td>Tabela 4 e Figura 4</td>
+</tr>
+<tr class="even">
+<td>Diversidade (EE7)</td>
+<td>A amostragem foi suficiente? Onde está a diversidade: dentro ou entre os caixetais?</td>
+<td>Tabela 5, Figura 5 e parágrafo-síntese</td>
+</tr>
+<tr class="odd">
+<td>Oficinas</td>
+<td>Como juntar tudo numa história?</td>
+<td>Introdução, Discussão, Resumo</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-simple callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-body-container">
-<p>Os cálculos vistos em aula (densidade, frequência, dominância, IVI, diversidade e índices de agregação) estão disponíveis como rotinas comentadas no <strong>R Lab</strong>:</p>
-<ul>
-<li><a href="../../extensao/rlab/rotinas/fitossociologia.html">Parâmetros fitossociológicos e diversidade</a></li>
-<li><a href="../../extensao/rlab/rotinas/indices-agregacao.html">Padrão espacial: índices de agregação e distribuições de probabilidade</a></li>
-</ul>
+<div class="callout-title-container flex-fill">
+Estrutura do relatório
 </div>
 </div>
+<div class="callout-body-container callout-body">
+<p><strong>Título</strong> · <strong>Resumo</strong> (até 250 palavras) · <strong>Introdução</strong> (o que são caixetais; por que estudar sua estrutura; objetivo) · <strong>Material e métodos</strong> (área e dados; tratamento dos dados; análises, com os pacotes e a versão do R) · <strong>Resultados</strong> (Tabelas 1-5 e Figuras 2-5) · <strong>Discussão</strong> (compare com a literatura) · <strong>Conclusões</strong> · <strong>Referências</strong> · <strong>Material suplementar</strong> (o script em R usado).</p>
+<p>Cada estudante entrega também o <strong>script</strong> que gera todas as tabelas e figuras, para que qualquer pessoa consiga reproduzir os resultados.</p>
 </div>
-<!--
-## Cronograma (modelo)
-
-| Semana | Data  | Tema | Tipo |
-|--------|-------|------|------|
-| 1      | dd/mm |      |      |
-
-## Avaliação (modelo)
-
-| Atividade | Peso |
-|-----------|------|
-|           |  %   |
--->
+</div>
 </section>
 <section id="bibliografia" class="level2">
 <h2 class="anchored" data-anchor-id="bibliografia">Bibliografia</h2>
@@ -1004,7 +1161,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","selector":".lightbox","descPosition":"bottom","loop":false,"closeEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","openEffect":"zoom","loop":false,"closeEffect":"zoom","descPosition":"bottom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {

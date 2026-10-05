@@ -1,139 +1,233 @@
 ---
-title: "Parâmetros fitossociológicos e diversidade"
-description: "Densidade, frequência, dominância, IVI, IVC e índices de Shannon, Simpson e Pielou a partir de um inventário em parcelas."
+title: "Parâmetros fitossociológicos e estrutura"
+description: "Densidade, frequência, dominância, IVI e IVC por caixetal, e distribuição de diâmetros e alturas, com os dados abertos caixeta."
 categories: [Fitossociologia, Ecologia]
-order: 2
+order: 3
 ---
 
 ::: {.callout-note appearance="simple"}
-**Nível:** iniciante/intermediário · **Pacotes:** apenas R básico · **Disciplina:** [FGD320 - Fitossociologia](/ensino/graduacao/fitossociologia.qmd) · [Baixar script](../scripts/fitossociologia.R){download="fitossociologia.R"}
+**Nível:** iniciante/intermediário · **Pacotes:** apenas R básico · **Disciplina:** [FGD320 - Fitossociologia](/ensino/graduacao/fitossociologia.qmd) · [Baixar script](../scripts/fitossociologia.R){download="fitossociologia.R"} · [Baixar dados caixeta](../dados/caixeta.csv){download="caixeta.csv"}
 :::
 
-Nesta rotina calculamos a **estrutura horizontal** de uma comunidade arbórea a partir de um inventário em parcelas, usando somente funções do R básico, para que cada passo da fórmula fique visível.
+Nesta rotina calculamos a **estrutura horizontal** (densidade, frequência, dominância e valor de importância) e a **estrutura diamétrica e vertical** dos caixetais do Vale do Ribeira, usando o mesmo banco da prática de [índices de agregação](indices-agregacao.qmd). Usamos só funções do R básico, para que cada passo da fórmula fique visível.
+
+::: {.callout-tip appearance="simple"}
+## Roteiro da aula prática (09/10 · EE4)
+
+1.  Calcular os parâmetros de **uma espécie** à mão (seção 3) e conferir no Excel;
+2.  Generalizar o cálculo para todas as espécies com uma função (seção 4);
+3.  Comparar os três caixetais (seção 5) e montar a estrutura diamétrica (seção 6);
+4.  Responder aos exercícios e escrever o parágrafo de resultados para o relatório (seção 7).
+:::
 
 ## 1. Dados
 
-Usamos um inventário **simulado** com 10 parcelas de 20 × 50 m (0,1 ha cada; 1 ha no total). Para usar seus dados, basta ter uma tabela com uma linha por árvore e as colunas `parcela`, `especie` e `dap` (em cm).
+Os dados **caixeta** vêm da dissertação de Andrea Vanin (1999), disponibilizados pelo curso [ecoR/USP](https://ecor.ib.usp.br/doku.php?id=dados:dados-caixeta): três caixetais (`chauas`, `jureia` e `retiro`), cada um com 5 parcelas de 10 × 20 m. Cada linha é um **fuste**.
 
 ```{r}
-set.seed(2026)
-especies <- c("Eschweilera coriacea", "Protium hebetatum", "Pouteria guianensis",
-              "Ecclinusa guianensis", "Licania micrantha", "Micropholis guyanensis",
-              "Scleronema micranthum", "Oenocarpus bataua", "Goupia glabra",
-              "Dinizia excelsa")
-prob <- c(0.22, 0.18, 0.12, 0.10, 0.09, 0.08, 0.07, 0.07, 0.05, 0.02)
-
-n_arv <- 600
-inv <- data.frame(
-  parcela = sample(paste0("P", 1:10), n_arv, replace = TRUE),
-  especie = sample(especies, n_arv, replace = TRUE, prob = prob),
-  dap     = round(10 + rlnorm(n_arv, meanlog = 2.3, sdlog = 0.7), 1)  # DAP >= 10 cm
-)
-head(inv)
-
-# Para seus dados, use por exemplo:
-# inv <- read.csv2("dados/inventario.csv")
+cx <- read.csv("../dados/caixeta.csv")   # no seu projeto: read.csv("dados/caixeta.csv")
+cx$especie[cx$especie == "Callophyllum brasiliensis"] <- "Calophyllum brasiliensis"
+str(cx)
 ```
 
-## 2. Definições da amostragem
+::: {.callout-warning appearance="simple"}
+**Unidades.** A página do ecoR não informa as unidades de `cap` e `h`. Pelos valores (CAP mediano de 270 e altura mediana de 90), assumimos **CAP em milímetros** e **altura em decímetros**, o que dá DAP mediano de cerca de 8,6 cm e altura mediana de 9 m, valores coerentes com caixetais. Se descobrir outra informação, basta mudar os dois fatores abaixo.
+:::
 
 ```{r}
-area_parcela <- 0.1                          # ha
-n_parcelas   <- length(unique(inv$parcela))
-area_total   <- area_parcela * n_parcelas    # ha
+fator_cap <- 0.1    # mm  -> cm
+fator_h   <- 0.1    # dm  -> m
+cx$cap_cm <- cx$cap * fator_cap
+cx$h_m    <- cx$h * fator_h
+cx$dap    <- cx$cap_cm / pi                     # DAP (cm)
+cx$g      <- pi * cx$dap^2 / 40000              # área basal do fuste (m²) = CAP²/(4π)/10000
+summary(cx[, c("dap", "h_m", "g")])
 ```
 
-## 3. Cálculo dos parâmetros
+## 2. De fustes para árvores
 
-As fórmulas usadas (Mueller-Dombois & Ellenberg 1974; Felfili et al. 2011):
+A densidade conta **árvores**, mas a dominância soma a área basal de **todos os fustes**. Por isso, juntamos os fustes de cada árvore, somando a área basal e guardando a maior altura e o número de fustes:
+
+```{r}
+cx$parc <- paste(cx$local, cx$parcela, sep = "_")
+chave   <- c("local", "parc", "arvore", "especie")
+
+arv <- aggregate(g ~ local + parc + arvore + especie, data = cx, FUN = sum)
+arv$h_m     <- aggregate(h_m ~ local + parc + arvore + especie, data = cx, FUN = max)$h_m
+arv$fustes  <- aggregate(fuste ~ local + parc + arvore + especie, data = cx, FUN = length)$fuste
+arv$dap_eq  <- sqrt(arv$g * 40000 / pi)        # DAP equivalente (cm) de uma árvore com vários fustes
+
+c(fustes = nrow(cx), arvores = nrow(arv), parcelas = length(unique(arv$parc)))
+head(arv)
+```
+
+O **DAP equivalente** é o diâmetro de um fuste único com a mesma área basal da árvore: $DAP_{eq} = \sqrt{\sum DAP_j^2}$.
+
+## 3. Passo a passo com uma espécie
+
+As fórmulas (Mueller-Dombois & Ellenberg 1974; Felfili et al. 2011):
 
 | Parâmetro | Fórmula |
 |------------------------------------|------------------------------------|
-| Densidade absoluta | $DA_i = n_i / A$ |
-| Densidade relativa | $DR_i = 100 \cdot n_i / N$ |
-| Frequência absoluta | $FA_i = 100 \cdot p_i / P$ |
-| Frequência relativa | $FR_i = 100 \cdot FA_i / \sum FA$ |
-| Área basal | $g = \pi \cdot DAP^2 / 40000$ |
-| Dominância absoluta | $DoA_i = G_i / A$ |
-| Dominância relativa | $DoR_i = 100 \cdot G_i / \sum G$ |
-| Índice de valor de importância | $IVI_i = DR_i + FR_i + DoR_i$ |
-| Índice de valor de cobertura | $IVC_i = DR_i + DoR_i$ |
+| Densidade absoluta (ind./ha) | $DA_i = n_i / A$ |
+| Densidade relativa (%) | $DR_i = 100 \cdot n_i / N$ |
+| Frequência absoluta (%) | $FA_i = 100 \cdot u_i / U_T$ |
+| Frequência relativa (%) | $FR_i = 100 \cdot FA_i / \sum FA$ |
+| Dominância absoluta (m²/ha) | $DoA_i = G_i / A$ |
+| Dominância relativa (%) | $DoR_i = 100 \cdot G_i / \sum G$ |
+| Valor de importância | $VI_i = DR_i + FR_i + DoR_i$ (ou dividido por 3, em %) |
+| Valor de cobertura | $VC_i = DR_i + DoR_i$ |
 
-em que $n_i$ = número de árvores da espécie *i*, $N$ = total de árvores, $A$ = área amostrada (ha), $p_i$ = parcelas com a espécie *i*, $P$ = total de parcelas e $G_i$ = área basal da espécie *i*.
+em que $n_i$ = árvores da espécie *i*, $N$ = total de árvores, $A$ = área amostrada (ha), $u_i$ = parcelas com a espécie, $U_T$ = total de parcelas e $G_i$ = área basal da espécie (m²).
 
-```{r}
-inv$g <- pi * inv$dap^2 / 40000      # área basal de cada árvore (m²)
-
-n_i <- tapply(inv$dap, inv$especie, length)                         # nº de árvores
-p_i <- tapply(inv$parcela, inv$especie, function(x) length(unique(x)))  # nº de parcelas
-G_i <- tapply(inv$g, inv$especie, sum)                              # área basal
-
-fito <- data.frame(
-  especie = names(n_i),
-  N   = as.integer(n_i),
-  DA  = n_i / area_total,
-  DR  = 100 * n_i / sum(n_i),
-  FA  = 100 * p_i / n_parcelas,
-  DoA = G_i / area_total,
-  DoR = 100 * G_i / sum(G_i)
-)
-fito$FR  <- 100 * fito$FA / sum(fito$FA)
-fito$IVI <- fito$DR + fito$FR + fito$DoR
-fito$IVC <- fito$DR + fito$DoR
-
-fito <- fito[order(fito$IVI, decreasing = TRUE), ]
-rownames(fito) <- NULL
-knitr::kable(fito, digits = 2)
-```
-
-## 4. Gráfico do IVI
+Para *Myrcia sulfiflora*, considerando as 15 parcelas (15 × 200 m² = 0,3 ha):
 
 ```{r}
-#| fig-cap: "Índice de valor de importância (IVI) por espécie, decomposto em densidade, frequência e dominância relativas."
-#| fig-height: 5
-comp <- t(as.matrix(fito[, c("DR", "FR", "DoR")]))
-colnames(comp) <- fito$especie
-par(mar = c(4, 12, 1, 1))
-barplot(comp[, ncol(comp):1], horiz = TRUE, las = 1, font.axis = 3,
-        col = c("#78c2ad", "#f3969a", "#6cc3d5"), border = NA,
-        xlab = "IVI", cex.names = 0.8)
-legend("bottomright", legend = c("DR", "FR", "DoR"),
-       fill = c("#78c2ad", "#f3969a", "#6cc3d5"), border = NA, bty = "n")
+A  <- 15 * 10 * 20 / 10000           # 0,3 ha
+UT <- 15
+m  <- arv[arv$especie == "Myrcia sulfiflora", ]
+
+n_i <- nrow(m);                  N <- nrow(arv)
+u_i <- length(unique(m$parc))
+G_i <- sum(m$g);                 G <- sum(arv$g)
+
+c(DA = n_i / A, DR = 100 * n_i / N, FA = 100 * u_i / UT,
+  DoA = G_i / A, DoR = 100 * G_i / G)
 ```
 
-## 5. Diversidade
+::: {.callout-note appearance="simple"}
+## No Excel
 
--   **Shannon:** $H' = -\sum p_i \ln p_i$
--   **Simpson (Gini-Simpson):** $1 - D = 1 - \sum p_i^2$
--   **Equabilidade de Pielou:** $J = H' / \ln S$
-
-```{r}
-p <- fito$N / sum(fito$N)
-S <- nrow(fito)
-
-H <- -sum(p * log(p))
-simpson <- 1 - sum(p^2)
-J <- H / log(S)
-
-data.frame(Riqueza = S, Shannon = round(H, 3),
-           Simpson = round(simpson, 3), Pielou = round(J, 3))
-```
-
-::: {.callout-tip}
-## Conferindo com pacotes
-
-O pacote **vegan** calcula os mesmos índices: `vegan::diversity(fito$N, "shannon")` e `vegan::diversity(fito$N, "simpson")`. Para comparar várias parcelas, use uma matriz parcela × espécie: `table(inv$parcela, inv$especie)`.
+O mesmo cálculo no Excel: (1) importe o `caixeta.csv`; (2) crie a coluna de área basal `=(CAP*0,1)^2/(4*PI())/10000`; (3) monte uma **tabela dinâmica** com `especie` nas linhas e, nos valores, a *contagem distinta* de árvores, a *soma* da área basal e a *contagem distinta* de parcelas; (4) calcule DA, DR, FA, FR, DoA, DoR e VI em colunas ao lado. Compare com o R: os valores devem ser idênticos.
 :::
 
-## 6. Exporte os resultados
+## 4. Uma função para todas as espécies
+
+```{r}
+fitossociologia <- function(d, A, UT) {
+  n_i <- tapply(d$g, d$especie, length)
+  u_i <- tapply(d$parc, d$especie, function(x) length(unique(x)))
+  G_i <- tapply(d$g, d$especie, sum)
+  FA  <- 100 * u_i / UT
+  f <- data.frame(
+    especie = names(n_i), n = as.integer(n_i),
+    DA  = n_i / A,  DR  = 100 * n_i / sum(n_i),
+    FA  = FA,       FR  = 100 * FA / sum(FA),
+    DoA = G_i / A,  DoR = 100 * G_i / sum(G_i)
+  )
+  f$VI <- f$DR + f$FR + f$DoR
+  f$VC <- f$DR + f$DoR
+  f <- f[order(f$VI, decreasing = TRUE), ]
+  rownames(f) <- NULL
+  f
+}
+
+geral <- fitossociologia(arv, A = 0.3, UT = 15)
+knitr::kable(head(geral, 10), digits = 2,
+             caption = "Parâmetros fitossociológicos das 10 espécies de maior VI (15 parcelas, 0,3 ha).")
+```
+
+Totais da comunidade:
+
+```{r}
+c(arvores_ha = nrow(arv) / 0.3, area_basal_m2_ha = sum(arv$g) / 0.3,
+  riqueza = length(unique(arv$especie)))
+```
+
+## 5. Comparando os três caixetais
+
+Cada caixetal tem 5 parcelas (0,1 ha). Aplicamos a mesma função a cada local:
+
+```{r}
+por_local <- lapply(split(arv, arv$local), fitossociologia, A = 0.1, UT = 5)
+
+resumo <- t(sapply(split(arv, arv$local), function(d) c(
+  arvores_ha = nrow(d) / 0.1,
+  G_m2_ha    = round(sum(d$g) / 0.1, 1),
+  riqueza    = length(unique(d$especie)),
+  VI_caixeta = round(subset(fitossociologia(d, 0.1, 5), especie == "Tabebuia cassinoides")$VI, 1)
+)))
+knitr::kable(resumo, caption = "Resumo da estrutura por caixetal.")
+```
+
+```{r}
+#| fig-cap: "Valor de importância (VI) das cinco espécies principais em cada caixetal, decomposto em densidade, frequência e dominância relativas."
+#| fig-height: 7
+cores <- c("#78c2ad", "#f3969a", "#6cc3d5")
+par(mfrow = c(3, 1), mar = c(4, 14, 2, 1))
+for (l in names(por_local)) {
+  f <- head(por_local[[l]], 5)
+  comp <- t(as.matrix(f[, c("DR", "FR", "DoR")]))
+  colnames(comp) <- f$especie
+  barplot(comp[, ncol(comp):1], horiz = TRUE, las = 1, font.axis = 3, col = cores,
+          border = NA, xlim = c(0, 300), xlab = "VI", main = l, cex.names = 0.9)
+}
+legend("bottomright", legend = c("DR", "FR", "DoR"), fill = cores, border = NA, bty = "n")
+```
+
+## 6. Estrutura diamétrica e vertical
+
+Em florestas naturais, a distribuição de diâmetros costuma ter a forma de **J invertido**: muitas árvores finas e poucas grossas. Usamos classes de 5 cm de DAP equivalente e de 2 m de altura:
+
+```{r}
+#| fig-cap: "Distribuição das árvores em classes de DAP equivalente (5 cm) e de altura (2 m) em cada caixetal."
+#| fig-height: 6
+classes_d <- seq(0, ceiling(max(arv$dap_eq) / 5) * 5, by = 5)
+classes_h <- seq(0, ceiling(max(arv$h_m) / 2) * 2, by = 2)
+
+par(mfrow = c(2, 3), mar = c(4, 4, 2, 1))
+for (l in sort(unique(arv$local)))
+  hist(arv$dap_eq[arv$local == l], breaks = classes_d, col = "#78c2ad", border = "white",
+       main = l, xlab = "DAP equivalente (cm)", ylab = "Árvores")
+for (l in sort(unique(arv$local)))
+  hist(arv$h_m[arv$local == l], breaks = classes_h, col = "#6cc3d5", border = "white",
+       main = l, xlab = "Altura (m)", ylab = "Árvores")
+```
+
+```{r}
+tab_d <- table(arv$local, cut(arv$dap_eq, classes_d))
+tab_d[, colSums(tab_d) > 0]
+```
+
+E a caixeta, que rebrota e forma touceiras, tem mais fustes por árvore que as outras espécies?
+
+```{r}
+arv$grupo <- ifelse(arv$especie == "Tabebuia cassinoides", "caixeta", "outras")
+aggregate(fustes ~ grupo, data = arv, FUN = function(x) round(c(media = mean(x), max = max(x)), 2))
+```
+
+## 7. Exercícios
+
+::: {.callout-important appearance="simple"}
+## Para entregar (EE4)
+
+1.  Calcule à mão (ou no Excel) DA, DR, FA, FR, DoA, DoR e VI de *Calophyllum brasiliensis* nas 15 parcelas e confira com a tabela da seção 4.
+2.  Qual é a espécie de maior VI em cada caixetal? Qual parâmetro (densidade, frequência ou dominância) mais contribui para isso?
+3.  Por que a frequência relativa da caixeta é menor que a sua densidade e dominância relativas?
+4.  Compare densidade (árv./ha) e área basal (m²/ha) entre os locais. Qual caixetal tem árvores mais grossas, em média?
+5.  As distribuições diamétricas têm forma de J invertido? Por que a primeira classe (0 a 5 cm) tem tão poucas árvores? Pense no critério de inclusão do levantamento.
+6.  Qual seria o efeito de calcular a dominância com o DAP do maior fuste, em vez da soma de todos?
+:::
+
+::: {.callout-note appearance="simple"}
+## Para o relatório (formato de artigo)
+
+Esta prática gera a **Tabela 2** (parâmetros por caixetal, 5 espécies principais) e a **Figura 2** (distribuições diamétricas). Escreva um parágrafo de resultados descrevendo a dominância da caixeta e as diferenças entre os locais.
+:::
+
+## Exporte os resultados
 
 ```{r}
 #| eval: false
-write.csv2(fito, "resultados/fitossociologia.csv", row.names = FALSE)
+dir.create("resultados", showWarnings = FALSE)
+write.csv2(geral, "resultados/fitossociologia_geral.csv", row.names = FALSE)
+for (l in names(por_local))
+  write.csv2(por_local[[l]], paste0("resultados/fitossociologia_", l, ".csv"), row.names = FALSE)
 ```
 
 ## Referências
 
 -   FELFILI, J. M. et al. *Fitossociologia no Brasil: métodos e estudos de caso*. Viçosa: Editora UFV, 2011.
--   MAGURRAN, A. E. *Medindo a diversidade biológica*. Curitiba: Ed. UFPR, 2011.
 -   MUELLER-DOMBOIS, D.; ELLENBERG, H. *Aims and Methods of Vegetation Ecology*. New York: Wiley, 1974.
+-   SOUZA, A. L.; SOARES, C. P. B. *Florestas nativas: estrutura, dinâmica e manejo*. Viçosa: Editora UFV, 2014.
+-   VANIN, A. 1999. Dissertação de mestrado (dados caixeta). Dados disponíveis em: <https://ecor.ib.usp.br/doku.php?id=dados:dados-caixeta>.

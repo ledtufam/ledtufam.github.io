@@ -2,7 +2,7 @@
 title: "Padronização de nomes científicos"
 description: "Organizar a lista de espécies de um levantamento florístico, contar famílias, gêneros, espécies, cf., aff. e indeterminadas, e validar os nomes no TNRS (WFO e WCVP) e na Flora e Funga do Brasil."
 categories: [Taxonomia, Dendrologia]
-order: 6
+order: 9
 ---
 
 ::: {.callout-note appearance="simple"}

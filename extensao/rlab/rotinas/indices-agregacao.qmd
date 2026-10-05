@@ -2,7 +2,7 @@
 title: "Padrão espacial: índices de agregação e distribuições de probabilidade"
 description: "Índices de MacGuinnes, Fracker e Brischle, Payandeh, não aleatorizado, Hazen e Morisita, e ajuste das distribuições de Poisson e binomial negativa."
 categories: [Fitossociologia, Ecologia]
-order: 3
+order: 2
 ---
 
 ::: {.callout-note appearance="simple"}
@@ -14,7 +14,7 @@ Os indivíduos de uma espécie podem estar distribuídos no espaço de forma **a
 O que todos os índices precisam é de uma tabela com **quantas árvores de cada espécie há em cada parcela**.
 
 ::: {.callout-tip appearance="simple"}
-## Roteiro da aula prática
+## Roteiro da aula prática (02/10 · EE3)
 
 1.  Preparar o RStudio e importar os dados **caixeta** (seção 0 e 1);
 2.  Calcular **à mão, no R**, os índices para uma espécie, passo a passo (seção 2);
@@ -368,7 +368,7 @@ knitr::kable(caixeta_local, caption = "Índices para *Tabebuia cassinoides* em c
 ## 6. Exercícios
 
 ::: {.callout-important appearance="simple"}
-## Para entregar
+## Para entregar (EE3)
 
 1.  Quantos **fustes** e quantas **árvores** há nos dados? Por que os índices devem ser calculados com árvores e não com fustes?
 2.  Monte uma tabela com os índices de agregação das espécies com pelo menos 5 árvores e classifique o padrão de cada uma segundo os seis índices.
@@ -376,6 +376,12 @@ knitr::kable(caixeta_local, caption = "Índices para *Tabebuia cassinoides* em c
 4.  *Tabebuia cassinoides* ocorre em todas as 15 parcelas. Por que os índices de MacGuinnes e Fracker e Brischle não podem ser calculados para ela?
 5.  Compare o padrão da caixeta considerando as 15 parcelas juntas e cada caixetal separadamente. O que isso revela sobre o **tamanho e a distribuição das unidades amostrais** na avaliação do padrão espacial?
 6.  Proponha uma explicação ecológica (dispersão, regeneração, ambiente) para o padrão encontrado para a caixeta. Use a literatura.
+:::
+
+::: {.callout-note appearance="simple"}
+## Para o relatório (formato de artigo)
+
+Esta prática gera a **Tabela 1** (índices de agregação das espécies com pelo menos 5 árvores) e a comparação da caixeta entre as escalas (15 parcelas × cada caixetal). As respostas dos exercícios 5 e 6 viram parágrafos de resultados e discussão.
 :::
 
 ## 7. Para saber mais: conferindo com o livro

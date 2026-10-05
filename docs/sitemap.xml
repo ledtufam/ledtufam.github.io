@@ -2,106 +2,118 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://ledtufam.github.io/extensao/rlab/rotinas/indices-agregacao.html</loc>
-    <lastmod>2026-10-02T19:08:01.566Z</lastmod>
+    <lastmod>2026-10-02T19:57:33.003Z</lastmod>
   </url>
   <url>
     <loc>https://ledtufam.github.io/extensao/rlab/rotinas/nomes-cientificos.html</loc>
-    <lastmod>2026-10-02T15:38:00.514Z</lastmod>
+    <lastmod>2026-10-02T19:57:36.119Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ledtufam.github.io/extensao/rlab/rotinas/associacao-similaridade.html</loc>
+    <lastmod>2026-10-02T19:57:33.917Z</lastmod>
   </url>
   <url>
     <loc>https://ledtufam.github.io/extensao/rlab/rotinas/mapa-ocorrencias.html</loc>
-    <lastmod>2026-10-02T12:56:21.955Z</lastmod>
+    <lastmod>2026-10-02T19:57:35.675Z</lastmod>
   </url>
   <url>
-    <loc>https://ledtufam.github.io/extensao/rlab/rotinas/primeiros-passos.html</loc>
-    <lastmod>2026-10-02T12:56:21.031Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ledtufam.github.io/contato.html</loc>
-    <lastmod>2026-09-16T22:07:12.713Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ledtufam.github.io/selecoes.html</loc>
-    <lastmod>2026-10-01T14:33:02.993Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ledtufam.github.io/pesquisa/projetos.html</loc>
-    <lastmod>2026-08-03T00:14:01.711Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ledtufam.github.io/index.html</loc>
-    <lastmod>2026-10-02T15:37:58.688Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ledtufam.github.io/extensao/rlab/index.html</loc>
-    <lastmod>2026-10-02T13:27:47.023Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ledtufam.github.io/ensino/posgraduacao/disciplinas.html</loc>
-    <lastmod>2026-10-01T14:33:05.956Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ledtufam.github.io/ensino/graduacao/fitossociologia.html</loc>
-    <lastmod>2026-10-02T12:56:30.011Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ledtufam.github.io/ensino/graduacao/disciplinas.html</loc>
-    <lastmod>2026-10-01T14:33:03.959Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ledtufam.github.io/divulgacaocientifica.html</loc>
-    <lastmod>2026-10-01T14:33:12.606Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ledtufam.github.io/divulgacao/posts/2026-10-01-site-novo/index.html</loc>
-    <lastmod>2026-10-02T13:27:54.196Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ledtufam.github.io/ensino/graduacao/dendrologiatropical.html</loc>
-    <lastmod>2026-10-02T13:27:53.772Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ledtufam.github.io/ensino/graduacao/ecologiaflorestal.html</loc>
-    <lastmod>2026-10-01T14:33:04.889Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ledtufam.github.io/ensino/graduacao/sementesflorestais.html</loc>
-    <lastmod>2026-10-01T14:33:05.407Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ledtufam.github.io/extensao.html</loc>
-    <lastmod>2026-10-02T12:56:17.952Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ledtufam.github.io/identidade-visual.html</loc>
-    <lastmod>2026-10-01T14:33:15.650Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ledtufam.github.io/pesquisa.html</loc>
-    <lastmod>2026-08-06T03:14:24.959Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ledtufam.github.io/pessoas.html</loc>
-    <lastmod>2026-08-08T05:31:31.203Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ledtufam.github.io/sobre.html</loc>
-    <lastmod>2026-10-01T16:00:16.560Z</lastmod>
+    <loc>https://ledtufam.github.io/extensao/rlab/rotinas/diversidade.html</loc>
+    <lastmod>2026-10-02T19:57:34.785Z</lastmod>
   </url>
   <url>
     <loc>https://ledtufam.github.io/publicacoes.html</loc>
     <lastmod>2026-10-02T12:56:19.932Z</lastmod>
   </url>
   <url>
-    <loc>https://ledtufam.github.io/extensao/rlab/rotinas/fitossociologia.html</loc>
-    <lastmod>2026-10-01T14:33:18.401Z</lastmod>
+    <loc>https://ledtufam.github.io/sobre.html</loc>
+    <lastmod>2026-10-01T16:00:16.560Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ledtufam.github.io/pessoas.html</loc>
+    <lastmod>2026-08-08T05:31:31.203Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ledtufam.github.io/pesquisa.html</loc>
+    <lastmod>2026-08-06T03:14:24.959Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ledtufam.github.io/identidade-visual.html</loc>
+    <lastmod>2026-10-01T14:33:15.650Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ledtufam.github.io/extensao.html</loc>
+    <lastmod>2026-10-02T12:56:17.952Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ledtufam.github.io/ensino/graduacao/sementesflorestais.html</loc>
+    <lastmod>2026-10-01T14:33:05.407Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ledtufam.github.io/ensino/graduacao/ecologiaflorestal.html</loc>
+    <lastmod>2026-10-01T14:33:04.889Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ledtufam.github.io/ensino/graduacao/dendrologiatropical.html</loc>
+    <lastmod>2026-10-02T13:27:53.772Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ledtufam.github.io/divulgacao/posts/2026-10-01-site-novo/index.html</loc>
+    <lastmod>2026-10-02T13:27:54.196Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ledtufam.github.io/divulgacaocientifica.html</loc>
+    <lastmod>2026-10-01T14:33:12.606Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ledtufam.github.io/ensino/graduacao/disciplinas.html</loc>
+    <lastmod>2026-10-01T14:33:03.959Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ledtufam.github.io/ensino/graduacao/fitossociologia.html</loc>
+    <lastmod>2026-10-02T19:57:39.329Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ledtufam.github.io/ensino/posgraduacao/disciplinas.html</loc>
+    <lastmod>2026-10-01T14:33:05.956Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ledtufam.github.io/extensao/rlab/index.html</loc>
+    <lastmod>2026-10-02T13:27:47.023Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ledtufam.github.io/index.html</loc>
+    <lastmod>2026-10-02T15:37:58.688Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ledtufam.github.io/pesquisa/projetos.html</loc>
+    <lastmod>2026-08-03T00:14:01.711Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ledtufam.github.io/selecoes.html</loc>
+    <lastmod>2026-10-01T14:33:02.993Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ledtufam.github.io/contato.html</loc>
+    <lastmod>2026-09-16T22:07:12.713Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ledtufam.github.io/extensao/rlab/rotinas/primeiros-passos.html</loc>
+    <lastmod>2026-10-02T12:56:21.031Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ledtufam.github.io/extensao/rlab/rotinas/heterogeneidade.html</loc>
+    <lastmod>2026-10-02T19:57:34.341Z</lastmod>
   </url>
   <url>
     <loc>https://ledtufam.github.io/extensao/rlab/rotinas/fenologia-specieslink.html</loc>
-    <lastmod>2026-10-02T13:27:50.712Z</lastmod>
+    <lastmod>2026-10-02T19:57:36.555Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ledtufam.github.io/extensao/rlab/rotinas/fitossociologia.html</loc>
+    <lastmod>2026-10-02T19:57:33.425Z</lastmod>
   </url>
   <url>
     <loc>https://ledtufam.github.io/extensao/rlab/rotinas/nir-especies.html</loc>
-    <lastmod>2026-10-02T16:02:20.930Z</lastmod>
+    <lastmod>2026-10-02T19:57:35.246Z</lastmod>
   </url>
 </urlset>

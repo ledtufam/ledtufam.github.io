@@ -2,7 +2,7 @@
 title: "Mapa de ocorrências a partir do GBIF"
 description: "Baixar registros de uma espécie no GBIF, limpar coordenadas problemáticas e fazer um mapa interativo."
 categories: [Herbários e biodiversidade, Mapas]
-order: 5
+order: 8
 ---
 
 ::: {.callout-note appearance="simple"}

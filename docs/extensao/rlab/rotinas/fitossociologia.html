@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="LEDT/UFAM">
-<meta name="description" content="Densidade, frequência, dominância, IVI, IVC e índices de Shannon, Simpson e Pielou a partir de um inventário em parcelas.">
+<meta name="description" content="Densidade, frequência, dominância, IVI e IVC por caixetal, e distribuição de diâmetros e alturas, com os dados abertos caixeta.">
 
-<title>Parâmetros fitossociológicos e diversidade – LEDT</title>
+<title>Parâmetros fitossociológicos e estrutura – LEDT</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -140,8 +140,8 @@ window.Quarto = {
 </script>
 
 <link rel="stylesheet" href="../../../styles.css">
-<meta property="og:title" content="Parâmetros fitossociológicos e diversidade – LEDT">
-<meta property="og:description" content="Densidade, frequência, dominância, IVI, IVC e índices de Shannon, Simpson e Pielou a partir de um inventário em parcelas.">
+<meta property="og:title" content="Parâmetros fitossociológicos e estrutura – LEDT">
+<meta property="og:description" content="Densidade, frequência, dominância, IVI e IVC por caixetal, e distribuição de diâmetros e alturas, com os dados abertos caixeta.">
 <meta property="og:image" content="https://ledtufam.github.io/extensao/rlab/rotinas/assets/images/logos/logo_horizontal.png">
 <meta property="og:site_name" content="LEDT">
 </head>
@@ -299,11 +299,13 @@ window.Quarto = {
    
   <ul>
   <li><a href="#dados" id="toc-dados" class="nav-link active" data-scroll-target="#dados">1. Dados</a></li>
-  <li><a href="#definições-da-amostragem" id="toc-definições-da-amostragem" class="nav-link" data-scroll-target="#definições-da-amostragem">2. Definições da amostragem</a></li>
-  <li><a href="#cálculo-dos-parâmetros" id="toc-cálculo-dos-parâmetros" class="nav-link" data-scroll-target="#cálculo-dos-parâmetros">3. Cálculo dos parâmetros</a></li>
-  <li><a href="#gráfico-do-ivi" id="toc-gráfico-do-ivi" class="nav-link" data-scroll-target="#gráfico-do-ivi">4. Gráfico do IVI</a></li>
-  <li><a href="#diversidade" id="toc-diversidade" class="nav-link" data-scroll-target="#diversidade">5. Diversidade</a></li>
-  <li><a href="#exporte-os-resultados" id="toc-exporte-os-resultados" class="nav-link" data-scroll-target="#exporte-os-resultados">6. Exporte os resultados</a></li>
+  <li><a href="#de-fustes-para-árvores" id="toc-de-fustes-para-árvores" class="nav-link" data-scroll-target="#de-fustes-para-árvores">2. De fustes para árvores</a></li>
+  <li><a href="#passo-a-passo-com-uma-espécie" id="toc-passo-a-passo-com-uma-espécie" class="nav-link" data-scroll-target="#passo-a-passo-com-uma-espécie">3. Passo a passo com uma espécie</a></li>
+  <li><a href="#uma-função-para-todas-as-espécies" id="toc-uma-função-para-todas-as-espécies" class="nav-link" data-scroll-target="#uma-função-para-todas-as-espécies">4. Uma função para todas as espécies</a></li>
+  <li><a href="#comparando-os-três-caixetais" id="toc-comparando-os-três-caixetais" class="nav-link" data-scroll-target="#comparando-os-três-caixetais">5. Comparando os três caixetais</a></li>
+  <li><a href="#estrutura-diamétrica-e-vertical" id="toc-estrutura-diamétrica-e-vertical" class="nav-link" data-scroll-target="#estrutura-diamétrica-e-vertical">6. Estrutura diamétrica e vertical</a></li>
+  <li><a href="#exercícios" id="toc-exercícios" class="nav-link" data-scroll-target="#exercícios">7. Exercícios</a></li>
+  <li><a href="#exporte-os-resultados" id="toc-exporte-os-resultados" class="nav-link" data-scroll-target="#exporte-os-resultados">Exporte os resultados</a></li>
   <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências">Referências</a></li>
   </ul>
 </nav>
@@ -313,7 +315,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Parâmetros fitossociológicos e diversidade</h1>
+<h1 class="title">Parâmetros fitossociológicos e estrutura</h1>
   <div class="quarto-categories">
     <div class="quarto-category">Fitossociologia</div>
     <div class="quarto-category">Ecologia</div>
@@ -322,7 +324,7 @@ window.Quarto = {
 
 <div>
   <div class="description">
-    Densidade, frequência, dominância, IVI, IVC e índices de Shannon, Simpson e Pielou a partir de um inventário em parcelas.
+    Densidade, frequência, dominância, IVI e IVC por caixetal, e distribuição de diâmetros e alturas, com os dados abertos caixeta.
   </div>
 </div>
 
@@ -351,53 +353,116 @@ window.Quarto = {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Nível:</strong> iniciante/intermediário · <strong>Pacotes:</strong> apenas R básico · <strong>Disciplina:</strong> <a href="../../../ensino/graduacao/fitossociologia.html">FGD320 - Fitossociologia</a> · <a href="../scripts/fitossociologia.R" download="fitossociologia.R">Baixar script</a></p>
+<p><strong>Nível:</strong> iniciante/intermediário · <strong>Pacotes:</strong> apenas R básico · <strong>Disciplina:</strong> <a href="../../../ensino/graduacao/fitossociologia.html">FGD320 - Fitossociologia</a> · <a href="../scripts/fitossociologia.R" download="fitossociologia.R">Baixar script</a> · <a href="../dados/caixeta.csv" download="caixeta.csv">Baixar dados caixeta</a></p>
 </div>
 </div>
 </div>
-<p>Nesta rotina calculamos a <strong>estrutura horizontal</strong> de uma comunidade arbórea a partir de um inventário em parcelas, usando somente funções do R básico, para que cada passo da fórmula fique visível.</p>
+<p>Nesta rotina calculamos a <strong>estrutura horizontal</strong> (densidade, frequência, dominância e valor de importância) e a <strong>estrutura diamétrica e vertical</strong> dos caixetais do Vale do Ribeira, usando o mesmo banco da prática de <a href="../../../extensao/rlab/rotinas/indices-agregacao.html">índices de agregação</a>. Usamos só funções do R básico, para que cada passo da fórmula fique visível.</p>
+<div class="callout callout-style-simple callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Roteiro da aula prática (09/10 · EE4)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Calcular os parâmetros de <strong>uma espécie</strong> à mão (seção 3) e conferir no Excel;</li>
+<li>Generalizar o cálculo para todas as espécies com uma função (seção 4);</li>
+<li>Comparar os três caixetais (seção 5) e montar a estrutura diamétrica (seção 6);</li>
+<li>Responder aos exercícios e escrever o parágrafo de resultados para o relatório (seção 7).</li>
+</ol>
+</div>
+</div>
 <section id="dados" class="level2">
 <h2 class="anchored" data-anchor-id="dados">1. Dados</h2>
-<p>Usamos um inventário <strong>simulado</strong> com 10 parcelas de 20 × 50 m (0,1 ha cada; 1 ha no total). Para usar seus dados, basta ter uma tabela com uma linha por árvore e as colunas <code>parcela</code>, <code>especie</code> e <code>dap</code> (em cm).</p>
+<p>Os dados <strong>caixeta</strong> vêm da dissertação de Andrea Vanin (1999), disponibilizados pelo curso <a href="https://ecor.ib.usp.br/doku.php?id=dados:dados-caixeta">ecoR/USP</a>: três caixetais (<code>chauas</code>, <code>jureia</code> e <code>retiro</code>), cada um com 5 parcelas de 10 × 20 m. Cada linha é um <strong>fuste</strong>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>especies <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Eschweilera coriacea"</span>, <span class="st">"Protium hebetatum"</span>, <span class="st">"Pouteria guianensis"</span>,</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>              <span class="st">"Ecclinusa guianensis"</span>, <span class="st">"Licania micrantha"</span>, <span class="st">"Micropholis guyanensis"</span>,</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>              <span class="st">"Scleronema micranthum"</span>, <span class="st">"Oenocarpus bataua"</span>, <span class="st">"Goupia glabra"</span>,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>              <span class="st">"Dinizia excelsa"</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>prob <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.22</span>, <span class="fl">0.18</span>, <span class="fl">0.12</span>, <span class="fl">0.10</span>, <span class="fl">0.09</span>, <span class="fl">0.08</span>, <span class="fl">0.07</span>, <span class="fl">0.07</span>, <span class="fl">0.05</span>, <span class="fl">0.02</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>n_arv <span class="ot">&lt;-</span> <span class="dv">600</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>inv <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">parcela =</span> <span class="fu">sample</span>(<span class="fu">paste0</span>(<span class="st">"P"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>), n_arv, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">especie =</span> <span class="fu">sample</span>(especies, n_arv, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> prob),</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">dap     =</span> <span class="fu">round</span>(<span class="dv">10</span> <span class="sc">+</span> <span class="fu">rlnorm</span>(n_arv, <span class="at">meanlog =</span> <span class="fl">2.3</span>, <span class="at">sdlog =</span> <span class="fl">0.7</span>), <span class="dv">1</span>)  <span class="co"># DAP &gt;= 10 cm</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(inv)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>cx <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../dados/caixeta.csv"</span>)   <span class="co"># no seu projeto: read.csv("dados/caixeta.csv")</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>cx<span class="sc">$</span>especie[cx<span class="sc">$</span>especie <span class="sc">==</span> <span class="st">"Callophyllum brasiliensis"</span>] <span class="ot">&lt;-</span> <span class="st">"Calophyllum brasiliensis"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(cx)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  parcela              especie  dap
-1      P9 Eschweilera coriacea 28.3
-2      P1  Pouteria guianensis 15.5
-3      P6    Oenocarpus bataua 14.4
-4      P4 Eschweilera coriacea 25.6
-5      P5 Eschweilera coriacea 16.5
-6     P10        Goupia glabra 47.5</code></pre>
+<pre><code>'data.frame':   1027 obs. of  7 variables:
+ $ local  : chr  "chauas" "chauas" "chauas" "chauas" ...
+ $ parcela: int  1 1 1 1 1 1 1 1 1 1 ...
+ $ arvore : int  1 3 4 5 6 7 8 9 10 10 ...
+ $ fuste  : int  1 1 1 1 1 1 1 1 1 2 ...
+ $ cap    : int  210 170 720 200 750 320 480 240 290 310 ...
+ $ h      : int  80 80 70 80 170 80 160 140 120 120 ...
+ $ especie: chr  "Myrcia sulfiflora" "Myrcia sulfiflora" "Syagrus romanzoffianus" "Tabebuia cassinoides" ...</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Para seus dados, use por exemplo:</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># inv &lt;- read.csv2("dados/inventario.csv")</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="definições-da-amostragem" class="level2">
-<h2 class="anchored" data-anchor-id="definições-da-amostragem">2. Definições da amostragem</h2>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Unidades.</strong> A página do ecoR não informa as unidades de <code>cap</code> e <code>h</code>. Pelos valores (CAP mediano de 270 e altura mediana de 90), assumimos <strong>CAP em milímetros</strong> e <strong>altura em decímetros</strong>, o que dá DAP mediano de cerca de 8,6 cm e altura mediana de 9 m, valores coerentes com caixetais. Se descobrir outra informação, basta mudar os dois fatores abaixo.</p>
+</div>
+</div>
+</div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>area_parcela <span class="ot">&lt;-</span> <span class="fl">0.1</span>                          <span class="co"># ha</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>n_parcelas   <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">unique</span>(inv<span class="sc">$</span>parcela))</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>area_total   <span class="ot">&lt;-</span> area_parcela <span class="sc">*</span> n_parcelas    <span class="co"># ha</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>fator_cap <span class="ot">&lt;-</span> <span class="fl">0.1</span>    <span class="co"># mm  -&gt; cm</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>fator_h   <span class="ot">&lt;-</span> <span class="fl">0.1</span>    <span class="co"># dm  -&gt; m</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>cx<span class="sc">$</span>cap_cm <span class="ot">&lt;-</span> cx<span class="sc">$</span>cap <span class="sc">*</span> fator_cap</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>cx<span class="sc">$</span>h_m    <span class="ot">&lt;-</span> cx<span class="sc">$</span>h <span class="sc">*</span> fator_h</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>cx<span class="sc">$</span>dap    <span class="ot">&lt;-</span> cx<span class="sc">$</span>cap_cm <span class="sc">/</span> pi                     <span class="co"># DAP (cm)</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>cx<span class="sc">$</span>g      <span class="ot">&lt;-</span> pi <span class="sc">*</span> cx<span class="sc">$</span>dap<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> <span class="dv">40000</span>              <span class="co"># área basal do fuste (m²) = CAP²/(4π)/10000</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cx[, <span class="fu">c</span>(<span class="st">"dap"</span>, <span class="st">"h_m"</span>, <span class="st">"g"</span>)])</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      dap               h_m               g            
+ Min.   : 0.6366   Min.   : 0.500   Min.   :0.0000318  
+ 1st Qu.: 6.0479   1st Qu.: 6.000   1st Qu.:0.0028727  
+ Median : 8.5944   Median : 9.000   Median :0.0058012  
+ Mean   : 9.5383   Mean   : 9.028   Mean   :0.0094813  
+ 3rd Qu.:11.4592   3rd Qu.:11.000   3rd Qu.:0.0103132  
+ Max.   :66.8451   Max.   :48.000   Max.   :0.3509366  </code></pre>
+</div>
 </div>
 </section>
-<section id="cálculo-dos-parâmetros" class="level2">
-<h2 class="anchored" data-anchor-id="cálculo-dos-parâmetros">3. Cálculo dos parâmetros</h2>
-<p>As fórmulas usadas (Mueller-Dombois &amp; Ellenberg 1974; Felfili et al.&nbsp;2011):</p>
+<section id="de-fustes-para-árvores" class="level2">
+<h2 class="anchored" data-anchor-id="de-fustes-para-árvores">2. De fustes para árvores</h2>
+<p>A densidade conta <strong>árvores</strong>, mas a dominância soma a área basal de <strong>todos os fustes</strong>. Por isso, juntamos os fustes de cada árvore, somando a área basal e guardando a maior altura e o número de fustes:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>cx<span class="sc">$</span>parc <span class="ot">&lt;-</span> <span class="fu">paste</span>(cx<span class="sc">$</span>local, cx<span class="sc">$</span>parcela, <span class="at">sep =</span> <span class="st">"_"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>chave   <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"local"</span>, <span class="st">"parc"</span>, <span class="st">"arvore"</span>, <span class="st">"especie"</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>arv <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(g <span class="sc">~</span> local <span class="sc">+</span> parc <span class="sc">+</span> arvore <span class="sc">+</span> especie, <span class="at">data =</span> cx, <span class="at">FUN =</span> sum)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>arv<span class="sc">$</span>h_m     <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(h_m <span class="sc">~</span> local <span class="sc">+</span> parc <span class="sc">+</span> arvore <span class="sc">+</span> especie, <span class="at">data =</span> cx, <span class="at">FUN =</span> max)<span class="sc">$</span>h_m</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>arv<span class="sc">$</span>fustes  <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(fuste <span class="sc">~</span> local <span class="sc">+</span> parc <span class="sc">+</span> arvore <span class="sc">+</span> especie, <span class="at">data =</span> cx, <span class="at">FUN =</span> length)<span class="sc">$</span>fuste</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>arv<span class="sc">$</span>dap_eq  <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(arv<span class="sc">$</span>g <span class="sc">*</span> <span class="dv">40000</span> <span class="sc">/</span> pi)        <span class="co"># DAP equivalente (cm) de uma árvore com vários fustes</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="at">fustes =</span> <span class="fu">nrow</span>(cx), <span class="at">arvores =</span> <span class="fu">nrow</span>(arv), <span class="at">parcelas =</span> <span class="fu">length</span>(<span class="fu">unique</span>(arv<span class="sc">$</span>parc)))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  fustes  arvores parcelas 
+    1027      672       15 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(arv)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   local     parc arvore                especie           g h_m fustes
+1 retiro retiro_1     44 Alchornea triplinervia 0.005379437   9      1
+2 jureia jureia_2     57 Alchornea triplinervia 0.056149864  12      1
+3 retiro retiro_2     67 Alchornea triplinervia 0.009215071   5      9
+4 retiro retiro_3     81 Alchornea triplinervia 0.019106551  10      1
+5 jureia jureia_4    108 Alchornea triplinervia 0.029610777  14      1
+6 retiro retiro_3    129 Alchornea triplinervia 0.004209648   9      1
+     dap_eq
+1  8.276057
+2 26.738030
+3 10.831894
+4 15.597184
+5 19.416903
+6  7.321127</code></pre>
+</div>
+</div>
+<p>O <strong>DAP equivalente</strong> é o diâmetro de um fuste único com a mesma área basal da árvore: <span class="math inline">\(DAP_{eq} = \sqrt{\sum DAP_j^2}\)</span>.</p>
+</section>
+<section id="passo-a-passo-com-uma-espécie" class="level2">
+<h2 class="anchored" data-anchor-id="passo-a-passo-com-uma-espécie">3. Passo a passo com uma espécie</h2>
+<p>As fórmulas (Mueller-Dombois &amp; Ellenberg 1974; Felfili et al.&nbsp;2011):</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -411,290 +476,433 @@ window.Quarto = {
 </thead>
 <tbody>
 <tr class="odd">
-<td>Densidade absoluta</td>
+<td>Densidade absoluta (ind./ha)</td>
 <td><span class="math inline">\(DA_i = n_i / A\)</span></td>
 </tr>
 <tr class="even">
-<td>Densidade relativa</td>
+<td>Densidade relativa (%)</td>
 <td><span class="math inline">\(DR_i = 100 \cdot n_i / N\)</span></td>
 </tr>
 <tr class="odd">
-<td>Frequência absoluta</td>
-<td><span class="math inline">\(FA_i = 100 \cdot p_i / P\)</span></td>
+<td>Frequência absoluta (%)</td>
+<td><span class="math inline">\(FA_i = 100 \cdot u_i / U_T\)</span></td>
 </tr>
 <tr class="even">
-<td>Frequência relativa</td>
+<td>Frequência relativa (%)</td>
 <td><span class="math inline">\(FR_i = 100 \cdot FA_i / \sum FA\)</span></td>
 </tr>
 <tr class="odd">
-<td>Área basal</td>
-<td><span class="math inline">\(g = \pi \cdot DAP^2 / 40000\)</span></td>
-</tr>
-<tr class="even">
-<td>Dominância absoluta</td>
+<td>Dominância absoluta (m²/ha)</td>
 <td><span class="math inline">\(DoA_i = G_i / A\)</span></td>
 </tr>
-<tr class="odd">
-<td>Dominância relativa</td>
+<tr class="even">
+<td>Dominância relativa (%)</td>
 <td><span class="math inline">\(DoR_i = 100 \cdot G_i / \sum G\)</span></td>
 </tr>
-<tr class="even">
-<td>Índice de valor de importância</td>
-<td><span class="math inline">\(IVI_i = DR_i + FR_i + DoR_i\)</span></td>
-</tr>
 <tr class="odd">
-<td>Índice de valor de cobertura</td>
-<td><span class="math inline">\(IVC_i = DR_i + DoR_i\)</span></td>
+<td>Valor de importância</td>
+<td><span class="math inline">\(VI_i = DR_i + FR_i + DoR_i\)</span> (ou dividido por 3, em %)</td>
+</tr>
+<tr class="even">
+<td>Valor de cobertura</td>
+<td><span class="math inline">\(VC_i = DR_i + DoR_i\)</span></td>
 </tr>
 </tbody>
 </table>
-<p>em que <span class="math inline">\(n_i\)</span> = número de árvores da espécie <em>i</em>, <span class="math inline">\(N\)</span> = total de árvores, <span class="math inline">\(A\)</span> = área amostrada (ha), <span class="math inline">\(p_i\)</span> = parcelas com a espécie <em>i</em>, <span class="math inline">\(P\)</span> = total de parcelas e <span class="math inline">\(G_i\)</span> = área basal da espécie <em>i</em>.</p>
+<p>em que <span class="math inline">\(n_i\)</span> = árvores da espécie <em>i</em>, <span class="math inline">\(N\)</span> = total de árvores, <span class="math inline">\(A\)</span> = área amostrada (ha), <span class="math inline">\(u_i\)</span> = parcelas com a espécie, <span class="math inline">\(U_T\)</span> = total de parcelas e <span class="math inline">\(G_i\)</span> = área basal da espécie (m²).</p>
+<p>Para <em>Myrcia sulfiflora</em>, considerando as 15 parcelas (15 × 200 m² = 0,3 ha):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>inv<span class="sc">$</span>g <span class="ot">&lt;-</span> pi <span class="sc">*</span> inv<span class="sc">$</span>dap<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> <span class="dv">40000</span>      <span class="co"># área basal de cada árvore (m²)</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>n_i <span class="ot">&lt;-</span> <span class="fu">tapply</span>(inv<span class="sc">$</span>dap, inv<span class="sc">$</span>especie, length)                         <span class="co"># nº de árvores</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>p_i <span class="ot">&lt;-</span> <span class="fu">tapply</span>(inv<span class="sc">$</span>parcela, inv<span class="sc">$</span>especie, <span class="cf">function</span>(x) <span class="fu">length</span>(<span class="fu">unique</span>(x)))  <span class="co"># nº de parcelas</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>G_i <span class="ot">&lt;-</span> <span class="fu">tapply</span>(inv<span class="sc">$</span>g, inv<span class="sc">$</span>especie, sum)                              <span class="co"># área basal</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>fito <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">especie =</span> <span class="fu">names</span>(n_i),</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">N   =</span> <span class="fu">as.integer</span>(n_i),</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">DA  =</span> n_i <span class="sc">/</span> area_total,</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">DR  =</span> <span class="dv">100</span> <span class="sc">*</span> n_i <span class="sc">/</span> <span class="fu">sum</span>(n_i),</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">FA  =</span> <span class="dv">100</span> <span class="sc">*</span> p_i <span class="sc">/</span> n_parcelas,</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">DoA =</span> G_i <span class="sc">/</span> area_total,</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">DoR =</span> <span class="dv">100</span> <span class="sc">*</span> G_i <span class="sc">/</span> <span class="fu">sum</span>(G_i)</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>fito<span class="sc">$</span>FR  <span class="ot">&lt;-</span> <span class="dv">100</span> <span class="sc">*</span> fito<span class="sc">$</span>FA <span class="sc">/</span> <span class="fu">sum</span>(fito<span class="sc">$</span>FA)</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>fito<span class="sc">$</span>IVI <span class="ot">&lt;-</span> fito<span class="sc">$</span>DR <span class="sc">+</span> fito<span class="sc">$</span>FR <span class="sc">+</span> fito<span class="sc">$</span>DoR</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>fito<span class="sc">$</span>IVC <span class="ot">&lt;-</span> fito<span class="sc">$</span>DR <span class="sc">+</span> fito<span class="sc">$</span>DoR</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>fito <span class="ot">&lt;-</span> fito[<span class="fu">order</span>(fito<span class="sc">$</span>IVI, <span class="at">decreasing =</span> <span class="cn">TRUE</span>), ]</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(fito) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(fito, <span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>A  <span class="ot">&lt;-</span> <span class="dv">15</span> <span class="sc">*</span> <span class="dv">10</span> <span class="sc">*</span> <span class="dv">20</span> <span class="sc">/</span> <span class="dv">10000</span>           <span class="co"># 0,3 ha</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>UT <span class="ot">&lt;-</span> <span class="dv">15</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>m  <span class="ot">&lt;-</span> arv[arv<span class="sc">$</span>especie <span class="sc">==</span> <span class="st">"Myrcia sulfiflora"</span>, ]</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>n_i <span class="ot">&lt;-</span> <span class="fu">nrow</span>(m);                  N <span class="ot">&lt;-</span> <span class="fu">nrow</span>(arv)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>u_i <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">unique</span>(m<span class="sc">$</span>parc))</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>G_i <span class="ot">&lt;-</span> <span class="fu">sum</span>(m<span class="sc">$</span>g);                 G <span class="ot">&lt;-</span> <span class="fu">sum</span>(arv<span class="sc">$</span>g)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="at">DA =</span> n_i <span class="sc">/</span> A, <span class="at">DR =</span> <span class="dv">100</span> <span class="sc">*</span> n_i <span class="sc">/</span> N, <span class="at">FA =</span> <span class="dv">100</span> <span class="sc">*</span> u_i <span class="sc">/</span> UT,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">DoA =</span> G_i <span class="sc">/</span> A, <span class="at">DoR =</span> <span class="dv">100</span> <span class="sc">*</span> G_i <span class="sc">/</span> G)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        DA         DR         FA        DoA        DoR 
+263.333333  11.755952  33.333333   2.053417   6.326421 </code></pre>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+No Excel
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>O mesmo cálculo no Excel: (1) importe o <code>caixeta.csv</code>; (2) crie a coluna de área basal <code>=(CAP*0,1)^2/(4*PI())/10000</code>; (3) monte uma <strong>tabela dinâmica</strong> com <code>especie</code> nas linhas e, nos valores, a <em>contagem distinta</em> de árvores, a <em>soma</em> da área basal e a <em>contagem distinta</em> de parcelas; (4) calcule DA, DR, FA, FR, DoA, DoR e VI em colunas ao lado. Compare com o R: os valores devem ser idênticos.</p>
+</div>
+</div>
+</section>
+<section id="uma-função-para-todas-as-espécies" class="level2">
+<h2 class="anchored" data-anchor-id="uma-função-para-todas-as-espécies">4. Uma função para todas as espécies</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>fitossociologia <span class="ot">&lt;-</span> <span class="cf">function</span>(d, A, UT) {</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  n_i <span class="ot">&lt;-</span> <span class="fu">tapply</span>(d<span class="sc">$</span>g, d<span class="sc">$</span>especie, length)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  u_i <span class="ot">&lt;-</span> <span class="fu">tapply</span>(d<span class="sc">$</span>parc, d<span class="sc">$</span>especie, <span class="cf">function</span>(x) <span class="fu">length</span>(<span class="fu">unique</span>(x)))</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  G_i <span class="ot">&lt;-</span> <span class="fu">tapply</span>(d<span class="sc">$</span>g, d<span class="sc">$</span>especie, sum)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  FA  <span class="ot">&lt;-</span> <span class="dv">100</span> <span class="sc">*</span> u_i <span class="sc">/</span> UT</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  f <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">especie =</span> <span class="fu">names</span>(n_i), <span class="at">n =</span> <span class="fu">as.integer</span>(n_i),</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">DA  =</span> n_i <span class="sc">/</span> A,  <span class="at">DR  =</span> <span class="dv">100</span> <span class="sc">*</span> n_i <span class="sc">/</span> <span class="fu">sum</span>(n_i),</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">FA  =</span> FA,       <span class="at">FR  =</span> <span class="dv">100</span> <span class="sc">*</span> FA <span class="sc">/</span> <span class="fu">sum</span>(FA),</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">DoA =</span> G_i <span class="sc">/</span> A,  <span class="at">DoR =</span> <span class="dv">100</span> <span class="sc">*</span> G_i <span class="sc">/</span> <span class="fu">sum</span>(G_i)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  f<span class="sc">$</span>VI <span class="ot">&lt;-</span> f<span class="sc">$</span>DR <span class="sc">+</span> f<span class="sc">$</span>FR <span class="sc">+</span> f<span class="sc">$</span>DoR</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  f<span class="sc">$</span>VC <span class="ot">&lt;-</span> f<span class="sc">$</span>DR <span class="sc">+</span> f<span class="sc">$</span>DoR</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  f <span class="ot">&lt;-</span> f[<span class="fu">order</span>(f<span class="sc">$</span>VI, <span class="at">decreasing =</span> <span class="cn">TRUE</span>), ]</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames</span>(f) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  f</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>geral <span class="ot">&lt;-</span> <span class="fu">fitossociologia</span>(arv, <span class="at">A =</span> <span class="fl">0.3</span>, <span class="at">UT =</span> <span class="dv">15</span>)</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(geral, <span class="dv">10</span>), <span class="at">digits =</span> <span class="dv">2</span>,</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>             <span class="at">caption =</span> <span class="st">"Parâmetros fitossociológicos das 10 espécies de maior VI (15 parcelas, 0,3 ha)."</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
+<caption>Parâmetros fitossociológicos das 10 espécies de maior VI (15 parcelas, 0,3 ha).</caption>
 <colgroup>
-<col style="width: 32%">
-<col style="width: 5%">
-<col style="width: 5%">
-<col style="width: 8%">
-<col style="width: 5%">
+<col style="width: 30%">
+<col style="width: 4%">
+<col style="width: 9%">
 <col style="width: 7%">
 <col style="width: 8%">
-<col style="width: 8%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
 <col style="width: 8%">
 <col style="width: 8%">
 </colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">especie</th>
-<th style="text-align: right;">N</th>
+<th style="text-align: right;">n</th>
 <th style="text-align: right;">DA</th>
 <th style="text-align: right;">DR</th>
 <th style="text-align: right;">FA</th>
+<th style="text-align: right;">FR</th>
 <th style="text-align: right;">DoA</th>
 <th style="text-align: right;">DoR</th>
-<th style="text-align: right;">FR</th>
-<th style="text-align: right;">IVI</th>
-<th style="text-align: right;">IVC</th>
+<th style="text-align: right;">VI</th>
+<th style="text-align: right;">VC</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Protium hebetatum</td>
-<td style="text-align: right;">119</td>
-<td style="text-align: right;">119</td>
-<td style="text-align: right;">19.83</td>
-<td style="text-align: right;">100</td>
-<td style="text-align: right;">6.37</td>
-<td style="text-align: right;">21.66</td>
-<td style="text-align: right;">10.42</td>
-<td style="text-align: right;">51.91</td>
-<td style="text-align: right;">41.49</td>
+<td style="text-align: left;">Tabebuia cassinoides</td>
+<td style="text-align: right;">410</td>
+<td style="text-align: right;">1366.67</td>
+<td style="text-align: right;">61.01</td>
+<td style="text-align: right;">100.00</td>
+<td style="text-align: right;">15.46</td>
+<td style="text-align: right;">21.51</td>
+<td style="text-align: right;">66.26</td>
+<td style="text-align: right;">142.73</td>
+<td style="text-align: right;">127.27</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Eschweilera coriacea</td>
-<td style="text-align: right;">124</td>
-<td style="text-align: right;">124</td>
-<td style="text-align: right;">20.67</td>
-<td style="text-align: right;">100</td>
-<td style="text-align: right;">4.93</td>
-<td style="text-align: right;">16.76</td>
-<td style="text-align: right;">10.42</td>
-<td style="text-align: right;">47.85</td>
-<td style="text-align: right;">37.43</td>
+<td style="text-align: left;">Myrcia sulfiflora</td>
+<td style="text-align: right;">79</td>
+<td style="text-align: right;">263.33</td>
+<td style="text-align: right;">11.76</td>
+<td style="text-align: right;">33.33</td>
+<td style="text-align: right;">5.15</td>
+<td style="text-align: right;">2.05</td>
+<td style="text-align: right;">6.33</td>
+<td style="text-align: right;">23.24</td>
+<td style="text-align: right;">18.08</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Ecclinusa guianensis</td>
-<td style="text-align: right;">72</td>
-<td style="text-align: right;">72</td>
-<td style="text-align: right;">12.00</td>
-<td style="text-align: right;">100</td>
-<td style="text-align: right;">4.16</td>
-<td style="text-align: right;">14.15</td>
-<td style="text-align: right;">10.42</td>
-<td style="text-align: right;">36.57</td>
-<td style="text-align: right;">26.15</td>
+<td style="text-align: left;">Calophyllum brasiliensis</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">36.67</td>
+<td style="text-align: right;">1.64</td>
+<td style="text-align: right;">46.67</td>
+<td style="text-align: right;">7.22</td>
+<td style="text-align: right;">2.94</td>
+<td style="text-align: right;">9.06</td>
+<td style="text-align: right;">17.91</td>
+<td style="text-align: right;">10.69</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Pouteria guianensis</td>
-<td style="text-align: right;">67</td>
-<td style="text-align: right;">67</td>
-<td style="text-align: right;">11.17</td>
-<td style="text-align: right;">100</td>
-<td style="text-align: right;">3.78</td>
-<td style="text-align: right;">12.87</td>
-<td style="text-align: right;">10.42</td>
-<td style="text-align: right;">34.45</td>
-<td style="text-align: right;">24.03</td>
+<td style="text-align: left;">Mela 1</td>
+<td style="text-align: right;">47</td>
+<td style="text-align: right;">156.67</td>
+<td style="text-align: right;">6.99</td>
+<td style="text-align: right;">33.33</td>
+<td style="text-align: right;">5.15</td>
+<td style="text-align: right;">0.76</td>
+<td style="text-align: right;">2.35</td>
+<td style="text-align: right;">14.50</td>
+<td style="text-align: right;">9.34</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Licania micrantha</td>
-<td style="text-align: right;">56</td>
-<td style="text-align: right;">56</td>
-<td style="text-align: right;">9.33</td>
-<td style="text-align: right;">100</td>
-<td style="text-align: right;">2.01</td>
-<td style="text-align: right;">6.84</td>
-<td style="text-align: right;">10.42</td>
-<td style="text-align: right;">26.59</td>
-<td style="text-align: right;">16.18</td>
+<td style="text-align: left;">jussara</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">123.33</td>
+<td style="text-align: right;">5.51</td>
+<td style="text-align: right;">20.00</td>
+<td style="text-align: right;">3.09</td>
+<td style="text-align: right;">0.91</td>
+<td style="text-align: right;">2.79</td>
+<td style="text-align: right;">11.39</td>
+<td style="text-align: right;">8.30</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Oenocarpus bataua</td>
-<td style="text-align: right;">40</td>
-<td style="text-align: right;">40</td>
-<td style="text-align: right;">6.67</td>
-<td style="text-align: right;">100</td>
-<td style="text-align: right;">2.52</td>
-<td style="text-align: right;">8.58</td>
-<td style="text-align: right;">10.42</td>
-<td style="text-align: right;">25.67</td>
-<td style="text-align: right;">15.25</td>
+<td style="text-align: left;">Alchornea triplinervia</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">23.33</td>
+<td style="text-align: right;">1.04</td>
+<td style="text-align: right;">40.00</td>
+<td style="text-align: right;">6.19</td>
+<td style="text-align: right;">0.50</td>
+<td style="text-align: right;">1.55</td>
+<td style="text-align: right;">8.78</td>
+<td style="text-align: right;">2.60</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Micropholis guyanensis</td>
-<td style="text-align: right;">52</td>
-<td style="text-align: right;">52</td>
-<td style="text-align: right;">8.67</td>
-<td style="text-align: right;">100</td>
-<td style="text-align: right;">1.78</td>
-<td style="text-align: right;">6.06</td>
-<td style="text-align: right;">10.42</td>
-<td style="text-align: right;">25.15</td>
-<td style="text-align: right;">14.73</td>
+<td style="text-align: left;">Psidium sp</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">33.33</td>
+<td style="text-align: right;">1.49</td>
+<td style="text-align: right;">33.33</td>
+<td style="text-align: right;">5.15</td>
+<td style="text-align: right;">0.46</td>
+<td style="text-align: right;">1.40</td>
+<td style="text-align: right;">8.05</td>
+<td style="text-align: right;">2.89</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Scleronema micranthum</td>
-<td style="text-align: right;">31</td>
-<td style="text-align: right;">31</td>
-<td style="text-align: right;">5.17</td>
-<td style="text-align: right;">90</td>
-<td style="text-align: right;">1.94</td>
-<td style="text-align: right;">6.60</td>
-<td style="text-align: right;">9.38</td>
-<td style="text-align: right;">21.14</td>
-<td style="text-align: right;">11.77</td>
+<td style="text-align: left;">Coussapoa micropoda</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">23.33</td>
+<td style="text-align: right;">1.04</td>
+<td style="text-align: right;">26.67</td>
+<td style="text-align: right;">4.12</td>
+<td style="text-align: right;">0.30</td>
+<td style="text-align: right;">0.93</td>
+<td style="text-align: right;">6.09</td>
+<td style="text-align: right;">1.97</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Goupia glabra</td>
-<td style="text-align: right;">23</td>
-<td style="text-align: right;">23</td>
-<td style="text-align: right;">3.83</td>
-<td style="text-align: right;">90</td>
-<td style="text-align: right;">1.12</td>
-<td style="text-align: right;">3.82</td>
-<td style="text-align: right;">9.38</td>
-<td style="text-align: right;">17.03</td>
-<td style="text-align: right;">7.66</td>
+<td style="text-align: left;">Ilex durosa</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">20.00</td>
+<td style="text-align: right;">0.89</td>
+<td style="text-align: right;">13.33</td>
+<td style="text-align: right;">2.06</td>
+<td style="text-align: right;">0.38</td>
+<td style="text-align: right;">1.18</td>
+<td style="text-align: right;">4.13</td>
+<td style="text-align: right;">2.07</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Dinizia excelsa</td>
-<td style="text-align: right;">16</td>
-<td style="text-align: right;">16</td>
-<td style="text-align: right;">2.67</td>
-<td style="text-align: right;">80</td>
-<td style="text-align: right;">0.78</td>
-<td style="text-align: right;">2.65</td>
-<td style="text-align: right;">8.33</td>
-<td style="text-align: right;">13.65</td>
-<td style="text-align: right;">5.32</td>
+<td style="text-align: left;">Andira fraxinifolia</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">13.33</td>
+<td style="text-align: right;">0.60</td>
+<td style="text-align: right;">20.00</td>
+<td style="text-align: right;">3.09</td>
+<td style="text-align: right;">0.07</td>
+<td style="text-align: right;">0.23</td>
+<td style="text-align: right;">3.91</td>
+<td style="text-align: right;">0.82</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-</section>
-<section id="gráfico-do-ivi" class="level2">
-<h2 class="anchored" data-anchor-id="gráfico-do-ivi">4. Gráfico do IVI</h2>
+<p>Totais da comunidade:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>comp <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">as.matrix</span>(fito[, <span class="fu">c</span>(<span class="st">"DR"</span>, <span class="st">"FR"</span>, <span class="st">"DoR"</span>)]))</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(comp) <span class="ot">&lt;-</span> fito<span class="sc">$</span>especie</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">12</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(comp[, <span class="fu">ncol</span>(comp)<span class="sc">:</span><span class="dv">1</span>], <span class="at">horiz =</span> <span class="cn">TRUE</span>, <span class="at">las =</span> <span class="dv">1</span>, <span class="at">font.axis =</span> <span class="dv">3</span>,</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"#78c2ad"</span>, <span class="st">"#f3969a"</span>, <span class="st">"#6cc3d5"</span>), <span class="at">border =</span> <span class="cn">NA</span>,</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"IVI"</span>, <span class="at">cex.names =</span> <span class="fl">0.8</span>)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"bottomright"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"DR"</span>, <span class="st">"FR"</span>, <span class="st">"DoR"</span>),</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="fu">c</span>(<span class="st">"#78c2ad"</span>, <span class="st">"#f3969a"</span>, <span class="st">"#6cc3d5"</span>), <span class="at">border =</span> <span class="cn">NA</span>, <span class="at">bty =</span> <span class="st">"n"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="at">arvores_ha =</span> <span class="fu">nrow</span>(arv) <span class="sc">/</span> <span class="fl">0.3</span>, <span class="at">area_basal_m2_ha =</span> <span class="fu">sum</span>(arv<span class="sc">$</span>g) <span class="sc">/</span> <span class="fl">0.3</span>,</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">riqueza =</span> <span class="fu">length</span>(<span class="fu">unique</span>(arv<span class="sc">$</span>especie)))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      arvores_ha area_basal_m2_ha          riqueza 
+       2240.0000          32.4578          42.0000 </code></pre>
+</div>
+</div>
+</section>
+<section id="comparando-os-três-caixetais" class="level2">
+<h2 class="anchored" data-anchor-id="comparando-os-três-caixetais">5. Comparando os três caixetais</h2>
+<p>Cada caixetal tem 5 parcelas (0,1 ha). Aplicamos a mesma função a cada local:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>por_local <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="fu">split</span>(arv, arv<span class="sc">$</span>local), fitossociologia, <span class="at">A =</span> <span class="fl">0.1</span>, <span class="at">UT =</span> <span class="dv">5</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>resumo <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">sapply</span>(<span class="fu">split</span>(arv, arv<span class="sc">$</span>local), <span class="cf">function</span>(d) <span class="fu">c</span>(</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">arvores_ha =</span> <span class="fu">nrow</span>(d) <span class="sc">/</span> <span class="fl">0.1</span>,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">G_m2_ha    =</span> <span class="fu">round</span>(<span class="fu">sum</span>(d<span class="sc">$</span>g) <span class="sc">/</span> <span class="fl">0.1</span>, <span class="dv">1</span>),</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">riqueza    =</span> <span class="fu">length</span>(<span class="fu">unique</span>(d<span class="sc">$</span>especie)),</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">VI_caixeta =</span> <span class="fu">round</span>(<span class="fu">subset</span>(<span class="fu">fitossociologia</span>(d, <span class="fl">0.1</span>, <span class="dv">5</span>), especie <span class="sc">==</span> <span class="st">"Tabebuia cassinoides"</span>)<span class="sc">$</span>VI, <span class="dv">1</span>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>)))</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(resumo, <span class="at">caption =</span> <span class="st">"Resumo da estrutura por caixetal."</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Resumo da estrutura por caixetal.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">arvores_ha</th>
+<th style="text-align: right;">G_m2_ha</th>
+<th style="text-align: right;">riqueza</th>
+<th style="text-align: right;">VI_caixeta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">chauas</td>
+<td style="text-align: right;">2900</td>
+<td style="text-align: right;">35.8</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">148.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">jureia</td>
+<td style="text-align: right;">1780</td>
+<td style="text-align: right;">40.1</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">124.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">retiro</td>
+<td style="text-align: right;">2040</td>
+<td style="text-align: right;">21.4</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">159.4</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>cores <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#78c2ad"</span>, <span class="st">"#f3969a"</span>, <span class="st">"#6cc3d5"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">14</span>, <span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (l <span class="cf">in</span> <span class="fu">names</span>(por_local)) {</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  f <span class="ot">&lt;-</span> <span class="fu">head</span>(por_local[[l]], <span class="dv">5</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  comp <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">as.matrix</span>(f[, <span class="fu">c</span>(<span class="st">"DR"</span>, <span class="st">"FR"</span>, <span class="st">"DoR"</span>)]))</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>(comp) <span class="ot">&lt;-</span> f<span class="sc">$</span>especie</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">barplot</span>(comp[, <span class="fu">ncol</span>(comp)<span class="sc">:</span><span class="dv">1</span>], <span class="at">horiz =</span> <span class="cn">TRUE</span>, <span class="at">las =</span> <span class="dv">1</span>, <span class="at">font.axis =</span> <span class="dv">3</span>, <span class="at">col =</span> cores,</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">border =</span> <span class="cn">NA</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">300</span>), <span class="at">xlab =</span> <span class="st">"VI"</span>, <span class="at">main =</span> l, <span class="at">cex.names =</span> <span class="fl">0.9</span>)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"bottomright"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"DR"</span>, <span class="st">"FR"</span>, <span class="st">"DoR"</span>), <span class="at">fill =</span> cores, <span class="at">border =</span> <span class="cn">NA</span>, <span class="at">bty =</span> <span class="st">"n"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="fitossociologia_files/figure-html/unnamed-chunk-4-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Índice de valor de importância (IVI) por espécie, decomposto em densidade, frequência e dominância relativas."><img src="fitossociologia_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672" alt="Índice de valor de importância (IVI) por espécie, decomposto em densidade, frequência e dominância relativas."></a></p>
-<figcaption>Índice de valor de importância (IVI) por espécie, decomposto em densidade, frequência e dominância relativas.</figcaption>
+<p><a href="fitossociologia_files/figure-html/unnamed-chunk-8-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Valor de importância (VI) das cinco espécies principais em cada caixetal, decomposto em densidade, frequência e dominância relativas."><img src="fitossociologia_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672" alt="Valor de importância (VI) das cinco espécies principais em cada caixetal, decomposto em densidade, frequência e dominância relativas."></a></p>
+<figcaption>Valor de importância (VI) das cinco espécies principais em cada caixetal, decomposto em densidade, frequência e dominância relativas.</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="diversidade" class="level2">
-<h2 class="anchored" data-anchor-id="diversidade">5. Diversidade</h2>
-<ul>
-<li><strong>Shannon:</strong> <span class="math inline">\(H' = -\sum p_i \ln p_i\)</span></li>
-<li><strong>Simpson (Gini-Simpson):</strong> <span class="math inline">\(1 - D = 1 - \sum p_i^2\)</span></li>
-<li><strong>Equabilidade de Pielou:</strong> <span class="math inline">\(J = H' / \ln S\)</span></li>
-</ul>
+<section id="estrutura-diamétrica-e-vertical" class="level2">
+<h2 class="anchored" data-anchor-id="estrutura-diamétrica-e-vertical">6. Estrutura diamétrica e vertical</h2>
+<p>Em florestas naturais, a distribuição de diâmetros costuma ter a forma de <strong>J invertido</strong>: muitas árvores finas e poucas grossas. Usamos classes de 5 cm de DAP equivalente e de 2 m de altura:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> fito<span class="sc">$</span>N <span class="sc">/</span> <span class="fu">sum</span>(fito<span class="sc">$</span>N)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span> <span class="fu">nrow</span>(fito)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>H <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">sum</span>(p <span class="sc">*</span> <span class="fu">log</span>(p))</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>simpson <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">sum</span>(p<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>J <span class="ot">&lt;-</span> H <span class="sc">/</span> <span class="fu">log</span>(S)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">Riqueza =</span> S, <span class="at">Shannon =</span> <span class="fu">round</span>(H, <span class="dv">3</span>),</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">Simpson =</span> <span class="fu">round</span>(simpson, <span class="dv">3</span>), <span class="at">Pielou =</span> <span class="fu">round</span>(J, <span class="dv">3</span>))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>classes_d <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="fu">ceiling</span>(<span class="fu">max</span>(arv<span class="sc">$</span>dap_eq) <span class="sc">/</span> <span class="dv">5</span>) <span class="sc">*</span> <span class="dv">5</span>, <span class="at">by =</span> <span class="dv">5</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>classes_h <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="fu">ceiling</span>(<span class="fu">max</span>(arv<span class="sc">$</span>h_m) <span class="sc">/</span> <span class="dv">2</span>) <span class="sc">*</span> <span class="dv">2</span>, <span class="at">by =</span> <span class="dv">2</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (l <span class="cf">in</span> <span class="fu">sort</span>(<span class="fu">unique</span>(arv<span class="sc">$</span>local)))</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hist</span>(arv<span class="sc">$</span>dap_eq[arv<span class="sc">$</span>local <span class="sc">==</span> l], <span class="at">breaks =</span> classes_d, <span class="at">col =</span> <span class="st">"#78c2ad"</span>, <span class="at">border =</span> <span class="st">"white"</span>,</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">main =</span> l, <span class="at">xlab =</span> <span class="st">"DAP equivalente (cm)"</span>, <span class="at">ylab =</span> <span class="st">"Árvores"</span>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (l <span class="cf">in</span> <span class="fu">sort</span>(<span class="fu">unique</span>(arv<span class="sc">$</span>local)))</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hist</span>(arv<span class="sc">$</span>h_m[arv<span class="sc">$</span>local <span class="sc">==</span> l], <span class="at">breaks =</span> classes_h, <span class="at">col =</span> <span class="st">"#6cc3d5"</span>, <span class="at">border =</span> <span class="st">"white"</span>,</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">main =</span> l, <span class="at">xlab =</span> <span class="st">"Altura (m)"</span>, <span class="at">ylab =</span> <span class="st">"Árvores"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="fitossociologia_files/figure-html/unnamed-chunk-9-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Distribuição das árvores em classes de DAP equivalente (5 cm) e de altura (2 m) em cada caixetal."><img src="fitossociologia_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672" alt="Distribuição das árvores em classes de DAP equivalente (5 cm) e de altura (2 m) em cada caixetal."></a></p>
+<figcaption>Distribuição das árvores em classes de DAP equivalente (5 cm) e de altura (2 m) em cada caixetal.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>tab_d <span class="ot">&lt;-</span> <span class="fu">table</span>(arv<span class="sc">$</span>local, <span class="fu">cut</span>(arv<span class="sc">$</span>dap_eq, classes_d))</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>tab_d[, <span class="fu">colSums</span>(tab_d) <span class="sc">&gt;</span> <span class="dv">0</span>]</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  Riqueza Shannon Simpson Pielou
-1      10   2.135   0.866  0.927</code></pre>
+<pre><code>        
+         (0,5] (5,10] (10,15] (15,20] (20,25] (25,30] (30,35] (35,40] (40,45]
+  chauas     5    127     106      33      12       4       1       2       0
+  jureia     0     59      51      36      14       9       4       3       1
+  retiro    11    109      52      19       9       3       1       0       0
+        
+         (65,70]
+  chauas       0
+  jureia       1
+  retiro       0</code></pre>
 </div>
 </div>
-<div class="callout callout-style-default callout-tip callout-titled">
+<p>E a caixeta, que rebrota e forma touceiras, tem mais fustes por árvore que as outras espécies?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>arv<span class="sc">$</span>grupo <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(arv<span class="sc">$</span>especie <span class="sc">==</span> <span class="st">"Tabebuia cassinoides"</span>, <span class="st">"caixeta"</span>, <span class="st">"outras"</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(fustes <span class="sc">~</span> grupo, <span class="at">data =</span> arv, <span class="at">FUN =</span> <span class="cf">function</span>(x) <span class="fu">round</span>(<span class="fu">c</span>(<span class="at">media =</span> <span class="fu">mean</span>(x), <span class="at">max =</span> <span class="fu">max</span>(x)), <span class="dv">2</span>))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    grupo fustes.media fustes.max
+1 caixeta         1.70      11.00
+2  outras         1.26       9.00</code></pre>
+</div>
+</div>
+</section>
+<section id="exercícios" class="level2">
+<h2 class="anchored" data-anchor-id="exercícios">7. Exercícios</h2>
+<div class="callout callout-style-simple callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Conferindo com pacotes
+Para entregar (EE4)
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>O pacote <strong>vegan</strong> calcula os mesmos índices: <code>vegan::diversity(fito$N, "shannon")</code> e <code>vegan::diversity(fito$N, "simpson")</code>. Para comparar várias parcelas, use uma matriz parcela × espécie: <code>table(inv$parcela, inv$especie)</code>.</p>
+<ol type="1">
+<li>Calcule à mão (ou no Excel) DA, DR, FA, FR, DoA, DoR e VI de <em>Calophyllum brasiliensis</em> nas 15 parcelas e confira com a tabela da seção 4.</li>
+<li>Qual é a espécie de maior VI em cada caixetal? Qual parâmetro (densidade, frequência ou dominância) mais contribui para isso?</li>
+<li>Por que a frequência relativa da caixeta é menor que a sua densidade e dominância relativas?</li>
+<li>Compare densidade (árv./ha) e área basal (m²/ha) entre os locais. Qual caixetal tem árvores mais grossas, em média?</li>
+<li>As distribuições diamétricas têm forma de J invertido? Por que a primeira classe (0 a 5 cm) tem tão poucas árvores? Pense no critério de inclusão do levantamento.</li>
+<li>Qual seria o efeito de calcular a dominância com o DAP do maior fuste, em vez da soma de todos?</li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Para o relatório (formato de artigo)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Esta prática gera a <strong>Tabela 2</strong> (parâmetros por caixetal, 5 espécies principais) e a <strong>Figura 2</strong> (distribuições diamétricas). Escreva um parágrafo de resultados descrevendo a dominância da caixeta e as diferenças entre os locais.</p>
 </div>
 </div>
 </section>
 <section id="exporte-os-resultados" class="level2">
-<h2 class="anchored" data-anchor-id="exporte-os-resultados">6. Exporte os resultados</h2>
+<h2 class="anchored" data-anchor-id="exporte-os-resultados">Exporte os resultados</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv2</span>(fito, <span class="st">"resultados/fitossociologia.csv"</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">"resultados"</span>, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv2</span>(geral, <span class="st">"resultados/fitossociologia_geral.csv"</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (l <span class="cf">in</span> <span class="fu">names</span>(por_local))</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write.csv2</span>(por_local[[l]], <span class="fu">paste0</span>(<span class="st">"resultados/fitossociologia_"</span>, l, <span class="st">".csv"</span>), <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="referências" class="level2">
 <h2 class="anchored" data-anchor-id="referências">Referências</h2>
 <ul>
 <li>FELFILI, J. M. et al.&nbsp;<em>Fitossociologia no Brasil: métodos e estudos de caso</em>. Viçosa: Editora UFV, 2011.</li>
-<li>MAGURRAN, A. E. <em>Medindo a diversidade biológica</em>. Curitiba: Ed. UFPR, 2011.</li>
 <li>MUELLER-DOMBOIS, D.; ELLENBERG, H. <em>Aims and Methods of Vegetation Ecology</em>. New York: Wiley, 1974.</li>
+<li>SOUZA, A. L.; SOARES, C. P. B. <em>Florestas nativas: estrutura, dinâmica e manejo</em>. Viçosa: Editora UFV, 2014.</li>
+<li>VANIN, A. 1999. Dissertação de mestrado (dados caixeta). Dados disponíveis em: <a href="https://ecor.ib.usp.br/doku.php?id=dados:dados-caixeta" class="uri">https://ecor.ib.usp.br/doku.php?id=dados:dados-caixeta</a>.</li>
 </ul>
 
 
@@ -1323,7 +1531,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","descPosition":"bottom","closeEffect":"zoom","selector":".lightbox","loop":false});
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","loop":false,"selector":".lightbox","descPosition":"bottom","openEffect":"zoom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {

@@ -2,7 +2,7 @@
 title: "Calendário fenológico a partir de registros de herbário (speciesLink)"
 description: "Baixar registros de uma espécie no speciesLink, identificar flores e frutos nas anotações das exsicatas e construir calendários fenológicos por mês."
 categories: [Fenologia, Dendrologia, Herbários e biodiversidade]
-order: 7
+order: 10
 ---
 
 ::: {.callout-note appearance="simple"}

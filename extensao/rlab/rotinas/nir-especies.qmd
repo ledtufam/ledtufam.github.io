@@ -2,7 +2,7 @@
 title: "Espectros NIR: do arquivo bruto à discriminação de espécies"
 description: "Fluxo do curso Herbarium Spectroscopy with MicroNIR: gerar a matriz no ISC Reader App, ajustar e recortar os comprimentos de onda, remover leituras problemáticas, calcular médias por exsicata e discriminar espécies de Handroanthus com LDA e validação leave-one-out."
 categories: [Espectroscopia NIR, Taxonomia]
-order: 4
+order: 7
 ---
 
 ::: {.callout-note appearance="simple"}

@@ -1,0 +1,181 @@
+---
+title: "Diversidade da vegetação: rarefação, estimadores e diversidade beta"
+description: "Curva do coletor, rarefação, estimadores de riqueza (Chao 1, Jackknife) e partição da diversidade em alfa, beta e gama, com os dados abertos caixeta."
+categories: [Fitossociologia, Diversidade]
+order: 6
+---
+
+::: {.callout-note appearance="simple"}
+**Nível:** intermediário · **Pacotes:** apenas R básico · **Disciplina:** [FGD320 - Fitossociologia](/ensino/graduacao/fitossociologia.qmd) · [Baixar script](../scripts/diversidade.R){download="diversidade.R"} · [Baixar dados caixeta](../dados/caixeta.csv){download="caixeta.csv"}
+:::
+
+Na prática de [heterogeneidade](heterogeneidade.qmd), o caixetal da Jureia teve mais espécies (22) que os outros dois (13). Mas ele também foi amostrado com o mesmo esforço? Com **menos árvores**, esperamos encontrar **menos espécies**, mesmo que a comunidade seja igualmente rica. Nesta rotina, vemos como comparar a riqueza de forma justa, estimar quantas espécies faltam e separar a diversidade **dentro** e **entre** as áreas.
+
+::: {.callout-tip appearance="simple"}
+## Roteiro da aula prática (30/10 · EE7)
+
+1.  Construir a curva do coletor (seção 2);
+2.  Comparar os caixetais pela rarefação (seção 3);
+3.  Estimar a riqueza total com Chao 1 e Jackknife (seção 4);
+4.  Partir a diversidade em alfa, beta e gama (seção 5) e responder aos exercícios (seção 6).
+:::
+
+## 1. Dados
+
+```{r}
+cx <- read.csv("../dados/caixeta.csv")   # no seu projeto: read.csv("dados/caixeta.csv")
+cx$especie[cx$especie == "Callophyllum brasiliensis"] <- "Calophyllum brasiliensis"
+
+arv <- unique(cx[, c("local", "parcela", "arvore", "especie")])   # uma linha por árvore
+arv$parc <- paste(arv$local, arv$parcela, sep = "_")
+
+ab_parc  <- unclass(table(arv$parc, arv$especie))    # parcela × espécie
+ab_local <- unclass(table(arv$local, arv$especie))   # local × espécie
+rowSums(ab_local)                                    # árvores por caixetal
+```
+
+## 2. Curva do coletor (acumulação de espécies)
+
+A **curva do coletor** mostra quantas espécies novas aparecem à medida que acrescentamos parcelas. Se ela se **estabiliza** (assíntota), a amostragem foi suficiente. Como a ordem das parcelas muda o resultado, sorteamos a ordem muitas vezes e usamos a média:
+
+```{r}
+coletor <- function(m, n_perm = 200) {
+  m <- m > 0
+  res <- replicate(n_perm, {
+    ordem <- sample(nrow(m))
+    sapply(seq_along(ordem), function(k) sum(colSums(m[ordem[1:k], , drop = FALSE]) > 0))
+  })
+  data.frame(parcelas = 1:nrow(m), media = rowMeans(res),
+             inf = apply(res, 1, quantile, 0.025), sup = apply(res, 1, quantile, 0.975))
+}
+
+set.seed(2026)
+cc <- coletor(ab_parc)
+cc
+```
+
+```{r}
+#| fig-cap: "Curva do coletor das 15 parcelas (média de 200 ordens sorteadas e intervalo de 95 por cento)."
+#| fig-height: 4.5
+plot(cc$parcelas, cc$media, type = "n", ylim = c(0, max(cc$sup) + 5),
+     xlab = "Número de parcelas (200 m² cada)", ylab = "Número de espécies")
+polygon(c(cc$parcelas, rev(cc$parcelas)), c(cc$inf, rev(cc$sup)), col = "#78c2ad55", border = NA)
+lines(cc$parcelas, cc$media, lwd = 2, col = "#2c7a5e")
+points(cc$parcelas, cc$media, pch = 19, col = "#2c7a5e")
+```
+
+## 3. Rarefação: comparar a riqueza com o mesmo número de indivíduos
+
+A **rarefação** (Hurlbert 1971) responde: *quantas espécies esperaríamos encontrar se tivéssemos amostrado só $n$ indivíduos?* Assim, comparamos as áreas com o **mesmo esforço**:
+
+$$E(S_n) = \sum_{i=1}^{S} \left[ 1 - \frac{\binom{N - N_i}{n}}{\binom{N}{n}} \right]$$
+
+em que $N$ = total de indivíduos e $N_i$ = indivíduos da espécie *i*.
+
+```{r}
+rarefacao <- function(x, n) {
+  x <- x[x > 0]; N <- sum(x)
+  sapply(n, function(k) sum(1 - exp(lchoose(N - x, k) - lchoose(N, k))))
+}
+
+n_min <- min(rowSums(ab_local))          # o menor caixetal (jureia, 178 árvores)
+sapply(rownames(ab_local), function(l) round(rarefacao(ab_local[l, ], n_min), 1))
+```
+
+```{r}
+#| fig-cap: "Curvas de rarefação dos três caixetais. A linha tracejada marca o tamanho do menor caixetal."
+#| fig-height: 4.5
+cores <- c(chauas = "#1b9e77", jureia = "#d95f02", retiro = "#7570b3")
+plot(NA, xlim = c(1, max(rowSums(ab_local))), ylim = c(0, 25),
+     xlab = "Número de árvores", ylab = "Número esperado de espécies")
+for (l in rownames(ab_local)) {
+  n <- 1:sum(ab_local[l, ])
+  lines(n, rarefacao(ab_local[l, ], n), lwd = 2, col = cores[l])
+}
+abline(v = n_min, lty = 2, col = "grey50")
+legend("bottomright", legend = names(cores), col = cores, lwd = 2, bty = "n")
+```
+
+## 4. Quantas espécies faltam? Estimadores de riqueza
+
+Os estimadores **não paramétricos** usam as espécies **raras** para estimar quantas ainda não foram encontradas:
+
+| Estimador | Fórmula | Baseado em |
+|--------------|----------------------------------|---------------------------------|
+| Chao 1 | $S_{obs} + \frac{F_1(F_1 - 1)}{2(F_2 + 1)}$ | *singletons* ($F_1$, espécies com 1 indivíduo) e *doubletons* ($F_2$, com 2) |
+| Jackknife 1 | $S_{obs} + Q_1 \frac{m - 1}{m}$ | $Q_1$ = espécies em uma só parcela; $m$ = número de parcelas |
+
+```{r}
+estimadores <- function(m) {          # m = parcela × espécie (abundâncias)
+  x  <- colSums(m); x <- x[x > 0]
+  Sobs <- length(x); F1 <- sum(x == 1); F2 <- sum(x == 2)
+  inc <- colSums(m > 0); inc <- inc[inc > 0]
+  Q1 <- sum(inc == 1); k <- nrow(m)
+  c(S_obs = Sobs, F1 = F1, F2 = F2, Chao1 = Sobs + F1 * (F1 - 1) / (2 * (F2 + 1)),
+    Q1 = Q1, Jack1 = Sobs + Q1 * (k - 1) / k)
+}
+
+est <- rbind(
+  t(sapply(split(as.data.frame(ab_parc), sub("_.*", "", rownames(ab_parc))),
+           function(d) estimadores(as.matrix(d)))),
+  total = estimadores(ab_parc))
+knitr::kable(est, digits = 1, caption = "Riqueza observada e estimada por caixetal e no total.")
+```
+
+::: {.callout-warning appearance="simple"}
+Com só 5 parcelas por local, os estimadores são **pouco precisos**. Eles indicam a ordem de grandeza da riqueza que falta, não um valor exato.
+:::
+
+## 5. Diversidade alfa, beta e gama
+
+Whittaker (1960) separou a diversidade em três níveis:
+
+-   **alfa ($\alpha$):** diversidade **dentro** de cada unidade (média das parcelas ou dos locais);
+-   **gama ($\gamma$):** diversidade **total** da região;
+-   **beta ($\beta$):** diferença de composição **entre** as unidades.
+
+Na forma **multiplicativa**, $\beta = \gamma / \bar\alpha$ (quantas "unidades completamente diferentes" existem); na forma **aditiva**, $\beta = \gamma - \bar\alpha$ (quantas espécies faltam, em média, em cada unidade).
+
+```{r}
+particao <- function(m) {
+  alfa <- mean(rowSums(m > 0)); gama <- sum(colSums(m) > 0)
+  c(alfa = alfa, gama = gama, beta_mult = gama / alfa, beta_adit = gama - alfa)
+}
+
+rbind(
+  `parcelas dentro de chauas` = particao(ab_parc[grepl("chauas", rownames(ab_parc)), ]),
+  `parcelas dentro de jureia` = particao(ab_parc[grepl("jureia", rownames(ab_parc)), ]),
+  `parcelas dentro de retiro` = particao(ab_parc[grepl("retiro", rownames(ab_parc)), ]),
+  `entre os caixetais`        = particao(ab_local)
+) |> round(2)
+```
+
+Se a beta **entre os caixetais** se aproxima de 3 (o número de locais), quase não há espécies em comum: cada caixetal funciona como uma comunidade diferente, apesar de todos serem dominados pela caixeta.
+
+## 6. Exercícios
+
+::: {.callout-important appearance="simple"}
+## Para entregar (EE7)
+
+1.  A curva do coletor das 15 parcelas se estabilizou? O que isso diz sobre a suficiência amostral?
+2.  Com o mesmo número de árvores (rarefação), a Jureia continua sendo o caixetal mais rico? A diferença em relação aos outros diminuiu?
+3.  Quantas espécies os estimadores Chao 1 e Jackknife 1 sugerem que ainda faltam em cada caixetal? Qual deles você considera mais adequado para parcelas pequenas?
+4.  Compare a diversidade beta dentro de cada caixetal e entre os caixetais. Onde está a maior parte da diversidade da região?
+5.  Como a padronização dos nomes (morfoespécies que podem ser a mesma espécie) afetaria a diversidade beta?
+6.  Escreva um parágrafo-síntese que una os resultados de estrutura, padrão espacial, similaridade e diversidade dos caixetais. Este parágrafo será o ponto de partida da discussão do relatório.
+:::
+
+::: {.callout-note appearance="simple"}
+## Para o relatório (formato de artigo)
+
+Esta prática gera a **Figura 5** (curvas de rarefação) e a **Tabela 5** (estimadores e partição da diversidade). O parágrafo-síntese do exercício 6 abre a discussão.
+:::
+
+## Referências
+
+-   CHAO, A. Nonparametric estimation of the number of classes in a population. *Scandinavian Journal of Statistics*, v. 11, p. 265-270, 1984.
+-   GOTELLI, N. J.; COLWELL, R. K. Quantifying biodiversity: procedures and pitfalls in the measurement and comparison of species richness. *Ecology Letters*, v. 4, p. 379-391, 2001.
+-   HURLBERT, S. H. The nonconcept of species diversity: a critique and alternative parameters. *Ecology*, v. 52, p. 577-586, 1971.
+-   MAGURRAN, A. E. *Medindo a diversidade biológica*. Curitiba: Ed. UFPR, 2011.
+-   WHITTAKER, R. H. Vegetation of the Siskiyou Mountains, Oregon and California. *Ecological Monographs*, v. 30, p. 279-338, 1960.
+-   VANIN, A. 1999. Dissertação de mestrado (dados caixeta). Dados disponíveis em: <https://ecor.ib.usp.br/doku.php?id=dados:dados-caixeta>.
