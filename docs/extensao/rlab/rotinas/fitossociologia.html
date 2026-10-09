@@ -353,7 +353,7 @@ window.Quarto = {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Nível:</strong> iniciante/intermediário · <strong>Pacotes:</strong> apenas R básico · <strong>Disciplina:</strong> <a href="../../../ensino/graduacao/fitossociologia.html">FGD320 - Fitossociologia</a> · <a href="../scripts/fitossociologia.R" download="fitossociologia.R">Baixar script</a> · <a href="../dados/caixeta.csv" download="caixeta.csv">Baixar dados caixeta</a></p>
+<p><strong>Nível:</strong> iniciante/intermediário · <strong>Pacotes:</strong> apenas R básico · <strong>Disciplina:</strong> <a href="../../../ensino/graduacao/fitossociologia.html">FGD320 - Fitossociologia</a> · <a href="../scripts/fitossociologia.R" download="fitossociologia.R">Baixar script</a> · <a href="../dados/caixeta.csv" download="caixeta.csv">Baixar dados caixeta</a> · <a href="../dados/parametros_fitossociologicos_caixeta.xlsx" download="parametros_fitossociologicos_caixeta.xlsx">Baixar planilha Excel</a></p>
 </div>
 </div>
 </div>
@@ -372,7 +372,7 @@ Roteiro da aula prática (09/10 · EE4)
 <li>Calcular os parâmetros de <strong>uma espécie</strong> à mão (seção 3) e conferir no Excel;</li>
 <li>Generalizar o cálculo para todas as espécies com uma função (seção 4);</li>
 <li>Comparar os três caixetais (seção 5) e montar a estrutura diamétrica (seção 6);</li>
-<li>Responder aos exercícios e escrever o parágrafo de resultados para o relatório (seção 7).</li>
+<li>Responder aos exercícios (seção 7).</li>
 </ol>
 </div>
 </div>
@@ -538,6 +538,7 @@ No Excel
 </div>
 <div class="callout-body-container callout-body">
 <p>O mesmo cálculo no Excel: (1) importe o <code>caixeta.csv</code>; (2) crie a coluna de área basal <code>=(CAP*0,1)^2/(4*PI())/10000</code>; (3) monte uma <strong>tabela dinâmica</strong> com <code>especie</code> nas linhas e, nos valores, a <em>contagem distinta</em> de árvores, a <em>soma</em> da área basal e a <em>contagem distinta</em> de parcelas; (4) calcule DA, DR, FA, FR, DoA, DoR e VI em colunas ao lado. Compare com o R: os valores devem ser idênticos.</p>
+<p>Se preferir, use a planilha pronta, com todas as fórmulas visíveis: dados → árvores → matriz espécie × parcela → parâmetros (escolha o caixetal numa célula) → cálculo passo a passo de uma espécie → estrutura diamétrica e estratos de altura. <a href="../dados/parametros_fitossociologicos_caixeta.xlsx" download="parametros_fitossociologicos_caixeta.xlsx">Baixar planilha Excel</a></p>
 </div>
 </div>
 </section>
@@ -883,7 +884,7 @@ Para o relatório (formato de artigo)
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Esta prática gera a <strong>Tabela 2</strong> (parâmetros por caixetal, 5 espécies principais) e a <strong>Figura 2</strong> (distribuições diamétricas). Escreva um parágrafo de resultados descrevendo a dominância da caixeta e as diferenças entre os locais.</p>
+<p>Esta prática gera a <strong>Tabela 2</strong> (parâmetros por caixetal, 5 espécies principais) e a <strong>Figura 2</strong> (distribuições diamétricas).</p>
 </div>
 </div>
 </section>
@@ -901,7 +902,7 @@ Para o relatório (formato de artigo)
 <ul>
 <li>FELFILI, J. M. et al.&nbsp;<em>Fitossociologia no Brasil: métodos e estudos de caso</em>. Viçosa: Editora UFV, 2011.</li>
 <li>MUELLER-DOMBOIS, D.; ELLENBERG, H. <em>Aims and Methods of Vegetation Ecology</em>. New York: Wiley, 1974.</li>
-<li>SOUZA, A. L.; SOARES, C. P. B. <em>Florestas nativas: estrutura, dinâmica e manejo</em>. Viçosa: Editora UFV, 2014.</li>
+<li>SOUZA, A. L.; SOARES, C. P. B. <em>Florestas nativas: estrutura, dinâmica e manejo</em>. Viçosa: Editora UFV, 2013.</li>
 <li>VANIN, A. 1999. Dissertação de mestrado (dados caixeta). Dados disponíveis em: <a href="https://ecor.ib.usp.br/doku.php?id=dados:dados-caixeta" class="uri">https://ecor.ib.usp.br/doku.php?id=dados:dados-caixeta</a>.</li>
 </ul>
 
@@ -1531,7 +1532,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","loop":false,"selector":".lightbox","descPosition":"bottom","openEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"loop":false,"openEffect":"zoom","descPosition":"bottom","selector":".lightbox","closeEffect":"zoom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {

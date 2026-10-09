@@ -49,7 +49,7 @@ Cada prática responde a uma pergunta sobre os caixetais e gera **uma tabela ou 
 
 Atualizado em 25/09/2026. T = teoria; P = prática.
 
-| Data | Tipo | Tema | Atividade | Roteiro no R Lab |
+| Data | Tipo | Tema | Atividade | Material |
 |-------|:----:|---------------------------------|:-----:|------------------------------|
 | 21/08 | T | Apresentação da disciplina. Introdução e importância da fitossociologia | | |
 | 28/08 | T/P | Comportamento das populações nas comunidades. Observações nas trilhas da UFAM | | |
@@ -58,7 +58,7 @@ Atualizado em 25/09/2026. T = teoria; P = prática.
 | 18/09 | P | Planejamento do inventário: seminário | EE1 | |
 | 25/09 | T | Métodos usados em levantamentos fitossociológicos | EE2 | |
 | 02/10 | P | Distribuição espacial de árvores | EE3 | [Índices de agregação](/extensao/rlab/rotinas/indices-agregacao.qmd) |
-| 09/10 | T/P | Parâmetros fitossociológicos (Excel e R) | EE4 | [Parâmetros e estrutura](/extensao/rlab/rotinas/fitossociologia.qmd) |
+| 09/10 | T/P | Parâmetros fitossociológicos (Excel e R) | EE4 | [Slides (PDF)](/assets/pdf/FGD320_Aula_Parametros_Fitossociologicos.pdf){target="_blank"} · [Parâmetros e estrutura](/extensao/rlab/rotinas/fitossociologia.qmd) · [Planilha Excel](/extensao/rlab/dados/parametros_fitossociologicos_caixeta.xlsx){download="parametros_fitossociologicos_caixeta.xlsx"} |
 | 16/10 | T/P | Índices de associação e similaridade | EE5 | [Associação e similaridade](/extensao/rlab/rotinas/associacao-similaridade.qmd) |
 | 23/10 | T/P | Índices de heterogeneidade de comunidades | EE6 | [Heterogeneidade](/extensao/rlab/rotinas/heterogeneidade.qmd) |
 | 30/10 | T/P | Diversidade da vegetação | EE7 | [Rarefação e diversidade beta](/extensao/rlab/rotinas/diversidade.qmd) |

@@ -6,7 +6,7 @@ order: 3
 ---
 
 ::: {.callout-note appearance="simple"}
-**Nível:** iniciante/intermediário · **Pacotes:** apenas R básico · **Disciplina:** [FGD320 - Fitossociologia](/ensino/graduacao/fitossociologia.qmd) · [Baixar script](../scripts/fitossociologia.R){download="fitossociologia.R"} · [Baixar dados caixeta](../dados/caixeta.csv){download="caixeta.csv"}
+**Nível:** iniciante/intermediário · **Pacotes:** apenas R básico · **Disciplina:** [FGD320 - Fitossociologia](/ensino/graduacao/fitossociologia.qmd) · [Baixar script](../scripts/fitossociologia.R){download="fitossociologia.R"} · [Baixar dados caixeta](../dados/caixeta.csv){download="caixeta.csv"} · [Baixar planilha Excel](../dados/parametros_fitossociologicos_caixeta.xlsx){download="parametros_fitossociologicos_caixeta.xlsx"}
 :::
 
 Nesta rotina calculamos a **estrutura horizontal** (densidade, frequência, dominância e valor de importância) e a **estrutura diamétrica e vertical** dos caixetais do Vale do Ribeira, usando o mesmo banco da prática de [índices de agregação](indices-agregacao.qmd). Usamos só funções do R básico, para que cada passo da fórmula fique visível.
@@ -17,7 +17,7 @@ Nesta rotina calculamos a **estrutura horizontal** (densidade, frequência, domi
 1.  Calcular os parâmetros de **uma espécie** à mão (seção 3) e conferir no Excel;
 2.  Generalizar o cálculo para todas as espécies com uma função (seção 4);
 3.  Comparar os três caixetais (seção 5) e montar a estrutura diamétrica (seção 6);
-4.  Responder aos exercícios e escrever o parágrafo de resultados para o relatório (seção 7).
+4.  Responder aos exercícios (seção 7).
 :::
 
 ## 1. Dados
@@ -99,6 +99,8 @@ c(DA = n_i / A, DR = 100 * n_i / N, FA = 100 * u_i / UT,
 ## No Excel
 
 O mesmo cálculo no Excel: (1) importe o `caixeta.csv`; (2) crie a coluna de área basal `=(CAP*0,1)^2/(4*PI())/10000`; (3) monte uma **tabela dinâmica** com `especie` nas linhas e, nos valores, a *contagem distinta* de árvores, a *soma* da área basal e a *contagem distinta* de parcelas; (4) calcule DA, DR, FA, FR, DoA, DoR e VI em colunas ao lado. Compare com o R: os valores devem ser idênticos.
+
+Se preferir, use a planilha pronta, com todas as fórmulas visíveis: dados → árvores → matriz espécie × parcela → parâmetros (escolha o caixetal numa célula) → cálculo passo a passo de uma espécie → estrutura diamétrica e estratos de altura. [Baixar planilha Excel](../dados/parametros_fitossociologicos_caixeta.xlsx){download="parametros_fitossociologicos_caixeta.xlsx"}
 :::
 
 ## 4. Uma função para todas as espécies
@@ -212,7 +214,7 @@ aggregate(fustes ~ grupo, data = arv, FUN = function(x) round(c(media = mean(x),
 ::: {.callout-note appearance="simple"}
 ## Para o relatório (formato de artigo)
 
-Esta prática gera a **Tabela 2** (parâmetros por caixetal, 5 espécies principais) e a **Figura 2** (distribuições diamétricas). Escreva um parágrafo de resultados descrevendo a dominância da caixeta e as diferenças entre os locais.
+Esta prática gera a **Tabela 2** (parâmetros por caixetal, 5 espécies principais) e a **Figura 2** (distribuições diamétricas).
 :::
 
 ## Exporte os resultados
@@ -229,5 +231,5 @@ for (l in names(por_local))
 
 -   FELFILI, J. M. et al. *Fitossociologia no Brasil: métodos e estudos de caso*. Viçosa: Editora UFV, 2011.
 -   MUELLER-DOMBOIS, D.; ELLENBERG, H. *Aims and Methods of Vegetation Ecology*. New York: Wiley, 1974.
--   SOUZA, A. L.; SOARES, C. P. B. *Florestas nativas: estrutura, dinâmica e manejo*. Viçosa: Editora UFV, 2014.
+-   SOUZA, A. L.; SOARES, C. P. B. *Florestas nativas: estrutura, dinâmica e manejo*. Viçosa: Editora UFV, 2013.
 -   VANIN, A. 1999. Dissertação de mestrado (dados caixeta). Dados disponíveis em: <https://ecor.ib.usp.br/doku.php?id=dados:dados-caixeta>.
