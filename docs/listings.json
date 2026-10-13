@@ -1,20 +1,5 @@
 [
   {
-    "listing": "/divulgacaocientifica.html",
-    "items": [
-      "/divulgacao/posts/2026-10-01-site-novo/index.html"
-    ]
-  },
-  {
-    "listing": "/ensino/graduacao/disciplinas.html",
-    "items": [
-      "/ensino/graduacao/fitossociologia.html",
-      "/ensino/graduacao/dendrologiatropical.html",
-      "/ensino/graduacao/ecologiaflorestal.html",
-      "/ensino/graduacao/sementesflorestais.html"
-    ]
-  },
-  {
     "listing": "/extensao/rlab/index.html",
     "items": [
       "/extensao/rlab/rotinas/primeiros-passos.html",
@@ -26,7 +11,24 @@
       "/extensao/rlab/rotinas/nir-especies.html",
       "/extensao/rlab/rotinas/mapa-ocorrencias.html",
       "/extensao/rlab/rotinas/nomes-cientificos.html",
+      "/extensao/rlab/rotinas/nomes-cientificos-excel.html",
       "/extensao/rlab/rotinas/fenologia-specieslink.html"
+    ]
+  },
+  {
+    "listing": "/ensino/graduacao/disciplinas.html",
+    "items": [
+      "/ensino/graduacao/fitossociologia.html",
+      "/ensino/graduacao/dendrologiatropical.html",
+      "/ensino/graduacao/ecologiaflorestal.html",
+      "/ensino/graduacao/sementesflorestais.html",
+      "/ensino/graduacao/dendrologia/prancha-instagram.html"
+    ]
+  },
+  {
+    "listing": "/divulgacaocientifica.html",
+    "items": [
+      "/divulgacao/posts/2026-10-01-site-novo/index.html"
     ]
   },
   {

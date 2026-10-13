@@ -1,0 +1,193 @@
+---
+title: "Padronização de nomes no Excel (Plantminer + Flora e Funga)"
+description: "A mesma validação de nomes científicos, sem programar: lista no Excel, conferência no Plantminer e resolução dos problemas na Flora e Funga do Brasil."
+categories: [Taxonomia, Dendrologia, Excel]
+order: 9.5
+---
+
+::: {.callout-note appearance="simple"}
+**Nível:** iniciante · **Programas:** Excel (ou LibreOffice Calc) e navegador · **Disciplina:** [FGD921 - Dendrologia Tropical](/ensino/graduacao/dendrologiatropical.qmd) · [Baixar a planilha modelo](../dados/nomes_cientificos_plantminer.xlsx){download="nomes_cientificos_plantminer.xlsx"} · [Versão em R desta rotina](nomes-cientificos.qmd)
+:::
+
+Este tutorial faz, no Excel, o mesmo que a [rotina em R](nomes-cientificos.qmd): **organizar a lista → conferir os nomes numa base de referência → resolver os problemas → fechar a lista padronizada**. Usamos duas ferramentas on-line e gratuitas:
+
+-   [**Plantminer**](http://www.plantminer.com/): confere uma lista inteira de uma vez na base da Flora e Funga do Brasil, corrige erros de grafia e troca sinônimos pelo nome aceito;
+-   [**Flora e Funga do Brasil**](https://floradobrasil.jbrj.gov.br/consulta/): a referência oficial para a flora brasileira. É nela que resolvemos, um a um, os nomes que o Plantminer não conseguiu resolver.
+
+::: {.callout-important appearance="simple"}
+O Plantminer trabalha com uma **cópia** da Flora e Funga do Brasil (atualizada em 17/01/2024). Ele é ótimo para a triagem, mas a **palavra final é da Flora e Funga on-line**, que é atualizada continuamente.
+:::
+
+## O fluxo
+
+| Etapa | Onde | O que sai |
+|:-----:|-------------------|-----------------------------------------------|
+| 1 | Excel | lista limpa, só com o que pode ser conferido |
+| 2 | Plantminer | um arquivo com o nome atual de cada táxon e uma nota sobre o que mudou |
+| 3 | Excel | o resultado do Plantminer ao lado da lista original |
+| 4 | Excel | cada nome classificado: OK, grafia corrigida, sinônimo, não encontrado... |
+| 5 | Flora e Funga | a decisão para cada nome com problema |
+| 6 | Excel | a lista padronizada e as respostas da prática |
+
+: {.striped}
+
+## 1. Prepare a lista no Excel
+
+Abra a [planilha modelo](../dados/nomes_cientificos_plantminer.xlsx). Ela já traz a lista de **240 táxons** de Oliveira & Amaral (2004), adaptada para a prática (a mesma da rotina em R), na aba `1_lista`. As colunas verdes são fórmulas: não apague.
+
+::: {.callout-tip appearance="simple"}
+## Vai usar a sua própria lista?
+
+Cole os seus dados nas colunas A a E da aba `1_lista` (família, nome, rank, status, hábito) e arraste as fórmulas das colunas F e G até o fim da lista. Nas abas `3_resultado` e `4_resumo`, arraste as fórmulas até o mesmo número de linhas.
+:::
+
+Dois cuidados antes de enviar os nomes:
+
+**Espaços sobrando.** Nomes digitados à mão costumam ter espaços invisíveis no início ou no fim (`"Astronium "`). Para o Excel e para o Plantminer, `"Astronium "` e `"Astronium"` são nomes diferentes. A coluna `nome_limpo` resolve isso com a função **ARRUMAR** (em inglês, *TRIM*), que tira os espaços do início, do fim e os espaços duplos:
+
+``` text
+=ARRUMAR(B2)
+```
+
+**cf. e aff.** Esses termos indicam dúvida na identificação e **não fazem parte do nome**. Para conferir *Protium* cf. *carnosum*, enviamos *Protium carnosum*. A coluna `nome_busca` tira o cf. e o aff. com a função **SUBSTITUIR** (*SUBSTITUTE*). Para os táxons identificados só até gênero ou família, ela guarda apenas o gênero (ou a família); as indeterminadas ficam de fora.
+
+``` text
+=SE(C2="indeterminada";"";SE(C2="espécie";ARRUMAR(SUBSTITUIR(SUBSTITUIR(F2;" cf. ";" ");" aff. ";" "));F2))
+```
+
+::: {.callout-note appearance="simple"}
+O cf. e o aff. continuam registrados na coluna `status` da lista original. Na lista final do trabalho, eles voltam para o nome (por exemplo, *Protium* cf. *carnosum* Swart).
+:::
+
+## 2. Confira os nomes no Plantminer
+
+1.  No Excel, selecione a coluna `nome_busca` (de G2 até G241, **sem o cabeçalho**) e copie (Ctrl+C).
+2.  Abra o [Plantminer](http://www.plantminer.com/). No menu à esquerda, deixe selecionado **Brazilian Flora 2020**.
+3.  Em **1. Name options**, deixe marcados **Replace synonyms** (trocar sinônimos pelo nome aceito) e **Correct misspelled names** (corrigir erros de grafia). Mantenha o grau de conservadorismo em **0.9**: valores menores aceitam sugestões mais distantes e podem errar.
+4.  Em **2. Life form & more**, marque **Life form**, **Occurrence**, **Establishment** e **Domain**.
+5.  Em **3. Paste your taxa**, apague os nomes de exemplo, cole a sua lista (Ctrl+V) e clique em **Process list**. Com 240 nomes, leva alguns segundos.
+6.  O resultado aparece em **4. Processed taxa**. Em **5. Download**, clique em **Semicolon-delimited** (separado por ponto e vírgula, o formato que o Excel em português abre melhor).
+
+::: {.callout-warning appearance="simple"}
+Envie os nomes **sem autor**. Com autor (*Pouteria guianensis* Aubl.), o Plantminer não encontra o nome, a menos que você marque *Remove authors*, que é bem mais lento.
+:::
+
+## 3. Traga o resultado para o Excel
+
+Se você abrir o arquivo baixado com dois cliques, os acentos podem aparecer errados (`Ãrvore` em vez de `Árvore`). Para evitar isso, importe o arquivo:
+
+1.  Na planilha modelo, vá à aba `2_plantminer` e apague o conteúdo dela.
+2.  Menu **Dados** → **Obter Dados** → **De Arquivo** → **De Texto/CSV** e escolha o arquivo baixado.
+3.  Na janela de visualização, confira: **Origem do arquivo** = *65001: Unicode (UTF-8)* e **Delimitador** = *Ponto e vírgula*.
+4.  Clique na setinha ao lado de **Carregar** → **Carregar para...** → **Tabela** em **Planilha existente**, célula `=$A$1` da aba `2_plantminer`.
+
+No LibreOffice Calc, basta abrir o arquivo e escolher *UTF-8* e *ponto e vírgula* na janela de importação; depois copie tudo e cole na célula A1 da aba `2_plantminer`.
+
+A aba `3_resultado` busca sozinha, para cada nome da lista, a linha correspondente do Plantminer (pela coluna `original.search`, que guarda o nome que você enviou). Isso é feito com **ÍNDICE** e **CORRESP** (*INDEX* e *MATCH*), que funcionam como um PROCV mais flexível: não importa em que ordem as colunas do Plantminer vieram.
+
+## 4. Leia o resultado
+
+As colunas mais importantes do Plantminer:
+
+| Coluna | O que significa |
+|----------------------|--------------------------------------------------|
+| `scientific.name` | nome aceito **com** autor |
+| `search.str` | nome aceito **sem** autor (é o que vai para a lista) |
+| `family` | família segundo a Flora e Funga (classificação atual, APG IV) |
+| `notes` | o que aconteceu com o nome (veja abaixo) |
+| `occurrence` | estados onde a espécie ocorre (BR-AM = Amazonas) |
+| `establishment` | `native` (nativa), `naturalized` (naturalizada) ou `cultivated` (cultivada) |
+| `domain` | domínios fitogeográficos (Amazônia, Cerrado, Mata Atlântica...) |
+
+: {.striped}
+
+E o significado das **notas**:
+
+| Nota | O que aconteceu | O que fazer |
+|-----------------|------------------------------------|------------------------------------|
+| *(vazia)* | o nome está correto e é aceito | nada |
+| `was misspelled` | o nome estava escrito errado e foi corrigido | conferir se a correção faz sentido |
+| `replaced synonym` | o nome é sinônimo e foi trocado pelo aceito | usar o nome aceito |
+| `was misspelled` e `replaced synonym` juntas | as duas coisas | usar o nome aceito |
+| `not found` | o nome não foi encontrado | **resolver na Flora e Funga** (etapa 5) |
+| `check ...` | há mais de um nome aceito possível, ou o status não está definido | **resolver na Flora e Funga** |
+
+: {.striped}
+
+A coluna `situação` da aba `3_resultado` junta tudo isso numa frase e pinta de **vermelho** os casos que precisam ir para a Flora e Funga e de **amarelo** os que mudaram ou merecem atenção. Use o **filtro** do cabeçalho para ver um caso de cada vez.
+
+::: {.callout-tip appearance="simple"}
+## Exemplos desta lista (conferidos em 13/10/2026)
+
+-   **Grafia corrigida:** *Eperua grabriflora* → *Eperua glabriflora*; *Lecythis graciena* → *Lecythis gracieana*.
+-   **Sinônimo substituído:** *Licania heteromorpha* → *Hymenopus heteromorphus*; *Tetragastris altissima* → *Protium altissimum*; *Cariniana decandra* → *Allantoma decandra*.
+-   **As duas coisas:** *Licaria cannela* → *Licaria crassifolia*.
+-   **Não encontrados:** seis nomes de espécie, entre eles *Aniba roseaodora* e *Ocotea cajumari*. Esses são com você na etapa 5.
+:::
+
+## 5. Resolva os problemas na Flora e Funga do Brasil
+
+Os casos em vermelho e amarelo da coluna `situação` precisam de uma olhada na [consulta pública da Flora e Funga do Brasil](https://floradobrasil.jbrj.gov.br/consulta/).
+
+**Como consultar:** preencha **Gênero** e **Espécie** (sem autor) e clique em **Consultar**. Se não aparecer nada, preencha **só o gênero**: a Flora e Funga lista todos os nomes daquele gênero, aceitos e sinônimos, e fica fácil achar um epíteto escrito de outro jeito.
+
+**O que ler na ficha do nome:**
+
+-   o **status**, logo abaixo do nome: *Nome aceito*, *Sinônimo* (e de qual nome aceito) ou *Variante ortográfica*;
+-   a **Distribuição**: *Ocorrências confirmadas* (por região e estado) e *Domínios Fitogeográficos*;
+-   a **Origem**: nativa, naturalizada ou cultivada.
+
+### Os casos mais comuns
+
+**Nome não encontrado no Plantminer.** Em geral é um erro de grafia grande demais para a correção automática, ou um nome que entrou na Flora e Funga depois de 2024. Busque só pelo gênero e procure o epíteto parecido. Exemplo: *Aniba roseaodora* não foi encontrado no Plantminer; na Flora e Funga, a busca pelo gênero *Aniba* mostra *Aniba rosaeodora* Ducke como **sinônimo (variante ortográfica)** de *Aniba rosodora* Ducke, que é o nome aceito.
+
+**O nome não ocorre no Brasil.** Se nem a busca pelo gênero mostrar o nome, ele pode ser de uma espécie que não ocorre no Brasil, ou o próprio gênero pode ter outra grafia. Confira em uma base mundial, como a [World Flora Online](https://www.worldfloraonline.org/) ou o [POWO](https://powo.science.kew.org/), e anote a base usada. Uma espécie que não ocorre no Brasil numa lista da Amazônia Central é sinal de **identificação a revisar**, não só de nome a corrigir.
+
+**Sem ocorrência no resultado.** Às vezes o Plantminer devolve o nome aceito, mas com as colunas de ocorrência vazias. Isso **não quer dizer** que a espécie não ocorre no Brasil. Exemplo: *Protium polybotryum* veio sem ocorrência no Plantminer, mas a Flora e Funga mostra ocorrências confirmadas no Amazonas e em outros estados da Região Norte.
+
+**Ocorre, mas não no Amazonas.** A coluna `ocorre no AM?` avisa quando a espécie não tem registro no Amazonas. Exemplos desta lista: *Xylopia brasiliensis* e *Sorocea guilleminiana*, registradas só fora da Amazônia. O nome está correto; o que precisa ser revisto é a **identificação**: confira o material de herbário ou consulte um especialista. Cultivadas (`cultivated`) num levantamento de floresta nativa também merecem essa conferência.
+
+### Registre a decisão
+
+Para cada linha, preencha as **colunas amarelas** da aba `3_resultado`:
+
+| Coluna | O que escrever |
+|------------------|-------------------------------------------------------|
+| `nome_final` | o nome aceito, sem autor (se o Plantminer estiver certo, copie a coluna C) |
+| `familia_final` | a família atual |
+| `fonte` | *Plantminer (Flora 2024)*, *Flora e Funga do Brasil* ou outra base |
+| `data` | a data da consulta |
+| `observação` | o que você decidiu e por quê (ex.: "variante ortográfica"; "confirmar identificação") |
+
+: {.striped}
+
+## 6. Feche a lista
+
+**Nomes repetidos.** Depois da padronização, dois nomes diferentes da lista original podem virar o mesmo. Nesta lista, *Eschweilera odora* virou *Eschweilera coriacea*, que já estava na lista, e *Mabea caudata* virou *Mabea speciosa*, que também já estava. A coluna `repetido?` marca esses casos em vermelho. Numa lista de espécies, eles viram **uma linha só**; num inventário, os indivíduos passam a ser contados juntos.
+
+**Famílias que mudaram.** Filtre `mudou de família?` = *sim* e compare as colunas A e E. Você vai ver, por exemplo, Caesalpiniaceae e Mimosaceae em Fabaceae, Cecropiaceae em Urticaceae e Bombacaceae, Sterculiaceae e Tiliaceae em Malvaceae: são mudanças do sistema de classificação (APG), não erros de quem fez a lista em 2004.
+
+**As perguntas da prática.** A aba `4_resumo` conta tudo sozinha: famílias, espécies, identificações até gênero ou família, cf. e aff. na lista original; e grafias corrigidas, sinônimos, não encontrados, mudanças de família e nomes repetidos depois da padronização.
+
+::: {.callout-important appearance="simple"}
+## Para entregar
+
+1.  A planilha preenchida, com as colunas amarelas completas para todos os nomes com problema.
+2.  Quantos nomes estavam com erro de grafia? Quantos eram sinônimos? Quantos não foram encontrados, e como você resolveu cada um?
+3.  Quantas famílias tinha a lista em 2004 e quantas tem hoje? Quais famílias deixaram de existir e para onde foram os seus gêneros?
+4.  Escolha um nome que ocorre fora do Amazonas e explique o que você faria para confirmar a identificação.
+:::
+
+## Boas práticas
+
+-   Confira os nomes **antes** de qualquer análise (riqueza, diversidade, fitossociologia).
+-   Guarde sempre a **lista original**: a padronizada fica ao lado, nunca por cima.
+-   Registre a **base e a data** da consulta: nomes mudam, e outra pessoa precisa conseguir refazer o seu trabalho.
+-   Quando as bases discordam, a decisão é **taxonômica**: consulte a literatura recente (revisões, monografias) e o especialista do grupo.
+-   Na escrita, gênero e epíteto em *itálico*; autor, cf., aff. e sp. em fonte normal (veja a [rotina em R](nomes-cientificos.qmd) para mais detalhes).
+
+## Referências
+
+-   CARVALHO, G. H.; CIANCIARUSO, M. V.; BATALHA, M. A. 2010. Plantminer: a web tool for checking and gathering plant species taxonomic information. *Environmental Modelling & Software* 25: 815-816.
+-   FLORA E FUNGA DO BRASIL. Jardim Botânico do Rio de Janeiro. Disponível em: <https://floradobrasil.jbrj.gov.br/>.
+-   OLIVEIRA, A. N.; AMARAL, I. L. 2004. Florística e fitossociologia de uma floresta de vertente na Amazônia Central, Amazonas, Brasil. *Acta Amazonica* 34(1): 21-34.

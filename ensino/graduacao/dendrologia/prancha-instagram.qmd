@@ -1,0 +1,110 @@
+---
+title: "Prancha dendrológica para o Instagram"
+description: "Como transformar o roteiro de descrição de uma árvore do campus em um post para o feed do @ledt_ufam, usando o modelo padrão em PowerPoint."
+categories: [Dendrologia, Divulgação científica]
+---
+
+::: {.callout-note appearance="simple"}
+**Atividade:** EE1 (versão final) · **Programa:** PowerPoint · **Disciplina:** [FGD921 - Dendrologia Tropical](/ensino/graduacao/dendrologiatropical.qmd) · **Entrega:** 20/10/2026
+:::
+
+Cada árvore descrita pela turma vira **um post no feed do [@ledt_ufam](https://www.instagram.com/ledt_ufam/)**, com crédito para quem descreveu e fotografou. Vocês **não vão descrever nada novo**: é passar a limpo o [roteiro de descrição](/assets/pdf/FGD921_Roteiro_Descricao_Dendrologica.pdf){target="_blank"} que já preencheram, com as correções da professora, num formato padrão.
+
+<a href="/assets/modelos/FGD921_Modelo_Post_Prancha.pptx" download="FGD921_Modelo_Post_Prancha.pptx" class="btn btn-outline-success btn-sm"><i class="bi bi-file-earmark-slides-fill"></i> Baixar o modelo (.pptx)</a> <a href="/assets/pdf/FGD921_Roteiro_Descricao_Dendrologica.pdf" target="_blank" class="btn btn-outline-success btn-sm"><i class="bi bi-file-pdf-fill"></i> Roteiro de descrição</a>
+
+## O post: um carrossel de 4 imagens
+
+Imagens quadradas (1080 × 1080 px), uma árvore por post.
+
+::: {layout-ncol="4"}
+![1 · Capa](/assets/images/dendrologia/prancha-modelo-1.jpg){fig-alt="Modelo da capa do post"}
+
+![2 · Prancha de fotos](/assets/images/dendrologia/prancha-modelo-2.jpg){fig-alt="Modelo da prancha com seis fotos"}
+
+![3 · Árvore, tronco e casca](/assets/images/dendrologia/prancha-modelo-3.jpg){fig-alt="Modelo da ficha de árvore, tronco e casca"}
+
+![4 · Folhas e reprodução](/assets/images/dendrologia/prancha-modelo-4.jpg){fig-alt="Modelo da ficha de folhas e reprodução"}
+:::
+
+| Imagem | O que entra | De onde vem |
+|:------:|----------------------------------------|----------------------------|
+| 1 · Capa | Foto A (árvore inteira), nome popular, nome científico, autor, família, local, data da observação e créditos | Roteiro, seção 1; caderneta de campo |
+| 2 · Prancha | Fotos B a G | Roteiro, seção 7 |
+| 3 · Árvore, tronco e casca | Hábito e porte · copa e ramificação · fuste e base · ritidoma · casca viva e oxidação · cheiro e exsudato | Roteiro, seções 2 a 4 |
+| 4 · Folhas e reprodução | Folha e filotaxia · limbo · venação e indumento · estruturas acessórias · flores e frutos · para reconhecer | Roteiro, seções 5 e 6 |
+
+: {.striped}
+
+## 1. Abra o modelo
+
+Baixe o [modelo](/assets/modelos/FGD921_Modelo_Post_Prancha.pptx){download="FGD921_Modelo_Post_Prancha.pptx"}. Os 4 primeiros slides são instruções (marcados **NÃO PUBLICAR**); depois vêm dois carrosséis em branco, **Árvore 1** e **Árvore 2**, um para cada árvore do grupo.
+
+::: {.callout-important appearance="simple"}
+## Regras de ouro
+
+-   Não mova, não redimensione e não troque cores ou fontes de nenhum elemento.
+-   Substitua tudo o que está entre \[colchetes\] e apague os colchetes.
+-   Não acrescentem caracteres novos. O que não foi observado vira “não observado”.
+:::
+
+## 2. Insira as fotos
+
+Clique no ícone de imagem dentro de cada espaço e escolha a foto: o PowerPoint corta no formato certo. Para ajustar o enquadramento, use **Formato da Imagem → Cortar → Preencher** e arraste a foto. Nunca estique a imagem.
+
+| Foto | Conteúdo |
+|:----:|---------------------------------------------------------------|
+| A | Árvore inteira, da base à copa, com céu ou fundo limpo (vai na capa; de preferência na vertical) |
+| B | Tronco e base: sapopemas, raízes ou base reta |
+| C | Ritidoma de perto, sem flash |
+| D | Corte da casca: casca viva, oxidação ou exsudato |
+| E | Ramo com a filotaxia visível |
+| F | Folha inteira com escala |
+| G | Detalhe diagnóstico: flor, fruto, estípula, glândula, pulvino… |
+
+: {.striped}
+
+::: {.callout-warning appearance="simple"}
+Sem círculos, setas, letras ou textos sobre as fotos: as letras A–G já estão no modelo. Sem rostos de pessoas.
+:::
+
+## 3. Passe o roteiro para os cartões
+
+Cada cartão corresponde a itens do roteiro. Escrevam em **estilo de ficha**: termos técnicos curtos, separados por vírgula e ponto e vírgula, sem verbos.
+
+::: {layout-ncol="2"}
+::: {.callout-caution appearance="simple" icon="false"}
+## Evite
+
+“A casca externa apresentou coloração amarelada e textura escamosa, enquanto a casca viva, quando observada, apresentou coloração amarelo-creme.”
+:::
+
+::: {.callout-tip appearance="simple" icon="false"}
+## Prefira
+
+**Ritidoma:** escamoso, amarelado.\
+**Casca viva:** amarelo-creme, lisa.
+:::
+:::
+
+-   Até 4 linhas por cartão. Se não couber, cortem palavras; não diminuam a fonte.
+-   **Para reconhecer** (no roteiro, “Observações diagnósticas”): de 1 a 3 caracteres que mais ajudam a reconhecer a espécie no campo.
+-   Nome científico em itálico; autor e família sem itálico. Confiram na [Flora e Funga do Brasil](https://floradobrasil.jbrj.gov.br/) (veja a prática de [validação de nomes](/extensao/rlab/rotinas/nomes-cientificos-excel.qmd)).
+-   Caráter não observado: “não observado”. Observado e ausente: “ausente”. Nunca “presente/ausente”.
+-   Unidades com espaço e vírgula decimal: 7,5 m; 58 cm; 4 mm.
+-   Créditos: Sobrenome, I.; em ordem alfabética.
+
+## 4. Exporte e entregue
+
+1.  Apaguem os 4 slides de instrução.
+2.  Salvem o arquivo como `Grupo[nº]_[NomePopular1]_[NomePopular2].pptx` (ex.: `Grupo1_Andiroba_Jatoba.pptx`).
+3.  Exportem as imagens em PNG: **Arquivo → Exportar → Alterar tipo de arquivo → PNG → Todos os slides** (Windows) ou **Arquivo → Exportar → PNG**, largura 1080 px (Mac).
+4.  Confiram se cada imagem tem 1080 × 1080 px e renomeiem: `Andiroba_1.png` … `Andiroba_4.png`.
+5.  Entreguem o `.pptx` e os PNGs, numa única pasta compactada, até **20/10/2026**.
+
+::: {.callout-tip appearance="simple"}
+## Checklist antes de enviar
+
+-   Nenhum \[colchete\] sobrando e nenhum texto passando do cartão.
+-   Sete fotos nos lugares certos (A–G), sem marcações.
+-   Correções da professora incorporadas; nome científico conferido.
+:::

@@ -6,12 +6,12 @@ order: 9
 ---
 
 ::: {.callout-note appearance="simple"}
-**Nível:** iniciante/intermediário · **Pacotes:** R básico; TNRS e flora (validação online) · **Disciplina:** [FGD921 - Dendrologia Tropical](/ensino/graduacao/dendrologiatropical.qmd) · [Baixar script](../scripts/nomes-cientificos.R){download="nomes-cientificos.R"} · [Baixar a lista de espécies](../dados/especies_oliveira_amaral2004.csv){download="especies_oliveira_amaral2004.csv"}
+**Nível:** iniciante/intermediário · **Pacotes:** R básico; TNRS e flora (validação online) · **Disciplina:** [FGD921 - Dendrologia Tropical](/ensino/graduacao/dendrologiatropical.qmd) · [Baixar script](../scripts/nomes-cientificos.R){download="nomes-cientificos.R"} · [Baixar a lista de espécies](../dados/especies_oliveira_amaral2004.csv){download="especies_oliveira_amaral2004.csv"} · [Versão no Excel (Plantminer + Flora e Funga)](nomes-cientificos-excel.qmd)
 :::
 
 Listas de espécies de inventários florestais costumam ter erros de grafia, nomes desatualizados (sinônimos), famílias de sistemas de classificação antigos e identificações incompletas (*sp.*, *cf.*, *aff.*). Antes de qualquer análise, é preciso **padronizar e validar** esses nomes.
 
-Esta rotina faz em R o mesmo que a prática da aula faz com o [Plant Miner](http://www.plantminer.com/) e o [Global Names Verifier](https://verifier.globalnames.org/): **organizar a lista → contar → validar em bases de referência → comparar com a lista original**.
+Esta rotina faz em R o mesmo que a prática da aula faz com o [Plantminer](http://www.plantminer.com/) e a [Flora e Funga do Brasil](https://floradobrasil.jbrj.gov.br/consulta/): **organizar a lista → contar → validar em bases de referência → comparar com a lista original**. Prefere não programar? Siga a [versão no Excel](nomes-cientificos-excel.qmd).
 
 ## 1. Os dados
 

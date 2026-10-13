@@ -41,7 +41,7 @@ categories: [Graduação, Engenharia Florestal]
 
 ## Aulas práticas
 
-As aulas práticas acontecem no campus da UFAM e no herbário. Os alunos aplicam o roteiro de campo padronizado para descrever caracteres dendrológicos das árvores do campus. Esses dados vão compor o **e-book da flórula do campus da UFAM**.
+As aulas práticas acontecem no campus da UFAM e no herbário. Os alunos aplicam o [roteiro de descrição padronizado](/assets/pdf/FGD921_Roteiro_Descricao_Dendrologica.pdf){target="_blank"} para descrever caracteres dendrológicos das árvores do campus. Esses dados vão compor o **e-book da flórula do campus da UFAM**.
 
 ::: {.callout-tip collapse="true"}
 ## O que levar para o campo
@@ -52,58 +52,22 @@ As aulas práticas acontecem no campus da UFAM e no herbário. Os alunos aplicam
 -   Roupa e calçado adequados, repelente e água
 :::
 
-## Cronograma 2026.2
+## Roteiros das práticas
 
-Aulas às terças-feiras, das 8h às 12h (FCA01 e Laboratório de Ecologia e Dendrologia Tropical). T = teórica; P = prática.
+Tutoriais passo a passo usados nas aulas práticas, com dados de exemplo para baixar.
 
-| Data | Conteúdo | Tipo |
-|-------|------------------------------------------------------------|------|
-| 11/08 | Apresentação da disciplina e do plano de ensino. Introdução à Dendrologia Tropical | T |
-| 11/08 | Caminhada de reconhecimento no campus: caracteres dendrológicos | P |
-| 18/08 | Morfologia e descrição dendrológica | T |
-| 18/08 | Descrição morfológica de material botânico | P |
-| 25/08 | Chaves de identificação de espécies florestais | T |
-| 25/08 | **EE1** – Uso de chaves de identificação botânica | P |
-| 01/09 | Coleta e preparo de material para coleções (herbário, carpotecas, xilotecas) | T |
-| 01/09 | Coleta e preparo de espécimes botânicos no campus | P |
-| 08/09 | Nomenclatura vegetal | T |
-| 08/09 | Interpretação e validação de nomes científicos ([rotina no R Lab](/extensao/rlab/rotinas/nomes-cientificos.qmd)) | P |
-| 15/09 | Palestras: Espectroscopia NIR (Dra. Flávia Durgante, INPA) e aplicativos de identificação por imagem (Ma. Gabrielly Guabiraba, JBRJ) | T |
-| 15/09 | A importância da identificação nos inventários florestais: estudos de caso | T |
-| 22/09 | Visita técnica ao Herbário INPA | P |
-| 29/09 | Biologia reprodutiva das árvores | T |
-| 29/09 | Oficina de síndromes de polinização e dispersão (Dra. Samyra Ramos, INPA) | P |
-| 06/10 | Grupos ecológicos de árvores | T |
-| 06/10 | Classificação ecológica de espécies arbóreas em trilhas da UFAM | P |
-| 20/10 | Fenologia de espécies florestais | T |
-| 20/10 | **EE2** – Calendários fenológicos com registros do speciesLink ([rotina no R Lab](/extensao/rlab/rotinas/fenologia-specieslink.qmd)) | P |
-| 27/10 | Levantamentos dendrológicos | T |
-| 27/10 | **EE3** – Levantamento dendrológico em campo | P |
-| 03/11 | Implantação de um arboreto | T |
-| 03/11 | Planejamento de um arboreto didático | P |
-| 10/11 | Espécies importantes e suas características (parte 1) | T |
-| 10/11 | Desafios: desvendando enigmas botânicos (parte 1) | P |
-| 17/11 | Espécies importantes e suas características (parte 2, com Dr. Mike Hopkins, INPA) | T |
-| 17/11 | Desafios: desvendando enigmas botânicos (parte 2) | P |
-| 24/11 | **EE4** – Seminário: ficha técnica de espécie arbórea do campus | T |
-| 01/12 | **EE5** – Avaliação oral (sabatina) de identificação botânica | P |
-| 15/12 | Prova final | – |
-
-: {.striped .hover}
-
-## Avaliação
-
-| Atividade | Formato | Data | Valor |
-|------------------------------------------|------------|-------|-------|
-| **EE1** – Identificação com chaves botânicas | Individual | 25/08 | 10 |
-| **EE2** – Calendários fenológicos (speciesLink) | Equipe | 20/10 | 10 |
-| **EE3** – Levantamento dendrológico no campus | Equipe | 27/10 | 10 |
-| **EE4** – Seminário: ficha técnica de espécie | Equipe | 24/11 | 10 |
-| **EE5** – Sabatina de identificação botânica | Individual | 01/12 | 10 |
+| Prática | Excel / on-line | R |
+|------------------------------------------|---------------------|---------------------|
+| Interpretação e validação de nomes científicos | [Plantminer + Flora e Funga](/extensao/rlab/rotinas/nomes-cientificos-excel.qmd) | [Rotina em R](/extensao/rlab/rotinas/nomes-cientificos.qmd) |
+| Calendários fenológicos com registros do speciesLink | – | [Rotina em R](/extensao/rlab/rotinas/fenologia-specieslink.qmd) |
 
 : {.striped}
 
-Quem obtiver **média dos exercícios escolares (MEE)** ≥ 8,0 e frequência mínima de 75% está aprovado e dispensado da prova final (Resolução nº 023/2017 – CONSEPE). Os demais fazem a **prova final** (15/12), que abrange todo o conteúdo.
+## Prancha dendrológica para o Instagram
+
+Na versão final do EE1, cada árvore descrita pela turma vira um post no feed do [@ledt_ufam](https://www.instagram.com/ledt_ufam/), com crédito para quem descreveu e fotografou. Os grupos passam a limpo o roteiro de descrição num modelo padrão em PowerPoint.
+
+<a href="dendrologia/prancha-instagram.qmd" class="btn btn-outline-success btn-sm"><i class="bi bi-instagram"></i> Instruções da prancha</a> <a href="/assets/modelos/FGD921_Modelo_Post_Prancha.pptx" download="FGD921_Modelo_Post_Prancha.pptx" class="btn btn-outline-success btn-sm"><i class="bi bi-file-earmark-slides-fill"></i> Baixar o modelo (.pptx)</a> <a href="/assets/pdf/FGD921_Roteiro_Descricao_Dendrologica.pdf" target="_blank" class="btn btn-outline-success btn-sm"><i class="bi bi-file-pdf-fill"></i> Roteiro de descrição</a>
 
 ## Bibliografia
 

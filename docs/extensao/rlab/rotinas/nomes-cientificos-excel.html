@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="LEDT/UFAM">
+<meta name="description" content="A mesma validação de nomes científicos, sem programar: lista no Excel, conferência no Plantminer e resolução dos problemas na Flora e Funga do Brasil.">
+
+<title>Padronização de nomes no Excel (Plantminer + Flora e Funga) – LEDT</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../assets/images/logos/favicon.ico" rel="icon">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../../styles.css">
+<meta property="og:title" content="Padronização de nomes no Excel (Plantminer + Flora e Funga) – LEDT">
+<meta property="og:description" content="A mesma validação de nomes científicos, sem programar: lista no Excel, conferência no Plantminer e resolução dos problemas na Flora e Funga do Brasil.">
+<meta property="og:image" content="https://ledtufam.github.io/extensao/rlab/rotinas/assets/images/logos/logo_horizontal.png">
+<meta property="og:site_name" content="LEDT">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../assets/images/logos/logo_simples.png" alt="LEDT – Laboratório de Ecologia e Dendrologia Tropical" class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Procurar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Alternar de navegação" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html"> 
+<span class="menu-text">Início</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../pessoas.html"> 
+<span class="menu-text">Pessoas</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ensino" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Ensino</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-ensino">    
+        <li>
+    <a class="dropdown-item" href="../../../ensino/graduacao/disciplinas.html">
+ <span class="dropdown-text">Graduação</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../ensino/posgraduacao/disciplinas.html">
+ <span class="dropdown-text">Pós-graduação</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-pesquisa" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Pesquisa</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-pesquisa">    
+        <li>
+    <a class="dropdown-item" href="../../../pesquisa.html">
+ <span class="dropdown-text">Projetos e parcerias</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../publicacoes.html">
+ <span class="dropdown-text">Publicações</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-extensão" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Extensão</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-extensão">    
+        <li>
+    <a class="dropdown-item" href="../../../extensao.html">
+ <span class="dropdown-text">Projetos de extensão</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../extensao/rlab/index.html">
+ <span class="dropdown-text">R Lab</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../divulgacaocientifica.html">
+ <span class="dropdown-text">Divulgação científica</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../selecoes.html"> 
+<span class="menu-text">Seleções</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-sobre" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Sobre</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-sobre">    
+        <li>
+    <a class="dropdown-item" href="../../../sobre.html">
+ <span class="dropdown-text">O LEDT</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../identidade-visual.html">
+ <span class="dropdown-text">Identidade visual</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../contato.html"> 
+<span class="menu-text">Contato</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-bi-translate" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-translate" role="img" aria-label="Idioma">
+</i> 
+ <span class="menu-text"></span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-bi-translate">    
+        <li>
+    <a class="dropdown-item" href="https://ledtufam.github.io/">
+ <span class="dropdown-text">Português</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://ledtufam.github.io/en/">
+ <span class="dropdown-text">English</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://ledtufam.github.io/es/">
+ <span class="dropdown-text">Español</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/ledtufam"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.instagram.com/ledt_ufam/"> <i class="bi bi-instagram" role="img" aria-label="Instagram">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.youtube.com/@ledt_ufam"> <i class="bi bi-youtube" role="img" aria-label="YouTube">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo escuro"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Nesta página</h2>
+   
+  <ul>
+  <li><a href="#o-fluxo" id="toc-o-fluxo" class="nav-link active" data-scroll-target="#o-fluxo">O fluxo</a></li>
+  <li><a href="#prepare-a-lista-no-excel" id="toc-prepare-a-lista-no-excel" class="nav-link" data-scroll-target="#prepare-a-lista-no-excel">1. Prepare a lista no Excel</a></li>
+  <li><a href="#confira-os-nomes-no-plantminer" id="toc-confira-os-nomes-no-plantminer" class="nav-link" data-scroll-target="#confira-os-nomes-no-plantminer">2. Confira os nomes no Plantminer</a></li>
+  <li><a href="#traga-o-resultado-para-o-excel" id="toc-traga-o-resultado-para-o-excel" class="nav-link" data-scroll-target="#traga-o-resultado-para-o-excel">3. Traga o resultado para o Excel</a></li>
+  <li><a href="#leia-o-resultado" id="toc-leia-o-resultado" class="nav-link" data-scroll-target="#leia-o-resultado">4. Leia o resultado</a></li>
+  <li><a href="#resolva-os-problemas-na-flora-e-funga-do-brasil" id="toc-resolva-os-problemas-na-flora-e-funga-do-brasil" class="nav-link" data-scroll-target="#resolva-os-problemas-na-flora-e-funga-do-brasil">5. Resolva os problemas na Flora e Funga do Brasil</a>
+  <ul class="collapse">
+  <li><a href="#os-casos-mais-comuns" id="toc-os-casos-mais-comuns" class="nav-link" data-scroll-target="#os-casos-mais-comuns">Os casos mais comuns</a></li>
+  <li><a href="#registre-a-decisão" id="toc-registre-a-decisão" class="nav-link" data-scroll-target="#registre-a-decisão">Registre a decisão</a></li>
+  </ul></li>
+  <li><a href="#feche-a-lista" id="toc-feche-a-lista" class="nav-link" data-scroll-target="#feche-a-lista">6. Feche a lista</a></li>
+  <li><a href="#boas-práticas" id="toc-boas-práticas" class="nav-link" data-scroll-target="#boas-práticas">Boas práticas</a></li>
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências">Referências</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Padronização de nomes no Excel (Plantminer + Flora e Funga)</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Taxonomia</div>
+    <div class="quarto-category">Dendrologia</div>
+    <div class="quarto-category">Excel</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    A mesma validação de nomes científicos, sem programar: lista no Excel, conferência no Plantminer e resolução dos problemas na Flora e Funga do Brasil.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor</div>
+    <div class="quarto-title-meta-contents">
+             <p>LEDT/UFAM </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Nível:</strong> iniciante · <strong>Programas:</strong> Excel (ou LibreOffice Calc) e navegador · <strong>Disciplina:</strong> <a href="../../../ensino/graduacao/dendrologiatropical.html">FGD921 - Dendrologia Tropical</a> · <a href="../dados/nomes_cientificos_plantminer.xlsx" download="nomes_cientificos_plantminer.xlsx">Baixar a planilha modelo</a> · <a href="../../../extensao/rlab/rotinas/nomes-cientificos.html">Versão em R desta rotina</a></p>
+</div>
+</div>
+</div>
+<p>Este tutorial faz, no Excel, o mesmo que a <a href="../../../extensao/rlab/rotinas/nomes-cientificos.html">rotina em R</a>: <strong>organizar a lista → conferir os nomes numa base de referência → resolver os problemas → fechar a lista padronizada</strong>. Usamos duas ferramentas on-line e gratuitas:</p>
+<ul>
+<li><a href="http://www.plantminer.com/"><strong>Plantminer</strong></a>: confere uma lista inteira de uma vez na base da Flora e Funga do Brasil, corrige erros de grafia e troca sinônimos pelo nome aceito;</li>
+<li><a href="https://floradobrasil.jbrj.gov.br/consulta/"><strong>Flora e Funga do Brasil</strong></a>: a referência oficial para a flora brasileira. É nela que resolvemos, um a um, os nomes que o Plantminer não conseguiu resolver.</li>
+</ul>
+<div class="callout callout-style-simple callout-important">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>O Plantminer trabalha com uma <strong>cópia</strong> da Flora e Funga do Brasil (atualizada em 17/01/2024). Ele é ótimo para a triagem, mas a <strong>palavra final é da Flora e Funga on-line</strong>, que é atualizada continuamente.</p>
+</div>
+</div>
+</div>
+<section id="o-fluxo" class="level2">
+<h2 class="anchored" data-anchor-id="o-fluxo">O fluxo</h2>
+<table class="table-striped caption-top table">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 26%">
+<col style="width: 64%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Etapa</th>
+<th>Onde</th>
+<th>O que sai</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td>Excel</td>
+<td>lista limpa, só com o que pode ser conferido</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td>Plantminer</td>
+<td>um arquivo com o nome atual de cada táxon e uma nota sobre o que mudou</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td>Excel</td>
+<td>o resultado do Plantminer ao lado da lista original</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td>Excel</td>
+<td>cada nome classificado: OK, grafia corrigida, sinônimo, não encontrado…</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td>Flora e Funga</td>
+<td>a decisão para cada nome com problema</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">6</td>
+<td>Excel</td>
+<td>a lista padronizada e as respostas da prática</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="prepare-a-lista-no-excel" class="level2">
+<h2 class="anchored" data-anchor-id="prepare-a-lista-no-excel">1. Prepare a lista no Excel</h2>
+<p>Abra a <a href="../dados/nomes_cientificos_plantminer.xlsx">planilha modelo</a>. Ela já traz a lista de <strong>240 táxons</strong> de Oliveira &amp; Amaral (2004), adaptada para a prática (a mesma da rotina em R), na aba <code>1_lista</code>. As colunas verdes são fórmulas: não apague.</p>
+<div class="callout callout-style-simple callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Vai usar a sua própria lista?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Cole os seus dados nas colunas A a E da aba <code>1_lista</code> (família, nome, rank, status, hábito) e arraste as fórmulas das colunas F e G até o fim da lista. Nas abas <code>3_resultado</code> e <code>4_resumo</code>, arraste as fórmulas até o mesmo número de linhas.</p>
+</div>
+</div>
+<p>Dois cuidados antes de enviar os nomes:</p>
+<p><strong>Espaços sobrando.</strong> Nomes digitados à mão costumam ter espaços invisíveis no início ou no fim (<code>"Astronium "</code>). Para o Excel e para o Plantminer, <code>"Astronium "</code> e <code>"Astronium"</code> são nomes diferentes. A coluna <code>nome_limpo</code> resolve isso com a função <strong>ARRUMAR</strong> (em inglês, <em>TRIM</em>), que tira os espaços do início, do fim e os espaços duplos:</p>
+<pre class="text"><code>=ARRUMAR(B2)</code></pre>
+<p><strong>cf.&nbsp;e aff.</strong> Esses termos indicam dúvida na identificação e <strong>não fazem parte do nome</strong>. Para conferir <em>Protium</em> cf.&nbsp;<em>carnosum</em>, enviamos <em>Protium carnosum</em>. A coluna <code>nome_busca</code> tira o cf.&nbsp;e o aff. com a função <strong>SUBSTITUIR</strong> (<em>SUBSTITUTE</em>). Para os táxons identificados só até gênero ou família, ela guarda apenas o gênero (ou a família); as indeterminadas ficam de fora.</p>
+<pre class="text"><code>=SE(C2="indeterminada";"";SE(C2="espécie";ARRUMAR(SUBSTITUIR(SUBSTITUIR(F2;" cf. ";" ");" aff. ";" "));F2))</code></pre>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>O cf.&nbsp;e o aff. continuam registrados na coluna <code>status</code> da lista original. Na lista final do trabalho, eles voltam para o nome (por exemplo, <em>Protium</em> cf.&nbsp;<em>carnosum</em> Swart).</p>
+</div>
+</div>
+</div>
+</section>
+<section id="confira-os-nomes-no-plantminer" class="level2">
+<h2 class="anchored" data-anchor-id="confira-os-nomes-no-plantminer">2. Confira os nomes no Plantminer</h2>
+<ol type="1">
+<li>No Excel, selecione a coluna <code>nome_busca</code> (de G2 até G241, <strong>sem o cabeçalho</strong>) e copie (Ctrl+C).</li>
+<li>Abra o <a href="http://www.plantminer.com/">Plantminer</a>. No menu à esquerda, deixe selecionado <strong>Brazilian Flora 2020</strong>.</li>
+<li>Em <strong>1. Name options</strong>, deixe marcados <strong>Replace synonyms</strong> (trocar sinônimos pelo nome aceito) e <strong>Correct misspelled names</strong> (corrigir erros de grafia). Mantenha o grau de conservadorismo em <strong>0.9</strong>: valores menores aceitam sugestões mais distantes e podem errar.</li>
+<li>Em <strong>2. Life form &amp; more</strong>, marque <strong>Life form</strong>, <strong>Occurrence</strong>, <strong>Establishment</strong> e <strong>Domain</strong>.</li>
+<li>Em <strong>3. Paste your taxa</strong>, apague os nomes de exemplo, cole a sua lista (Ctrl+V) e clique em <strong>Process list</strong>. Com 240 nomes, leva alguns segundos.</li>
+<li>O resultado aparece em <strong>4. Processed taxa</strong>. Em <strong>5. Download</strong>, clique em <strong>Semicolon-delimited</strong> (separado por ponto e vírgula, o formato que o Excel em português abre melhor).</li>
+</ol>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Envie os nomes <strong>sem autor</strong>. Com autor (<em>Pouteria guianensis</em> Aubl.), o Plantminer não encontra o nome, a menos que você marque <em>Remove authors</em>, que é bem mais lento.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="traga-o-resultado-para-o-excel" class="level2">
+<h2 class="anchored" data-anchor-id="traga-o-resultado-para-o-excel">3. Traga o resultado para o Excel</h2>
+<p>Se você abrir o arquivo baixado com dois cliques, os acentos podem aparecer errados (<code>Ãrvore</code> em vez de <code>Árvore</code>). Para evitar isso, importe o arquivo:</p>
+<ol type="1">
+<li>Na planilha modelo, vá à aba <code>2_plantminer</code> e apague o conteúdo dela.</li>
+<li>Menu <strong>Dados</strong> → <strong>Obter Dados</strong> → <strong>De Arquivo</strong> → <strong>De Texto/CSV</strong> e escolha o arquivo baixado.</li>
+<li>Na janela de visualização, confira: <strong>Origem do arquivo</strong> = <em>65001: Unicode (UTF-8)</em> e <strong>Delimitador</strong> = <em>Ponto e vírgula</em>.</li>
+<li>Clique na setinha ao lado de <strong>Carregar</strong> → <strong>Carregar para…</strong> → <strong>Tabela</strong> em <strong>Planilha existente</strong>, célula <code>=$A$1</code> da aba <code>2_plantminer</code>.</li>
+</ol>
+<p>No LibreOffice Calc, basta abrir o arquivo e escolher <em>UTF-8</em> e <em>ponto e vírgula</em> na janela de importação; depois copie tudo e cole na célula A1 da aba <code>2_plantminer</code>.</p>
+<p>A aba <code>3_resultado</code> busca sozinha, para cada nome da lista, a linha correspondente do Plantminer (pela coluna <code>original.search</code>, que guarda o nome que você enviou). Isso é feito com <strong>ÍNDICE</strong> e <strong>CORRESP</strong> (<em>INDEX</em> e <em>MATCH</em>), que funcionam como um PROCV mais flexível: não importa em que ordem as colunas do Plantminer vieram.</p>
+</section>
+<section id="leia-o-resultado" class="level2">
+<h2 class="anchored" data-anchor-id="leia-o-resultado">4. Leia o resultado</h2>
+<p>As colunas mais importantes do Plantminer:</p>
+<table class="table-striped caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 69%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Coluna</th>
+<th>O que significa</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>scientific.name</code></td>
+<td>nome aceito <strong>com</strong> autor</td>
+</tr>
+<tr class="even">
+<td><code>search.str</code></td>
+<td>nome aceito <strong>sem</strong> autor (é o que vai para a lista)</td>
+</tr>
+<tr class="odd">
+<td><code>family</code></td>
+<td>família segundo a Flora e Funga (classificação atual, APG IV)</td>
+</tr>
+<tr class="even">
+<td><code>notes</code></td>
+<td>o que aconteceu com o nome (veja abaixo)</td>
+</tr>
+<tr class="odd">
+<td><code>occurrence</code></td>
+<td>estados onde a espécie ocorre (BR-AM = Amazonas)</td>
+</tr>
+<tr class="even">
+<td><code>establishment</code></td>
+<td><code>native</code> (nativa), <code>naturalized</code> (naturalizada) ou <code>cultivated</code> (cultivada)</td>
+</tr>
+<tr class="odd">
+<td><code>domain</code></td>
+<td>domínios fitogeográficos (Amazônia, Cerrado, Mata Atlântica…)</td>
+</tr>
+</tbody>
+</table>
+<p>E o significado das <strong>notas</strong>:</p>
+<table class="table-striped caption-top table">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 40%">
+<col style="width: 40%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Nota</th>
+<th>O que aconteceu</th>
+<th>O que fazer</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><em>(vazia)</em></td>
+<td>o nome está correto e é aceito</td>
+<td>nada</td>
+</tr>
+<tr class="even">
+<td><code>was misspelled</code></td>
+<td>o nome estava escrito errado e foi corrigido</td>
+<td>conferir se a correção faz sentido</td>
+</tr>
+<tr class="odd">
+<td><code>replaced synonym</code></td>
+<td>o nome é sinônimo e foi trocado pelo aceito</td>
+<td>usar o nome aceito</td>
+</tr>
+<tr class="even">
+<td><code>was misspelled</code> e <code>replaced synonym</code> juntas</td>
+<td>as duas coisas</td>
+<td>usar o nome aceito</td>
+</tr>
+<tr class="odd">
+<td><code>not found</code></td>
+<td>o nome não foi encontrado</td>
+<td><strong>resolver na Flora e Funga</strong> (etapa 5)</td>
+</tr>
+<tr class="even">
+<td><code>check ...</code></td>
+<td>há mais de um nome aceito possível, ou o status não está definido</td>
+<td><strong>resolver na Flora e Funga</strong></td>
+</tr>
+</tbody>
+</table>
+<p>A coluna <code>situação</code> da aba <code>3_resultado</code> junta tudo isso numa frase e pinta de <strong>vermelho</strong> os casos que precisam ir para a Flora e Funga e de <strong>amarelo</strong> os que mudaram ou merecem atenção. Use o <strong>filtro</strong> do cabeçalho para ver um caso de cada vez.</p>
+<div class="callout callout-style-simple callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exemplos desta lista (conferidos em 13/10/2026)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Grafia corrigida:</strong> <em>Eperua grabriflora</em> → <em>Eperua glabriflora</em>; <em>Lecythis graciena</em> → <em>Lecythis gracieana</em>.</li>
+<li><strong>Sinônimo substituído:</strong> <em>Licania heteromorpha</em> → <em>Hymenopus heteromorphus</em>; <em>Tetragastris altissima</em> → <em>Protium altissimum</em>; <em>Cariniana decandra</em> → <em>Allantoma decandra</em>.</li>
+<li><strong>As duas coisas:</strong> <em>Licaria cannela</em> → <em>Licaria crassifolia</em>.</li>
+<li><strong>Não encontrados:</strong> seis nomes de espécie, entre eles <em>Aniba roseaodora</em> e <em>Ocotea cajumari</em>. Esses são com você na etapa 5.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="resolva-os-problemas-na-flora-e-funga-do-brasil" class="level2">
+<h2 class="anchored" data-anchor-id="resolva-os-problemas-na-flora-e-funga-do-brasil">5. Resolva os problemas na Flora e Funga do Brasil</h2>
+<p>Os casos em vermelho e amarelo da coluna <code>situação</code> precisam de uma olhada na <a href="https://floradobrasil.jbrj.gov.br/consulta/">consulta pública da Flora e Funga do Brasil</a>.</p>
+<p><strong>Como consultar:</strong> preencha <strong>Gênero</strong> e <strong>Espécie</strong> (sem autor) e clique em <strong>Consultar</strong>. Se não aparecer nada, preencha <strong>só o gênero</strong>: a Flora e Funga lista todos os nomes daquele gênero, aceitos e sinônimos, e fica fácil achar um epíteto escrito de outro jeito.</p>
+<p><strong>O que ler na ficha do nome:</strong></p>
+<ul>
+<li>o <strong>status</strong>, logo abaixo do nome: <em>Nome aceito</em>, <em>Sinônimo</em> (e de qual nome aceito) ou <em>Variante ortográfica</em>;</li>
+<li>a <strong>Distribuição</strong>: <em>Ocorrências confirmadas</em> (por região e estado) e <em>Domínios Fitogeográficos</em>;</li>
+<li>a <strong>Origem</strong>: nativa, naturalizada ou cultivada.</li>
+</ul>
+<section id="os-casos-mais-comuns" class="level3">
+<h3 class="anchored" data-anchor-id="os-casos-mais-comuns">Os casos mais comuns</h3>
+<p><strong>Nome não encontrado no Plantminer.</strong> Em geral é um erro de grafia grande demais para a correção automática, ou um nome que entrou na Flora e Funga depois de 2024. Busque só pelo gênero e procure o epíteto parecido. Exemplo: <em>Aniba roseaodora</em> não foi encontrado no Plantminer; na Flora e Funga, a busca pelo gênero <em>Aniba</em> mostra <em>Aniba rosaeodora</em> Ducke como <strong>sinônimo (variante ortográfica)</strong> de <em>Aniba rosodora</em> Ducke, que é o nome aceito.</p>
+<p><strong>O nome não ocorre no Brasil.</strong> Se nem a busca pelo gênero mostrar o nome, ele pode ser de uma espécie que não ocorre no Brasil, ou o próprio gênero pode ter outra grafia. Confira em uma base mundial, como a <a href="https://www.worldfloraonline.org/">World Flora Online</a> ou o <a href="https://powo.science.kew.org/">POWO</a>, e anote a base usada. Uma espécie que não ocorre no Brasil numa lista da Amazônia Central é sinal de <strong>identificação a revisar</strong>, não só de nome a corrigir.</p>
+<p><strong>Sem ocorrência no resultado.</strong> Às vezes o Plantminer devolve o nome aceito, mas com as colunas de ocorrência vazias. Isso <strong>não quer dizer</strong> que a espécie não ocorre no Brasil. Exemplo: <em>Protium polybotryum</em> veio sem ocorrência no Plantminer, mas a Flora e Funga mostra ocorrências confirmadas no Amazonas e em outros estados da Região Norte.</p>
+<p><strong>Ocorre, mas não no Amazonas.</strong> A coluna <code>ocorre no AM?</code> avisa quando a espécie não tem registro no Amazonas. Exemplos desta lista: <em>Xylopia brasiliensis</em> e <em>Sorocea guilleminiana</em>, registradas só fora da Amazônia. O nome está correto; o que precisa ser revisto é a <strong>identificação</strong>: confira o material de herbário ou consulte um especialista. Cultivadas (<code>cultivated</code>) num levantamento de floresta nativa também merecem essa conferência.</p>
+</section>
+<section id="registre-a-decisão" class="level3">
+<h3 class="anchored" data-anchor-id="registre-a-decisão">Registre a decisão</h3>
+<p>Para cada linha, preencha as <strong>colunas amarelas</strong> da aba <code>3_resultado</code>:</p>
+<table class="table-striped caption-top table">
+<colgroup>
+<col style="width: 24%">
+<col style="width: 75%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Coluna</th>
+<th>O que escrever</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>nome_final</code></td>
+<td>o nome aceito, sem autor (se o Plantminer estiver certo, copie a coluna C)</td>
+</tr>
+<tr class="even">
+<td><code>familia_final</code></td>
+<td>a família atual</td>
+</tr>
+<tr class="odd">
+<td><code>fonte</code></td>
+<td><em>Plantminer (Flora 2024)</em>, <em>Flora e Funga do Brasil</em> ou outra base</td>
+</tr>
+<tr class="even">
+<td><code>data</code></td>
+<td>a data da consulta</td>
+</tr>
+<tr class="odd">
+<td><code>observação</code></td>
+<td>o que você decidiu e por quê (ex.: “variante ortográfica”; “confirmar identificação”)</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="feche-a-lista" class="level2">
+<h2 class="anchored" data-anchor-id="feche-a-lista">6. Feche a lista</h2>
+<p><strong>Nomes repetidos.</strong> Depois da padronização, dois nomes diferentes da lista original podem virar o mesmo. Nesta lista, <em>Eschweilera odora</em> virou <em>Eschweilera coriacea</em>, que já estava na lista, e <em>Mabea caudata</em> virou <em>Mabea speciosa</em>, que também já estava. A coluna <code>repetido?</code> marca esses casos em vermelho. Numa lista de espécies, eles viram <strong>uma linha só</strong>; num inventário, os indivíduos passam a ser contados juntos.</p>
+<p><strong>Famílias que mudaram.</strong> Filtre <code>mudou de família?</code> = <em>sim</em> e compare as colunas A e E. Você vai ver, por exemplo, Caesalpiniaceae e Mimosaceae em Fabaceae, Cecropiaceae em Urticaceae e Bombacaceae, Sterculiaceae e Tiliaceae em Malvaceae: são mudanças do sistema de classificação (APG), não erros de quem fez a lista em 2004.</p>
+<p><strong>As perguntas da prática.</strong> A aba <code>4_resumo</code> conta tudo sozinha: famílias, espécies, identificações até gênero ou família, cf.&nbsp;e aff. na lista original; e grafias corrigidas, sinônimos, não encontrados, mudanças de família e nomes repetidos depois da padronização.</p>
+<div class="callout callout-style-simple callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Para entregar
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>A planilha preenchida, com as colunas amarelas completas para todos os nomes com problema.</li>
+<li>Quantos nomes estavam com erro de grafia? Quantos eram sinônimos? Quantos não foram encontrados, e como você resolveu cada um?</li>
+<li>Quantas famílias tinha a lista em 2004 e quantas tem hoje? Quais famílias deixaram de existir e para onde foram os seus gêneros?</li>
+<li>Escolha um nome que ocorre fora do Amazonas e explique o que você faria para confirmar a identificação.</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="boas-práticas" class="level2">
+<h2 class="anchored" data-anchor-id="boas-práticas">Boas práticas</h2>
+<ul>
+<li>Confira os nomes <strong>antes</strong> de qualquer análise (riqueza, diversidade, fitossociologia).</li>
+<li>Guarde sempre a <strong>lista original</strong>: a padronizada fica ao lado, nunca por cima.</li>
+<li>Registre a <strong>base e a data</strong> da consulta: nomes mudam, e outra pessoa precisa conseguir refazer o seu trabalho.</li>
+<li>Quando as bases discordam, a decisão é <strong>taxonômica</strong>: consulte a literatura recente (revisões, monografias) e o especialista do grupo.</li>
+<li>Na escrita, gênero e epíteto em <em>itálico</em>; autor, cf., aff. e sp. em fonte normal (veja a <a href="../../../extensao/rlab/rotinas/nomes-cientificos.html">rotina em R</a> para mais detalhes).</li>
+</ul>
+</section>
+<section id="referências" class="level2">
+<h2 class="anchored" data-anchor-id="referências">Referências</h2>
+<ul>
+<li>CARVALHO, G. H.; CIANCIARUSO, M. V.; BATALHA, M. A. 2010. Plantminer: a web tool for checking and gathering plant species taxonomic information. <em>Environmental Modelling &amp; Software</em> 25: 815-816.</li>
+<li>FLORA E FUNGA DO BRASIL. Jardim Botânico do Rio de Janeiro. Disponível em: <a href="https://floradobrasil.jbrj.gov.br/" class="uri">https://floradobrasil.jbrj.gov.br/</a>.</li>
+<li>OLIVEIRA, A. N.; AMARAL, I. L. 2004. Florística e fitossociologia de uma floresta de vertente na Amazônia Central, Amazonas, Brasil. <em>Acta Amazonica</em> 34(1): 21-34.</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<!-- Seletor de idioma: leva para a mesma página no outro idioma (ou para a página inicial, se ainda não houver tradução) -->
+<script>
+(function () {
+  var SITE = "https://ledtufam.github.io/";
+  var LANGS = ["en", "es"];
+  var lib = document.querySelector('script[src*="site_libs/"]');
+  if (!lib) return;
+  var root = lib.src.split("site_libs/")[0];             // raiz do site (funciona local e online)
+  var rel = location.href.split("#")[0].split("?")[0].slice(root.length);
+  var first = rel.split("/")[0];
+  var cur = LANGS.indexOf(first) >= 0 ? first : "pt";
+  var base = cur === "pt" ? rel : rel.slice(cur.length + 1);
+  if (base === "") base = "index.html";
+
+  // logo leva para a página inicial do idioma atual
+  if (cur !== "pt") {
+    document.querySelectorAll("a.navbar-brand").forEach(function (b) { b.setAttribute("href", root + cur + "/index.html"); });
+  }
+
+  document.querySelectorAll('a[href^="' + SITE + '"]').forEach(function (a) {
+    if (!a.closest(".navbar")) return;
+    var code = a.getAttribute("href").slice(SITE.length).replace(/\/$/, "") || "pt";
+    if (code !== "pt" && LANGS.indexOf(code) < 0) return;
+    var home = root + (code === "pt" ? "" : code + "/");
+    var alvo = home + base;
+    a.setAttribute("href", alvo);
+    a.setAttribute("hreflang", code);
+    if (code === cur) a.classList.add("active");
+    a.addEventListener("click", function (ev) {
+      if (location.protocol === "file:") { a.setAttribute("href", alvo); return; }
+      ev.preventDefault();
+      fetch(alvo, { method: "HEAD" })
+        .then(function (r) { location.href = r.ok ? alvo : home; })
+        .catch(function () { location.href = home; });
+    });
+  });
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiada");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiada");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/ledtufam\.github\.io");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2026 LEDT/UFAM. Todos os direitos reservados.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="https://ccvasconcelos.github.io/">
+<p>Desenvolvido por Caroline C. Vasconcelos</p>
+</a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

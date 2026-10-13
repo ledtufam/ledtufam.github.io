@@ -328,12 +328,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Nível:</strong> iniciante/intermediário · <strong>Pacotes:</strong> R básico; TNRS e flora (validação online) · <strong>Disciplina:</strong> <a href="../../../ensino/graduacao/dendrologiatropical.html">FGD921 - Dendrologia Tropical</a> · <a href="../scripts/nomes-cientificos.R" download="nomes-cientificos.R">Baixar script</a> · <a href="../dados/especies_oliveira_amaral2004.csv" download="especies_oliveira_amaral2004.csv">Baixar a lista de espécies</a></p>
+<p><strong>Nível:</strong> iniciante/intermediário · <strong>Pacotes:</strong> R básico; TNRS e flora (validação online) · <strong>Disciplina:</strong> <a href="../../../ensino/graduacao/dendrologiatropical.html">FGD921 - Dendrologia Tropical</a> · <a href="../scripts/nomes-cientificos.R" download="nomes-cientificos.R">Baixar script</a> · <a href="../dados/especies_oliveira_amaral2004.csv" download="especies_oliveira_amaral2004.csv">Baixar a lista de espécies</a> · <a href="../../../extensao/rlab/rotinas/nomes-cientificos-excel.html">Versão no Excel (Plantminer + Flora e Funga)</a></p>
 </div>
 </div>
 </div>
 <p>Listas de espécies de inventários florestais costumam ter erros de grafia, nomes desatualizados (sinônimos), famílias de sistemas de classificação antigos e identificações incompletas (<em>sp.</em>, <em>cf.</em>, <em>aff.</em>). Antes de qualquer análise, é preciso <strong>padronizar e validar</strong> esses nomes.</p>
-<p>Esta rotina faz em R o mesmo que a prática da aula faz com o <a href="http://www.plantminer.com/">Plant Miner</a> e o <a href="https://verifier.globalnames.org/">Global Names Verifier</a>: <strong>organizar a lista → contar → validar em bases de referência → comparar com a lista original</strong>.</p>
+<p>Esta rotina faz em R o mesmo que a prática da aula faz com o <a href="http://www.plantminer.com/">Plantminer</a> e a <a href="https://floradobrasil.jbrj.gov.br/consulta/">Flora e Funga do Brasil</a>: <strong>organizar a lista → contar → validar em bases de referência → comparar com a lista original</strong>. Prefere não programar? Siga a <a href="../../../extensao/rlab/rotinas/nomes-cientificos-excel.html">versão no Excel</a>.</p>
 <section id="os-dados" class="level2">
 <h2 class="anchored" data-anchor-id="os-dados">1. Os dados</h2>
 <p>Usamos a lista de <strong>240 espécies</strong> do levantamento de Oliveira &amp; Amaral (2004), numa floresta de vertente na Amazônia Central, <strong>adaptada para a prática</strong> da disciplina. As colunas são:</p>
@@ -1232,7 +1232,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","loop":false,"closeEffect":"zoom","openEffect":"zoom","descPosition":"bottom"});
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","loop":false,"descPosition":"bottom","closeEffect":"zoom","openEffect":"zoom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
