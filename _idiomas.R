@@ -43,8 +43,18 @@ for (l in idiomas) {
   message("\n==> Gerando versão '", l, "'...")
   tmp <- file.path("_idiomas", l)
   unlink(tmp, recursive = TRUE)
-  status <- system2(quarto, c("render", "--profile", l))
-  if (!identical(as.integer(status), 0L)) stop("Erro ao gerar a versão '", l, "'")
+  # No Windows, o Dropbox (ou uma pré-visualização aberta) às vezes trava a
+  # pasta .quarto por alguns segundos ("os error 32"). Tenta até 4 vezes.
+  status <- 1L
+  for (tentativa in 1:4) {
+    status <- system2(quarto, c("render", "--profile", l))
+    if (identical(as.integer(status), 0L)) break
+    message("   ... pasta .quarto em uso; nova tentativa em 15 s (", tentativa, "/4)")
+    Sys.sleep(15)
+    try(unlink(file.path(".quarto", "idx"), recursive = TRUE), silent = TRUE)
+  }
+  if (!identical(as.integer(status), 0L)) stop("Erro ao gerar a versão '", l, "'. ",
+    "Pause a sincronização do Dropbox, feche a pré-visualização (aba Background Jobs) e renderize de novo.")
 
   destino <- file.path(saida, l)
   unlink(destino, recursive = TRUE)

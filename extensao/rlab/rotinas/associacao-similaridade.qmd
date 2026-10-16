@@ -233,7 +233,7 @@ O pacote **vegan** calcula as mesmas distâncias: `vegan::vegdist(ab_parc, "jacc
 ::: {.callout-note appearance="simple"}
 ## Para o relatório (formato de artigo)
 
-Esta prática gera a **Tabela 3** (similaridade entre os caixetais) e a **Figura 3** (dendrogramas das parcelas). Escreva um parágrafo comparando a similaridade florística e a quantitativa.
+Esta prática gera a **Tabela 3** (similaridade entre os caixetais) e a **Figura 3** (dendrogramas das parcelas).
 :::
 
 ## Referências

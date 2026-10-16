@@ -47,21 +47,21 @@ Cada prática responde a uma pergunta sobre os caixetais e gera **uma tabela ou 
 
 ## Cronograma 2026.2
 
-Atualizado em 25/09/2026. T = teoria; P = prática.
+Atualizado em 15/10/2026. T = teoria; P = prática. Material: <i class="bi bi-file-earmark-pdf"></i> slides da aula e <i class="bi bi-camera-video"></i> videoaula (Google Drive, acesso restrito aos alunos matriculados); <i class="bi bi-code-slash"></i> rotina da prática no R Lab; <i class="bi bi-file-earmark-spreadsheet"></i> planilha Excel.
 
 | Data | Tipo | Tema | Atividade | Material |
-|-------|:----:|---------------------------------|:-----:|------------------------------|
+|-------|:----:|-----------------------------|:-----:|-----------------------------------|
 | 21/08 | T | Apresentação da disciplina. Introdução e importância da fitossociologia | | |
 | 28/08 | T/P | Comportamento das populações nas comunidades. Observações nas trilhas da UFAM | | |
 | 04/09 | T | Planejamento do inventário: instruções gerais | | |
 | 11/09 | P | Planejamento do inventário: elaboração | | |
 | 18/09 | P | Planejamento do inventário: seminário | EE1 | |
 | 25/09 | T | Métodos usados em levantamentos fitossociológicos | EE2 | |
-| 02/10 | P | Distribuição espacial de árvores | EE3 | [Índices de agregação](/extensao/rlab/rotinas/indices-agregacao.qmd) |
-| 09/10 | T/P | Parâmetros fitossociológicos (Excel e R) | EE4 | [Slides (PDF)](/assets/pdf/FGD320_Aula_Parametros_Fitossociologicos.pdf){target="_blank"} · [Parâmetros e estrutura](/extensao/rlab/rotinas/fitossociologia.qmd) · [Planilha Excel](/extensao/rlab/dados/parametros_fitossociologicos_caixeta.xlsx){download="parametros_fitossociologicos_caixeta.xlsx"} |
-| 16/10 | T/P | Índices de associação e similaridade | EE5 | [Associação e similaridade](/extensao/rlab/rotinas/associacao-similaridade.qmd) |
-| 23/10 | T/P | Índices de heterogeneidade de comunidades | EE6 | [Heterogeneidade](/extensao/rlab/rotinas/heterogeneidade.qmd) |
-| 30/10 | T/P | Diversidade da vegetação | EE7 | [Rarefação e diversidade beta](/extensao/rlab/rotinas/diversidade.qmd) |
+| 02/10 | P | Distribuição espacial de árvores | EE3 | <a href="/extensao/rlab/rotinas/indices-agregacao.qmd" title="Rotina: Índices de agregação"><i class="bi bi-code-slash"></i> Rotina</a> |
+| 09/10 | T/P | Parâmetros fitossociológicos (Excel e R) | EE4 | <a href="https://drive.google.com/file/d/1G9xlO-rtS6llbBjHWl23ZEd6Vw-NBklt/view?usp=drive_link" target="_blank" title="Slides da aula (Google Drive)"><i class="bi bi-file-earmark-pdf"></i> Aula</a> · <a href="/extensao/rlab/rotinas/fitossociologia.qmd" title="Rotina: Parâmetros e estrutura"><i class="bi bi-code-slash"></i> Rotina</a> · <a href="/extensao/rlab/dados/parametros_fitossociologicos_caixeta.xlsx" download="parametros_fitossociologicos_caixeta.xlsx" title="Planilha Excel"><i class="bi bi-file-earmark-spreadsheet"></i> Excel</a> |
+| 16/10 | T/P | Índices de associação e similaridade | EE5 | <a href="https://drive.google.com/file/d/1PCP1_93yCjTNdpMLM1sYVFxqHfpEQGwy/view?usp=drive_link" target="_blank" title="Slides da aula (Google Drive)"><i class="bi bi-file-earmark-pdf"></i> Aula</a> · <a href="https://drive.google.com/file/d/13TqOIrSAvrI2Blw_8igEBLrmR1ZPxjIx/view?usp=drive_link" target="_blank" title="Videoaula (Google Drive)"><i class="bi bi-camera-video"></i> Vídeo</a> · <a href="/extensao/rlab/rotinas/associacao-similaridade.qmd" title="Rotina: Associação e similaridade"><i class="bi bi-code-slash"></i> Rotina</a> |
+| 23/10 | T/P | Índices de heterogeneidade de comunidades | EE6 | <a href="/extensao/rlab/rotinas/heterogeneidade.qmd" title="Rotina: Heterogeneidade"><i class="bi bi-code-slash"></i> Rotina</a> |
+| 30/10 | T/P | Diversidade da vegetação | EE7 | <a href="/extensao/rlab/rotinas/diversidade.qmd" title="Rotina: Rarefação e diversidade beta"><i class="bi bi-code-slash"></i> Rotina</a> |
 | 06/11 | P | Oficina: elaboração do relatório (formato de artigo) | | |
 | 13/11 | P | Oficina: elaboração do relatório (formato de artigo) | | |
 | 20/11 | T | Seminário: apresentação do relatório | EE8 | |
@@ -91,6 +91,8 @@ Cada estudante entrega também o **script** que gera todas as tabelas e figuras,
 :::
 
 ## Bibliografia
+
+<a href="https://drive.google.com/drive/folders/1EPTCFcCpLk6CgUIRaCFWw7WGo0HlYJ2q?usp=drive_link" target="_blank" class="btn btn-outline-success btn-sm"><i class="bi bi-google"></i> Literatura base (Drive)</a> <small>Acesso restrito aos alunos matriculados.</small>
 
 **Básica**
 
