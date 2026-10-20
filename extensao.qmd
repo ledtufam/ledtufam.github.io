@@ -21,6 +21,18 @@ Rotinas em R comentadas e reprodutíveis para fitossociologia, espectroscopia NI
 ::: {.g-col-12 .g-col-md-6}
 ::: {.card .h-100}
 ::: card-body
+### <i class="bi bi-flower1"></i> Ferramentas: FenoTree
+
+Aplicativo on-line do LEDT que monta calendários de floração e frutificação de árvores a partir das exsicatas da rede speciesLink. Não é preciso instalar nada.
+
+[Conhecer o FenoTree](extensao/ferramentas.qmd){.btn .btn-outline-success .btn-sm} [Abrir o app](https://ledtufam.shinyapps.io/fenotree/){.btn .btn-outline-success .btn-sm target="_blank"}
+:::
+:::
+:::
+
+::: {.g-col-12 .g-col-md-6}
+::: {.card .h-100}
+::: card-body
 ### <i class="bi bi-tree"></i> Flórula do campus da UFAM
 
 Levantamento das árvores do campus da UFAM feito pelos alunos de Dendrologia Tropical, com roteiro de campo padronizado. O resultado será um **e-book** sobre a flora arbórea do campus. *(em desenvolvimento)*

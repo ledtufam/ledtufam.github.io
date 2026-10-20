@@ -36,6 +36,8 @@ website:
             text: "Outreach projects"
           - href: extensao/rlab/index.html
             text: "R Lab (PT)"
+          - href: extensao/ferramentas.html
+            text: "Tools – FenoTree (PT)"
           - href: divulgacaocientifica.html
             text: "Science communication (PT)"
       - href: en/selecoes.qmd

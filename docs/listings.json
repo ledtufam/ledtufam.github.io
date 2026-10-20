@@ -22,6 +22,12 @@
     ]
   },
   {
+    "listing": "/divulgacaocientifica.html",
+    "items": [
+      "/divulgacao/posts/2026-10-01-site-novo/index.html"
+    ]
+  },
+  {
     "listing": "/ensino/graduacao/disciplinas.html",
     "items": [
       "/ensino/graduacao/fitossociologia.html",
@@ -29,12 +35,6 @@
       "/ensino/graduacao/ecologiaflorestal.html",
       "/ensino/graduacao/sementesflorestais.html",
       "/ensino/graduacao/dendrologia/prancha-instagram.html"
-    ]
-  },
-  {
-    "listing": "/divulgacaocientifica.html",
-    "items": [
-      "/divulgacao/posts/2026-10-01-site-novo/index.html"
     ]
   }
 ]

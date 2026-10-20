@@ -1,0 +1,49 @@
+---
+title: "Ferramentas"
+description: "Aplicativos on-line abertos desenvolvidos pelo LEDT para o ensino e a pesquisa sobre árvores amazônicas."
+toc: true
+---
+
+Aplicativos on-line, abertos e gratuitos, desenvolvidos pelo LEDT para apoiar o ensino e a pesquisa sobre árvores e florestas amazônicas. Funcionam direto no navegador: **não é preciso instalar nada**.
+
+## FenoTree {#fenotree}
+
+::: grid
+::: {.g-col-12 .g-col-md-3}
+[![](/assets/images/logos/fenotree_hex.png){width=170 fig-align="center" fig-alt="Logo do FenoTree"}](https://ledtufam.shinyapps.io/fenotree/){target="_blank"}
+:::
+
+::: {.g-col-12 .g-col-md-9}
+**Calendários fenológicos a partir de exsicatas.**
+
+O FenoTree busca os registros de herbário de uma espécie na rede [speciesLink](https://specieslink.net/){target="_blank"}, incluindo os sinônimos da [Flora e Funga do Brasil](https://floradobrasil.jbrj.gov.br/){target="_blank"}, identifica flores e frutos nas anotações das etiquetas e monta o calendário de floração e frutificação da espécie.
+
+<a href="https://ledtufam.shinyapps.io/fenotree/" target="_blank" class="btn btn-success btn-sm"><i class="bi bi-box-arrow-up-right"></i> Abrir o FenoTree</a> <a href="/extensao/rlab/rotinas/fenologia-specieslink.qmd" class="btn btn-outline-success btn-sm"><i class="bi bi-mortarboard"></i> Atividade de Dendrologia</a> <a href="https://github.com/ledtufam/fenotree" target="_blank" class="btn btn-outline-success btn-sm"><i class="bi bi-github"></i> Código</a>
+:::
+:::
+
+::: {.callout-note appearance="simple" icon="false"}
+**Versão:** 1.0.0 (20/10/2026) \| **Feito em:** R (Shiny) \| **Dados:** rede speciesLink (CRIA) \| **Licença:** MIT
+:::
+
+### O que o FenoTree faz
+
+| Recurso | O que mostra |
+|---------------------|---------------------------------------------------|
+| Resumo | número de registros, com mês de coleta, com flor e com fruto |
+| Calendário | registros com flor e com fruto em cada mês, em número ou em proporção das coletas |
+| Calendário circular | mês médio de floração e de frutificação e concentração (*r*) |
+| Esforço de coleta | todas as coletas de cada mês, para separar o padrão da espécie do esforço dos coletores |
+| Mapa | onde as exsicatas foram coletadas e o que cada etiqueta registra |
+| Etiquetas | o texto de cada etiqueta e como foi classificado, para conferir a busca |
+| Downloads | figuras (PNG) e tabelas (CSV) |
+
+**Filtros de região:** todo o Brasil e exterior, bioma Amazônia, Amazônia Legal, Panamazônia ou estados escolhidos.
+
+### Cuidados na interpretação
+
+Dados de herbário não são um monitoramento fenológico: o esforço de coleta varia entre meses e regiões, os botânicos preferem coletar material fértil e a busca por palavras-chave nas etiquetas pode errar. Por isso, compare o número de registros com a **proporção** das coletas, filtre a região e confira uma amostra das etiquetas.
+
+### Como citar
+
+LEDT/UFAM. *FenoTree: calendários fenológicos a partir de exsicatas*. Versão 1.0.0. Laboratório de Ecologia e Dendrologia Tropical, Universidade Federal do Amazonas, 2026. Disponível em: <https://ledtufam.shinyapps.io/fenotree/>. Dados: rede speciesLink (CRIA).

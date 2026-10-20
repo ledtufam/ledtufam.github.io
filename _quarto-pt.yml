@@ -37,6 +37,8 @@ website:
             text: "Projetos de extensão"
           - href: extensao/rlab/index.qmd
             text: "R Lab"
+          - href: extensao/ferramentas.qmd
+            text: "Ferramentas (FenoTree)"
           - href: divulgacaocientifica.qmd
             text: "Divulgação científica"
       - href: selecoes.qmd
