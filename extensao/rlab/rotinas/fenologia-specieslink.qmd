@@ -1,195 +1,183 @@
 ---
-title: "Calendário fenológico a partir de registros de herbário (speciesLink)"
-description: "Baixar registros de uma espécie no speciesLink, identificar flores e frutos nas anotações das exsicatas e construir calendários fenológicos por mês."
+title: "Calendários fenológicos a partir de exsicatas (FenoTree)"
+description: "Atividade prática de Dendrologia Tropical: comparar o calendário de floração e frutificação de até três árvores amazônicas de importância comercial com registros de herbário do speciesLink, usando o FenoTree."
 categories: [Fenologia, Dendrologia, Herbários e biodiversidade]
 order: 10
 ---
 
 ::: {.callout-note appearance="simple"}
-**Nível:** iniciante/intermediário · **Pacotes:** jsonlite (download); o restante usa R básico · **Disciplina:** [FGD921 - Dendrologia Tropical](/ensino/graduacao/dendrologiatropical.qmd) · [Baixar script](../scripts/fenologia-specieslink.R){download="fenologia-specieslink.R"}
+**Ferramenta:** [FenoTree](https://ledtufam.shinyapps.io/fenotree/){target="_blank"} (abre no navegador, **não é preciso instalar nada**) · **Disciplina:** [Dendrologia Tropical](/ensino/graduacao/dendrologiatropical.qmd) · **Dados:** rede [speciesLink](https://specieslink.net/){target="_blank"}
 :::
 
-As exsicatas guardam, na etiqueta, **quando** a planta foi coletada e, muitas vezes, **se tinha flores ou frutos**. Juntando centenas de registros de herbários, é possível montar um **calendário fenológico**, ou seja, os meses em que a espécie floresce e frutifica. Essa informação é útil para planejar a **coleta de sementes** e entender a ecologia reprodutiva da espécie.
+::: {.callout-important}
+## Atividade prática - Dendrologia Tropical
 
-Fluxo da rotina: **baixar registros → identificar flor/fruto na etiqueta → contar por mês → calendário**.
+Esta atividade complementa a **aula de Fenologia de espécies florestais** ([slides](https://drive.google.com/file/d/1PHsgm46qUCWo0m9o6N_-97M__Nrs84Xy/view?usp=drive_link){target="_blank"}).
 
-## 1. Baixar os registros do speciesLink
-
-O [speciesLink](https://specieslink.net/) tem um serviço web aberto, mas cada consulta exige uma **chave de acesso (API key)**:
-
-1.  Crie uma conta gratuita no [speciesLink](https://specieslink.net/).
-2.  Gere sua chave em [specieslink.net/aut/profile/apikeys](https://specieslink.net/aut/profile/apikeys).
-3.  Guarde a chave no R **sem colocá-la no script** que você vai compartilhar. Por exemplo, rode uma vez `usethis::edit_r_environ()`, escreva `SPLINK_KEY=sua_chave` no arquivo, salve e reinicie o R.
-
-::: {.callout-important appearance="simple"}
-Os blocos desta seção **não são executados** no site (dependem da internet e da sua chave). A partir da seção 2 usamos dados de exemplo.
+-   **O que fazer:** escolher **até três árvores amazônicas de importância comercial** (madeireiras ou não-madeireiras), montar o calendário fenológico de cada uma no FenoTree, **comparar** e **interpretar ecologicamente**.
+-   **Entrega:** relatório em Word (.docx).
+-   **Onde entregar:** na [pasta da disciplina no Google Drive](https://drive.google.com/drive/folders/13s7SicSGeq21bN6qIVih_TpS7Ww-Rchz?usp=drive_link).
+-   **Prazo:** **21/10/2026, até 12h**.
 :::
 
-```{r}
-#| eval: false
-library(jsonlite)
+As exsicatas guardam, na etiqueta, **quando** a planta foi coletada e, muitas vezes, **se tinha flores ou frutos**. Juntando centenas de registros de herbários, dá para montar um **calendário fenológico**: os meses em que a espécie floresce e frutifica. O **FenoTree** faz isso por você: busca as exsicatas no speciesLink, procura flores e frutos nas anotações das etiquetas e monta os gráficos. Assim, você se concentra no mais importante: **comparar e interpretar**.
 
-baixar_splink <- function(especie, chave = Sys.getenv("SPLINK_KEY"), limite = 5000) {
-  url <- paste0("https://specieslink.net/ws/1.0/search?",
-                "scientificname=", URLencode(especie),
-                "&scope=p&limit=", limite,
-                "&apikey=", chave)
-  res <- fromJSON(url)
-  res$features$properties          # tabela com um registro por linha
-}
+[![](/assets/images/logos/fenotree_hex.png){width=130 fig-align="center" fig-alt="Logo do FenoTree"}](https://ledtufam.shinyapps.io/fenotree/){target="_blank"}
 
-reg <- baixar_splink("Handroanthus serratifolius")
-nrow(reg)
-names(reg)
-```
+<p style="text-align:center"><a class="btn btn-primary btn-lg" href="https://ledtufam.shinyapps.io/fenotree/" target="_blank">Abrir o FenoTree</a></p>
 
-As colunas que vamos usar são `monthCollected` (mês da coleta), `occurrenceRemarks` (anotações da etiqueta), `stateProvince` e `scientificName`.
+## Passo a passo
+
+| Passo | O que fazer | Onde |
+|:-----:|---------------------------------------------|-------------|
+| 1 | Assistir ao vídeo sobre a plataforma speciesLink | [Seção 1](#video) |
+| 2 | Escolher até três espécies | [Seção 2](#especies) |
+| 3 | Buscar cada espécie no FenoTree e baixar figuras e tabelas | [Seção 3](#fenotree) |
+| 4 | Responder às perguntas, comparando as espécies | [Seção 4](#exercicio) |
+| 5 | Montar o relatório em Word e entregar no Drive | [Seção 5](#entrega) |
+
+## 1. Conheça o speciesLink {#video}
+
+O FenoTree usa os dados da rede **speciesLink**, que reúne os registros de centenas de coleções biológicas, incluindo os principais herbários do Brasil. Antes de começar, assista ao vídeo sobre como a plataforma funciona.
+
+<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;margin-bottom:1rem">
+<iframe src="https://drive.google.com/file/d/1yNFipCTIZdCO44F_zQFxL_i81gK_4Nv_/preview" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="autoplay; fullscreen" allowfullscreen title="Vídeo: como usar a plataforma speciesLink"></iframe>
+</div>
+
+<a href="https://drive.google.com/file/d/1yNFipCTIZdCO44F_zQFxL_i81gK_4Nv_/view?usp=drive_link" target="_blank" class="btn btn-outline-success btn-sm"><i class="bi bi-camera-video"></i> Abrir o vídeo no Google Drive</a>
+
+## 2. Escolha as espécies {#especies}
+
+Escolha **de uma a três espécies** (o ideal é comparar **duas ou três**). Cada espécie precisa atender às **três condições**:
+
+| Condição | Como conferir |
+|---------------------|---------------------------------------------------|
+| **É árvore** | Na [Flora e Funga do Brasil](https://floradobrasil.jbrj.gov.br/){target="_blank"}, a forma de vida inclui "árvore". |
+| **Ocorre na Amazônia** | Na Flora e Funga do Brasil, o domínio fitogeográfico inclui "Amazônia". |
+| **Tem importância comercial** | **Madeireira** (madeira serrada, laminados, construção) ou **não-madeireira** (frutos, sementes, óleos, resinas, látex, fibras, uso medicinal). Confirme em pelo menos uma fonte. |
+
+Para a comparação ficar interessante, escolha espécies **diferentes em alguma coisa**: uma madeireira e uma não-madeireira, de grupos ecológicos diferentes (pioneira × tardia), de terra firme e de várzea ou igapó, com frutos dispersos pelo vento e por animais...
+
+Dicas:
+
+-   Use o **nome científico aceito** (gênero e epíteto). Confira a grafia na Flora e Funga do Brasil.
+-   Prefira espécies **bem coletadas**: com menos de 30 registros com flor ou fruto, o calendário fica pouco confiável (o FenoTree avisa). Se isso acontecer, troque de espécie.
+
+## 3. Use o FenoTree {#fenotree}
+
+O FenoTree busca **uma espécie por vez**. Repita os passos abaixo para cada espécie e **use a mesma região** para todas, para a comparação ser justa.
+
+1.  Abra o [FenoTree](https://ledtufam.shinyapps.io/fenotree/){target="_blank"}. No primeiro acesso do dia, ele pode levar alguns segundos para carregar.
+2.  No campo **Espécie**, escreva o nome científico.
+3.  Mantenha marcado **Incluir sinônimos (Flora e Funga do Brasil)**: assim entram também as exsicatas identificadas com nomes antigos.
+4.  Escolha **onde**. Sugestão: **Bioma Amazônia** ou **Amazônia Legal**.
+
+| Opção | O que entra |
+|---------------------|---------------------------------------------------|
+| Todo o Brasil e exterior | todas as exsicatas da espécie |
+| Bioma Amazônia | exsicatas com coordenadas dentro do bioma Amazônia |
+| Amazônia Legal | exsicatas com coordenadas dentro da Amazônia Legal |
+| Panamazônia | bioma Amazônia no Brasil + registros da Bolívia, Peru, Equador, Colômbia, Venezuela, Guiana, Suriname e Guiana Francesa |
+| Escolher estados | exsicatas dos estados escolhidos |
+
+5.  Clique em **Buscar no speciesLink** e aguarde (até 1 minuto).
+6.  Anote os números das caixas no alto (registros, com mês, com flor, com fruto), explore as abas e **baixe** as figuras (PNG) e as tabelas (CSV):
+
+| Aba | O que mostra |
+|-------------|----------------------------------------------------------|
+| Calendário | registros com flor e com fruto em cada mês, em número ou em **proporção** das coletas |
+| Circular | calendário circular, com seta no **mês médio** e concentração (*r*) |
+| Esforço de coleta | todas as coletas de cada mês, para ver se os picos acompanham só o esforço dos coletores |
+| Tabelas | resumo da espécie (mês médio, *r*) e números de cada mês |
+| Mapa | onde as exsicatas foram coletadas e o que cada etiqueta registra (clique num ponto para ver a etiqueta) |
+| Etiquetas | o texto das etiquetas e como cada uma foi classificada |
 
 ::: {.callout-tip collapse="true"}
-## Prefere baixar pelo site?
+## Como o FenoTree identifica flor e fruto?
 
-Na busca do [speciesLink](https://specieslink.net/), pesquise a espécie, use **Download** para baixar os registros e leia o arquivo no R, por exemplo com `reg <- read.delim("dados/speciesLink.txt")`. Os nomes das colunas podem mudar um pouco (por exemplo, `monthcollected` em vez de `monthCollected`). Confira com `names(reg)` e ajuste a rotina.
+As etiquetas não têm um campo padronizado de fenologia. O FenoTree procura **palavras-chave** nas anotações, em português, inglês e espanhol: *flor, fl., botão, floração, antese, flower, bud* para flor e *fruto, fr., fruit, vagem, semente, cápsula, drupa* para fruto. Antes, apaga expressões que enganariam a busca, como "sem flores", "floresta" e "flor-de-…". Um registro pode ter flor **e** fruto.
 :::
 
-## 2. Dados de exemplo
+::: {.callout-tip collapse="true"}
+## O que são o mês médio e o *r*?
 
-Para que esta página funcione sem internet, usamos **registros simulados** com a mesma estrutura do speciesLink. São 240 registros de uma espécie hipotética com floração concentrada na estação seca e frutificação logo depois, como ocorre em muitos ipês amazônicos.
-
-```{r}
-set.seed(921)
-n <- 240
-mes_fl <- sample(1:12, n, replace = TRUE, prob = c(1, 1, 1, 1, 2, 4, 9, 12, 8, 3, 1, 1))
-fen <- sample(c("flor", "fruto", "esteril", "ambos"), n, replace = TRUE, prob = c(.40, .25, .25, .10))
-mes <- ifelse(fen == "fruto", (mes_fl + 1) %% 12 + 1, mes_fl)   # frutos ~2 meses depois
-
-modelos <- list(
-  flor    = c("Árvore 15 m, flores amarelas.", "fl. amarelas", "Com flores.", "Botões e flores abertas.", "Floração intensa, sem folhas."),
-  fruto   = c("Frutos imaturos.", "fr. verdes", "Árvore com frutos maduros, deiscentes.", "Frutificando."),
-  ambos   = c("Flores e frutos.", "fl. e fr. jovens"),
-  esteril = c("Material estéril.", "Árvore 20 m, DAP 40 cm.", "", "Ramo estéril, folhas compostas.")
-)
-reg <- data.frame(
-  scientificName    = "Espécie hipotética",
-  monthCollected    = mes,
-  stateProvince     = sample(c("Amazonas", "Pará", "Acre", "Rondônia", "Mato Grosso"), n, replace = TRUE),
-  occurrenceRemarks = vapply(fen, function(f) sample(modelos[[f]], 1), "")
-)
-head(reg)
-```
-
-## 3. Identificar flor e fruto nas etiquetas
-
-As etiquetas não têm um campo padronizado de fenologia. Por isso, procuramos **palavras-chave** nas anotações. Ajuste a lista conforme o idioma e o estilo das etiquetas da sua espécie.
-
-```{r}
-txt <- tolower(reg$occurrenceRemarks)
-
-termos_flor  <- c("\\bflor", "\\bfl\\.", "\\bflower", "\\bbot[aã]o", "\\bbot[oõ]es", "\\bflora[cç][aã]o", "\\bantese")
-termos_fruto <- c("\\bfrut", "\\bfr\\.", "\\bfruit")
-
-reg$flor  <- grepl(paste(termos_flor,  collapse = "|"), txt)
-reg$fruto <- grepl(paste(termos_fruto, collapse = "|"), txt)
-
-# registros sem mês ou sem informação de fenologia não entram no calendário
-reg <- subset(reg, !is.na(monthCollected) & monthCollected %in% 1:12)
-c(total = nrow(reg), com_flor = sum(reg$flor), com_fruto = sum(reg$fruto),
-  sem_info = sum(!reg$flor & !reg$fruto))
-```
-
-::: {.callout-warning appearance="simple"}
-**Confira uma amostra à mão!** Leia algumas dezenas de etiquetas classificadas e veja se a busca por palavras acertou. Expressões como "sem flores" ou "flor-de-ipê" (nome popular) podem gerar falsos positivos.
+Como os meses formam um ciclo, a média comum não funciona: a média entre dezembro (12) e janeiro (1) daria junho! O FenoTree usa a **média circular**: cada registro vira um ângulo no círculo do ano. O **mês médio** é a direção média, e o ***r*** (de 0 a 1) mede a concentração: acima de **0,5**, a fenofase está **bem concentrada** em poucos meses; abaixo de **0,2**, praticamente não tem época definida.
 :::
 
-## 4. Contar registros por mês
+## 4. Perguntas {#exercicio}
 
-```{r}
-meses <- c("Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez")
+Responda com base na **aula de Fenologia** e nos resultados do FenoTree. Na Amazônia Central, a estação **mais seca** vai, em geral, de **junho a outubro** e a **chuvosa**, de **dezembro a maio** (Aleixo et al. 2023). **Como comparar as espécies fica a seu critério**: pode ser uma tabela, figuras lado a lado ou um calendário que você mesmo monta.
 
-calendario <- data.frame(
-  mes   = factor(meses, levels = meses),
-  flor  = tabulate(reg$monthCollected[reg$flor],  nbins = 12),
-  fruto = tabulate(reg$monthCollected[reg$fruto], nbins = 12),
-  total = tabulate(reg$monthCollected,            nbins = 12)
-)
-calendario
-```
+**Conheça as espécies**
 
-Como o número de coletas varia muito entre os meses (há mais expedições na estação seca, por exemplo), vale olhar também a **proporção** de registros férteis em cada mês:
+1.  Para cada espécie: nome científico, família, nome popular, **uso comercial** (madeireiro ou não-madeireiro; qual produto) e ambiente onde ocorre (terra firme, várzea, igapó).
 
-```{r}
-calendario$prop_flor  <- round(calendario$flor  / calendario$total, 2)
-calendario$prop_fruto <- round(calendario$fruto / calendario$total, 2)
-calendario[, c("mes", "prop_flor", "prop_fruto")]
-```
+**Os dados**
 
-Cuidado com meses com **poucos registros**: uma única exsicata com flor num mês com duas coletas já dá 50%.
+2.  Quantos registros cada espécie tem? Quantos com flor e quantos com fruto? Os dados são suficientes para confiar no calendário?
 
-## 5. Calendário fenológico
+**O calendário de cada espécie**
 
-```{r}
-#| fig-cap: "Número de registros de herbário com flores e com frutos em cada mês."
-#| fig-height: 4.5
-cores <- c(flor = "#ffce67", fruto = "#78c2ad")
-barplot(t(as.matrix(calendario[, c("flor", "fruto")])), beside = TRUE,
-        names.arg = meses, col = cores, border = NA, las = 1,
-        ylab = "Número de registros", legend.text = c("Flor", "Fruto"),
-        args.legend = list(x = "topright", bty = "n"))
-```
+3.  Em que meses cada espécie **floresce** e **frutifica**? Quais os meses de pico, o **mês médio** e o ***r***?
+4.  A floração e a frutificação caem na **estação seca** ou na **chuvosa**? As espécies seguem o padrão geral da Amazônia Central visto em aula (a maioria floresce na seca e frutifica nas chuvas) ou alguma é **exceção**?
 
-### Versão circular
+**Comparação e interpretação ecológica**
 
-O calendário circular deixa claro que dezembro e janeiro são vizinhos:
+5.  As espécies têm calendários **parecidos ou diferentes**? Em quê?
+6.  Que **fatores ecológicos** podem explicar as semelhanças e diferenças? Pense no que vimos em aula: chuva e seca, luz, pulso de inundação, polinizadores, dispersores (vento × animais) e grupo ecológico.
 
-```{r}
-#| fig-cap: "Calendário fenológico circular: o comprimento de cada barra é proporcional ao número de registros no mês."
-#| fig-width: 9
-#| fig-height: 4.8
-calendario_circular <- function(contagem, cor, titulo = "") {
-  ang <- pi / 2 - (0:11) * 2 * pi / 12            # janeiro no topo, sentido horário
-  r   <- contagem / max(contagem)
-  plot(NA, xlim = c(-1.25, 1.25), ylim = c(-1.25, 1.25), asp = 1, axes = FALSE,
-       xlab = "", ylab = "", main = titulo)
-  for (k in c(.25, .5, .75, 1)) symbols(0, 0, circles = k, inches = FALSE, add = TRUE, fg = "grey85")
-  for (i in 1:12) {
-    a <- seq(ang[i] + pi / 12, ang[i] - pi / 12, length.out = 20)
-    polygon(c(0, r[i] * cos(a), 0), c(0, r[i] * sin(a), 0), col = cor, border = "white")
-  }
-  text(1.15 * cos(ang), 1.15 * sin(ang), meses, cex = 0.8)
-}
+**Aplicação**
 
-par(mfrow = c(1, 2), mar = c(0, 0, 2, 0))
-calendario_circular(calendario$flor,  cores["flor"],  "Floração")
-calendario_circular(calendario$fruto, cores["fruto"], "Frutificação")
-```
+7.  Monte um **calendário de coleta**: em que meses você iria a campo coletar **sementes** de cada espécie? E **flores**, para identificá-las?
+8.  Como esse calendário ajuda no **uso comercial** das espécies (safra de um produto, coleta de sementes de matrizes, manejo)?
 
-## 6. Mês médio e concentração (estatística circular)
+**Limitações**
 
-Como os meses formam um ciclo, a média comum não funciona (a média entre dezembro e janeiro não é junho!). Usamos a **média circular**: cada registro vira um ângulo, e calculamos o ângulo médio e o comprimento do vetor médio (*r*), que vai de 0 (fenofase espalhada no ano todo) a 1 (todos os registros no mesmo mês).
+9.  Na aba **Esforço de coleta**, os picos acompanham só os meses com mais coletas? Cite **uma limitação** dos dados de herbário em comparação com um estudo fenológico de campo.
 
-```{r}
-media_circular <- function(m) {
-  ang <- (m - 0.5) * 2 * pi / 12
-  C <- mean(cos(ang)); S <- mean(sin(ang))
-  ang_medio <- atan2(S, C) %% (2 * pi)
-  c(mes_medio = round(ang_medio * 12 / (2 * pi) + 0.5, 1), r = round(sqrt(C^2 + S^2), 2))
-}
+## 5. Monte o relatório e entregue {#entrega}
 
-rbind(Floração     = media_circular(reg$monthCollected[reg$flor]),
-      Frutificação = media_circular(reg$monthCollected[reg$fruto]))
-```
+Um documento **Word (.docx)**, de **3 a 5 páginas**, com:
 
-Um `mes_medio` de 8,5 corresponde à segunda quinzena de agosto. Valores de *r* acima de 0,5 indicam uma fenofase bem concentrada no ano.
+1.  **Identificação:** nome(s) e matrícula(s).
+2.  **Introdução:** quais espécies e por que você as escolheu (o que esperava encontrar).
+3.  **Métodos:** fonte dos dados (speciesLink, via FenoTree), região escolhida e data da consulta.
+4.  **Resultados:** uma tabela com os números e o mês médio/*r* de cada espécie e as figuras do calendário (pelo menos uma por espécie), cada uma com legenda.
+5.  **Discussão:** respostas às perguntas 2 a 9, em texto corrido.
+6.  **Conclusão:** um parágrafo curto.
+7.  **Referências.**
 
-::: {.callout-tip}
-## Para discutir na prática
+Salve como **`NomeSobrenome_fenologia.docx`** e coloque na [pasta da disciplina no Google Drive](https://drive.google.com/drive/folders/13s7SicSGeq21bN6qIVih_TpS7Ww-Rchz?usp=drive_link) até **21/10/2026, às 12h**.
 
--   Em que meses você planejaria uma expedição para **coletar sementes** dessa espécie?
--   O padrão muda entre estados (`stateProvince`)? Repita a análise separando por região.
--   Que vieses os dados de herbário têm? Pense em quando e onde os coletores costumam ir a campo e em quais plantas eles preferem coletar.
+## Problemas comuns
+
+::: {.callout-caution collapse="true"}
+## "Nenhum registro encontrado"
+
+Confira a grafia do nome (gênero com inicial maiúscula e epíteto) e se ele é aceito na Flora e Funga do Brasil. Mantenha marcada a opção de sinônimos. Se escolheu uma região, tente "Todo o Brasil e exterior".
+:::
+
+::: {.callout-caution collapse="true"}
+## O FenoTree está demorando ou não abre
+
+No primeiro acesso, o app precisa "acordar" e pode levar alguns segundos. A busca demora mais para espécies com milhares de registros. Se der erro, recarregue a página e tente de novo.
+:::
+
+::: {.callout-caution collapse="true"}
+## Poucos registros com flor ou fruto
+
+Muitas exsicatas não têm anotação sobre flor ou fruto. Troque por uma espécie mais coletada.
+:::
+
+::: {.callout-tip appearance="simple"}
+**Quer ver o código?** O FenoTree é aberto e foi feito em R (Shiny) pelo LEDT/UFAM: [github.com/ledtufam/fenotree](https://github.com/ledtufam/fenotree){target="_blank"}.
 :::
 
 ## Referências
 
--   MORELLATO, L. P. C. et al. 2016. Linking plant phenology to conservation biology. *Biological Conservation* 195: 60-72.
--   speciesLink. *API do serviço web v1.0*. <https://specieslink.net/ws/1.0/>
--   ZAR, J. H. *Biostatistical Analysis*. 5. ed. Upper Saddle River: Prentice Hall, 2010. (capítulos de estatística circular)
+-   ALEIXO, I. F. et al. 2023. *Fenologia: árvores da Amazônia*. Manaus: Editora INPA.
+-   ALENCAR, J. C.; ALMEIDA, R. A.; FERNANDES, N. P. 1979. Fenologia de espécies florestais em floresta tropical úmida de terra firme na Amazônia Central. *Acta Amazonica* 9(1).
+-   HAUGAASEN, T.; PERES, C. A. 2005. Tree phenology in adjacent Amazonian flooded and unflooded forests. *Biotropica* 37(4): 620-630.
+-   LEDT/UFAM. 2026. *FenoTree: calendários fenológicos a partir de exsicatas*. <https://ledtufam.shinyapps.io/fenotree/>
+-   REGO, G. M.; NEGRELLE, R. R. B.; MORELLATO, L. P. C. (eds.). 2007. *Fenologia: ferramenta para conservação, melhoramento e manejo de recursos vegetais arbóreos*. Colombo: Embrapa Florestas.
+-   speciesLink. *Rede speciesLink*. Centro de Referência em Informação Ambiental (CRIA). <https://specieslink.net/>

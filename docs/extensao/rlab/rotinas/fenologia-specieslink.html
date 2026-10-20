@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="LEDT/UFAM">
-<meta name="description" content="Baixar registros de uma espécie no speciesLink, identificar flores e frutos nas anotações das exsicatas e construir calendários fenológicos por mês.">
+<meta name="description" content="Atividade prática de Dendrologia Tropical: comparar o calendário de floração e frutificação de até três árvores amazônicas de importância comercial com registros de herbário do speciesLink, usando o FenoTree.">
 
-<title>Calendário fenológico a partir de registros de herbário (speciesLink) – LEDT</title>
+<title>Calendários fenológicos a partir de exsicatas (FenoTree) – LEDT</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,40 +21,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -78,9 +44,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<script src="../../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
-<link href="../../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -111,8 +74,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <link rel="stylesheet" href="../../../styles.css">
-<meta property="og:title" content="Calendário fenológico a partir de registros de herbário (speciesLink) – LEDT">
-<meta property="og:description" content="Baixar registros de uma espécie no speciesLink, identificar flores e frutos nas anotações das exsicatas e construir calendários fenológicos por mês.">
+<meta property="og:title" content="Calendários fenológicos a partir de exsicatas (FenoTree) – LEDT">
+<meta property="og:description" content="Atividade prática de Dendrologia Tropical: comparar o calendário de floração e frutificação de até três árvores amazônicas de importância comercial com registros de herbário do speciesLink, usando o FenoTree.">
 <meta property="og:image" content="https://ledtufam.github.io/extensao/rlab/rotinas/assets/images/logos/logo_horizontal.png">
 <meta property="og:site_name" content="LEDT">
 </head>
@@ -269,15 +232,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Nesta página</h2>
    
   <ul>
-  <li><a href="#baixar-os-registros-do-specieslink" id="toc-baixar-os-registros-do-specieslink" class="nav-link active" data-scroll-target="#baixar-os-registros-do-specieslink">1. Baixar os registros do speciesLink</a></li>
-  <li><a href="#dados-de-exemplo" id="toc-dados-de-exemplo" class="nav-link" data-scroll-target="#dados-de-exemplo">2. Dados de exemplo</a></li>
-  <li><a href="#identificar-flor-e-fruto-nas-etiquetas" id="toc-identificar-flor-e-fruto-nas-etiquetas" class="nav-link" data-scroll-target="#identificar-flor-e-fruto-nas-etiquetas">3. Identificar flor e fruto nas etiquetas</a></li>
-  <li><a href="#contar-registros-por-mês" id="toc-contar-registros-por-mês" class="nav-link" data-scroll-target="#contar-registros-por-mês">4. Contar registros por mês</a></li>
-  <li><a href="#calendário-fenológico" id="toc-calendário-fenológico" class="nav-link" data-scroll-target="#calendário-fenológico">5. Calendário fenológico</a>
-  <ul class="collapse">
-  <li><a href="#versão-circular" id="toc-versão-circular" class="nav-link" data-scroll-target="#versão-circular">Versão circular</a></li>
-  </ul></li>
-  <li><a href="#mês-médio-e-concentração-estatística-circular" id="toc-mês-médio-e-concentração-estatística-circular" class="nav-link" data-scroll-target="#mês-médio-e-concentração-estatística-circular">6. Mês médio e concentração (estatística circular)</a></li>
+  <li><a href="#passo-a-passo" id="toc-passo-a-passo" class="nav-link active" data-scroll-target="#passo-a-passo">Passo a passo</a></li>
+  <li><a href="#video" id="toc-video" class="nav-link" data-scroll-target="#video">1. Conheça o speciesLink</a></li>
+  <li><a href="#especies" id="toc-especies" class="nav-link" data-scroll-target="#especies">2. Escolha as espécies</a></li>
+  <li><a href="#fenotree" id="toc-fenotree" class="nav-link" data-scroll-target="#fenotree">3. Use o FenoTree</a></li>
+  <li><a href="#exercicio" id="toc-exercicio" class="nav-link" data-scroll-target="#exercicio">4. Perguntas</a></li>
+  <li><a href="#entrega" id="toc-entrega" class="nav-link" data-scroll-target="#entrega">5. Monte o relatório e entregue</a></li>
+  <li><a href="#problemas-comuns" id="toc-problemas-comuns" class="nav-link" data-scroll-target="#problemas-comuns">Problemas comuns</a></li>
   <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências">Referências</a></li>
   </ul>
 </nav>
@@ -287,7 +248,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Calendário fenológico a partir de registros de herbário (speciesLink)</h1>
+<h1 class="title">Calendários fenológicos a partir de exsicatas (FenoTree)</h1>
   <div class="quarto-categories">
     <div class="quarto-category">Fenologia</div>
     <div class="quarto-category">Dendrologia</div>
@@ -297,7 +258,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div>
   <div class="description">
-    Baixar registros de uma espécie no speciesLink, identificar flores e frutos nas anotações das exsicatas e construir calendários fenológicos por mês.
+    Atividade prática de Dendrologia Tropical: comparar o calendário de floração e frutificação de até três árvores amazônicas de importância comercial com registros de herbário do speciesLink, usando o FenoTree.
   </div>
 </div>
 
@@ -326,273 +287,351 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Nível:</strong> iniciante/intermediário · <strong>Pacotes:</strong> jsonlite (download); o restante usa R básico · <strong>Disciplina:</strong> <a href="../../../ensino/graduacao/dendrologiatropical.html">FGD921 - Dendrologia Tropical</a> · <a href="../scripts/fenologia-specieslink.R" download="fenologia-specieslink.R">Baixar script</a></p>
+<p><strong>Ferramenta:</strong> <a href="https://ledtufam.shinyapps.io/fenotree/" target="_blank">FenoTree</a> (abre no navegador, <strong>não é preciso instalar nada</strong>) · <strong>Disciplina:</strong> <a href="../../../ensino/graduacao/dendrologiatropical.html">Dendrologia Tropical</a> · <strong>Dados:</strong> rede <a href="https://specieslink.net/" target="_blank">speciesLink</a></p>
 </div>
 </div>
 </div>
-<p>As exsicatas guardam, na etiqueta, <strong>quando</strong> a planta foi coletada e, muitas vezes, <strong>se tinha flores ou frutos</strong>. Juntando centenas de registros de herbários, é possível montar um <strong>calendário fenológico</strong>, ou seja, os meses em que a espécie floresce e frutifica. Essa informação é útil para planejar a <strong>coleta de sementes</strong> e entender a ecologia reprodutiva da espécie.</p>
-<p>Fluxo da rotina: <strong>baixar registros → identificar flor/fruto na etiqueta → contar por mês → calendário</strong>.</p>
-<section id="baixar-os-registros-do-specieslink" class="level2">
-<h2 class="anchored" data-anchor-id="baixar-os-registros-do-specieslink">1. Baixar os registros do speciesLink</h2>
-<p>O <a href="https://specieslink.net/">speciesLink</a> tem um serviço web aberto, mas cada consulta exige uma <strong>chave de acesso (API key)</strong>:</p>
-<ol type="1">
-<li>Crie uma conta gratuita no <a href="https://specieslink.net/">speciesLink</a>.</li>
-<li>Gere sua chave em <a href="https://specieslink.net/aut/profile/apikeys">specieslink.net/aut/profile/apikeys</a>.</li>
-<li>Guarde a chave no R <strong>sem colocá-la no script</strong> que você vai compartilhar. Por exemplo, rode uma vez <code>usethis::edit_r_environ()</code>, escreva <code>SPLINK_KEY=sua_chave</code> no arquivo, salve e reinicie o R.</li>
-</ol>
-<div class="callout callout-style-simple callout-important">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>Os blocos desta seção <strong>não são executados</strong> no site (dependem da internet e da sua chave). A partir da seção 2 usamos dados de exemplo.</p>
-</div>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jsonlite)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>baixar_splink <span class="ot">&lt;-</span> <span class="cf">function</span>(especie, <span class="at">chave =</span> <span class="fu">Sys.getenv</span>(<span class="st">"SPLINK_KEY"</span>), <span class="at">limite =</span> <span class="dv">5000</span>) {</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  url <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"https://specieslink.net/ws/1.0/search?"</span>,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                <span class="st">"scientificname="</span>, <span class="fu">URLencode</span>(especie),</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                <span class="st">"&amp;scope=p&amp;limit="</span>, limite,</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>                <span class="st">"&amp;apikey="</span>, chave)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  res <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(url)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  res<span class="sc">$</span>features<span class="sc">$</span>properties          <span class="co"># tabela com um registro por linha</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>reg <span class="ot">&lt;-</span> <span class="fu">baixar_splink</span>(<span class="st">"Handroanthus serratifolius"</span>)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(reg)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(reg)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>As colunas que vamos usar são <code>monthCollected</code> (mês da coleta), <code>occurrenceRemarks</code> (anotações da etiqueta), <code>stateProvince</code> e <code>scientificName</code>.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Prefere baixar pelo site?
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Na busca do <a href="https://specieslink.net/">speciesLink</a>, pesquise a espécie, use <strong>Download</strong> para baixar os registros e leia o arquivo no R, por exemplo com <code>reg &lt;- read.delim("dados/speciesLink.txt")</code>. Os nomes das colunas podem mudar um pouco (por exemplo, <code>monthcollected</code> em vez de <code>monthCollected</code>). Confira com <code>names(reg)</code> e ajuste a rotina.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="dados-de-exemplo" class="level2">
-<h2 class="anchored" data-anchor-id="dados-de-exemplo">2. Dados de exemplo</h2>
-<p>Para que esta página funcione sem internet, usamos <strong>registros simulados</strong> com a mesma estrutura do speciesLink. São 240 registros de uma espécie hipotética com floração concentrada na estação seca e frutificação logo depois, como ocorre em muitos ipês amazônicos.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">921</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">240</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>mes_fl <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, n, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">9</span>, <span class="dv">12</span>, <span class="dv">8</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>fen <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"flor"</span>, <span class="st">"fruto"</span>, <span class="st">"esteril"</span>, <span class="st">"ambos"</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> <span class="fu">c</span>(.<span class="dv">40</span>, .<span class="dv">25</span>, .<span class="dv">25</span>, .<span class="dv">10</span>))</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>mes <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(fen <span class="sc">==</span> <span class="st">"fruto"</span>, (mes_fl <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">%%</span> <span class="dv">12</span> <span class="sc">+</span> <span class="dv">1</span>, mes_fl)   <span class="co"># frutos ~2 meses depois</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>modelos <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">flor    =</span> <span class="fu">c</span>(<span class="st">"Árvore 15 m, flores amarelas."</span>, <span class="st">"fl. amarelas"</span>, <span class="st">"Com flores."</span>, <span class="st">"Botões e flores abertas."</span>, <span class="st">"Floração intensa, sem folhas."</span>),</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">fruto   =</span> <span class="fu">c</span>(<span class="st">"Frutos imaturos."</span>, <span class="st">"fr. verdes"</span>, <span class="st">"Árvore com frutos maduros, deiscentes."</span>, <span class="st">"Frutificando."</span>),</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">ambos   =</span> <span class="fu">c</span>(<span class="st">"Flores e frutos."</span>, <span class="st">"fl. e fr. jovens"</span>),</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">esteril =</span> <span class="fu">c</span>(<span class="st">"Material estéril."</span>, <span class="st">"Árvore 20 m, DAP 40 cm."</span>, <span class="st">""</span>, <span class="st">"Ramo estéril, folhas compostas."</span>)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>reg <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">scientificName    =</span> <span class="st">"Espécie hipotética"</span>,</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">monthCollected    =</span> mes,</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">stateProvince     =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"Amazonas"</span>, <span class="st">"Pará"</span>, <span class="st">"Acre"</span>, <span class="st">"Rondônia"</span>, <span class="st">"Mato Grosso"</span>), n, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">occurrenceRemarks =</span> <span class="fu">vapply</span>(fen, <span class="cf">function</span>(f) <span class="fu">sample</span>(modelos[[f]], <span class="dv">1</span>), <span class="st">""</span>)</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(reg)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>      scientificName monthCollected stateProvince             occurrenceRemarks
-1 Espécie hipotética              6      Rondônia              Frutos imaturos.
-2 Espécie hipotética              1          Pará Árvore 15 m, flores amarelas.
-3 Espécie hipotética              7   Mato Grosso                  fl. amarelas
-4 Espécie hipotética             10          Acre                    fr. verdes
-5 Espécie hipotética              8      Rondônia                    fr. verdes
-6 Espécie hipotética              9          Acre                  fl. amarelas</code></pre>
-</div>
-</div>
-</section>
-<section id="identificar-flor-e-fruto-nas-etiquetas" class="level2">
-<h2 class="anchored" data-anchor-id="identificar-flor-e-fruto-nas-etiquetas">3. Identificar flor e fruto nas etiquetas</h2>
-<p>As etiquetas não têm um campo padronizado de fenologia. Por isso, procuramos <strong>palavras-chave</strong> nas anotações. Ajuste a lista conforme o idioma e o estilo das etiquetas da sua espécie.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>txt <span class="ot">&lt;-</span> <span class="fu">tolower</span>(reg<span class="sc">$</span>occurrenceRemarks)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>termos_flor  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">bflor"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">bfl</span><span class="sc">\\</span><span class="st">."</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">bflower"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">bbot[aã]o"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">bbot[oõ]es"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">bflora[cç][aã]o"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">bantese"</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>termos_fruto <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">bfrut"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">bfr</span><span class="sc">\\</span><span class="st">."</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">bfruit"</span>)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>reg<span class="sc">$</span>flor  <span class="ot">&lt;-</span> <span class="fu">grepl</span>(<span class="fu">paste</span>(termos_flor,  <span class="at">collapse =</span> <span class="st">"|"</span>), txt)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>reg<span class="sc">$</span>fruto <span class="ot">&lt;-</span> <span class="fu">grepl</span>(<span class="fu">paste</span>(termos_fruto, <span class="at">collapse =</span> <span class="st">"|"</span>), txt)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># registros sem mês ou sem informação de fenologia não entram no calendário</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>reg <span class="ot">&lt;-</span> <span class="fu">subset</span>(reg, <span class="sc">!</span><span class="fu">is.na</span>(monthCollected) <span class="sc">&amp;</span> monthCollected <span class="sc">%in%</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="at">total =</span> <span class="fu">nrow</span>(reg), <span class="at">com_flor =</span> <span class="fu">sum</span>(reg<span class="sc">$</span>flor), <span class="at">com_fruto =</span> <span class="fu">sum</span>(reg<span class="sc">$</span>fruto),</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">sem_info =</span> <span class="fu">sum</span>(<span class="sc">!</span>reg<span class="sc">$</span>flor <span class="sc">&amp;</span> <span class="sc">!</span>reg<span class="sc">$</span>fruto))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>    total  com_flor com_fruto  sem_info 
-      240       125        82        59 </code></pre>
-</div>
-</div>
-<div class="callout callout-style-simple callout-warning">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p><strong>Confira uma amostra à mão!</strong> Leia algumas dezenas de etiquetas classificadas e veja se a busca por palavras acertou. Expressões como “sem flores” ou “flor-de-ipê” (nome popular) podem gerar falsos positivos.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="contar-registros-por-mês" class="level2">
-<h2 class="anchored" data-anchor-id="contar-registros-por-mês">4. Contar registros por mês</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>meses <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Jan"</span>, <span class="st">"Fev"</span>, <span class="st">"Mar"</span>, <span class="st">"Abr"</span>, <span class="st">"Mai"</span>, <span class="st">"Jun"</span>, <span class="st">"Jul"</span>, <span class="st">"Ago"</span>, <span class="st">"Set"</span>, <span class="st">"Out"</span>, <span class="st">"Nov"</span>, <span class="st">"Dez"</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>calendario <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">mes   =</span> <span class="fu">factor</span>(meses, <span class="at">levels =</span> meses),</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">flor  =</span> <span class="fu">tabulate</span>(reg<span class="sc">$</span>monthCollected[reg<span class="sc">$</span>flor],  <span class="at">nbins =</span> <span class="dv">12</span>),</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">fruto =</span> <span class="fu">tabulate</span>(reg<span class="sc">$</span>monthCollected[reg<span class="sc">$</span>fruto], <span class="at">nbins =</span> <span class="dv">12</span>),</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">total =</span> <span class="fu">tabulate</span>(reg<span class="sc">$</span>monthCollected,            <span class="at">nbins =</span> <span class="dv">12</span>)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>calendario</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   mes flor fruto total
-1  Jan    2     4     8
-2  Fev    4     4     9
-3  Mar    5     3     7
-4  Abr    0     0     1
-5  Mai    6     2    11
-6  Jun   16     4    19
-7  Jul   36     7    53
-8  Ago   30    16    58
-9  Set   15    18    36
-10 Out    6    14    22
-11 Nov    2     9    12
-12 Dez    3     1     4</code></pre>
-</div>
-</div>
-<p>Como o número de coletas varia muito entre os meses (há mais expedições na estação seca, por exemplo), vale olhar também a <strong>proporção</strong> de registros férteis em cada mês:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>calendario<span class="sc">$</span>prop_flor  <span class="ot">&lt;-</span> <span class="fu">round</span>(calendario<span class="sc">$</span>flor  <span class="sc">/</span> calendario<span class="sc">$</span>total, <span class="dv">2</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>calendario<span class="sc">$</span>prop_fruto <span class="ot">&lt;-</span> <span class="fu">round</span>(calendario<span class="sc">$</span>fruto <span class="sc">/</span> calendario<span class="sc">$</span>total, <span class="dv">2</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>calendario[, <span class="fu">c</span>(<span class="st">"mes"</span>, <span class="st">"prop_flor"</span>, <span class="st">"prop_fruto"</span>)]</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   mes prop_flor prop_fruto
-1  Jan      0.25       0.50
-2  Fev      0.44       0.44
-3  Mar      0.71       0.43
-4  Abr      0.00       0.00
-5  Mai      0.55       0.18
-6  Jun      0.84       0.21
-7  Jul      0.68       0.13
-8  Ago      0.52       0.28
-9  Set      0.42       0.50
-10 Out      0.27       0.64
-11 Nov      0.17       0.75
-12 Dez      0.75       0.25</code></pre>
-</div>
-</div>
-<p>Cuidado com meses com <strong>poucos registros</strong>: uma única exsicata com flor num mês com duas coletas já dá 50%.</p>
-</section>
-<section id="calendário-fenológico" class="level2">
-<h2 class="anchored" data-anchor-id="calendário-fenológico">5. Calendário fenológico</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>cores <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">flor =</span> <span class="st">"#ffce67"</span>, <span class="at">fruto =</span> <span class="st">"#78c2ad"</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">t</span>(<span class="fu">as.matrix</span>(calendario[, <span class="fu">c</span>(<span class="st">"flor"</span>, <span class="st">"fruto"</span>)])), <span class="at">beside =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">names.arg =</span> meses, <span class="at">col =</span> cores, <span class="at">border =</span> <span class="cn">NA</span>, <span class="at">las =</span> <span class="dv">1</span>,</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Número de registros"</span>, <span class="at">legend.text =</span> <span class="fu">c</span>(<span class="st">"Flor"</span>, <span class="st">"Fruto"</span>),</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">args.legend =</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="st">"topright"</span>, <span class="at">bty =</span> <span class="st">"n"</span>))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="fenologia-specieslink_files/figure-html/unnamed-chunk-6-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Número de registros de herbário com flores e com frutos em cada mês."><img src="fenologia-specieslink_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672" alt="Número de registros de herbário com flores e com frutos em cada mês."></a></p>
-<figcaption>Número de registros de herbário com flores e com frutos em cada mês.</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<section id="versão-circular" class="level3">
-<h3 class="anchored" data-anchor-id="versão-circular">Versão circular</h3>
-<p>O calendário circular deixa claro que dezembro e janeiro são vizinhos:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>calendario_circular <span class="ot">&lt;-</span> <span class="cf">function</span>(contagem, cor, <span class="at">titulo =</span> <span class="st">""</span>) {</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  ang <span class="ot">&lt;-</span> pi <span class="sc">/</span> <span class="dv">2</span> <span class="sc">-</span> (<span class="dv">0</span><span class="sc">:</span><span class="dv">11</span>) <span class="sc">*</span> <span class="dv">2</span> <span class="sc">*</span> pi <span class="sc">/</span> <span class="dv">12</span>            <span class="co"># janeiro no topo, sentido horário</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  r   <span class="ot">&lt;-</span> contagem <span class="sc">/</span> <span class="fu">max</span>(contagem)</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="cn">NA</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">1.25</span>, <span class="fl">1.25</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">1.25</span>, <span class="fl">1.25</span>), <span class="at">asp =</span> <span class="dv">1</span>, <span class="at">axes =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">main =</span> titulo)</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (k <span class="cf">in</span> <span class="fu">c</span>(.<span class="dv">25</span>, .<span class="dv">5</span>, .<span class="dv">75</span>, <span class="dv">1</span>)) <span class="fu">symbols</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="at">circles =</span> k, <span class="at">inches =</span> <span class="cn">FALSE</span>, <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">fg =</span> <span class="st">"grey85"</span>)</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>) {</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    a <span class="ot">&lt;-</span> <span class="fu">seq</span>(ang[i] <span class="sc">+</span> pi <span class="sc">/</span> <span class="dv">12</span>, ang[i] <span class="sc">-</span> pi <span class="sc">/</span> <span class="dv">12</span>, <span class="at">length.out =</span> <span class="dv">20</span>)</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">polygon</span>(<span class="fu">c</span>(<span class="dv">0</span>, r[i] <span class="sc">*</span> <span class="fu">cos</span>(a), <span class="dv">0</span>), <span class="fu">c</span>(<span class="dv">0</span>, r[i] <span class="sc">*</span> <span class="fu">sin</span>(a), <span class="dv">0</span>), <span class="at">col =</span> cor, <span class="at">border =</span> <span class="st">"white"</span>)</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">text</span>(<span class="fl">1.15</span> <span class="sc">*</span> <span class="fu">cos</span>(ang), <span class="fl">1.15</span> <span class="sc">*</span> <span class="fu">sin</span>(ang), meses, <span class="at">cex =</span> <span class="fl">0.8</span>)</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">0</span>))</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="fu">calendario_circular</span>(calendario<span class="sc">$</span>flor,  cores[<span class="st">"flor"</span>],  <span class="st">"Floração"</span>)</span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="fu">calendario_circular</span>(calendario<span class="sc">$</span>fruto, cores[<span class="st">"fruto"</span>], <span class="st">"Frutificação"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="fenologia-specieslink_files/figure-html/unnamed-chunk-7-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Calendário fenológico circular: o comprimento de cada barra é proporcional ao número de registros no mês."><img src="fenologia-specieslink_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="864" alt="Calendário fenológico circular: o comprimento de cada barra é proporcional ao número de registros no mês."></a></p>
-<figcaption>Calendário fenológico circular: o comprimento de cada barra é proporcional ao número de registros no mês.</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="mês-médio-e-concentração-estatística-circular" class="level2">
-<h2 class="anchored" data-anchor-id="mês-médio-e-concentração-estatística-circular">6. Mês médio e concentração (estatística circular)</h2>
-<p>Como os meses formam um ciclo, a média comum não funciona (a média entre dezembro e janeiro não é junho!). Usamos a <strong>média circular</strong>: cada registro vira um ângulo, e calculamos o ângulo médio e o comprimento do vetor médio (<em>r</em>), que vai de 0 (fenofase espalhada no ano todo) a 1 (todos os registros no mesmo mês).</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>media_circular <span class="ot">&lt;-</span> <span class="cf">function</span>(m) {</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  ang <span class="ot">&lt;-</span> (m <span class="sc">-</span> <span class="fl">0.5</span>) <span class="sc">*</span> <span class="dv">2</span> <span class="sc">*</span> pi <span class="sc">/</span> <span class="dv">12</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  C <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">cos</span>(ang)); S <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">sin</span>(ang))</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  ang_medio <span class="ot">&lt;-</span> <span class="fu">atan2</span>(S, C) <span class="sc">%%</span> (<span class="dv">2</span> <span class="sc">*</span> pi)</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="at">mes_medio =</span> <span class="fu">round</span>(ang_medio <span class="sc">*</span> <span class="dv">12</span> <span class="sc">/</span> (<span class="dv">2</span> <span class="sc">*</span> pi) <span class="sc">+</span> <span class="fl">0.5</span>, <span class="dv">1</span>), <span class="at">r =</span> <span class="fu">round</span>(<span class="fu">sqrt</span>(C<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> S<span class="sc">^</span><span class="dv">2</span>), <span class="dv">2</span>))</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(Floração     <span class="ot">=</span> <span class="fu">media_circular</span>(reg<span class="sc">$</span>monthCollected[reg<span class="sc">$</span>flor]),</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>      Frutificação <span class="ot">=</span> <span class="fu">media_circular</span>(reg<span class="sc">$</span>monthCollected[reg<span class="sc">$</span>fruto]))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>             mes_medio    r
-Floração           7.4 0.61
-Frutificação       9.1 0.52</code></pre>
-</div>
-</div>
-<p>Um <code>mes_medio</code> de 8,5 corresponde à segunda quinzena de agosto. Valores de <em>r</em> acima de 0,5 indicam uma fenofase bem concentrada no ano.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Para discutir na prática
+Atividade prática - Dendrologia Tropical
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p>Esta atividade complementa a <strong>aula de Fenologia de espécies florestais</strong> (<a href="https://drive.google.com/file/d/1PHsgm46qUCWo0m9o6N_-97M__Nrs84Xy/view?usp=drive_link" target="_blank">slides</a>).</p>
 <ul>
-<li>Em que meses você planejaria uma expedição para <strong>coletar sementes</strong> dessa espécie?</li>
-<li>O padrão muda entre estados (<code>stateProvince</code>)? Repita a análise separando por região.</li>
-<li>Que vieses os dados de herbário têm? Pense em quando e onde os coletores costumam ir a campo e em quais plantas eles preferem coletar.</li>
+<li><strong>O que fazer:</strong> escolher <strong>até três árvores amazônicas de importância comercial</strong> (madeireiras ou não-madeireiras), montar o calendário fenológico de cada uma no FenoTree, <strong>comparar</strong> e <strong>interpretar ecologicamente</strong>.</li>
+<li><strong>Entrega:</strong> relatório em Word (.docx).</li>
+<li><strong>Onde entregar:</strong> na <a href="https://drive.google.com/drive/folders/13s7SicSGeq21bN6qIVih_TpS7Ww-Rchz?usp=drive_link">pasta da disciplina no Google Drive</a>.</li>
+<li><strong>Prazo:</strong> <strong>21/10/2026, até 12h</strong>.</li>
 </ul>
+</div>
+</div>
+<p>As exsicatas guardam, na etiqueta, <strong>quando</strong> a planta foi coletada e, muitas vezes, <strong>se tinha flores ou frutos</strong>. Juntando centenas de registros de herbários, dá para montar um <strong>calendário fenológico</strong>: os meses em que a espécie floresce e frutifica. O <strong>FenoTree</strong> faz isso por você: busca as exsicatas no speciesLink, procura flores e frutos nas anotações das etiquetas e monta os gráficos. Assim, você se concentra no mais importante: <strong>comparar e interpretar</strong>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="https://ledtufam.shinyapps.io/fenotree/" target="_blank"><img src="../../..\assets/images/logos/fenotree_hex.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Logo do FenoTree" width="130"></a></p>
+</figure>
+</div>
+<p style="text-align:center">
+<a class="btn btn-primary btn-lg" href="https://ledtufam.shinyapps.io/fenotree/" target="_blank">Abrir o FenoTree</a>
+</p>
+<section id="passo-a-passo" class="level2">
+<h2 class="anchored" data-anchor-id="passo-a-passo">Passo a passo</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Passo</th>
+<th>O que fazer</th>
+<th>Onde</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td>Assistir ao vídeo sobre a plataforma speciesLink</td>
+<td><a href="#video">Seção 1</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td>Escolher até três espécies</td>
+<td><a href="#especies">Seção 2</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td>Buscar cada espécie no FenoTree e baixar figuras e tabelas</td>
+<td><a href="#fenotree">Seção 3</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td>Responder às perguntas, comparando as espécies</td>
+<td><a href="#exercicio">Seção 4</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td>Montar o relatório em Word e entregar no Drive</td>
+<td><a href="#entrega">Seção 5</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="video" class="level2">
+<h2 class="anchored" data-anchor-id="video">1. Conheça o speciesLink</h2>
+<p>O FenoTree usa os dados da rede <strong>speciesLink</strong>, que reúne os registros de centenas de coleções biológicas, incluindo os principais herbários do Brasil. Antes de começar, assista ao vídeo sobre como a plataforma funciona.</p>
+<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;margin-bottom:1rem">
+<iframe src="https://drive.google.com/file/d/1yNFipCTIZdCO44F_zQFxL_i81gK_4Nv_/preview" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allow="autoplay; fullscreen" allowfullscreen="" title="Vídeo: como usar a plataforma speciesLink">
+</iframe>
+</div>
+<p><a href="https://drive.google.com/file/d/1yNFipCTIZdCO44F_zQFxL_i81gK_4Nv_/view?usp=drive_link" target="_blank" class="btn btn-outline-success btn-sm"><i class="bi bi-camera-video"></i> Abrir o vídeo no Google Drive</a></p>
+</section>
+<section id="especies" class="level2">
+<h2 class="anchored" data-anchor-id="especies">2. Escolha as espécies</h2>
+<p>Escolha <strong>de uma a três espécies</strong> (o ideal é comparar <strong>duas ou três</strong>). Cada espécie precisa atender às <strong>três condições</strong>:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Condição</th>
+<th>Como conferir</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>É árvore</strong></td>
+<td>Na <a href="https://floradobrasil.jbrj.gov.br/" target="_blank">Flora e Funga do Brasil</a>, a forma de vida inclui “árvore”.</td>
+</tr>
+<tr class="even">
+<td><strong>Ocorre na Amazônia</strong></td>
+<td>Na Flora e Funga do Brasil, o domínio fitogeográfico inclui “Amazônia”.</td>
+</tr>
+<tr class="odd">
+<td><strong>Tem importância comercial</strong></td>
+<td><strong>Madeireira</strong> (madeira serrada, laminados, construção) ou <strong>não-madeireira</strong> (frutos, sementes, óleos, resinas, látex, fibras, uso medicinal). Confirme em pelo menos uma fonte.</td>
+</tr>
+</tbody>
+</table>
+<p>Para a comparação ficar interessante, escolha espécies <strong>diferentes em alguma coisa</strong>: uma madeireira e uma não-madeireira, de grupos ecológicos diferentes (pioneira × tardia), de terra firme e de várzea ou igapó, com frutos dispersos pelo vento e por animais…</p>
+<p>Dicas:</p>
+<ul>
+<li>Use o <strong>nome científico aceito</strong> (gênero e epíteto). Confira a grafia na Flora e Funga do Brasil.</li>
+<li>Prefira espécies <strong>bem coletadas</strong>: com menos de 30 registros com flor ou fruto, o calendário fica pouco confiável (o FenoTree avisa). Se isso acontecer, troque de espécie.</li>
+</ul>
+</section>
+<section id="fenotree" class="level2">
+<h2 class="anchored" data-anchor-id="fenotree">3. Use o FenoTree</h2>
+<p>O FenoTree busca <strong>uma espécie por vez</strong>. Repita os passos abaixo para cada espécie e <strong>use a mesma região</strong> para todas, para a comparação ser justa.</p>
+<ol type="1">
+<li>Abra o <a href="https://ledtufam.shinyapps.io/fenotree/" target="_blank">FenoTree</a>. No primeiro acesso do dia, ele pode levar alguns segundos para carregar.</li>
+<li>No campo <strong>Espécie</strong>, escreva o nome científico.</li>
+<li>Mantenha marcado <strong>Incluir sinônimos (Flora e Funga do Brasil)</strong>: assim entram também as exsicatas identificadas com nomes antigos.</li>
+<li>Escolha <strong>onde</strong>. Sugestão: <strong>Bioma Amazônia</strong> ou <strong>Amazônia Legal</strong>.</li>
+</ol>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 29%">
+<col style="width: 70%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Opção</th>
+<th>O que entra</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Todo o Brasil e exterior</td>
+<td>todas as exsicatas da espécie</td>
+</tr>
+<tr class="even">
+<td>Bioma Amazônia</td>
+<td>exsicatas com coordenadas dentro do bioma Amazônia</td>
+</tr>
+<tr class="odd">
+<td>Amazônia Legal</td>
+<td>exsicatas com coordenadas dentro da Amazônia Legal</td>
+</tr>
+<tr class="even">
+<td>Panamazônia</td>
+<td>bioma Amazônia no Brasil + registros da Bolívia, Peru, Equador, Colômbia, Venezuela, Guiana, Suriname e Guiana Francesa</td>
+</tr>
+<tr class="odd">
+<td>Escolher estados</td>
+<td>exsicatas dos estados escolhidos</td>
+</tr>
+</tbody>
+</table>
+<ol start="5" type="1">
+<li>Clique em <strong>Buscar no speciesLink</strong> e aguarde (até 1 minuto).</li>
+<li>Anote os números das caixas no alto (registros, com mês, com flor, com fruto), explore as abas e <strong>baixe</strong> as figuras (PNG) e as tabelas (CSV):</li>
+</ol>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 81%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Aba</th>
+<th>O que mostra</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Calendário</td>
+<td>registros com flor e com fruto em cada mês, em número ou em <strong>proporção</strong> das coletas</td>
+</tr>
+<tr class="even">
+<td>Circular</td>
+<td>calendário circular, com seta no <strong>mês médio</strong> e concentração (<em>r</em>)</td>
+</tr>
+<tr class="odd">
+<td>Esforço de coleta</td>
+<td>todas as coletas de cada mês, para ver se os picos acompanham só o esforço dos coletores</td>
+</tr>
+<tr class="even">
+<td>Tabelas</td>
+<td>resumo da espécie (mês médio, <em>r</em>) e números de cada mês</td>
+</tr>
+<tr class="odd">
+<td>Mapa</td>
+<td>onde as exsicatas foram coletadas e o que cada etiqueta registra (clique num ponto para ver a etiqueta)</td>
+</tr>
+<tr class="even">
+<td>Etiquetas</td>
+<td>o texto das etiquetas e como cada uma foi classificada</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Como o FenoTree identifica flor e fruto?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>As etiquetas não têm um campo padronizado de fenologia. O FenoTree procura <strong>palavras-chave</strong> nas anotações, em português, inglês e espanhol: <em>flor, fl., botão, floração, antese, flower, bud</em> para flor e <em>fruto, fr., fruit, vagem, semente, cápsula, drupa</em> para fruto. Antes, apaga expressões que enganariam a busca, como “sem flores”, “floresta” e “flor-de-…”. Um registro pode ter flor <strong>e</strong> fruto.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+O que são o mês médio e o <em>r</em>?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Como os meses formam um ciclo, a média comum não funciona: a média entre dezembro (12) e janeiro (1) daria junho! O FenoTree usa a <strong>média circular</strong>: cada registro vira um ângulo no círculo do ano. O <strong>mês médio</strong> é a direção média, e o <strong><em>r</em></strong> (de 0 a 1) mede a concentração: acima de <strong>0,5</strong>, a fenofase está <strong>bem concentrada</strong> em poucos meses; abaixo de <strong>0,2</strong>, praticamente não tem época definida.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercicio" class="level2">
+<h2 class="anchored" data-anchor-id="exercicio">4. Perguntas</h2>
+<p>Responda com base na <strong>aula de Fenologia</strong> e nos resultados do FenoTree. Na Amazônia Central, a estação <strong>mais seca</strong> vai, em geral, de <strong>junho a outubro</strong> e a <strong>chuvosa</strong>, de <strong>dezembro a maio</strong> (Aleixo et al.&nbsp;2023). <strong>Como comparar as espécies fica a seu critério</strong>: pode ser uma tabela, figuras lado a lado ou um calendário que você mesmo monta.</p>
+<p><strong>Conheça as espécies</strong></p>
+<ol type="1">
+<li>Para cada espécie: nome científico, família, nome popular, <strong>uso comercial</strong> (madeireiro ou não-madeireiro; qual produto) e ambiente onde ocorre (terra firme, várzea, igapó).</li>
+</ol>
+<p><strong>Os dados</strong></p>
+<ol start="2" type="1">
+<li>Quantos registros cada espécie tem? Quantos com flor e quantos com fruto? Os dados são suficientes para confiar no calendário?</li>
+</ol>
+<p><strong>O calendário de cada espécie</strong></p>
+<ol start="3" type="1">
+<li>Em que meses cada espécie <strong>floresce</strong> e <strong>frutifica</strong>? Quais os meses de pico, o <strong>mês médio</strong> e o <strong><em>r</em></strong>?</li>
+<li>A floração e a frutificação caem na <strong>estação seca</strong> ou na <strong>chuvosa</strong>? As espécies seguem o padrão geral da Amazônia Central visto em aula (a maioria floresce na seca e frutifica nas chuvas) ou alguma é <strong>exceção</strong>?</li>
+</ol>
+<p><strong>Comparação e interpretação ecológica</strong></p>
+<ol start="5" type="1">
+<li>As espécies têm calendários <strong>parecidos ou diferentes</strong>? Em quê?</li>
+<li>Que <strong>fatores ecológicos</strong> podem explicar as semelhanças e diferenças? Pense no que vimos em aula: chuva e seca, luz, pulso de inundação, polinizadores, dispersores (vento × animais) e grupo ecológico.</li>
+</ol>
+<p><strong>Aplicação</strong></p>
+<ol start="7" type="1">
+<li>Monte um <strong>calendário de coleta</strong>: em que meses você iria a campo coletar <strong>sementes</strong> de cada espécie? E <strong>flores</strong>, para identificá-las?</li>
+<li>Como esse calendário ajuda no <strong>uso comercial</strong> das espécies (safra de um produto, coleta de sementes de matrizes, manejo)?</li>
+</ol>
+<p><strong>Limitações</strong></p>
+<ol start="9" type="1">
+<li>Na aba <strong>Esforço de coleta</strong>, os picos acompanham só os meses com mais coletas? Cite <strong>uma limitação</strong> dos dados de herbário em comparação com um estudo fenológico de campo.</li>
+</ol>
+</section>
+<section id="entrega" class="level2">
+<h2 class="anchored" data-anchor-id="entrega">5. Monte o relatório e entregue</h2>
+<p>Um documento <strong>Word (.docx)</strong>, de <strong>3 a 5 páginas</strong>, com:</p>
+<ol type="1">
+<li><strong>Identificação:</strong> nome(s) e matrícula(s).</li>
+<li><strong>Introdução:</strong> quais espécies e por que você as escolheu (o que esperava encontrar).</li>
+<li><strong>Métodos:</strong> fonte dos dados (speciesLink, via FenoTree), região escolhida e data da consulta.</li>
+<li><strong>Resultados:</strong> uma tabela com os números e o mês médio/<em>r</em> de cada espécie e as figuras do calendário (pelo menos uma por espécie), cada uma com legenda.</li>
+<li><strong>Discussão:</strong> respostas às perguntas 2 a 9, em texto corrido.</li>
+<li><strong>Conclusão:</strong> um parágrafo curto.</li>
+<li><strong>Referências.</strong></li>
+</ol>
+<p>Salve como <strong><code>NomeSobrenome_fenologia.docx</code></strong> e coloque na <a href="https://drive.google.com/drive/folders/13s7SicSGeq21bN6qIVih_TpS7Ww-Rchz?usp=drive_link">pasta da disciplina no Google Drive</a> até <strong>21/10/2026, às 12h</strong>.</p>
+</section>
+<section id="problemas-comuns" class="level2">
+<h2 class="anchored" data-anchor-id="problemas-comuns">Problemas comuns</h2>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+“Nenhum registro encontrado”
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Confira a grafia do nome (gênero com inicial maiúscula e epíteto) e se ele é aceito na Flora e Funga do Brasil. Mantenha marcada a opção de sinônimos. Se escolheu uma região, tente “Todo o Brasil e exterior”.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+O FenoTree está demorando ou não abre
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>No primeiro acesso, o app precisa “acordar” e pode levar alguns segundos. A busca demora mais para espécies com milhares de registros. Se der erro, recarregue a página e tente de novo.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Poucos registros com flor ou fruto
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Muitas exsicatas não têm anotação sobre flor ou fruto. Troque por uma espécie mais coletada.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Quer ver o código?</strong> O FenoTree é aberto e foi feito em R (Shiny) pelo LEDT/UFAM: <a href="https://github.com/ledtufam/fenotree" target="_blank">github.com/ledtufam/fenotree</a>.</p>
+</div>
 </div>
 </div>
 </section>
 <section id="referências" class="level2">
 <h2 class="anchored" data-anchor-id="referências">Referências</h2>
 <ul>
-<li>MORELLATO, L. P. C. et al.&nbsp;2016. Linking plant phenology to conservation biology. <em>Biological Conservation</em> 195: 60-72.</li>
-<li>speciesLink. <em>API do serviço web v1.0</em>. <a href="https://specieslink.net/ws/1.0/" class="uri">https://specieslink.net/ws/1.0/</a></li>
-<li>ZAR, J. H. <em>Biostatistical Analysis</em>. 5. ed.&nbsp;Upper Saddle River: Prentice Hall, 2010. (capítulos de estatística circular)</li>
+<li>ALEIXO, I. F. et al.&nbsp;2023. <em>Fenologia: árvores da Amazônia</em>. Manaus: Editora INPA.</li>
+<li>ALENCAR, J. C.; ALMEIDA, R. A.; FERNANDES, N. P. 1979. Fenologia de espécies florestais em floresta tropical úmida de terra firme na Amazônia Central. <em>Acta Amazonica</em> 9(1).</li>
+<li>HAUGAASEN, T.; PERES, C. A. 2005. Tree phenology in adjacent Amazonian flooded and unflooded forests. <em>Biotropica</em> 37(4): 620-630.</li>
+<li>LEDT/UFAM. 2026. <em>FenoTree: calendários fenológicos a partir de exsicatas</em>. <a href="https://ledtufam.shinyapps.io/fenotree/" class="uri">https://ledtufam.shinyapps.io/fenotree/</a></li>
+<li>REGO, G. M.; NEGRELLE, R. R. B.; MORELLATO, L. P. C. (eds.). 2007. <em>Fenologia: ferramenta para conservação, melhoramento e manejo de recursos vegetais arbóreos</em>. Colombo: Embrapa Florestas.</li>
+<li>speciesLink. <em>Rede speciesLink</em>. Centro de Referência em Informação Ambiental (CRIA). <a href="https://specieslink.net/" class="uri">https://specieslink.net/</a></li>
 </ul>
 
 
@@ -1221,38 +1260,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","selector":".lightbox","loop":false,"openEffect":"zoom","closeEffect":"zoom"});
-(function() {
-  let previousOnload = window.onload;
-  window.onload = () => {
-    if (previousOnload) {
-      previousOnload();
-    }
-    lightboxQuarto.on('slide_before_load', (data) => {
-      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-      const href = trigger.getAttribute('href');
-      if (href !== null) {
-        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
-        if (imgEl !== null) {
-          const srcAttr = imgEl.getAttribute("src");
-          if (srcAttr && srcAttr.startsWith("data:")) {
-            slideConfig.href = srcAttr;
-          }
-        }
-      } 
-    });
-  
-    lightboxQuarto.on('slide_after_load', (data) => {
-      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(slideNode);
-      }
-    });
-  
-  };
-  
-})();
-          </script>
 
 
 

@@ -39,6 +39,22 @@ categories: [Graduação, Engenharia Florestal]
 
 <a href="/assets/pdf/Engenharia Florestal PPC_Dendrologia tropical.pdf" target="_blank" class="btn btn-outline-success btn-sm"><i class="bi bi-file-pdf-fill"></i> Ementa oficial (PPC)</a>
 
+## Aulas 2026.2
+
+Material: <i class="bi bi-file-earmark-pdf"></i> slides da aula e <i class="bi bi-camera-video"></i> videoaula (Google Drive, acesso restrito aos alunos matriculados); <i class="bi bi-laptop"></i> atividade prática.
+
+<!-- Para publicar a videoaula, troque
+     <span class="text-muted" title="Em breve"><i class="bi bi-camera-video"></i> Vídeo (em breve)</span>
+     por
+     <a href="LINK_DO_DRIVE" target="_blank" title="Videoaula (Google Drive)"><i class="bi bi-camera-video"></i> Vídeo</a> -->
+
+| Tema | Material | Prática |
+|-----------------------------|-----------------------------------|-----------------------------|
+| Grupos ecológicos de árvores | <a href="https://drive.google.com/file/d/1JfTP5pG_PM93zAniqzPpDCD56-UG27hA/view?usp=drive_link" target="_blank" title="Slides da aula (Google Drive)"><i class="bi bi-file-earmark-pdf"></i> Aula</a> · <span class="text-muted" title="Em breve"><i class="bi bi-camera-video"></i> Vídeo (em breve)</span> | |
+| Fenologia de espécies florestais | <a href="https://drive.google.com/file/d/1PHsgm46qUCWo0m9o6N_-97M__Nrs84Xy/view?usp=drive_link" target="_blank" title="Slides da aula (Google Drive)"><i class="bi bi-file-earmark-pdf"></i> Aula</a> · <span class="text-muted" title="Em breve"><i class="bi bi-camera-video"></i> Vídeo (em breve)</span> | <a href="/extensao/rlab/rotinas/fenologia-specieslink.qmd" title="Atividade: calendários fenológicos com o FenoTree"><i class="bi bi-laptop"></i> Atividade FenoTree</a> · <a href="https://drive.google.com/file/d/1yNFipCTIZdCO44F_zQFxL_i81gK_4Nv_/view?usp=drive_link" target="_blank" title="Vídeo: como usar o speciesLink (Google Drive)"><i class="bi bi-camera-video"></i> Vídeo speciesLink</a> |
+
+: {.striped .hover}
+
 ## Aulas práticas
 
 As aulas práticas acontecem no campus da UFAM e no herbário. Os alunos aplicam o [roteiro de descrição padronizado](/assets/pdf/FGD921_Roteiro_Descricao_Dendrologica.pdf){target="_blank"} para descrever caracteres dendrológicos das árvores do campus. Esses dados vão compor o **e-book da flórula do campus da UFAM**.
@@ -59,7 +75,7 @@ Tutoriais passo a passo usados nas aulas práticas, com dados de exemplo para ba
 | Prática | Excel / on-line | R |
 |------------------------------------------|---------------------|---------------------|
 | Interpretação e validação de nomes científicos | [Plantminer + Flora e Funga](/extensao/rlab/rotinas/nomes-cientificos-excel.qmd) | [Rotina em R](/extensao/rlab/rotinas/nomes-cientificos.qmd) |
-| Calendários fenológicos com registros do speciesLink | – | [Rotina em R](/extensao/rlab/rotinas/fenologia-specieslink.qmd) |
+| Calendários fenológicos com registros do speciesLink | [FenoTree (on-line)](/extensao/rlab/rotinas/fenologia-specieslink.qmd) | – |
 
 : {.striped}
 

@@ -1,5 +1,11 @@
 [
   {
+    "listing": "/index.html",
+    "items": [
+      "/divulgacao/posts/2026-10-01-site-novo/index.html"
+    ]
+  },
+  {
     "listing": "/extensao/rlab/index.html",
     "items": [
       "/extensao/rlab/rotinas/primeiros-passos.html",
@@ -27,12 +33,6 @@
   },
   {
     "listing": "/divulgacaocientifica.html",
-    "items": [
-      "/divulgacao/posts/2026-10-01-site-novo/index.html"
-    ]
-  },
-  {
-    "listing": "/index.html",
     "items": [
       "/divulgacao/posts/2026-10-01-site-novo/index.html"
     ]

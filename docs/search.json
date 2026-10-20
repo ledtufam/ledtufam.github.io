@@ -196,172 +196,235 @@
     "text": "Referências\n\nFELFILI, J. M. et al. Fitossociologia no Brasil: métodos e estudos de caso. Viçosa: Editora UFV, 2011.\nLEGENDRE, P.; LEGENDRE, L. Numerical ecology. 3. ed. Amsterdam: Elsevier, 2012.\nMAGURRAN, A. E. Medindo a diversidade biológica. Curitiba: Ed. UFPR, 2011.\nMUELLER-DOMBOIS, D.; ELLENBERG, H. Aims and Methods of Vegetation Ecology. New York: Wiley, 1974.\nVANIN, A. 1999. Dissertação de mestrado (dados caixeta). Dados disponíveis em: https://ecor.ib.usp.br/doku.php?id=dados:dados-caixeta."
   },
   {
-    "objectID": "extensao/rlab/rotinas/mapa-ocorrencias.html",
-    "href": "extensao/rlab/rotinas/mapa-ocorrencias.html",
-    "title": "Mapa de ocorrências a partir do GBIF",
+    "objectID": "extensao/rlab/rotinas/heterogeneidade.html",
+    "href": "extensao/rlab/rotinas/heterogeneidade.html",
+    "title": "Índices de heterogeneidade: Shannon, Simpson e Pielou",
     "section": "",
-    "text": "Nível: intermediário · Pacotes: rgbif, CoordinateCleaner, leaflet · Requer internet · Baixar script"
+    "text": "Nível: iniciante/intermediário · Pacotes: apenas R básico · Disciplina: FGD320 - Fitossociologia · Baixar script · Baixar dados caixeta\nUma comunidade é mais heterogênea (ou diversa) quando tem mais espécies (riqueza) e quando os indivíduos estão distribuídos de forma mais equilibrada entre elas (equabilidade). Os índices de heterogeneidade combinam esses dois componentes num único número.\nOs caixetais são um ótimo exemplo: uma espécie, a caixeta, domina a comunidade. Como isso aparece nos índices?"
   },
   {
-    "objectID": "extensao/rlab/rotinas/mapa-ocorrencias.html#instale-os-pacotes",
-    "href": "extensao/rlab/rotinas/mapa-ocorrencias.html#instale-os-pacotes",
-    "title": "Mapa de ocorrências a partir do GBIF",
-    "section": "1. Instale os pacotes",
-    "text": "1. Instale os pacotes\n\ninstall.packages(c(\"rgbif\", \"CoordinateCleaner\", \"leaflet\", \"dplyr\"))"
-  },
-  {
-    "objectID": "extensao/rlab/rotinas/mapa-ocorrencias.html#baixe-os-registros",
-    "href": "extensao/rlab/rotinas/mapa-ocorrencias.html#baixe-os-registros",
-    "title": "Mapa de ocorrências a partir do GBIF",
-    "section": "2. Baixe os registros",
-    "text": "2. Baixe os registros\nO occ_search() é bom para explorar até alguns milhares de registros. Para artigos, use occ_download(), que gera um DOI citável para o conjunto de dados.\n\nlibrary(rgbif)\nlibrary(dplyr)\n\nespecie &lt;- \"Ecclinusa guianensis\"\n\nres &lt;- occ_search(\n  scientificName     = especie,\n  hasCoordinate      = TRUE,\n  hasGeospatialIssue = FALSE,\n  limit              = 5000\n)\n\nocc &lt;- res$data |&gt;\n  select(species, decimalLongitude, decimalLatitude, countryCode,\n         institutionCode, catalogNumber, year, basisOfRecord)\n\nnrow(occ)"
-  },
-  {
-    "objectID": "extensao/rlab/rotinas/mapa-ocorrencias.html#limpe-as-coordenadas",
-    "href": "extensao/rlab/rotinas/mapa-ocorrencias.html#limpe-as-coordenadas",
-    "title": "Mapa de ocorrências a partir do GBIF",
-    "section": "3. Limpe as coordenadas",
-    "text": "3. Limpe as coordenadas\nO CoordinateCleaner marca registros suspeitos: coordenadas em capitais, centroides de países, sedes de instituições (herbários!), coordenadas iguais a zero, no mar etc.\n\nlibrary(CoordinateCleaner)\n\nflags &lt;- clean_coordinates(\n  occ,\n  lon = \"decimalLongitude\", lat = \"decimalLatitude\",\n  countries = \"countryCode\", species = \"species\",\n  tests = c(\"capitals\", \"centroids\", \"equal\", \"gbif\",\n            \"institutions\", \"zeros\", \"seas\")\n)\n\nsummary(flags)\nocc_limpo &lt;- occ[flags$.summary, ]       # mantém só os registros aprovados\n\n# Remove duplicatas de coordenadas\nocc_limpo &lt;- distinct(occ_limpo, decimalLongitude, decimalLatitude, .keep_all = TRUE)\n\n\n\n\n\n\n\nDica\n\n\n\nA limpeza automática não substitui o olhar do taxonomista: confira a identificação dos registros fora da distribuição esperada antes de excluí-los ou mantê-los."
-  },
-  {
-    "objectID": "extensao/rlab/rotinas/mapa-ocorrencias.html#mapa-interativo",
-    "href": "extensao/rlab/rotinas/mapa-ocorrencias.html#mapa-interativo",
-    "title": "Mapa de ocorrências a partir do GBIF",
-    "section": "4. Mapa interativo",
-    "text": "4. Mapa interativo\n\nlibrary(leaflet)\n\nleaflet(occ_limpo) |&gt;\n  addProviderTiles(\"Esri.WorldImagery\", group = \"Satélite\") |&gt;\n  addTiles(group = \"Mapa\") |&gt;\n  addCircleMarkers(\n    ~decimalLongitude, ~decimalLatitude,\n    radius = 4, stroke = FALSE, fillOpacity = 0.8, color = \"#f3969a\",\n    popup = ~paste0(\"&lt;b&gt;\", institutionCode, \"&lt;/b&gt; \", catalogNumber,\n                    \"&lt;br&gt;Ano: \", year)\n  ) |&gt;\n  addLayersControl(baseGroups = c(\"Satélite\", \"Mapa\"))"
-  },
-  {
-    "objectID": "extensao/rlab/rotinas/mapa-ocorrencias.html#salve-os-dados",
-    "href": "extensao/rlab/rotinas/mapa-ocorrencias.html#salve-os-dados",
-    "title": "Mapa de ocorrências a partir do GBIF",
-    "section": "5. Salve os dados",
-    "text": "5. Salve os dados\n\nwrite.csv(occ_limpo, \"dados/ocorrencias_limpas.csv\", row.names = FALSE)"
-  },
-  {
-    "objectID": "extensao/rlab/rotinas/mapa-ocorrencias.html#referências",
-    "href": "extensao/rlab/rotinas/mapa-ocorrencias.html#referências",
-    "title": "Mapa de ocorrências a partir do GBIF",
-    "section": "Referências",
-    "text": "Referências\n\nCHAMBERLAIN, S. et al. rgbif: Interface to the Global Biodiversity Information Facility API. https://CRAN.R-project.org/package=rgbif\nZIZKA, A. et al. 2019. CoordinateCleaner: standardized cleaning of occurrence records from biological collection databases. Methods in Ecology and Evolution 10: 744-751."
-  },
-  {
-    "objectID": "extensao/rlab/rotinas/diversidade.html",
-    "href": "extensao/rlab/rotinas/diversidade.html",
-    "title": "Diversidade da vegetação: rarefação, estimadores e diversidade beta",
-    "section": "",
-    "text": "Nível: intermediário · Pacotes: apenas R básico · Disciplina: FGD320 - Fitossociologia · Baixar script · Baixar dados caixeta\nNa prática de heterogeneidade, o caixetal da Jureia teve mais espécies (22) que os outros dois (13). Mas ele também foi amostrado com o mesmo esforço? Com menos árvores, esperamos encontrar menos espécies, mesmo que a comunidade seja igualmente rica. Nesta rotina, vemos como comparar a riqueza de forma justa, estimar quantas espécies faltam e separar a diversidade dentro e entre as áreas."
-  },
-  {
-    "objectID": "extensao/rlab/rotinas/diversidade.html#dados",
-    "href": "extensao/rlab/rotinas/diversidade.html#dados",
-    "title": "Diversidade da vegetação: rarefação, estimadores e diversidade beta",
+    "objectID": "extensao/rlab/rotinas/heterogeneidade.html#dados",
+    "href": "extensao/rlab/rotinas/heterogeneidade.html#dados",
+    "title": "Índices de heterogeneidade: Shannon, Simpson e Pielou",
     "section": "1. Dados",
-    "text": "1. Dados\n\ncx &lt;- read.csv(\"../dados/caixeta.csv\")   # no seu projeto: read.csv(\"dados/caixeta.csv\")\ncx$especie[cx$especie == \"Callophyllum brasiliensis\"] &lt;- \"Calophyllum brasiliensis\"\n\narv &lt;- unique(cx[, c(\"local\", \"parcela\", \"arvore\", \"especie\")])   # uma linha por árvore\narv$parc &lt;- paste(arv$local, arv$parcela, sep = \"_\")\n\nab_parc  &lt;- unclass(table(arv$parc, arv$especie))    # parcela × espécie\nab_local &lt;- unclass(table(arv$local, arv$especie))   # local × espécie\nrowSums(ab_local)                                    # árvores por caixetal\n\nchauas jureia retiro \n   290    178    204"
+    "text": "1. Dados\n\ncx &lt;- read.csv(\"../dados/caixeta.csv\")   # no seu projeto: read.csv(\"dados/caixeta.csv\")\ncx$especie[cx$especie == \"Callophyllum brasiliensis\"] &lt;- \"Calophyllum brasiliensis\"\n\narv &lt;- unique(cx[, c(\"local\", \"parcela\", \"arvore\", \"especie\")])   # uma linha por árvore\nab  &lt;- unclass(table(arv$local, arv$especie))                      # local × espécie\nab[, 1:5]\n\n        \n         Alchornea triplinervia Andira fraxinifolia bombacaceae\n  chauas                      0                   0           0\n  jureia                      3                   4           1\n  retiro                      4                   0           0\n        \n         Cabralea canjerana Calophyllum brasiliensis\n  chauas                  0                        7\n  jureia                  4                        4\n  retiro                  0                        0"
   },
   {
-    "objectID": "extensao/rlab/rotinas/diversidade.html#curva-do-coletor-acumulação-de-espécies",
-    "href": "extensao/rlab/rotinas/diversidade.html#curva-do-coletor-acumulação-de-espécies",
-    "title": "Diversidade da vegetação: rarefação, estimadores e diversidade beta",
-    "section": "2. Curva do coletor (acumulação de espécies)",
-    "text": "2. Curva do coletor (acumulação de espécies)\nA curva do coletor mostra quantas espécies novas aparecem à medida que acrescentamos parcelas. Se ela se estabiliza (assíntota), a amostragem foi suficiente. Como a ordem das parcelas muda o resultado, sorteamos a ordem muitas vezes e usamos a média:\n\ncoletor &lt;- function(m, n_perm = 200) {\n  m &lt;- m &gt; 0\n  res &lt;- replicate(n_perm, {\n    ordem &lt;- sample(nrow(m))\n    sapply(seq_along(ordem), function(k) sum(colSums(m[ordem[1:k], , drop = FALSE]) &gt; 0))\n  })\n  data.frame(parcelas = 1:nrow(m), media = rowMeans(res),\n             inf = apply(res, 1, quantile, 0.025), sup = apply(res, 1, quantile, 0.975))\n}\n\nset.seed(2026)\ncc &lt;- coletor(ab_parc)\ncc\n\n   parcelas  media    inf    sup\n1         1  6.480  2.000 12.000\n2         2 11.095  4.000 19.025\n3         3 15.095  5.975 25.000\n4         4 18.595  9.950 29.000\n5         5 21.715 12.000 31.000\n6         6 24.540 15.975 33.000\n7         7 26.955 18.000 35.000\n8         8 29.545 21.000 37.000\n9         9 31.910 24.000 39.000\n10       10 34.020 25.975 40.000\n11       11 35.945 29.000 41.000\n12       12 37.780 31.975 42.000\n13       13 39.270 33.975 42.000\n14       14 40.730 36.000 42.000\n15       15 42.000 42.000 42.000\n\n\n\nplot(cc$parcelas, cc$media, type = \"n\", ylim = c(0, max(cc$sup) + 5),\n     xlab = \"Número de parcelas (200 m² cada)\", ylab = \"Número de espécies\")\npolygon(c(cc$parcelas, rev(cc$parcelas)), c(cc$inf, rev(cc$sup)), col = \"#78c2ad55\", border = NA)\nlines(cc$parcelas, cc$media, lwd = 2, col = \"#2c7a5e\")\npoints(cc$parcelas, cc$media, pch = 19, col = \"#2c7a5e\")\n\n\n\n\nCurva do coletor das 15 parcelas (média de 200 ordens sorteadas e intervalo de 95 por cento)."
+    "objectID": "extensao/rlab/rotinas/heterogeneidade.html#passo-a-passo-o-caixetal-da-jureia",
+    "href": "extensao/rlab/rotinas/heterogeneidade.html#passo-a-passo-o-caixetal-da-jureia",
+    "title": "Índices de heterogeneidade: Shannon, Simpson e Pielou",
+    "section": "2. Passo a passo: o caixetal da Jureia",
+    "text": "2. Passo a passo: o caixetal da Jureia\n\n\n\n\n\n\n\n\nÍndice\nFórmula\nInterpretação\n\n\n\n\nRiqueza\n\\(S\\)\nnúmero de espécies\n\n\nShannon\n\\(H' = -\\sum p_i \\ln p_i\\)\nincerteza em prever a espécie do próximo indivíduo\n\n\nSimpson (dominância)\n\\(D = \\sum \\frac{n_i(n_i-1)}{N(N-1)}\\)\nprobabilidade de dois indivíduos sorteados serem da mesma espécie\n\n\nGini-Simpson\n\\(1 - D\\)\nprobabilidade de serem de espécies diferentes\n\n\nSimpson inverso\n\\(1/D\\)\nnúmero “efetivo” de espécies dominantes\n\n\nPielou\n\\(J' = H' / \\ln S\\)\nequabilidade, de 0 a 1\n\n\n\nem que \\(p_i = n_i / N\\) é a proporção de indivíduos da espécie i.\n\nn &lt;- ab[\"jureia\", ]\nn &lt;- n[n &gt; 0]                  # só as espécies presentes\nN &lt;- sum(n); S &lt;- length(n)\np &lt;- n / N\n\nH &lt;- -sum(p * log(p))\nD &lt;- sum(n * (n - 1)) / (N * (N - 1))\nJ &lt;- H / log(S)\n\nc(N = N, S = S, Shannon = round(H, 3), Simpson_D = round(D, 3),\n  Gini_Simpson = round(1 - D, 3), Simpson_inv = round(1 / D, 2), Pielou = round(J, 3))\n\n           N            S      Shannon    Simpson_D Gini_Simpson  Simpson_inv \n     178.000       22.000        1.873        0.285        0.715        3.510 \n      Pielou \n       0.606 \n\n\n\n\n\n\n\n\nQual logaritmo? Usamos o logaritmo natural (\\(\\ln\\), log() no R), e o resultado é dado em nats. Alguns trabalhos usam \\(\\log_2\\) (bits) ou \\(\\log_{10}\\). Os valores mudam, então só compare índices calculados com a mesma base."
   },
   {
-    "objectID": "extensao/rlab/rotinas/diversidade.html#rarefação-comparar-a-riqueza-com-o-mesmo-número-de-indivíduos",
-    "href": "extensao/rlab/rotinas/diversidade.html#rarefação-comparar-a-riqueza-com-o-mesmo-número-de-indivíduos",
-    "title": "Diversidade da vegetação: rarefação, estimadores e diversidade beta",
-    "section": "3. Rarefação: comparar a riqueza com o mesmo número de indivíduos",
-    "text": "3. Rarefação: comparar a riqueza com o mesmo número de indivíduos\nA rarefação (Hurlbert 1971) responde: quantas espécies esperaríamos encontrar se tivéssemos amostrado só \\(n\\) indivíduos? Assim, comparamos as áreas com o mesmo esforço:\n\\[E(S_n) = \\sum_{i=1}^{S} \\left[ 1 - \\frac{\\binom{N - N_i}{n}}{\\binom{N}{n}} \\right]\\]\nem que \\(N\\) = total de indivíduos e \\(N_i\\) = indivíduos da espécie i.\n\nrarefacao &lt;- function(x, n) {\n  x &lt;- x[x &gt; 0]; N &lt;- sum(x)\n  sapply(n, function(k) sum(1 - exp(lchoose(N - x, k) - lchoose(N, k))))\n}\n\nn_min &lt;- min(rowSums(ab_local))          # o menor caixetal (jureia, 178 árvores)\nsapply(rownames(ab_local), function(l) round(rarefacao(ab_local[l, ], n_min), 1))\n\nchauas jureia retiro \n   9.7   22.0   12.4 \n\n\n\ncores &lt;- c(chauas = \"#1b9e77\", jureia = \"#d95f02\", retiro = \"#7570b3\")\nplot(NA, xlim = c(1, max(rowSums(ab_local))), ylim = c(0, 25),\n     xlab = \"Número de árvores\", ylab = \"Número esperado de espécies\")\nfor (l in rownames(ab_local)) {\n  n &lt;- 1:sum(ab_local[l, ])\n  lines(n, rarefacao(ab_local[l, ], n), lwd = 2, col = cores[l])\n}\nabline(v = n_min, lty = 2, col = \"grey50\")\nlegend(\"bottomright\", legend = names(cores), col = cores, lwd = 2, bty = \"n\")\n\n\n\n\nCurvas de rarefação dos três caixetais. A linha tracejada marca o tamanho do menor caixetal."
+    "objectID": "extensao/rlab/rotinas/heterogeneidade.html#os-três-caixetais",
+    "href": "extensao/rlab/rotinas/heterogeneidade.html#os-três-caixetais",
+    "title": "Índices de heterogeneidade: Shannon, Simpson e Pielou",
+    "section": "3. Os três caixetais",
+    "text": "3. Os três caixetais\n\nheterogeneidade &lt;- function(n) {\n  n &lt;- n[n &gt; 0]; N &lt;- sum(n); S &lt;- length(n); p &lt;- n / N\n  H &lt;- -sum(p * log(p)); D &lt;- sum(n * (n - 1)) / (N * (N - 1))\n  c(N = N, S = S, Shannon = H, Simpson_D = D, Gini_Simpson = 1 - D,\n    Simpson_inv = 1 / D, Pielou = H / log(S))\n}\n\nhet &lt;- t(apply(ab, 1, heterogeneidade))\nhet &lt;- rbind(het, total = heterogeneidade(colSums(ab)))\nknitr::kable(het, digits = 3, caption = \"Índices de heterogeneidade por caixetal.\")\n\n\nÍndices de heterogeneidade por caixetal.\n\n\n\n\n\n\n\n\n\n\n\n\n\nN\nS\nShannon\nSimpson_D\nGini_Simpson\nSimpson_inv\nPielou\n\n\n\n\nchauas\n290\n13\n0.957\n0.507\n0.493\n1.972\n0.373\n\n\njureia\n178\n22\n1.873\n0.285\n0.715\n3.505\n0.606\n\n\nretiro\n204\n13\n1.148\n0.471\n0.529\n2.123\n0.448\n\n\ntotal\n672\n42\n1.667\n0.394\n0.606\n2.537\n0.446\n\n\n\n\n\n\ncores &lt;- c(chauas = \"#1b9e77\", jureia = \"#d95f02\", retiro = \"#7570b3\")\nplot(NA, xlim = c(1, max(het[1:3, \"S\"])), ylim = c(0.1, 100), log = \"y\",\n     xlab = \"Posição da espécie (da mais para a menos abundante)\",\n     ylab = \"Abundância relativa (%)\")\nfor (l in rownames(ab)) {\n  pr &lt;- sort(ab[l, ab[l, ] &gt; 0], decreasing = TRUE) / sum(ab[l, ]) * 100\n  lines(seq_along(pr), pr, type = \"b\", pch = 19, col = cores[l])\n}\nlegend(\"topright\", legend = names(cores), col = cores, pch = 19, lty = 1, bty = \"n\")\n\n\n\n\nCurvas de dominância-diversidade (abundância relativa em escala logarítmica por posição da espécie) nos três caixetais.\n\n\n\n\nA curva de dominância-diversidade mostra os dois componentes ao mesmo tempo: o comprimento da curva é a riqueza, e a inclinação, a (falta de) equabilidade."
   },
   {
-    "objectID": "extensao/rlab/rotinas/diversidade.html#quantas-espécies-faltam-estimadores-de-riqueza",
-    "href": "extensao/rlab/rotinas/diversidade.html#quantas-espécies-faltam-estimadores-de-riqueza",
-    "title": "Diversidade da vegetação: rarefação, estimadores e diversidade beta",
-    "section": "4. Quantas espécies faltam? Estimadores de riqueza",
-    "text": "4. Quantas espécies faltam? Estimadores de riqueza\nOs estimadores não paramétricos usam as espécies raras para estimar quantas ainda não foram encontradas:\n\n\n\n\n\n\n\n\nEstimador\nFórmula\nBaseado em\n\n\n\n\nChao 1\n\\(S_{obs} + \\frac{F_1(F_1 - 1)}{2(F_2 + 1)}\\)\nsingletons (\\(F_1\\), espécies com 1 indivíduo) e doubletons (\\(F_2\\), com 2)\n\n\nJackknife 1\n\\(S_{obs} + Q_1 \\frac{m - 1}{m}\\)\n\\(Q_1\\) = espécies em uma só parcela; \\(m\\) = número de parcelas\n\n\n\n\nestimadores &lt;- function(m) {          # m = parcela × espécie (abundâncias)\n  x  &lt;- colSums(m); x &lt;- x[x &gt; 0]\n  Sobs &lt;- length(x); F1 &lt;- sum(x == 1); F2 &lt;- sum(x == 2)\n  inc &lt;- colSums(m &gt; 0); inc &lt;- inc[inc &gt; 0]\n  Q1 &lt;- sum(inc == 1); k &lt;- nrow(m)\n  c(S_obs = Sobs, F1 = F1, F2 = F2, Chao1 = Sobs + F1 * (F1 - 1) / (2 * (F2 + 1)),\n    Q1 = Q1, Jack1 = Sobs + Q1 * (k - 1) / k)\n}\n\nest &lt;- rbind(\n  t(sapply(split(as.data.frame(ab_parc), sub(\"_.*\", \"\", rownames(ab_parc))),\n           function(d) estimadores(as.matrix(d)))),\n  total = estimadores(ab_parc))\nknitr::kable(est, digits = 1, caption = \"Riqueza observada e estimada por caixetal e no total.\")\n\n\nRiqueza observada e estimada por caixetal e no total.\n\n\n\nS_obs\nF1\nF2\nChao1\nQ1\nJack1\n\n\n\n\nchauas\n13\n8\n1\n27.0\n9\n20.2\n\n\njureia\n22\n8\n3\n29.0\n8\n28.4\n\n\nretiro\n13\n4\n4\n14.2\n7\n18.6\n\n\ntotal\n42\n18\n8\n59.0\n22\n62.5\n\n\n\n\n\n\n\n\n\n\n\nCom só 5 parcelas por local, os estimadores são pouco precisos. Eles indicam a ordem de grandeza da riqueza que falta, não um valor exato."
+    "objectID": "extensao/rlab/rotinas/heterogeneidade.html#os-índices-de-shannon-diferem-teste-t-de-hutcheson",
+    "href": "extensao/rlab/rotinas/heterogeneidade.html#os-índices-de-shannon-diferem-teste-t-de-hutcheson",
+    "title": "Índices de heterogeneidade: Shannon, Simpson e Pielou",
+    "section": "4. Os índices de Shannon diferem? Teste t de Hutcheson",
+    "text": "4. Os índices de Shannon diferem? Teste t de Hutcheson\nHutcheson (1970) propôs um teste t para comparar dois valores de \\(H'\\), usando a variância de cada um:\n\\[\\text{Var}(H') = \\frac{\\sum p_i (\\ln p_i)^2 - (\\sum p_i \\ln p_i)^2}{N} + \\frac{S - 1}{2N^2}\\]\n\\[t = \\frac{H'_1 - H'_2}{\\sqrt{\\text{Var}(H'_1) + \\text{Var}(H'_2)}}, \\qquad gl = \\frac{[\\text{Var}(H'_1) + \\text{Var}(H'_2)]^2}{\\text{Var}(H'_1)^2/N_1 + \\text{Var}(H'_2)^2/N_2}\\]\n\nhutcheson &lt;- function(n1, n2) {\n  v &lt;- function(n) {\n    n &lt;- n[n &gt; 0]; N &lt;- sum(n); S &lt;- length(n); p &lt;- n / N\n    H &lt;- -sum(p * log(p))\n    c(H = H, var = (sum(p * log(p)^2) - sum(p * log(p))^2) / N + (S - 1) / (2 * N^2), N = N)\n  }\n  a &lt;- v(n1); b &lt;- v(n2)\n  t  &lt;- (a[\"H\"] - b[\"H\"]) / sqrt(a[\"var\"] + b[\"var\"])\n  gl &lt;- (a[\"var\"] + b[\"var\"])^2 / (a[\"var\"]^2 / a[\"N\"] + b[\"var\"]^2 / b[\"N\"])\n  c(H1 = a[[\"H\"]], H2 = b[[\"H\"]], t = t[[1]], gl = gl[[1]], p = 2 * pt(-abs(t[[1]]), gl[[1]]))\n}\n\npares &lt;- combn(rownames(ab), 2)\nteste &lt;- t(apply(pares, 2, function(x) hutcheson(ab[x[1], ], ab[x[2], ])))\nrownames(teste) &lt;- apply(pares, 2, paste, collapse = \" × \")\nknitr::kable(teste, digits = 4, caption = \"Teste t de Hutcheson entre os caixetais.\")\n\n\nTeste t de Hutcheson entre os caixetais.\n\n\n\nH1\nH2\nt\ngl\np\n\n\n\n\nchauas × jureia\n0.9572\n1.8734\n-7.0986\n306.1799\n0.0000\n\n\nchauas × retiro\n0.9572\n1.1484\n-1.7066\n403.6121\n0.0887\n\n\njureia × retiro\n1.8734\n1.1484\n5.0858\n355.8907\n0.0000"
   },
   {
-    "objectID": "extensao/rlab/rotinas/diversidade.html#diversidade-alfa-beta-e-gama",
-    "href": "extensao/rlab/rotinas/diversidade.html#diversidade-alfa-beta-e-gama",
-    "title": "Diversidade da vegetação: rarefação, estimadores e diversidade beta",
-    "section": "5. Diversidade alfa, beta e gama",
-    "text": "5. Diversidade alfa, beta e gama\nWhittaker (1960) separou a diversidade em três níveis:\n\nalfa (\\(\\alpha\\)): diversidade dentro de cada unidade (média das parcelas ou dos locais);\ngama (\\(\\gamma\\)): diversidade total da região;\nbeta (\\(\\beta\\)): diferença de composição entre as unidades.\n\nNa forma multiplicativa, \\(\\beta = \\gamma / \\bar\\alpha\\) (quantas “unidades completamente diferentes” existem); na forma aditiva, \\(\\beta = \\gamma - \\bar\\alpha\\) (quantas espécies faltam, em média, em cada unidade).\n\nparticao &lt;- function(m) {\n  alfa &lt;- mean(rowSums(m &gt; 0)); gama &lt;- sum(colSums(m) &gt; 0)\n  c(alfa = alfa, gama = gama, beta_mult = gama / alfa, beta_adit = gama - alfa)\n}\n\nrbind(\n  `parcelas dentro de chauas` = particao(ab_parc[grepl(\"chauas\", rownames(ab_parc)), ]),\n  `parcelas dentro de jureia` = particao(ab_parc[grepl(\"jureia\", rownames(ab_parc)), ]),\n  `parcelas dentro de retiro` = particao(ab_parc[grepl(\"retiro\", rownames(ab_parc)), ]),\n  `entre os caixetais`        = particao(ab_local)\n) |&gt; round(2)\n\n                          alfa gama beta_mult beta_adit\nparcelas dentro de chauas  5.0   13      2.60       8.0\nparcelas dentro de jureia  9.0   22      2.44      13.0\nparcelas dentro de retiro  5.4   13      2.41       7.6\nentre os caixetais        16.0   42      2.62      26.0\n\n\nSe a beta entre os caixetais se aproxima de 3 (o número de locais), quase não há espécies em comum: cada caixetal funciona como uma comunidade diferente, apesar de todos serem dominados pela caixeta."
+    "objectID": "extensao/rlab/rotinas/heterogeneidade.html#números-de-hill-uma-família-de-índices",
+    "href": "extensao/rlab/rotinas/heterogeneidade.html#números-de-hill-uma-família-de-índices",
+    "title": "Índices de heterogeneidade: Shannon, Simpson e Pielou",
+    "section": "5. Números de Hill: uma família de índices",
+    "text": "5. Números de Hill: uma família de índices\nRiqueza, Shannon e Simpson podem ser vistos como membros de uma mesma família, os números de Hill (\\(^qD\\)), expressos em número efetivo de espécies:\n\n\\(^0D = S\\) (riqueza: todas as espécies contam igualmente);\n\\(^1D = \\exp(H')\\) (espécies pesam pela abundância);\n\\(^2D = 1 / \\sum p_i^2\\) (só as espécies dominantes pesam).\n\nQuanto mais rápido o perfil cai com \\(q\\), mais desigual é a comunidade.\n\nhill &lt;- function(n, q) {\n  p &lt;- n[n &gt; 0] / sum(n)\n  if (q == 1) exp(-sum(p * log(p))) else sum(p^q)^(1 / (1 - q))\n}\nqs &lt;- seq(0, 3, by = 0.1)\nperfis &lt;- sapply(rownames(ab), function(l) sapply(qs, function(q) hill(ab[l, ], q)))\n\nmatplot(qs, perfis, type = \"l\", lty = 1, lwd = 2, col = cores[colnames(perfis)],\n        xlab = \"Ordem q\", ylab = \"Número efetivo de espécies\")\nlegend(\"topright\", legend = colnames(perfis), col = cores[colnames(perfis)], lwd = 2, bty = \"n\")\n\n\n\n\nPerfis de diversidade de Hill (q de 0 a 3) dos três caixetais.\n\n\n\nround(perfis[qs %in% c(0, 1, 2), ], 2)\n\n     chauas jureia retiro\n[1,]  13.00  22.00  13.00\n[2,]   2.60   6.51   3.15\n[3,]   1.97   3.46   2.11"
   },
   {
-    "objectID": "extensao/rlab/rotinas/diversidade.html#exercícios",
-    "href": "extensao/rlab/rotinas/diversidade.html#exercícios",
-    "title": "Diversidade da vegetação: rarefação, estimadores e diversidade beta",
-    "section": "6. Exercícios",
-    "text": "6. Exercícios\n\n\n\n\n\n\nPara entregar (EE7)\n\n\n\n\nA curva do coletor das 15 parcelas se estabilizou? O que isso diz sobre a suficiência amostral?\nCom o mesmo número de árvores (rarefação), a Jureia continua sendo o caixetal mais rico? A diferença em relação aos outros diminuiu?\nQuantas espécies os estimadores Chao 1 e Jackknife 1 sugerem que ainda faltam em cada caixetal? Qual deles você considera mais adequado para parcelas pequenas?\nCompare a diversidade beta dentro de cada caixetal e entre os caixetais. Onde está a maior parte da diversidade da região?\nComo a padronização dos nomes (morfoespécies que podem ser a mesma espécie) afetaria a diversidade beta?\nEscreva um parágrafo-síntese que una os resultados de estrutura, padrão espacial, similaridade e diversidade dos caixetais. Este parágrafo será o ponto de partida da discussão do relatório.\n\n\n\n\n\n\n\n\n\nPara o relatório (formato de artigo)\n\n\n\nEsta prática gera a Figura 5 (curvas de rarefação) e a Tabela 5 (estimadores e partição da diversidade). O parágrafo-síntese do exercício 6 abre a discussão."
+    "objectID": "extensao/rlab/rotinas/heterogeneidade.html#o-peso-da-espécie-dominante",
+    "href": "extensao/rlab/rotinas/heterogeneidade.html#o-peso-da-espécie-dominante",
+    "title": "Índices de heterogeneidade: Shannon, Simpson e Pielou",
+    "section": "6. O peso da espécie dominante",
+    "text": "6. O peso da espécie dominante\nO que acontece com os índices se retirarmos a caixeta?\n\nsem_caixeta &lt;- ab[, colnames(ab) != \"Tabebuia cassinoides\"]\nknitr::kable(cbind(com = het[1:3, c(\"Shannon\", \"Pielou\")],\n                   sem = t(apply(sem_caixeta, 1, heterogeneidade))[, c(\"Shannon\", \"Pielou\")]),\n             digits = 3, col.names = c(\"H' (com)\", \"J' (com)\", \"H' (sem)\", \"J' (sem)\"),\n             caption = \"Shannon e Pielou com e sem a caixeta.\")\n\n\nShannon e Pielou com e sem a caixeta.\n\n\n\nH’ (com)\nJ’ (com)\nH’ (sem)\nJ’ (sem)\n\n\n\n\nchauas\n0.957\n0.373\n0.924\n0.372\n\n\njureia\n1.873\n0.606\n2.309\n0.758\n\n\nretiro\n1.148\n0.448\n1.414\n0.569"
   },
   {
-    "objectID": "extensao/rlab/rotinas/diversidade.html#referências",
-    "href": "extensao/rlab/rotinas/diversidade.html#referências",
-    "title": "Diversidade da vegetação: rarefação, estimadores e diversidade beta",
+    "objectID": "extensao/rlab/rotinas/heterogeneidade.html#exercícios",
+    "href": "extensao/rlab/rotinas/heterogeneidade.html#exercícios",
+    "title": "Índices de heterogeneidade: Shannon, Simpson e Pielou",
+    "section": "7. Exercícios",
+    "text": "7. Exercícios\n\n\n\n\n\n\nPara entregar (EE6)\n\n\n\n\nCalcule à mão (calculadora ou Excel) \\(H'\\), \\(D\\) e \\(J'\\) para o caixetal de chauas e confira com a tabela da seção 3.\nQual caixetal é mais diverso? A resposta é a mesma para todos os índices?\nAs diferenças entre os valores de \\(H'\\) são significativas pelo teste de Hutcheson?\nExplique, com o perfil de Hill, por que a diferença entre os caixetais diminui quando \\(q\\) aumenta.\nO que acontece com \\(H'\\) e \\(J'\\) quando a caixeta é retirada? O que isso diz sobre a estrutura dos caixetais?\nCompare os valores de \\(H'\\) dos caixetais com os de florestas de terra firme da Amazônia (procure na literatura). Por que são tão diferentes?\n\n\n\n\n\n\n\n\n\nPara o relatório (formato de artigo)\n\n\n\nEsta prática gera a Tabela 4 (índices de heterogeneidade por caixetal, com o teste de Hutcheson) e a Figura 4 (curvas de dominância-diversidade ou perfis de Hill)."
+  },
+  {
+    "objectID": "extensao/rlab/rotinas/heterogeneidade.html#referências",
+    "href": "extensao/rlab/rotinas/heterogeneidade.html#referências",
+    "title": "Índices de heterogeneidade: Shannon, Simpson e Pielou",
     "section": "Referências",
-    "text": "Referências\n\nCHAO, A. Nonparametric estimation of the number of classes in a population. Scandinavian Journal of Statistics, v. 11, p. 265-270, 1984.\nGOTELLI, N. J.; COLWELL, R. K. Quantifying biodiversity: procedures and pitfalls in the measurement and comparison of species richness. Ecology Letters, v. 4, p. 379-391, 2001.\nHURLBERT, S. H. The nonconcept of species diversity: a critique and alternative parameters. Ecology, v. 52, p. 577-586, 1971.\nMAGURRAN, A. E. Medindo a diversidade biológica. Curitiba: Ed. UFPR, 2011.\nWHITTAKER, R. H. Vegetation of the Siskiyou Mountains, Oregon and California. Ecological Monographs, v. 30, p. 279-338, 1960.\nVANIN, A. 1999. Dissertação de mestrado (dados caixeta). Dados disponíveis em: https://ecor.ib.usp.br/doku.php?id=dados:dados-caixeta."
+    "text": "Referências\n\nHILL, M. O. Diversity and evenness: a unifying notation and its consequences. Ecology, v. 54, p. 427-432, 1973.\nHUTCHESON, K. A test for comparing diversities based on the Shannon formula. Journal of Theoretical Biology, v. 29, p. 151-154, 1970.\nMAGURRAN, A. E. Medindo a diversidade biológica. Curitiba: Ed. UFPR, 2011.\nPIELOU, E. C. The measurement of diversity in different types of biological collections. Journal of Theoretical Biology, v. 13, p. 131-144, 1966.\nVANIN, A. 1999. Dissertação de mestrado (dados caixeta). Dados disponíveis em: https://ecor.ib.usp.br/doku.php?id=dados:dados-caixeta."
   },
   {
-    "objectID": "publicacoes.html",
-    "href": "publicacoes.html",
-    "title": "Publicações",
+    "objectID": "extensao/rlab/rotinas/primeiros-passos.html",
+    "href": "extensao/rlab/rotinas/primeiros-passos.html",
+    "title": "Primeiros passos no R",
     "section": "",
-    "text": "Produção científica do LEDT, organizada por ano. Nomes em negrito são membros do laboratório. Os selos mostram a atenção online (Altmetric) e as citações (Dimensions) de cada trabalho, quando houver.\n10 publicações"
+    "text": "Nível: iniciante · Pacotes: nenhum além do R básico · Baixar script"
   },
   {
-    "objectID": "publicacoes.html#section",
-    "href": "publicacoes.html#section",
-    "title": "Publicações",
-    "section": "2026",
-    "text": "2026\n\nPreprint White, D.M.; Durgante, F.M.; Austin, M.; …; Vasconcelos, C.C.; et al. (2026). A Protocol for Standardizing Measurements and Enabling Global Harmonization of Herbarium Leaf Reflectance Spectra. EcoEvoRxiv.\n DOI: 10.32942/X2SD4D  \n\n\nGuia de campo Ureta-Adrianzen, M.; Vasconcelos, C.C.; Rivera-Parada, L.; Franco-León, P.J.; Cunha, K.C.M.; Andrade, A.; Vicentini, A. (2026). Bark of the Lauraceae Trees of the Biological Dynamics of Forest Fragments Project. Field Museum, 4(1), 1787.\n Acessar\n\n\nArtigo da Cunha, K.C.M.; Durgante, F.M.; Rivera-Parada, L.L.; da Gama, I.G.; Ferreira, G.; Amoêdo, S.C.; Vasconcelos, C.C. (2026). Environmental specialization decouples geographic range and habitat occupancy in Ragala ucuquirana-branca (Sapotaceae) across the Amazon Basin. Plant Ecology and Evolution, 159(2), 444-459.\n DOI: 10.5091/plecevo.185741  \n\n\nPreprint Amoedo, S.; Vasconcelos, C.C.; Ferraz, I. (2026). Integrating morphometric and spectral evidence for species discrimination in Amazonian trees: a case study of Carapa (Meliaceae). EcoEvoRxiv.\n DOI: 10.32942/X2V69V  \n\n\nPreprint Nakamura, S.; Tsendbazar, N.; ter Steege, H.; …; Durgante, F.M.; Vasconcelos, C.C.; et al. (2026). Modeling spatial distribution of Amazonian functional composition and diversity using satellite embeddings. SSRN (preprint).\n DOI: 10.2139/ssrn.7553419  \n\n\nSoftware/Dados Vasconcelos, C.C. (2026). R script and example data to calculate IUCN Red List Criterion B spatial parameters using ConR. Zenodo, v1.0.0.\n DOI: 10.5281/zenodo.22822017  \n\n\nPreprint Durgante, F.M.; Vasconcelos, C.C.; Hadlich, H.L.; …; da Cunha, K.C.M.; Chaves, S.R.; et al. (2026). Species recognition in herbaria and standing trees using an accessible portable spectrometer. EcoEvoRxiv.\n DOI: 10.32942/X2T97T  \n\n\nLivro/Relatório Antonelli, A.; Fry, C.; Smith, R.J.; …; Durgante, F.M.; Vasconcelos, C.C.; et al. (2026). State of the World’s Plants and Fungi 2026. Royal Botanic Gardens, 102.\n DOI: 10.34885/rdzs-ky83  \n\n\nArtigo Oliveira, D.N.; Ordóñez-Parra, C.A.; Chen, S.C.; …; da Cruz Vasconcelos, C.; et al. (2026). Tropical Seed Trait Database: advancing seed functional ecology in the world’s most biodiverse region. New Phytologist, 251(3), 945-958.\n DOI: 10.1111/nph.71268"
+    "objectID": "extensao/rlab/rotinas/primeiros-passos.html#instale-o-r-e-o-rstudio",
+    "href": "extensao/rlab/rotinas/primeiros-passos.html#instale-o-r-e-o-rstudio",
+    "title": "Primeiros passos no R",
+    "section": "1. Instale o R e o RStudio",
+    "text": "1. Instale o R e o RStudio\n\nBaixe e instale o R: https://cran.r-project.org/\nBaixe e instale o RStudio Desktop: https://posit.co/download/rstudio-desktop/\nSó no Windows: instale também o Rtools, na versão correspondente ao seu R (ex.: R 4.5 → Rtools 4.5): https://cran.r-project.org/bin/windows/Rtools/. Ele é necessário para instalar pacotes que precisam ser compilados, como os instalados direto do GitHub.\nAbra sempre o RStudio (ele usa o R por trás).\n\n\n\n\n\n\n\nPara saber sua versão do R, digite R.version.string no Console. Para conferir se o Rtools foi reconhecido, instale o pacote pkgbuild e rode pkgbuild::has_build_tools(debug = TRUE)."
   },
   {
-    "objectID": "publicacoes.html#section-1",
-    "href": "publicacoes.html#section-1",
-    "title": "Publicações",
-    "section": "2025",
-    "text": "2025\n\nPreprint Vasconcelos, C.C.; Ferreira, G.; Silva, C.B.; …; Cunha, K.C.M.; Guabiraba-Ribeiro, G.; et al. (2025). Tree species natural regeneration in a tidal white-water floodplain forest of the Amazon River estuary. bioRxiv.\n DOI: 10.1101/2025.10.03.680168"
+    "objectID": "extensao/rlab/rotinas/primeiros-passos.html#trabalhe-com-projetos",
+    "href": "extensao/rlab/rotinas/primeiros-passos.html#trabalhe-com-projetos",
+    "title": "Primeiros passos no R",
+    "section": "2. Trabalhe com projetos",
+    "text": "2. Trabalhe com projetos\nNo RStudio, vá em File → New Project → New Directory. Crie uma pasta para cada trabalho (ex.: dendrologia_2026) com a estrutura:\ndendrologia_2026/\n├── dados/      # planilhas originais (nunca edite à mão depois de salvar!)\n├── scripts/    # seus arquivos .R\n└── figuras/    # gráficos exportados\nAssim, os caminhos ficam curtos e o projeto funciona em qualquer computador."
   },
   {
-    "objectID": "sobre.html",
-    "href": "sobre.html",
-    "title": "Sobre",
+    "objectID": "extensao/rlab/rotinas/primeiros-passos.html#o-básico-da-linguagem",
+    "href": "extensao/rlab/rotinas/primeiros-passos.html#o-básico-da-linguagem",
+    "title": "Primeiros passos no R",
+    "section": "3. O básico da linguagem",
+    "text": "3. O básico da linguagem\n\n# Comentários começam com #\nx &lt;- c(12.5, 30.2, 18.7, 45.0)   # vetor com DAP (cm) de 4 árvores\nmean(x)                          # média\n\n[1] 26.6\n\nsd(x)                            # desvio padrão\n\n[1] 14.29149\n\n# Área basal (m²) de cada árvore a partir do DAP em cm\ng &lt;- pi * x^2 / 40000\nround(g, 4)\n\n[1] 0.0123 0.0716 0.0275 0.1590"
+  },
+  {
+    "objectID": "extensao/rlab/rotinas/primeiros-passos.html#instale-e-carregue-pacotes",
+    "href": "extensao/rlab/rotinas/primeiros-passos.html#instale-e-carregue-pacotes",
+    "title": "Primeiros passos no R",
+    "section": "4. Instale e carregue pacotes",
+    "text": "4. Instale e carregue pacotes\nPacotes só precisam ser instalados uma vez; depois, carregue-os em cada sessão com library().\n\ninstall.packages(c(\"readxl\", \"ggplot2\", \"dplyr\"))\n\nlibrary(readxl)\nlibrary(ggplot2)"
+  },
+  {
+    "objectID": "extensao/rlab/rotinas/primeiros-passos.html#importe-uma-planilha",
+    "href": "extensao/rlab/rotinas/primeiros-passos.html#importe-uma-planilha",
+    "title": "Primeiros passos no R",
+    "section": "5. Importe uma planilha",
+    "text": "5. Importe uma planilha\nSalve a planilha do Excel como .csv (separador ; no Brasil) ou leia o .xlsx diretamente:\n\n# CSV com ; e vírgula decimal (padrão do Excel em português)\ndados &lt;- read.csv2(\"dados/inventario.csv\")\n\n# Ou o arquivo do Excel\ndados &lt;- readxl::read_excel(\"dados/inventario.xlsx\", sheet = 1)\n\nhead(dados)     # primeiras linhas\nstr(dados)      # tipo de cada coluna\nsummary(dados)  # resumo"
+  },
+  {
+    "objectID": "extensao/rlab/rotinas/primeiros-passos.html#seu-primeiro-gráfico",
+    "href": "extensao/rlab/rotinas/primeiros-passos.html#seu-primeiro-gráfico",
+    "title": "Primeiros passos no R",
+    "section": "6. Seu primeiro gráfico",
+    "text": "6. Seu primeiro gráfico\n\nset.seed(42)\ndap &lt;- rlnorm(200, meanlog = log(20), sdlog = 0.5)\nhist(dap, breaks = 20, col = \"#78c2ad\", border = \"white\",\n     main = \"\", xlab = \"DAP (cm)\", ylab = \"Número de árvores\")\n\n\n\n\nHistograma de DAP de 200 árvores simuladas."
+  },
+  {
+    "objectID": "extensao/rlab/rotinas/primeiros-passos.html#para-continuar-estudando",
+    "href": "extensao/rlab/rotinas/primeiros-passos.html#para-continuar-estudando",
+    "title": "Primeiros passos no R",
+    "section": "Para continuar estudando",
+    "text": "Para continuar estudando\n\nR for Data Science (2ª ed., em português)\nAnálises Ecológicas no R — livro em português com exemplos de ecologia"
+  },
+  {
+    "objectID": "contato.html",
+    "href": "contato.html",
+    "title": "Contato",
     "section": "",
-    "text": "Nossa missão\nO Laboratório de Ecologia e Dendrologia Tropical (LEDT) está vinculado ao Departamento de Ciências Florestais da Faculdade de Ciências Agrárias da Universidade Federal do Amazonas (UFAM), sediado em Manaus, Brasil.\nNosso laboratório dedica-se ao estudo da diversidade, ecologia, taxonomia e funcionamento das florestas tropicais, com ênfase na Amazônia. Desenvolvemos pesquisas que integram trabalho de campo, coleções biológicas, espectroscopia, monitoramento ecológico e ferramentas analíticas para compreender a biodiversidade amazônica e suas respostas às mudanças climáticas.\n\n\nO que fazemos\nNossas pesquisas abrangem diferentes escalas da biodiversidade vegetal, desde a identificação taxonômica de espécies até a compreensão dos processos ecológicos que estruturam as florestas amazônicas.\n\n\nAtuamos principalmente nas seguintes áreas:\n\nDendrologia, taxonomia e sistemática de árvores tropicais;\nEcologia de comunidades, ecologia funcional e monitoramento de florestas;\nEspectroscopia aplicada à identificação de plantas;\nHerbários, coleções científicas e documentação da biodiversidade amazônica;\nDistribuição de espécies, mudanças climáticas e conservação da flora amazônica.\n\n\n\nNossa abordagem\nAcreditamos que responder aos desafios científicos da Amazônia exige uma abordagem interdisciplinar.\nPor isso, combinamos diferentes fontes de informação, incluindo:\n\nInventários florísticos;\nParcelas permanentes;\nHerbários;\nEspectroscopia;\nMorfologia e taxonomia;\nEstatística, aprendizado de máquina e ciência de dados.\n\nEssa integração permite compreender desde a identidade das espécies até os processos ecológicos responsáveis pela manutenção da biodiversidade amazônica.\n\n\nEnsino e formação\nO LEDT participa ativamente da formação de recursos humanos em diferentes níveis, recebendo estudantes de graduação, iniciação científica, mestrado e doutorado.\nNosso objetivo é formar profissionais capazes de integrar conhecimentos clássicos da botânica e ecologia com ferramentas quantitativas e tecnologias emergentes.\n\n\nColaboração\nO laboratório mantém colaboração com pesquisadores e instituições nacionais e internacionais, contribuindo para redes de pesquisa voltadas ao conhecimento, documentação e conservação da biodiversidade amazônica.\nEstamos sempre abertos a novas parcerias científicas, projetos colaborativos e intercâmbio de estudantes e pesquisadores."
+    "text": "Mensagem\n\nSe você tiver dúvidas, sugestões ou interesse em colaborar com o LEDT, envie uma mensagem utilizando o formulário abaixo.\n\n\nNome \n\n\nE-mail \n\n\nInstituição \n\n\nAssunto \n\n\nMensagem\n\n\n\nEnviar\n\n\n\nLocalização\n\n\n\n Universidade Federal do Amazonas, Faculdade de Ciências Agrárias, Depto. de Ciências Florestais\n\n\n Av. Rodrigo Otávio, 6200 (Setor Sul), FCA01, 1º piso - 69080-900 - Manaus, AM, Brasil\n\n\n ledtufam@gmail.com\n\n\n\n\n\n\n\n\n\nRedes sociais"
   },
   {
-    "objectID": "pessoas.html",
-    "href": "pessoas.html",
-    "title": "Quem somos",
+    "objectID": "selecoes.html",
+    "href": "selecoes.html",
+    "title": "Seleções",
     "section": "",
-    "text": "Coordenação\n\n\n\n\n\nCaroline C. Vasconcelos (ela/dela)\nProfessora Assistente, Dra. | Departamento de Ciências Florestais\nUniversidade Federal do Amazonas (UFAM)\nLinhas de pesquisa: Taxonomia integrativa e sistemática; Flora arbórea da Amazônia; Sapotaceae; Digitalização espectral; Herbários; Ecologia Florestal\n\n  \n  \n  \n  \n  \n  \n\n\n\n\n\n\nPesquisadores colaboradores\n\n\n\n\n\nFlávia Machado Durgante (ela/dela)\nPesquisadora, Dra. | Coordenação de Dinâmica Ambiental\nInstituto Nacional de Pesquisas da Amazônia (INPA)\nLinhas de pesquisa: Ecologia e Manejo Florestal\n\n  \n  \n  \n  \n  \n  \n\n\n\n\n\n\n\n\n\nYêda Maria Boaventura Corrêa Arruda (ela/dela)\nProfessora Associada I, Dra. | Departamento de Biologia do Instituto de Ciências Biológicas\nUniversidade Federal do Amazonas (UFAM)\nLinhas de pesquisa: sementes florestais; espécies florestais; Amazônia; espécies nativas; dormência; silvicultura urbana; gestão e planejamento urbano\n\n  \n  \n  \n  \n  \n  \n\n\n\n\n\n\n\n\n\nGabrielly Guabiraba Ribeiro (ela/dela)\nDoutoranda | Programa de Pós-Graduação em Botânica\nInstituto de Pesquisas Jardim Botânico do Rio de Janeiro (JBRJ)\nLinhas de pesquisa: Taxonomia e biogeografia; Ormosia (Leguminosae); Ecologia florestal\n\n  \n  \n  \n  \n  \n  \n\n\n\n\n\n\n\n\n\nSamyra Ramos Chaves (ela/dela)\nPesquisadora bolsista, Dra. | Grupo MAUA\nInstituto Nacional de Pesquisas da Amazônia (INPA)\nLinhas de pesquisa: Biologia reprodutiva; Parkia (Leguminosae); Digitalização espectral; Herbários\n\n  \n  \n  \n  \n  \n  \n\n\n\n\n\n\n\n\n\nKaio Cesar Marinho da Cunha (ele/dele)\nPesquisador bolsista, Me. | Grupo MAUA\nInstituto Nacional de Pesquisas da Amazônia (INPA)\nLinhas de pesquisa: Taxonomia integrativa e sistemática; Sapotaceae; Digitalização espectral; Herbários\n\n  \n  \n  \n  \n  \n  \n\n\n\n\n\n\nAlunos\n\nPós-graduação\n\n\n\n\n\nTúlio Alex Martins da Silva (ele/dele)\nDoutorando | Programa de Pós-Graduação em Botânica\nInstituto Nacional de Pesquisas da Amazônia (INPA)\nLinhas de pesquisa: Taxonomia e sistemática; Biologia reprodutiva; Euphorbiaceae\n\n  \n  \n  \n  \n  \n  \n\n\n\n\n\n\n\n\n\nMaria Clara A. M. de O. Ramos Ferro (ela/dela)\nMestranda | Programa de Pós-Graduação em Botânica\nInstituto Nacional de Pesquisas da Amazônia (INPA)\nLinhas de pesquisa: Espectroscopia NIR como ferramenta para a taxonomia botânica\n\n  \n  \n  \n  \n  \n  \n\n\n\n\n\n\nIniciação científica (voluntários)\n\n\n\n\n\nAna Graciela Oliveira Mayo (ela/dela)\nGraduanda | Engenharia Florestal\nUniversidade Federal do Amazonas (UFAM)\nLinhas de pesquisa: Espectroscopia aplicada à identificação de árvores comerciais; Herbários\n\n  \n  \n  \n  \n  \n  \n\n\n\n\n\n\n\n\n\nAynê Carolyne Silva Sá (ela/dela)\nGraduanda | Engenharia Florestal\nUniversidade Federal do Amazonas (UFAM)\nLinhas de pesquisa: Ecologia e Dendrologia; trilha didática; espécies florestais\n\n  \n  \n  \n  \n  \n  \n\n\n\n\n\n\n\n\n\nAndré Luiz da Silva Melo (ele/dele)\nGraduando | Engenharia Florestal\nUniversidade Federal do Amazonas (UFAM)\nLinhas de pesquisa: Dendrologia\n\n  \n  \n  \n  \n  \n  \n\n\n\n\n\n\n\n\n\nHeyder Loureiro Pinagé Neto (ele/dele)\nGraduando | Engenharia Florestal\nUniversidade Federal do Amazonas (UFAM)\nLinhas de pesquisa: Dendrologia\n\n  \n  \n  \n  \n  \n  \n\n\n\n\n\n\n\n\n\nVitor Hugo Santos Silva (ele/dele)\nGraduando | Engenharia Florestal\nUniversidade Federal do Amazonas (UFAM)\nLinhas de pesquisa: Dendrologia\n\n  \n  \n  \n  \n  \n  \n\n\n\n\n\n\nIniciação científica (bolsistas)\n\n\n\n\n\nEliandra Rodrigues Ferreira (ela/dela)\nGraduanda | Ciências Biológicas\nUniversidade Federal do Amazonas (UFAM)\nLinhas de pesquisa: Espectroscopia aplicada à identificação de plantas; Herbários; Meliaceae; Fabaceae; Espécies CITES\n\n  \n  \n  \n  \n  \n  \n\n\n\n\n\n\n\n\n\nYasmin Jéssica G. Guedes (ela/dela)\nGraduanda | Licenciatura em Ciências Biológicas\nUniversidade Federal do Amazonas (UFAM)\nLinhas de pesquisa: Espectroscopia aplicada à identificação de plantas; Herbários; Bignoniaceae; Espécies CITES\n\n  \n  \n  \n  \n  \n  \n\n\n\n\n\n\n\n\n\nCassia Sousa Ataide (ela/dela)\nGraduanda | Engenharia da Computação\nUniversidade Federal do Amazonas (UFAM)\nLinhas de pesquisa: Espectroscopia aplicada à identificação de plantas; Herbários; Ecclinusa; Machine learning"
+    "text": "Nenhuma seleção aberta no momento\n\n\n\nNovas oportunidades serão divulgadas nesta página e no Instagram @ledt_ufam."
   },
   {
-    "objectID": "pesquisa.html",
-    "href": "pesquisa.html",
-    "title": "Pesquisa",
+    "objectID": "selecoes.html#vagas-abertas",
+    "href": "selecoes.html#vagas-abertas",
+    "title": "Seleções",
     "section": "",
-    "text": "O LEDT desenvolve pesquisas voltadas ao conhecimento, documentação e conservação da biodiversidade amazônica, integrando ecologia, dendrologia, taxonomia e ferramentas inovadoras para o estudo de árvores tropicais.\n\nProjetos\nAtualmente, o laboratório participa dos seguintes projetos de pesquisa:\n\nEcclinusa: Building a near-infrared spectral library to reveal new species of Ecclinusa (Sapotaceae, Chrysophylloideae) in South America | 2025-2026 | IAPT rodada 2025 | PI: Caroline C. Vasconcelos (UFAM, Brasil).\nSpectraPop: Popularização do uso da Assinatura Espectral da Espécie na identificação das árvores do Manejo Florestal Sustentável na Amazônia | 2025-2026 | FAPEAM | 01.02.016301.04984/2024-17 | PI: Flávia Machado Durgante (INPA, Brasil).\nHerbSpectra-Amazônia: Rede de Herbários Espectrais da Amazônia: Espectroscopia e inteligência artificial para a identificação automatizada da biodiversidade em herbários amazônicos | 2025-2027 | CNPq 385465/2025-4 | PI: Flávia Machado Durgante (INPA, Brasil).\nTropecolnet: Characterizing the role of interacting species, the drivers and the structure of plant-frugivore ecological networks along a defaunation gradient in tropical forests | 2023-2026 | PID2022-138272NA-I00 | PI: Ana Benítez-Lopez (MNCN-CSIC, Espanha).\nNeoshortfall: Addressing biodiversity shortfalls in Neotropical hyperdiverse forests to improve our understanding of the effects of defaunation on phenotypic traits, species assemblages and biotic interactions | PI: Ana Benítez-Lopez (MNCN-CSIC, Espanha).\nRevelando os Incógnitos: epífitas, insetos e fungos associados à flora arbórea de várzea na Amazônia oriental | 2024-2027 | CNPq 400738/2024-4 | PI: Marcelino Carneiro Guedes (Embrapa Amapá, Brasil).\n\n\n\nParceiros\n\nGrupo Ecologia, Monitoramento e Uso Sustentável de Áreas Úmidas (MAUA)\nHerbário INPA\nAmazon Tall Tower Observatory (ATTO)\nLaboratório de Sementes/ INPA\nEmbrapa Amapá\nAna Benítez-Lopez Lab\n\n\n\nRedes de colaboração\nO LEDT integra redes nacionais e internacionais dedicadas ao estudo da biodiversidade vegetal, herbários e espectroscopia:\n\nAmazon Tree Diversity Network (ATDN)\nInternational Herbarium Spectral Digitization Working Group (IHerbSpec)\nSapotaceae Taxonomic Expert Network – World Flora Online (TEN/WFO)\nTropical Seed Trait Database (TSTD)"
+    "text": "Nenhuma seleção aberta no momento\n\n\n\nNovas oportunidades serão divulgadas nesta página e no Instagram @ledt_ufam."
   },
   {
-    "objectID": "identidade-visual.html",
-    "href": "identidade-visual.html",
-    "title": "Identidade visual",
+    "objectID": "selecoes.html#como-fazer-parte-do-ledt",
+    "href": "selecoes.html#como-fazer-parte-do-ledt",
+    "title": "Seleções",
+    "section": "Como fazer parte do LEDT",
+    "text": "Como fazer parte do LEDT\nO LEDT recebe estudantes em diferentes níveis de formação:\n\n\n\nNível\nComo funciona\n\n\n\n\nIniciação científica (IC)\nAlunos de graduação da UFAM, com ou sem bolsa (PIBIC/PAIC). Os editais são anuais.\n\n\nTrabalho de conclusão de curso (TCC)\nAlunos de Engenharia Florestal interessados em dendrologia, taxonomia, ecologia ou espectroscopia.\n\n\nMestrado e doutorado\nPor meio dos programas de pós-graduação em que os docentes do LEDT atuam, como o PPGBOT/INPA. O ingresso segue os editais de cada programa.\n\n\nEstágios e visitas\nEstudantes e pesquisadores de outras instituições, mediante contato prévio.\n\n\n\n\nAntes de entrar em contato\n\nConheça nossas linhas em Pesquisa e as Publicações do grupo.\nEnvie uma mensagem pela página de Contato contando seu interesse, seu nível de formação e anexando o link do seu Currículo Lattes.\nPara a pós-graduação, entre em contato antes do edital do programa, para conversarmos sobre a proposta de projeto."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Boas-vindas!",
     "section": "",
-    "text": "Use os arquivos desta página em apresentações, pôsteres, relatórios e materiais de divulgação ligados ao LEDT. Clique em Baixar para salvar o arquivo em alta resolução."
+    "text": "No Laboratório de Ecologia e Dendrologia Tropical (LEDT), estudamos a diversidade, a ecologia e a taxonomia das árvores amazônicas. Combinamos trabalho de campo, coleções de herbário, espectroscopia, monitoramento ecológico e abordagens analíticas integrativas para investigar a identificação de espécies, padrões de biodiversidade e as respostas das florestas tropicais às mudanças climáticas.\nCom sede na Universidade Federal do Amazonas (UFAM), em Manaus, Brasil, nosso grupo colabora com redes de pesquisa nacionais e internacionais para promover a compreensão, a documentação e a conservação da biodiversidade amazônica."
   },
   {
-    "objectID": "identidade-visual.html#logos-do-ledt",
-    "href": "identidade-visual.html#logos-do-ledt",
-    "title": "Identidade visual",
-    "section": "Logos do LEDT",
-    "text": "Logos do LEDT\n\n\n\n\n\nHorizontal\nUso preferencial: slides, rodapés, sites.\n Baixar PNG\n\n\n\n\n\n\n\nVertical\nUso: pôsteres, capas, banners.\n Baixar PNG\n\n\n\n\n\n\n\nSímbolo\nUso: espaços pequenos, ícones, redes sociais.\n Baixar PNG\n\n\n\n\n\nCor principal\n\n\nVerde LEDT · HEX #234A18 · RGB 35, 74, 24\n\n\n\nBoas práticas\n\nNão distorça, recorte, gire ou mude as cores do logo.\nMantenha uma margem livre ao redor do logo e use-o sobre fundos claros.\nAo usar o LEDT junto com outras instituições, mantenha os logos com tamanhos visualmente equivalentes."
+    "objectID": "index.html#últimas-notícias",
+    "href": "index.html#últimas-notícias",
+    "title": "Boas-vindas!",
+    "section": "Últimas notícias",
+    "text": "Últimas notícias\n\n\n\n\n\n\n\n\n\n\nSite do LEDT de cara nova\n\n\nR Lab com rotinas em R, publicações organizadas por ano, páginas de disciplinas ampliadas, identidade visual e versões em inglês e espanhol.\n\n\n\n01/10/2026\n\n\n\n\n\n\n\n\nNenhum item correspondente\n\n\nVer todas as notícias\n\n\nO LEDT é apoiado por"
   },
   {
-    "objectID": "identidade-visual.html#logos-institucionais",
-    "href": "identidade-visual.html#logos-institucionais",
-    "title": "Identidade visual",
-    "section": "Logos institucionais",
-    "text": "Logos institucionais\nLogos das instituições às quais o LEDT está vinculado e das parceiras, para uso em apresentações e pôsteres.\n\n\n\n\n\n\n\nCada instituição tem regras próprias para o uso da sua marca. Na dúvida, baixe a versão oficial:\n\nUFAM: Identidade Visual UFAM · Manual de Identidade Visual (Edoc)\nINPA: solicite à Assessoria de Comunicação do INPA ou consulte o portal do INPA"
+    "objectID": "extensao/rlab/rotinas/nomes-cientificos-excel.html",
+    "href": "extensao/rlab/rotinas/nomes-cientificos-excel.html",
+    "title": "Padronização de nomes no Excel (Plantminer + Flora e Funga)",
+    "section": "",
+    "text": "Nível: iniciante · Programas: Excel (ou LibreOffice Calc) e navegador · Disciplina: FGD921 - Dendrologia Tropical · Baixar a planilha modelo · Versão em R desta rotina\nEste tutorial faz, no Excel, o mesmo que a rotina em R: organizar a lista → conferir os nomes numa base de referência → resolver os problemas → fechar a lista padronizada. Usamos duas ferramentas on-line e gratuitas:"
+  },
+  {
+    "objectID": "extensao/rlab/rotinas/nomes-cientificos-excel.html#o-fluxo",
+    "href": "extensao/rlab/rotinas/nomes-cientificos-excel.html#o-fluxo",
+    "title": "Padronização de nomes no Excel (Plantminer + Flora e Funga)",
+    "section": "O fluxo",
+    "text": "O fluxo\n\n\n\n\n\n\n\n\nEtapa\nOnde\nO que sai\n\n\n\n\n1\nExcel\nlista limpa, só com o que pode ser conferido\n\n\n2\nPlantminer\num arquivo com o nome atual de cada táxon e uma nota sobre o que mudou\n\n\n3\nExcel\no resultado do Plantminer ao lado da lista original\n\n\n4\nExcel\ncada nome classificado: OK, grafia corrigida, sinônimo, não encontrado…\n\n\n5\nFlora e Funga\na decisão para cada nome com problema\n\n\n6\nExcel\na lista padronizada e as respostas da prática"
+  },
+  {
+    "objectID": "extensao/rlab/rotinas/nomes-cientificos-excel.html#prepare-a-lista-no-excel",
+    "href": "extensao/rlab/rotinas/nomes-cientificos-excel.html#prepare-a-lista-no-excel",
+    "title": "Padronização de nomes no Excel (Plantminer + Flora e Funga)",
+    "section": "1. Prepare a lista no Excel",
+    "text": "1. Prepare a lista no Excel\nAbra a planilha modelo. Ela já traz a lista de 240 táxons de Oliveira & Amaral (2004), adaptada para a prática (a mesma da rotina em R), na aba 1_lista. As colunas verdes são fórmulas: não apague.\n\n\n\n\n\n\nVai usar a sua própria lista?\n\n\n\nCole os seus dados nas colunas A a E da aba 1_lista (família, nome, rank, status, hábito) e arraste as fórmulas das colunas F e G até o fim da lista. Nas abas 3_resultado e 4_resumo, arraste as fórmulas até o mesmo número de linhas.\n\n\nDois cuidados antes de enviar os nomes:\nEspaços sobrando. Nomes digitados à mão costumam ter espaços invisíveis no início ou no fim (\"Astronium \"). Para o Excel e para o Plantminer, \"Astronium \" e \"Astronium\" são nomes diferentes. A coluna nome_limpo resolve isso com a função ARRUMAR (em inglês, TRIM), que tira os espaços do início, do fim e os espaços duplos:\n=ARRUMAR(B2)\ncf. e aff. Esses termos indicam dúvida na identificação e não fazem parte do nome. Para conferir Protium cf. carnosum, enviamos Protium carnosum. A coluna nome_busca tira o cf. e o aff. com a função SUBSTITUIR (SUBSTITUTE). Para os táxons identificados só até gênero ou família, ela guarda apenas o gênero (ou a família); as indeterminadas ficam de fora.\n=SE(C2=\"indeterminada\";\"\";SE(C2=\"espécie\";ARRUMAR(SUBSTITUIR(SUBSTITUIR(F2;\" cf. \";\" \");\" aff. \";\" \"));F2))\n\n\n\n\n\n\nO cf. e o aff. continuam registrados na coluna status da lista original. Na lista final do trabalho, eles voltam para o nome (por exemplo, Protium cf. carnosum Swart)."
+  },
+  {
+    "objectID": "extensao/rlab/rotinas/nomes-cientificos-excel.html#confira-os-nomes-no-plantminer",
+    "href": "extensao/rlab/rotinas/nomes-cientificos-excel.html#confira-os-nomes-no-plantminer",
+    "title": "Padronização de nomes no Excel (Plantminer + Flora e Funga)",
+    "section": "2. Confira os nomes no Plantminer",
+    "text": "2. Confira os nomes no Plantminer\n\nNo Excel, selecione a coluna nome_busca (de G2 até G241, sem o cabeçalho) e copie (Ctrl+C).\nAbra o Plantminer. No menu à esquerda, deixe selecionado Brazilian Flora 2020.\nEm 1. Name options, deixe marcados Replace synonyms (trocar sinônimos pelo nome aceito) e Correct misspelled names (corrigir erros de grafia). Mantenha o grau de conservadorismo em 0.9: valores menores aceitam sugestões mais distantes e podem errar.\nEm 2. Life form & more, marque Life form, Occurrence, Establishment e Domain.\nEm 3. Paste your taxa, apague os nomes de exemplo, cole a sua lista (Ctrl+V) e clique em Process list. Com 240 nomes, leva alguns segundos.\nO resultado aparece em 4. Processed taxa. Em 5. Download, clique em Semicolon-delimited (separado por ponto e vírgula, o formato que o Excel em português abre melhor).\n\n\n\n\n\n\n\nEnvie os nomes sem autor. Com autor (Pouteria guianensis Aubl.), o Plantminer não encontra o nome, a menos que você marque Remove authors, que é bem mais lento."
+  },
+  {
+    "objectID": "extensao/rlab/rotinas/nomes-cientificos-excel.html#traga-o-resultado-para-o-excel",
+    "href": "extensao/rlab/rotinas/nomes-cientificos-excel.html#traga-o-resultado-para-o-excel",
+    "title": "Padronização de nomes no Excel (Plantminer + Flora e Funga)",
+    "section": "3. Traga o resultado para o Excel",
+    "text": "3. Traga o resultado para o Excel\nSe você abrir o arquivo baixado com dois cliques, os acentos podem aparecer errados (Ãrvore em vez de Árvore). Para evitar isso, importe o arquivo:\n\nNa planilha modelo, vá à aba 2_plantminer e apague o conteúdo dela.\nMenu Dados → Obter Dados → De Arquivo → De Texto/CSV e escolha o arquivo baixado.\nNa janela de visualização, confira: Origem do arquivo = 65001: Unicode (UTF-8) e Delimitador = Ponto e vírgula.\nClique na setinha ao lado de Carregar → Carregar para… → Tabela em Planilha existente, célula =$A$1 da aba 2_plantminer.\n\nNo LibreOffice Calc, basta abrir o arquivo e escolher UTF-8 e ponto e vírgula na janela de importação; depois copie tudo e cole na célula A1 da aba 2_plantminer.\nA aba 3_resultado busca sozinha, para cada nome da lista, a linha correspondente do Plantminer (pela coluna original.search, que guarda o nome que você enviou). Isso é feito com ÍNDICE e CORRESP (INDEX e MATCH), que funcionam como um PROCV mais flexível: não importa em que ordem as colunas do Plantminer vieram."
+  },
+  {
+    "objectID": "extensao/rlab/rotinas/nomes-cientificos-excel.html#leia-o-resultado",
+    "href": "extensao/rlab/rotinas/nomes-cientificos-excel.html#leia-o-resultado",
+    "title": "Padronização de nomes no Excel (Plantminer + Flora e Funga)",
+    "section": "4. Leia o resultado",
+    "text": "4. Leia o resultado\nAs colunas mais importantes do Plantminer:\n\n\n\n\n\n\n\nColuna\nO que significa\n\n\n\n\nscientific.name\nnome aceito com autor\n\n\nsearch.str\nnome aceito sem autor (é o que vai para a lista)\n\n\nfamily\nfamília segundo a Flora e Funga (classificação atual, APG IV)\n\n\nnotes\no que aconteceu com o nome (veja abaixo)\n\n\noccurrence\nestados onde a espécie ocorre (BR-AM = Amazonas)\n\n\nestablishment\nnative (nativa), naturalized (naturalizada) ou cultivated (cultivada)\n\n\ndomain\ndomínios fitogeográficos (Amazônia, Cerrado, Mata Atlântica…)\n\n\n\nE o significado das notas:\n\n\n\n\n\n\n\n\nNota\nO que aconteceu\nO que fazer\n\n\n\n\n(vazia)\no nome está correto e é aceito\nnada\n\n\nwas misspelled\no nome estava escrito errado e foi corrigido\nconferir se a correção faz sentido\n\n\nreplaced synonym\no nome é sinônimo e foi trocado pelo aceito\nusar o nome aceito\n\n\nwas misspelled e replaced synonym juntas\nas duas coisas\nusar o nome aceito\n\n\nnot found\no nome não foi encontrado\nresolver na Flora e Funga (etapa 5)\n\n\ncheck ...\nhá mais de um nome aceito possível, ou o status não está definido\nresolver na Flora e Funga\n\n\n\nA coluna situação da aba 3_resultado junta tudo isso numa frase e pinta de vermelho os casos que precisam ir para a Flora e Funga e de amarelo os que mudaram ou merecem atenção. Use o filtro do cabeçalho para ver um caso de cada vez.\n\n\n\n\n\n\nExemplos desta lista (conferidos em 13/10/2026)\n\n\n\n\nGrafia corrigida: Eperua grabriflora → Eperua glabriflora; Lecythis graciena → Lecythis gracieana.\nSinônimo substituído: Licania heteromorpha → Hymenopus heteromorphus; Tetragastris altissima → Protium altissimum; Cariniana decandra → Allantoma decandra.\nAs duas coisas: Licaria cannela → Licaria crassifolia.\nNão encontrados: seis nomes de espécie, entre eles Aniba roseaodora e Ocotea cajumari. Esses são com você na etapa 5."
+  },
+  {
+    "objectID": "extensao/rlab/rotinas/nomes-cientificos-excel.html#resolva-os-problemas-na-flora-e-funga-do-brasil",
+    "href": "extensao/rlab/rotinas/nomes-cientificos-excel.html#resolva-os-problemas-na-flora-e-funga-do-brasil",
+    "title": "Padronização de nomes no Excel (Plantminer + Flora e Funga)",
+    "section": "5. Resolva os problemas na Flora e Funga do Brasil",
+    "text": "5. Resolva os problemas na Flora e Funga do Brasil\nOs casos em vermelho e amarelo da coluna situação precisam de uma olhada na consulta pública da Flora e Funga do Brasil.\nComo consultar: preencha Gênero e Espécie (sem autor) e clique em Consultar. Se não aparecer nada, preencha só o gênero: a Flora e Funga lista todos os nomes daquele gênero, aceitos e sinônimos, e fica fácil achar um epíteto escrito de outro jeito.\nO que ler na ficha do nome:\n\no status, logo abaixo do nome: Nome aceito, Sinônimo (e de qual nome aceito) ou Variante ortográfica;\na Distribuição: Ocorrências confirmadas (por região e estado) e Domínios Fitogeográficos;\na Origem: nativa, naturalizada ou cultivada.\n\n\nOs casos mais comuns\nNome não encontrado no Plantminer. Em geral é um erro de grafia grande demais para a correção automática, ou um nome que entrou na Flora e Funga depois de 2024. Busque só pelo gênero e procure o epíteto parecido. Exemplo: Aniba roseaodora não foi encontrado no Plantminer; na Flora e Funga, a busca pelo gênero Aniba mostra Aniba rosaeodora Ducke como sinônimo (variante ortográfica) de Aniba rosodora Ducke, que é o nome aceito.\nO nome não ocorre no Brasil. Se nem a busca pelo gênero mostrar o nome, ele pode ser de uma espécie que não ocorre no Brasil, ou o próprio gênero pode ter outra grafia. Confira em uma base mundial, como a World Flora Online ou o POWO, e anote a base usada. Uma espécie que não ocorre no Brasil numa lista da Amazônia Central é sinal de identificação a revisar, não só de nome a corrigir.\nSem ocorrência no resultado. Às vezes o Plantminer devolve o nome aceito, mas com as colunas de ocorrência vazias. Isso não quer dizer que a espécie não ocorre no Brasil. Exemplo: Protium polybotryum veio sem ocorrência no Plantminer, mas a Flora e Funga mostra ocorrências confirmadas no Amazonas e em outros estados da Região Norte.\nOcorre, mas não no Amazonas. A coluna ocorre no AM? avisa quando a espécie não tem registro no Amazonas. Exemplos desta lista: Xylopia brasiliensis e Sorocea guilleminiana, registradas só fora da Amazônia. O nome está correto; o que precisa ser revisto é a identificação: confira o material de herbário ou consulte um especialista. Cultivadas (cultivated) num levantamento de floresta nativa também merecem essa conferência.\n\n\nRegistre a decisão\nPara cada linha, preencha as colunas amarelas da aba 3_resultado:\n\n\n\n\n\n\n\nColuna\nO que escrever\n\n\n\n\nnome_final\no nome aceito, sem autor (se o Plantminer estiver certo, copie a coluna C)\n\n\nfamilia_final\na família atual\n\n\nfonte\nPlantminer (Flora 2024), Flora e Funga do Brasil ou outra base\n\n\ndata\na data da consulta\n\n\nobservação\no que você decidiu e por quê (ex.: “variante ortográfica”; “confirmar identificação”)"
+  },
+  {
+    "objectID": "extensao/rlab/rotinas/nomes-cientificos-excel.html#feche-a-lista",
+    "href": "extensao/rlab/rotinas/nomes-cientificos-excel.html#feche-a-lista",
+    "title": "Padronização de nomes no Excel (Plantminer + Flora e Funga)",
+    "section": "6. Feche a lista",
+    "text": "6. Feche a lista\nNomes repetidos. Depois da padronização, dois nomes diferentes da lista original podem virar o mesmo. Nesta lista, Eschweilera odora virou Eschweilera coriacea, que já estava na lista, e Mabea caudata virou Mabea speciosa, que também já estava. A coluna repetido? marca esses casos em vermelho. Numa lista de espécies, eles viram uma linha só; num inventário, os indivíduos passam a ser contados juntos.\nFamílias que mudaram. Filtre mudou de família? = sim e compare as colunas A e E. Você vai ver, por exemplo, Caesalpiniaceae e Mimosaceae em Fabaceae, Cecropiaceae em Urticaceae e Bombacaceae, Sterculiaceae e Tiliaceae em Malvaceae: são mudanças do sistema de classificação (APG), não erros de quem fez a lista em 2004.\nAs perguntas da prática. A aba 4_resumo conta tudo sozinha: famílias, espécies, identificações até gênero ou família, cf. e aff. na lista original; e grafias corrigidas, sinônimos, não encontrados, mudanças de família e nomes repetidos depois da padronização.\n\n\n\n\n\n\nPara entregar\n\n\n\n\nA planilha preenchida, com as colunas amarelas completas para todos os nomes com problema.\nQuantos nomes estavam com erro de grafia? Quantos eram sinônimos? Quantos não foram encontrados, e como você resolveu cada um?\nQuantas famílias tinha a lista em 2004 e quantas tem hoje? Quais famílias deixaram de existir e para onde foram os seus gêneros?\nEscolha um nome que ocorre fora do Amazonas e explique o que você faria para confirmar a identificação."
+  },
+  {
+    "objectID": "extensao/rlab/rotinas/nomes-cientificos-excel.html#boas-práticas",
+    "href": "extensao/rlab/rotinas/nomes-cientificos-excel.html#boas-práticas",
+    "title": "Padronização de nomes no Excel (Plantminer + Flora e Funga)",
+    "section": "Boas práticas",
+    "text": "Boas práticas\n\nConfira os nomes antes de qualquer análise (riqueza, diversidade, fitossociologia).\nGuarde sempre a lista original: a padronizada fica ao lado, nunca por cima.\nRegistre a base e a data da consulta: nomes mudam, e outra pessoa precisa conseguir refazer o seu trabalho.\nQuando as bases discordam, a decisão é taxonômica: consulte a literatura recente (revisões, monografias) e o especialista do grupo.\nNa escrita, gênero e epíteto em itálico; autor, cf., aff. e sp. em fonte normal (veja a rotina em R para mais detalhes)."
+  },
+  {
+    "objectID": "extensao/rlab/rotinas/nomes-cientificos-excel.html#referências",
+    "href": "extensao/rlab/rotinas/nomes-cientificos-excel.html#referências",
+    "title": "Padronização de nomes no Excel (Plantminer + Flora e Funga)",
+    "section": "Referências",
+    "text": "Referências\n\nCARVALHO, G. H.; CIANCIARUSO, M. V.; BATALHA, M. A. 2010. Plantminer: a web tool for checking and gathering plant species taxonomic information. Environmental Modelling & Software 25: 815-816.\nFLORA E FUNGA DO BRASIL. Jardim Botânico do Rio de Janeiro. Disponível em: https://floradobrasil.jbrj.gov.br/.\nOLIVEIRA, A. N.; AMARAL, I. L. 2004. Florística e fitossociologia de uma floresta de vertente na Amazônia Central, Amazonas, Brasil. Acta Amazonica 34(1): 21-34."
   },
   {
     "objectID": "extensao/rlab/index.html",
@@ -525,6 +588,13 @@
     "text": "Ementa\n\nIntrodução\nMorfologia e descrição dendrológica\nChaves de identificação de espécies florestais\nColeta e preparo de material para coleções (herbário, carpotecas, xilotecas)\nNomenclatura vegetal\nBiologia reprodutiva das árvores\nGrupos ecológicos de árvores\nFenologia de espécies florestais\nLevantamentos dendrológicos\nImplantação de um arboreto\nEspécies importantes e suas características morfológicas, ecológicas e econômicas\n\n Ementa oficial (PPC)"
   },
   {
+    "objectID": "ensino/graduacao/dendrologiatropical.html#aulas-2026.2",
+    "href": "ensino/graduacao/dendrologiatropical.html#aulas-2026.2",
+    "title": "FGD921 - Dendrologia Tropical",
+    "section": "Aulas 2026.2",
+    "text": "Aulas 2026.2\nMaterial:  slides da aula e  videoaula (Google Drive, acesso restrito aos alunos matriculados);  atividade prática.\n\n\n\n\n\n\n\n\n\nTema\nMaterial\nPrática\n\n\n\n\nGrupos ecológicos de árvores\n Aula ·  Vídeo (em breve)\n\n\n\nFenologia de espécies florestais\n Aula ·  Vídeo (em breve)\n Atividade FenoTree ·  Vídeo speciesLink"
+  },
+  {
     "objectID": "ensino/graduacao/dendrologiatropical.html#aulas-práticas",
     "href": "ensino/graduacao/dendrologiatropical.html#aulas-práticas",
     "title": "FGD921 - Dendrologia Tropical",
@@ -536,7 +606,7 @@
     "href": "ensino/graduacao/dendrologiatropical.html#roteiros-das-práticas",
     "title": "FGD921 - Dendrologia Tropical",
     "section": "Roteiros das práticas",
-    "text": "Roteiros das práticas\nTutoriais passo a passo usados nas aulas práticas, com dados de exemplo para baixar.\n\n\n\nPrática\nExcel / on-line\nR\n\n\n\n\nInterpretação e validação de nomes científicos\nPlantminer + Flora e Funga\nRotina em R\n\n\nCalendários fenológicos com registros do speciesLink\n–\nRotina em R"
+    "text": "Roteiros das práticas\nTutoriais passo a passo usados nas aulas práticas, com dados de exemplo para baixar.\n\n\n\nPrática\nExcel / on-line\nR\n\n\n\n\nInterpretação e validação de nomes científicos\nPlantminer + Flora e Funga\nRotina em R\n\n\nCalendários fenológicos com registros do speciesLink\nFenoTree (on-line)\n–"
   },
   {
     "objectID": "ensino/graduacao/dendrologiatropical.html#prancha-dendrológica-para-o-instagram",
@@ -623,291 +693,235 @@
     "text": "O LEDT leva o conhecimento sobre as árvores e florestas amazônicas para além da sala de aula, com materiais abertos, formação em análise de dados e ações com a comunidade.\n\n\n\n\n R Lab\nRotinas em R comentadas e reprodutíveis para fitossociologia, espectroscopia NIR, mapas de ocorrência e mais.\nAcessar o R Lab\n\n\n\n\n\n\n Flórula do campus da UFAM\nLevantamento das árvores do campus da UFAM feito pelos alunos de Dendrologia Tropical, com roteiro de campo padronizado. O resultado será um e-book sobre a flora arbórea do campus. (em desenvolvimento)\nSobre a disciplina\n\n\n\n\n\n\n Divulgação científica\nNotícias, bastidores de campo e publicações explicadas de forma simples.\nVer publicações\n\n\n\n\n\n\n Cursos e oficinas\nMinicursos de R, identificação de árvores e espectroscopia oferecidos pelo LEDT serão divulgados aqui e no Instagram."
   },
   {
-    "objectID": "extensao/rlab/rotinas/nomes-cientificos-excel.html",
-    "href": "extensao/rlab/rotinas/nomes-cientificos-excel.html",
-    "title": "Padronização de nomes no Excel (Plantminer + Flora e Funga)",
-    "section": "",
-    "text": "Nível: iniciante · Programas: Excel (ou LibreOffice Calc) e navegador · Disciplina: FGD921 - Dendrologia Tropical · Baixar a planilha modelo · Versão em R desta rotina\nEste tutorial faz, no Excel, o mesmo que a rotina em R: organizar a lista → conferir os nomes numa base de referência → resolver os problemas → fechar a lista padronizada. Usamos duas ferramentas on-line e gratuitas:"
-  },
-  {
-    "objectID": "extensao/rlab/rotinas/nomes-cientificos-excel.html#o-fluxo",
-    "href": "extensao/rlab/rotinas/nomes-cientificos-excel.html#o-fluxo",
-    "title": "Padronização de nomes no Excel (Plantminer + Flora e Funga)",
-    "section": "O fluxo",
-    "text": "O fluxo\n\n\n\n\n\n\n\n\nEtapa\nOnde\nO que sai\n\n\n\n\n1\nExcel\nlista limpa, só com o que pode ser conferido\n\n\n2\nPlantminer\num arquivo com o nome atual de cada táxon e uma nota sobre o que mudou\n\n\n3\nExcel\no resultado do Plantminer ao lado da lista original\n\n\n4\nExcel\ncada nome classificado: OK, grafia corrigida, sinônimo, não encontrado…\n\n\n5\nFlora e Funga\na decisão para cada nome com problema\n\n\n6\nExcel\na lista padronizada e as respostas da prática"
-  },
-  {
-    "objectID": "extensao/rlab/rotinas/nomes-cientificos-excel.html#prepare-a-lista-no-excel",
-    "href": "extensao/rlab/rotinas/nomes-cientificos-excel.html#prepare-a-lista-no-excel",
-    "title": "Padronização de nomes no Excel (Plantminer + Flora e Funga)",
-    "section": "1. Prepare a lista no Excel",
-    "text": "1. Prepare a lista no Excel\nAbra a planilha modelo. Ela já traz a lista de 240 táxons de Oliveira & Amaral (2004), adaptada para a prática (a mesma da rotina em R), na aba 1_lista. As colunas verdes são fórmulas: não apague.\n\n\n\n\n\n\nVai usar a sua própria lista?\n\n\n\nCole os seus dados nas colunas A a E da aba 1_lista (família, nome, rank, status, hábito) e arraste as fórmulas das colunas F e G até o fim da lista. Nas abas 3_resultado e 4_resumo, arraste as fórmulas até o mesmo número de linhas.\n\n\nDois cuidados antes de enviar os nomes:\nEspaços sobrando. Nomes digitados à mão costumam ter espaços invisíveis no início ou no fim (\"Astronium \"). Para o Excel e para o Plantminer, \"Astronium \" e \"Astronium\" são nomes diferentes. A coluna nome_limpo resolve isso com a função ARRUMAR (em inglês, TRIM), que tira os espaços do início, do fim e os espaços duplos:\n=ARRUMAR(B2)\ncf. e aff. Esses termos indicam dúvida na identificação e não fazem parte do nome. Para conferir Protium cf. carnosum, enviamos Protium carnosum. A coluna nome_busca tira o cf. e o aff. com a função SUBSTITUIR (SUBSTITUTE). Para os táxons identificados só até gênero ou família, ela guarda apenas o gênero (ou a família); as indeterminadas ficam de fora.\n=SE(C2=\"indeterminada\";\"\";SE(C2=\"espécie\";ARRUMAR(SUBSTITUIR(SUBSTITUIR(F2;\" cf. \";\" \");\" aff. \";\" \"));F2))\n\n\n\n\n\n\nO cf. e o aff. continuam registrados na coluna status da lista original. Na lista final do trabalho, eles voltam para o nome (por exemplo, Protium cf. carnosum Swart)."
-  },
-  {
-    "objectID": "extensao/rlab/rotinas/nomes-cientificos-excel.html#confira-os-nomes-no-plantminer",
-    "href": "extensao/rlab/rotinas/nomes-cientificos-excel.html#confira-os-nomes-no-plantminer",
-    "title": "Padronização de nomes no Excel (Plantminer + Flora e Funga)",
-    "section": "2. Confira os nomes no Plantminer",
-    "text": "2. Confira os nomes no Plantminer\n\nNo Excel, selecione a coluna nome_busca (de G2 até G241, sem o cabeçalho) e copie (Ctrl+C).\nAbra o Plantminer. No menu à esquerda, deixe selecionado Brazilian Flora 2020.\nEm 1. Name options, deixe marcados Replace synonyms (trocar sinônimos pelo nome aceito) e Correct misspelled names (corrigir erros de grafia). Mantenha o grau de conservadorismo em 0.9: valores menores aceitam sugestões mais distantes e podem errar.\nEm 2. Life form & more, marque Life form, Occurrence, Establishment e Domain.\nEm 3. Paste your taxa, apague os nomes de exemplo, cole a sua lista (Ctrl+V) e clique em Process list. Com 240 nomes, leva alguns segundos.\nO resultado aparece em 4. Processed taxa. Em 5. Download, clique em Semicolon-delimited (separado por ponto e vírgula, o formato que o Excel em português abre melhor).\n\n\n\n\n\n\n\nEnvie os nomes sem autor. Com autor (Pouteria guianensis Aubl.), o Plantminer não encontra o nome, a menos que você marque Remove authors, que é bem mais lento."
-  },
-  {
-    "objectID": "extensao/rlab/rotinas/nomes-cientificos-excel.html#traga-o-resultado-para-o-excel",
-    "href": "extensao/rlab/rotinas/nomes-cientificos-excel.html#traga-o-resultado-para-o-excel",
-    "title": "Padronização de nomes no Excel (Plantminer + Flora e Funga)",
-    "section": "3. Traga o resultado para o Excel",
-    "text": "3. Traga o resultado para o Excel\nSe você abrir o arquivo baixado com dois cliques, os acentos podem aparecer errados (Ãrvore em vez de Árvore). Para evitar isso, importe o arquivo:\n\nNa planilha modelo, vá à aba 2_plantminer e apague o conteúdo dela.\nMenu Dados → Obter Dados → De Arquivo → De Texto/CSV e escolha o arquivo baixado.\nNa janela de visualização, confira: Origem do arquivo = 65001: Unicode (UTF-8) e Delimitador = Ponto e vírgula.\nClique na setinha ao lado de Carregar → Carregar para… → Tabela em Planilha existente, célula =$A$1 da aba 2_plantminer.\n\nNo LibreOffice Calc, basta abrir o arquivo e escolher UTF-8 e ponto e vírgula na janela de importação; depois copie tudo e cole na célula A1 da aba 2_plantminer.\nA aba 3_resultado busca sozinha, para cada nome da lista, a linha correspondente do Plantminer (pela coluna original.search, que guarda o nome que você enviou). Isso é feito com ÍNDICE e CORRESP (INDEX e MATCH), que funcionam como um PROCV mais flexível: não importa em que ordem as colunas do Plantminer vieram."
-  },
-  {
-    "objectID": "extensao/rlab/rotinas/nomes-cientificos-excel.html#leia-o-resultado",
-    "href": "extensao/rlab/rotinas/nomes-cientificos-excel.html#leia-o-resultado",
-    "title": "Padronização de nomes no Excel (Plantminer + Flora e Funga)",
-    "section": "4. Leia o resultado",
-    "text": "4. Leia o resultado\nAs colunas mais importantes do Plantminer:\n\n\n\n\n\n\n\nColuna\nO que significa\n\n\n\n\nscientific.name\nnome aceito com autor\n\n\nsearch.str\nnome aceito sem autor (é o que vai para a lista)\n\n\nfamily\nfamília segundo a Flora e Funga (classificação atual, APG IV)\n\n\nnotes\no que aconteceu com o nome (veja abaixo)\n\n\noccurrence\nestados onde a espécie ocorre (BR-AM = Amazonas)\n\n\nestablishment\nnative (nativa), naturalized (naturalizada) ou cultivated (cultivada)\n\n\ndomain\ndomínios fitogeográficos (Amazônia, Cerrado, Mata Atlântica…)\n\n\n\nE o significado das notas:\n\n\n\n\n\n\n\n\nNota\nO que aconteceu\nO que fazer\n\n\n\n\n(vazia)\no nome está correto e é aceito\nnada\n\n\nwas misspelled\no nome estava escrito errado e foi corrigido\nconferir se a correção faz sentido\n\n\nreplaced synonym\no nome é sinônimo e foi trocado pelo aceito\nusar o nome aceito\n\n\nwas misspelled e replaced synonym juntas\nas duas coisas\nusar o nome aceito\n\n\nnot found\no nome não foi encontrado\nresolver na Flora e Funga (etapa 5)\n\n\ncheck ...\nhá mais de um nome aceito possível, ou o status não está definido\nresolver na Flora e Funga\n\n\n\nA coluna situação da aba 3_resultado junta tudo isso numa frase e pinta de vermelho os casos que precisam ir para a Flora e Funga e de amarelo os que mudaram ou merecem atenção. Use o filtro do cabeçalho para ver um caso de cada vez.\n\n\n\n\n\n\nExemplos desta lista (conferidos em 13/10/2026)\n\n\n\n\nGrafia corrigida: Eperua grabriflora → Eperua glabriflora; Lecythis graciena → Lecythis gracieana.\nSinônimo substituído: Licania heteromorpha → Hymenopus heteromorphus; Tetragastris altissima → Protium altissimum; Cariniana decandra → Allantoma decandra.\nAs duas coisas: Licaria cannela → Licaria crassifolia.\nNão encontrados: seis nomes de espécie, entre eles Aniba roseaodora e Ocotea cajumari. Esses são com você na etapa 5."
-  },
-  {
-    "objectID": "extensao/rlab/rotinas/nomes-cientificos-excel.html#resolva-os-problemas-na-flora-e-funga-do-brasil",
-    "href": "extensao/rlab/rotinas/nomes-cientificos-excel.html#resolva-os-problemas-na-flora-e-funga-do-brasil",
-    "title": "Padronização de nomes no Excel (Plantminer + Flora e Funga)",
-    "section": "5. Resolva os problemas na Flora e Funga do Brasil",
-    "text": "5. Resolva os problemas na Flora e Funga do Brasil\nOs casos em vermelho e amarelo da coluna situação precisam de uma olhada na consulta pública da Flora e Funga do Brasil.\nComo consultar: preencha Gênero e Espécie (sem autor) e clique em Consultar. Se não aparecer nada, preencha só o gênero: a Flora e Funga lista todos os nomes daquele gênero, aceitos e sinônimos, e fica fácil achar um epíteto escrito de outro jeito.\nO que ler na ficha do nome:\n\no status, logo abaixo do nome: Nome aceito, Sinônimo (e de qual nome aceito) ou Variante ortográfica;\na Distribuição: Ocorrências confirmadas (por região e estado) e Domínios Fitogeográficos;\na Origem: nativa, naturalizada ou cultivada.\n\n\nOs casos mais comuns\nNome não encontrado no Plantminer. Em geral é um erro de grafia grande demais para a correção automática, ou um nome que entrou na Flora e Funga depois de 2024. Busque só pelo gênero e procure o epíteto parecido. Exemplo: Aniba roseaodora não foi encontrado no Plantminer; na Flora e Funga, a busca pelo gênero Aniba mostra Aniba rosaeodora Ducke como sinônimo (variante ortográfica) de Aniba rosodora Ducke, que é o nome aceito.\nO nome não ocorre no Brasil. Se nem a busca pelo gênero mostrar o nome, ele pode ser de uma espécie que não ocorre no Brasil, ou o próprio gênero pode ter outra grafia. Confira em uma base mundial, como a World Flora Online ou o POWO, e anote a base usada. Uma espécie que não ocorre no Brasil numa lista da Amazônia Central é sinal de identificação a revisar, não só de nome a corrigir.\nSem ocorrência no resultado. Às vezes o Plantminer devolve o nome aceito, mas com as colunas de ocorrência vazias. Isso não quer dizer que a espécie não ocorre no Brasil. Exemplo: Protium polybotryum veio sem ocorrência no Plantminer, mas a Flora e Funga mostra ocorrências confirmadas no Amazonas e em outros estados da Região Norte.\nOcorre, mas não no Amazonas. A coluna ocorre no AM? avisa quando a espécie não tem registro no Amazonas. Exemplos desta lista: Xylopia brasiliensis e Sorocea guilleminiana, registradas só fora da Amazônia. O nome está correto; o que precisa ser revisto é a identificação: confira o material de herbário ou consulte um especialista. Cultivadas (cultivated) num levantamento de floresta nativa também merecem essa conferência.\n\n\nRegistre a decisão\nPara cada linha, preencha as colunas amarelas da aba 3_resultado:\n\n\n\n\n\n\n\nColuna\nO que escrever\n\n\n\n\nnome_final\no nome aceito, sem autor (se o Plantminer estiver certo, copie a coluna C)\n\n\nfamilia_final\na família atual\n\n\nfonte\nPlantminer (Flora 2024), Flora e Funga do Brasil ou outra base\n\n\ndata\na data da consulta\n\n\nobservação\no que você decidiu e por quê (ex.: “variante ortográfica”; “confirmar identificação”)"
-  },
-  {
-    "objectID": "extensao/rlab/rotinas/nomes-cientificos-excel.html#feche-a-lista",
-    "href": "extensao/rlab/rotinas/nomes-cientificos-excel.html#feche-a-lista",
-    "title": "Padronização de nomes no Excel (Plantminer + Flora e Funga)",
-    "section": "6. Feche a lista",
-    "text": "6. Feche a lista\nNomes repetidos. Depois da padronização, dois nomes diferentes da lista original podem virar o mesmo. Nesta lista, Eschweilera odora virou Eschweilera coriacea, que já estava na lista, e Mabea caudata virou Mabea speciosa, que também já estava. A coluna repetido? marca esses casos em vermelho. Numa lista de espécies, eles viram uma linha só; num inventário, os indivíduos passam a ser contados juntos.\nFamílias que mudaram. Filtre mudou de família? = sim e compare as colunas A e E. Você vai ver, por exemplo, Caesalpiniaceae e Mimosaceae em Fabaceae, Cecropiaceae em Urticaceae e Bombacaceae, Sterculiaceae e Tiliaceae em Malvaceae: são mudanças do sistema de classificação (APG), não erros de quem fez a lista em 2004.\nAs perguntas da prática. A aba 4_resumo conta tudo sozinha: famílias, espécies, identificações até gênero ou família, cf. e aff. na lista original; e grafias corrigidas, sinônimos, não encontrados, mudanças de família e nomes repetidos depois da padronização.\n\n\n\n\n\n\nPara entregar\n\n\n\n\nA planilha preenchida, com as colunas amarelas completas para todos os nomes com problema.\nQuantos nomes estavam com erro de grafia? Quantos eram sinônimos? Quantos não foram encontrados, e como você resolveu cada um?\nQuantas famílias tinha a lista em 2004 e quantas tem hoje? Quais famílias deixaram de existir e para onde foram os seus gêneros?\nEscolha um nome que ocorre fora do Amazonas e explique o que você faria para confirmar a identificação."
-  },
-  {
-    "objectID": "extensao/rlab/rotinas/nomes-cientificos-excel.html#boas-práticas",
-    "href": "extensao/rlab/rotinas/nomes-cientificos-excel.html#boas-práticas",
-    "title": "Padronização de nomes no Excel (Plantminer + Flora e Funga)",
-    "section": "Boas práticas",
-    "text": "Boas práticas\n\nConfira os nomes antes de qualquer análise (riqueza, diversidade, fitossociologia).\nGuarde sempre a lista original: a padronizada fica ao lado, nunca por cima.\nRegistre a base e a data da consulta: nomes mudam, e outra pessoa precisa conseguir refazer o seu trabalho.\nQuando as bases discordam, a decisão é taxonômica: consulte a literatura recente (revisões, monografias) e o especialista do grupo.\nNa escrita, gênero e epíteto em itálico; autor, cf., aff. e sp. em fonte normal (veja a rotina em R para mais detalhes)."
-  },
-  {
-    "objectID": "extensao/rlab/rotinas/nomes-cientificos-excel.html#referências",
-    "href": "extensao/rlab/rotinas/nomes-cientificos-excel.html#referências",
-    "title": "Padronização de nomes no Excel (Plantminer + Flora e Funga)",
-    "section": "Referências",
-    "text": "Referências\n\nCARVALHO, G. H.; CIANCIARUSO, M. V.; BATALHA, M. A. 2010. Plantminer: a web tool for checking and gathering plant species taxonomic information. Environmental Modelling & Software 25: 815-816.\nFLORA E FUNGA DO BRASIL. Jardim Botânico do Rio de Janeiro. Disponível em: https://floradobrasil.jbrj.gov.br/.\nOLIVEIRA, A. N.; AMARAL, I. L. 2004. Florística e fitossociologia de uma floresta de vertente na Amazônia Central, Amazonas, Brasil. Acta Amazonica 34(1): 21-34."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Boas-vindas!",
-    "section": "",
-    "text": "No Laboratório de Ecologia e Dendrologia Tropical (LEDT), estudamos a diversidade, a ecologia e a taxonomia das árvores amazônicas. Combinamos trabalho de campo, coleções de herbário, espectroscopia, monitoramento ecológico e abordagens analíticas integrativas para investigar a identificação de espécies, padrões de biodiversidade e as respostas das florestas tropicais às mudanças climáticas.\nCom sede na Universidade Federal do Amazonas (UFAM), em Manaus, Brasil, nosso grupo colabora com redes de pesquisa nacionais e internacionais para promover a compreensão, a documentação e a conservação da biodiversidade amazônica."
-  },
-  {
-    "objectID": "index.html#últimas-notícias",
-    "href": "index.html#últimas-notícias",
-    "title": "Boas-vindas!",
-    "section": "Últimas notícias",
-    "text": "Últimas notícias\n\n\n\n\n\n\n\n\n\n\nSite do LEDT de cara nova\n\n\nR Lab com rotinas em R, publicações organizadas por ano, páginas de disciplinas ampliadas, identidade visual e versões em inglês e espanhol.\n\n\n\n01/10/2026\n\n\n\n\n\n\n\n\nNenhum item correspondente\n\n\nVer todas as notícias\n\n\nO LEDT é apoiado por"
-  },
-  {
-    "objectID": "selecoes.html",
-    "href": "selecoes.html",
-    "title": "Seleções",
-    "section": "",
-    "text": "Nenhuma seleção aberta no momento\n\n\n\nNovas oportunidades serão divulgadas nesta página e no Instagram @ledt_ufam."
-  },
-  {
-    "objectID": "selecoes.html#vagas-abertas",
-    "href": "selecoes.html#vagas-abertas",
-    "title": "Seleções",
-    "section": "",
-    "text": "Nenhuma seleção aberta no momento\n\n\n\nNovas oportunidades serão divulgadas nesta página e no Instagram @ledt_ufam."
-  },
-  {
-    "objectID": "selecoes.html#como-fazer-parte-do-ledt",
-    "href": "selecoes.html#como-fazer-parte-do-ledt",
-    "title": "Seleções",
-    "section": "Como fazer parte do LEDT",
-    "text": "Como fazer parte do LEDT\nO LEDT recebe estudantes em diferentes níveis de formação:\n\n\n\nNível\nComo funciona\n\n\n\n\nIniciação científica (IC)\nAlunos de graduação da UFAM, com ou sem bolsa (PIBIC/PAIC). Os editais são anuais.\n\n\nTrabalho de conclusão de curso (TCC)\nAlunos de Engenharia Florestal interessados em dendrologia, taxonomia, ecologia ou espectroscopia.\n\n\nMestrado e doutorado\nPor meio dos programas de pós-graduação em que os docentes do LEDT atuam, como o PPGBOT/INPA. O ingresso segue os editais de cada programa.\n\n\nEstágios e visitas\nEstudantes e pesquisadores de outras instituições, mediante contato prévio.\n\n\n\n\nAntes de entrar em contato\n\nConheça nossas linhas em Pesquisa e as Publicações do grupo.\nEnvie uma mensagem pela página de Contato contando seu interesse, seu nível de formação e anexando o link do seu Currículo Lattes.\nPara a pós-graduação, entre em contato antes do edital do programa, para conversarmos sobre a proposta de projeto."
-  },
-  {
-    "objectID": "contato.html",
-    "href": "contato.html",
-    "title": "Contato",
-    "section": "",
-    "text": "Mensagem\n\nSe você tiver dúvidas, sugestões ou interesse em colaborar com o LEDT, envie uma mensagem utilizando o formulário abaixo.\n\n\nNome \n\n\nE-mail \n\n\nInstituição \n\n\nAssunto \n\n\nMensagem\n\n\n\nEnviar\n\n\n\nLocalização\n\n\n\n Universidade Federal do Amazonas, Faculdade de Ciências Agrárias, Depto. de Ciências Florestais\n\n\n Av. Rodrigo Otávio, 6200 (Setor Sul), FCA01, 1º piso - 69080-900 - Manaus, AM, Brasil\n\n\n ledtufam@gmail.com\n\n\n\n\n\n\n\n\n\nRedes sociais"
-  },
-  {
-    "objectID": "extensao/rlab/rotinas/primeiros-passos.html",
-    "href": "extensao/rlab/rotinas/primeiros-passos.html",
-    "title": "Primeiros passos no R",
-    "section": "",
-    "text": "Nível: iniciante · Pacotes: nenhum além do R básico · Baixar script"
-  },
-  {
-    "objectID": "extensao/rlab/rotinas/primeiros-passos.html#instale-o-r-e-o-rstudio",
-    "href": "extensao/rlab/rotinas/primeiros-passos.html#instale-o-r-e-o-rstudio",
-    "title": "Primeiros passos no R",
-    "section": "1. Instale o R e o RStudio",
-    "text": "1. Instale o R e o RStudio\n\nBaixe e instale o R: https://cran.r-project.org/\nBaixe e instale o RStudio Desktop: https://posit.co/download/rstudio-desktop/\nSó no Windows: instale também o Rtools, na versão correspondente ao seu R (ex.: R 4.5 → Rtools 4.5): https://cran.r-project.org/bin/windows/Rtools/. Ele é necessário para instalar pacotes que precisam ser compilados, como os instalados direto do GitHub.\nAbra sempre o RStudio (ele usa o R por trás).\n\n\n\n\n\n\n\nPara saber sua versão do R, digite R.version.string no Console. Para conferir se o Rtools foi reconhecido, instale o pacote pkgbuild e rode pkgbuild::has_build_tools(debug = TRUE)."
-  },
-  {
-    "objectID": "extensao/rlab/rotinas/primeiros-passos.html#trabalhe-com-projetos",
-    "href": "extensao/rlab/rotinas/primeiros-passos.html#trabalhe-com-projetos",
-    "title": "Primeiros passos no R",
-    "section": "2. Trabalhe com projetos",
-    "text": "2. Trabalhe com projetos\nNo RStudio, vá em File → New Project → New Directory. Crie uma pasta para cada trabalho (ex.: dendrologia_2026) com a estrutura:\ndendrologia_2026/\n├── dados/      # planilhas originais (nunca edite à mão depois de salvar!)\n├── scripts/    # seus arquivos .R\n└── figuras/    # gráficos exportados\nAssim, os caminhos ficam curtos e o projeto funciona em qualquer computador."
-  },
-  {
-    "objectID": "extensao/rlab/rotinas/primeiros-passos.html#o-básico-da-linguagem",
-    "href": "extensao/rlab/rotinas/primeiros-passos.html#o-básico-da-linguagem",
-    "title": "Primeiros passos no R",
-    "section": "3. O básico da linguagem",
-    "text": "3. O básico da linguagem\n\n# Comentários começam com #\nx &lt;- c(12.5, 30.2, 18.7, 45.0)   # vetor com DAP (cm) de 4 árvores\nmean(x)                          # média\n\n[1] 26.6\n\nsd(x)                            # desvio padrão\n\n[1] 14.29149\n\n# Área basal (m²) de cada árvore a partir do DAP em cm\ng &lt;- pi * x^2 / 40000\nround(g, 4)\n\n[1] 0.0123 0.0716 0.0275 0.1590"
-  },
-  {
-    "objectID": "extensao/rlab/rotinas/primeiros-passos.html#instale-e-carregue-pacotes",
-    "href": "extensao/rlab/rotinas/primeiros-passos.html#instale-e-carregue-pacotes",
-    "title": "Primeiros passos no R",
-    "section": "4. Instale e carregue pacotes",
-    "text": "4. Instale e carregue pacotes\nPacotes só precisam ser instalados uma vez; depois, carregue-os em cada sessão com library().\n\ninstall.packages(c(\"readxl\", \"ggplot2\", \"dplyr\"))\n\nlibrary(readxl)\nlibrary(ggplot2)"
-  },
-  {
-    "objectID": "extensao/rlab/rotinas/primeiros-passos.html#importe-uma-planilha",
-    "href": "extensao/rlab/rotinas/primeiros-passos.html#importe-uma-planilha",
-    "title": "Primeiros passos no R",
-    "section": "5. Importe uma planilha",
-    "text": "5. Importe uma planilha\nSalve a planilha do Excel como .csv (separador ; no Brasil) ou leia o .xlsx diretamente:\n\n# CSV com ; e vírgula decimal (padrão do Excel em português)\ndados &lt;- read.csv2(\"dados/inventario.csv\")\n\n# Ou o arquivo do Excel\ndados &lt;- readxl::read_excel(\"dados/inventario.xlsx\", sheet = 1)\n\nhead(dados)     # primeiras linhas\nstr(dados)      # tipo de cada coluna\nsummary(dados)  # resumo"
-  },
-  {
-    "objectID": "extensao/rlab/rotinas/primeiros-passos.html#seu-primeiro-gráfico",
-    "href": "extensao/rlab/rotinas/primeiros-passos.html#seu-primeiro-gráfico",
-    "title": "Primeiros passos no R",
-    "section": "6. Seu primeiro gráfico",
-    "text": "6. Seu primeiro gráfico\n\nset.seed(42)\ndap &lt;- rlnorm(200, meanlog = log(20), sdlog = 0.5)\nhist(dap, breaks = 20, col = \"#78c2ad\", border = \"white\",\n     main = \"\", xlab = \"DAP (cm)\", ylab = \"Número de árvores\")\n\n\n\n\nHistograma de DAP de 200 árvores simuladas."
-  },
-  {
-    "objectID": "extensao/rlab/rotinas/primeiros-passos.html#para-continuar-estudando",
-    "href": "extensao/rlab/rotinas/primeiros-passos.html#para-continuar-estudando",
-    "title": "Primeiros passos no R",
-    "section": "Para continuar estudando",
-    "text": "Para continuar estudando\n\nR for Data Science (2ª ed., em português)\nAnálises Ecológicas no R — livro em português com exemplos de ecologia"
-  },
-  {
-    "objectID": "extensao/rlab/rotinas/heterogeneidade.html",
-    "href": "extensao/rlab/rotinas/heterogeneidade.html",
-    "title": "Índices de heterogeneidade: Shannon, Simpson e Pielou",
-    "section": "",
-    "text": "Nível: iniciante/intermediário · Pacotes: apenas R básico · Disciplina: FGD320 - Fitossociologia · Baixar script · Baixar dados caixeta\nUma comunidade é mais heterogênea (ou diversa) quando tem mais espécies (riqueza) e quando os indivíduos estão distribuídos de forma mais equilibrada entre elas (equabilidade). Os índices de heterogeneidade combinam esses dois componentes num único número.\nOs caixetais são um ótimo exemplo: uma espécie, a caixeta, domina a comunidade. Como isso aparece nos índices?"
-  },
-  {
-    "objectID": "extensao/rlab/rotinas/heterogeneidade.html#dados",
-    "href": "extensao/rlab/rotinas/heterogeneidade.html#dados",
-    "title": "Índices de heterogeneidade: Shannon, Simpson e Pielou",
-    "section": "1. Dados",
-    "text": "1. Dados\n\ncx &lt;- read.csv(\"../dados/caixeta.csv\")   # no seu projeto: read.csv(\"dados/caixeta.csv\")\ncx$especie[cx$especie == \"Callophyllum brasiliensis\"] &lt;- \"Calophyllum brasiliensis\"\n\narv &lt;- unique(cx[, c(\"local\", \"parcela\", \"arvore\", \"especie\")])   # uma linha por árvore\nab  &lt;- unclass(table(arv$local, arv$especie))                      # local × espécie\nab[, 1:5]\n\n        \n         Alchornea triplinervia Andira fraxinifolia bombacaceae\n  chauas                      0                   0           0\n  jureia                      3                   4           1\n  retiro                      4                   0           0\n        \n         Cabralea canjerana Calophyllum brasiliensis\n  chauas                  0                        7\n  jureia                  4                        4\n  retiro                  0                        0"
-  },
-  {
-    "objectID": "extensao/rlab/rotinas/heterogeneidade.html#passo-a-passo-o-caixetal-da-jureia",
-    "href": "extensao/rlab/rotinas/heterogeneidade.html#passo-a-passo-o-caixetal-da-jureia",
-    "title": "Índices de heterogeneidade: Shannon, Simpson e Pielou",
-    "section": "2. Passo a passo: o caixetal da Jureia",
-    "text": "2. Passo a passo: o caixetal da Jureia\n\n\n\n\n\n\n\n\nÍndice\nFórmula\nInterpretação\n\n\n\n\nRiqueza\n\\(S\\)\nnúmero de espécies\n\n\nShannon\n\\(H' = -\\sum p_i \\ln p_i\\)\nincerteza em prever a espécie do próximo indivíduo\n\n\nSimpson (dominância)\n\\(D = \\sum \\frac{n_i(n_i-1)}{N(N-1)}\\)\nprobabilidade de dois indivíduos sorteados serem da mesma espécie\n\n\nGini-Simpson\n\\(1 - D\\)\nprobabilidade de serem de espécies diferentes\n\n\nSimpson inverso\n\\(1/D\\)\nnúmero “efetivo” de espécies dominantes\n\n\nPielou\n\\(J' = H' / \\ln S\\)\nequabilidade, de 0 a 1\n\n\n\nem que \\(p_i = n_i / N\\) é a proporção de indivíduos da espécie i.\n\nn &lt;- ab[\"jureia\", ]\nn &lt;- n[n &gt; 0]                  # só as espécies presentes\nN &lt;- sum(n); S &lt;- length(n)\np &lt;- n / N\n\nH &lt;- -sum(p * log(p))\nD &lt;- sum(n * (n - 1)) / (N * (N - 1))\nJ &lt;- H / log(S)\n\nc(N = N, S = S, Shannon = round(H, 3), Simpson_D = round(D, 3),\n  Gini_Simpson = round(1 - D, 3), Simpson_inv = round(1 / D, 2), Pielou = round(J, 3))\n\n           N            S      Shannon    Simpson_D Gini_Simpson  Simpson_inv \n     178.000       22.000        1.873        0.285        0.715        3.510 \n      Pielou \n       0.606 \n\n\n\n\n\n\n\n\nQual logaritmo? Usamos o logaritmo natural (\\(\\ln\\), log() no R), e o resultado é dado em nats. Alguns trabalhos usam \\(\\log_2\\) (bits) ou \\(\\log_{10}\\). Os valores mudam, então só compare índices calculados com a mesma base."
-  },
-  {
-    "objectID": "extensao/rlab/rotinas/heterogeneidade.html#os-três-caixetais",
-    "href": "extensao/rlab/rotinas/heterogeneidade.html#os-três-caixetais",
-    "title": "Índices de heterogeneidade: Shannon, Simpson e Pielou",
-    "section": "3. Os três caixetais",
-    "text": "3. Os três caixetais\n\nheterogeneidade &lt;- function(n) {\n  n &lt;- n[n &gt; 0]; N &lt;- sum(n); S &lt;- length(n); p &lt;- n / N\n  H &lt;- -sum(p * log(p)); D &lt;- sum(n * (n - 1)) / (N * (N - 1))\n  c(N = N, S = S, Shannon = H, Simpson_D = D, Gini_Simpson = 1 - D,\n    Simpson_inv = 1 / D, Pielou = H / log(S))\n}\n\nhet &lt;- t(apply(ab, 1, heterogeneidade))\nhet &lt;- rbind(het, total = heterogeneidade(colSums(ab)))\nknitr::kable(het, digits = 3, caption = \"Índices de heterogeneidade por caixetal.\")\n\n\nÍndices de heterogeneidade por caixetal.\n\n\n\n\n\n\n\n\n\n\n\n\n\nN\nS\nShannon\nSimpson_D\nGini_Simpson\nSimpson_inv\nPielou\n\n\n\n\nchauas\n290\n13\n0.957\n0.507\n0.493\n1.972\n0.373\n\n\njureia\n178\n22\n1.873\n0.285\n0.715\n3.505\n0.606\n\n\nretiro\n204\n13\n1.148\n0.471\n0.529\n2.123\n0.448\n\n\ntotal\n672\n42\n1.667\n0.394\n0.606\n2.537\n0.446\n\n\n\n\n\n\ncores &lt;- c(chauas = \"#1b9e77\", jureia = \"#d95f02\", retiro = \"#7570b3\")\nplot(NA, xlim = c(1, max(het[1:3, \"S\"])), ylim = c(0.1, 100), log = \"y\",\n     xlab = \"Posição da espécie (da mais para a menos abundante)\",\n     ylab = \"Abundância relativa (%)\")\nfor (l in rownames(ab)) {\n  pr &lt;- sort(ab[l, ab[l, ] &gt; 0], decreasing = TRUE) / sum(ab[l, ]) * 100\n  lines(seq_along(pr), pr, type = \"b\", pch = 19, col = cores[l])\n}\nlegend(\"topright\", legend = names(cores), col = cores, pch = 19, lty = 1, bty = \"n\")\n\n\n\n\nCurvas de dominância-diversidade (abundância relativa em escala logarítmica por posição da espécie) nos três caixetais.\n\n\n\n\nA curva de dominância-diversidade mostra os dois componentes ao mesmo tempo: o comprimento da curva é a riqueza, e a inclinação, a (falta de) equabilidade."
-  },
-  {
-    "objectID": "extensao/rlab/rotinas/heterogeneidade.html#os-índices-de-shannon-diferem-teste-t-de-hutcheson",
-    "href": "extensao/rlab/rotinas/heterogeneidade.html#os-índices-de-shannon-diferem-teste-t-de-hutcheson",
-    "title": "Índices de heterogeneidade: Shannon, Simpson e Pielou",
-    "section": "4. Os índices de Shannon diferem? Teste t de Hutcheson",
-    "text": "4. Os índices de Shannon diferem? Teste t de Hutcheson\nHutcheson (1970) propôs um teste t para comparar dois valores de \\(H'\\), usando a variância de cada um:\n\\[\\text{Var}(H') = \\frac{\\sum p_i (\\ln p_i)^2 - (\\sum p_i \\ln p_i)^2}{N} + \\frac{S - 1}{2N^2}\\]\n\\[t = \\frac{H'_1 - H'_2}{\\sqrt{\\text{Var}(H'_1) + \\text{Var}(H'_2)}}, \\qquad gl = \\frac{[\\text{Var}(H'_1) + \\text{Var}(H'_2)]^2}{\\text{Var}(H'_1)^2/N_1 + \\text{Var}(H'_2)^2/N_2}\\]\n\nhutcheson &lt;- function(n1, n2) {\n  v &lt;- function(n) {\n    n &lt;- n[n &gt; 0]; N &lt;- sum(n); S &lt;- length(n); p &lt;- n / N\n    H &lt;- -sum(p * log(p))\n    c(H = H, var = (sum(p * log(p)^2) - sum(p * log(p))^2) / N + (S - 1) / (2 * N^2), N = N)\n  }\n  a &lt;- v(n1); b &lt;- v(n2)\n  t  &lt;- (a[\"H\"] - b[\"H\"]) / sqrt(a[\"var\"] + b[\"var\"])\n  gl &lt;- (a[\"var\"] + b[\"var\"])^2 / (a[\"var\"]^2 / a[\"N\"] + b[\"var\"]^2 / b[\"N\"])\n  c(H1 = a[[\"H\"]], H2 = b[[\"H\"]], t = t[[1]], gl = gl[[1]], p = 2 * pt(-abs(t[[1]]), gl[[1]]))\n}\n\npares &lt;- combn(rownames(ab), 2)\nteste &lt;- t(apply(pares, 2, function(x) hutcheson(ab[x[1], ], ab[x[2], ])))\nrownames(teste) &lt;- apply(pares, 2, paste, collapse = \" × \")\nknitr::kable(teste, digits = 4, caption = \"Teste t de Hutcheson entre os caixetais.\")\n\n\nTeste t de Hutcheson entre os caixetais.\n\n\n\nH1\nH2\nt\ngl\np\n\n\n\n\nchauas × jureia\n0.9572\n1.8734\n-7.0986\n306.1799\n0.0000\n\n\nchauas × retiro\n0.9572\n1.1484\n-1.7066\n403.6121\n0.0887\n\n\njureia × retiro\n1.8734\n1.1484\n5.0858\n355.8907\n0.0000"
-  },
-  {
-    "objectID": "extensao/rlab/rotinas/heterogeneidade.html#números-de-hill-uma-família-de-índices",
-    "href": "extensao/rlab/rotinas/heterogeneidade.html#números-de-hill-uma-família-de-índices",
-    "title": "Índices de heterogeneidade: Shannon, Simpson e Pielou",
-    "section": "5. Números de Hill: uma família de índices",
-    "text": "5. Números de Hill: uma família de índices\nRiqueza, Shannon e Simpson podem ser vistos como membros de uma mesma família, os números de Hill (\\(^qD\\)), expressos em número efetivo de espécies:\n\n\\(^0D = S\\) (riqueza: todas as espécies contam igualmente);\n\\(^1D = \\exp(H')\\) (espécies pesam pela abundância);\n\\(^2D = 1 / \\sum p_i^2\\) (só as espécies dominantes pesam).\n\nQuanto mais rápido o perfil cai com \\(q\\), mais desigual é a comunidade.\n\nhill &lt;- function(n, q) {\n  p &lt;- n[n &gt; 0] / sum(n)\n  if (q == 1) exp(-sum(p * log(p))) else sum(p^q)^(1 / (1 - q))\n}\nqs &lt;- seq(0, 3, by = 0.1)\nperfis &lt;- sapply(rownames(ab), function(l) sapply(qs, function(q) hill(ab[l, ], q)))\n\nmatplot(qs, perfis, type = \"l\", lty = 1, lwd = 2, col = cores[colnames(perfis)],\n        xlab = \"Ordem q\", ylab = \"Número efetivo de espécies\")\nlegend(\"topright\", legend = colnames(perfis), col = cores[colnames(perfis)], lwd = 2, bty = \"n\")\n\n\n\n\nPerfis de diversidade de Hill (q de 0 a 3) dos três caixetais.\n\n\n\nround(perfis[qs %in% c(0, 1, 2), ], 2)\n\n     chauas jureia retiro\n[1,]  13.00  22.00  13.00\n[2,]   2.60   6.51   3.15\n[3,]   1.97   3.46   2.11"
-  },
-  {
-    "objectID": "extensao/rlab/rotinas/heterogeneidade.html#o-peso-da-espécie-dominante",
-    "href": "extensao/rlab/rotinas/heterogeneidade.html#o-peso-da-espécie-dominante",
-    "title": "Índices de heterogeneidade: Shannon, Simpson e Pielou",
-    "section": "6. O peso da espécie dominante",
-    "text": "6. O peso da espécie dominante\nO que acontece com os índices se retirarmos a caixeta?\n\nsem_caixeta &lt;- ab[, colnames(ab) != \"Tabebuia cassinoides\"]\nknitr::kable(cbind(com = het[1:3, c(\"Shannon\", \"Pielou\")],\n                   sem = t(apply(sem_caixeta, 1, heterogeneidade))[, c(\"Shannon\", \"Pielou\")]),\n             digits = 3, col.names = c(\"H' (com)\", \"J' (com)\", \"H' (sem)\", \"J' (sem)\"),\n             caption = \"Shannon e Pielou com e sem a caixeta.\")\n\n\nShannon e Pielou com e sem a caixeta.\n\n\n\nH’ (com)\nJ’ (com)\nH’ (sem)\nJ’ (sem)\n\n\n\n\nchauas\n0.957\n0.373\n0.924\n0.372\n\n\njureia\n1.873\n0.606\n2.309\n0.758\n\n\nretiro\n1.148\n0.448\n1.414\n0.569"
-  },
-  {
-    "objectID": "extensao/rlab/rotinas/heterogeneidade.html#exercícios",
-    "href": "extensao/rlab/rotinas/heterogeneidade.html#exercícios",
-    "title": "Índices de heterogeneidade: Shannon, Simpson e Pielou",
-    "section": "7. Exercícios",
-    "text": "7. Exercícios\n\n\n\n\n\n\nPara entregar (EE6)\n\n\n\n\nCalcule à mão (calculadora ou Excel) \\(H'\\), \\(D\\) e \\(J'\\) para o caixetal de chauas e confira com a tabela da seção 3.\nQual caixetal é mais diverso? A resposta é a mesma para todos os índices?\nAs diferenças entre os valores de \\(H'\\) são significativas pelo teste de Hutcheson?\nExplique, com o perfil de Hill, por que a diferença entre os caixetais diminui quando \\(q\\) aumenta.\nO que acontece com \\(H'\\) e \\(J'\\) quando a caixeta é retirada? O que isso diz sobre a estrutura dos caixetais?\nCompare os valores de \\(H'\\) dos caixetais com os de florestas de terra firme da Amazônia (procure na literatura). Por que são tão diferentes?\n\n\n\n\n\n\n\n\n\nPara o relatório (formato de artigo)\n\n\n\nEsta prática gera a Tabela 4 (índices de heterogeneidade por caixetal, com o teste de Hutcheson) e a Figura 4 (curvas de dominância-diversidade ou perfis de Hill)."
-  },
-  {
-    "objectID": "extensao/rlab/rotinas/heterogeneidade.html#referências",
-    "href": "extensao/rlab/rotinas/heterogeneidade.html#referências",
-    "title": "Índices de heterogeneidade: Shannon, Simpson e Pielou",
-    "section": "Referências",
-    "text": "Referências\n\nHILL, M. O. Diversity and evenness: a unifying notation and its consequences. Ecology, v. 54, p. 427-432, 1973.\nHUTCHESON, K. A test for comparing diversities based on the Shannon formula. Journal of Theoretical Biology, v. 29, p. 151-154, 1970.\nMAGURRAN, A. E. Medindo a diversidade biológica. Curitiba: Ed. UFPR, 2011.\nPIELOU, E. C. The measurement of diversity in different types of biological collections. Journal of Theoretical Biology, v. 13, p. 131-144, 1966.\nVANIN, A. 1999. Dissertação de mestrado (dados caixeta). Dados disponíveis em: https://ecor.ib.usp.br/doku.php?id=dados:dados-caixeta."
-  },
-  {
     "objectID": "extensao/rlab/rotinas/fenologia-specieslink.html",
     "href": "extensao/rlab/rotinas/fenologia-specieslink.html",
-    "title": "Calendário fenológico a partir de registros de herbário (speciesLink)",
+    "title": "Calendários fenológicos a partir de exsicatas (FenoTree)",
     "section": "",
-    "text": "Nível: iniciante/intermediário · Pacotes: jsonlite (download); o restante usa R básico · Disciplina: FGD921 - Dendrologia Tropical · Baixar script\nAs exsicatas guardam, na etiqueta, quando a planta foi coletada e, muitas vezes, se tinha flores ou frutos. Juntando centenas de registros de herbários, é possível montar um calendário fenológico, ou seja, os meses em que a espécie floresce e frutifica. Essa informação é útil para planejar a coleta de sementes e entender a ecologia reprodutiva da espécie.\nFluxo da rotina: baixar registros → identificar flor/fruto na etiqueta → contar por mês → calendário."
+    "text": "Ferramenta: FenoTree (abre no navegador, não é preciso instalar nada) · Disciplina: Dendrologia Tropical · Dados: rede speciesLink\nAs exsicatas guardam, na etiqueta, quando a planta foi coletada e, muitas vezes, se tinha flores ou frutos. Juntando centenas de registros de herbários, dá para montar um calendário fenológico: os meses em que a espécie floresce e frutifica. O FenoTree faz isso por você: busca as exsicatas no speciesLink, procura flores e frutos nas anotações das etiquetas e monta os gráficos. Assim, você se concentra no mais importante: comparar e interpretar.\nAbrir o FenoTree"
   },
   {
-    "objectID": "extensao/rlab/rotinas/fenologia-specieslink.html#baixar-os-registros-do-specieslink",
-    "href": "extensao/rlab/rotinas/fenologia-specieslink.html#baixar-os-registros-do-specieslink",
-    "title": "Calendário fenológico a partir de registros de herbário (speciesLink)",
-    "section": "1. Baixar os registros do speciesLink",
-    "text": "1. Baixar os registros do speciesLink\nO speciesLink tem um serviço web aberto, mas cada consulta exige uma chave de acesso (API key):\n\nCrie uma conta gratuita no speciesLink.\nGere sua chave em specieslink.net/aut/profile/apikeys.\nGuarde a chave no R sem colocá-la no script que você vai compartilhar. Por exemplo, rode uma vez usethis::edit_r_environ(), escreva SPLINK_KEY=sua_chave no arquivo, salve e reinicie o R.\n\n\n\n\n\n\n\nOs blocos desta seção não são executados no site (dependem da internet e da sua chave). A partir da seção 2 usamos dados de exemplo.\n\n\n\n\nlibrary(jsonlite)\n\nbaixar_splink &lt;- function(especie, chave = Sys.getenv(\"SPLINK_KEY\"), limite = 5000) {\n  url &lt;- paste0(\"https://specieslink.net/ws/1.0/search?\",\n                \"scientificname=\", URLencode(especie),\n                \"&scope=p&limit=\", limite,\n                \"&apikey=\", chave)\n  res &lt;- fromJSON(url)\n  res$features$properties          # tabela com um registro por linha\n}\n\nreg &lt;- baixar_splink(\"Handroanthus serratifolius\")\nnrow(reg)\nnames(reg)\n\nAs colunas que vamos usar são monthCollected (mês da coleta), occurrenceRemarks (anotações da etiqueta), stateProvince e scientificName.\n\n\n\n\n\n\nPrefere baixar pelo site?\n\n\n\n\n\nNa busca do speciesLink, pesquise a espécie, use Download para baixar os registros e leia o arquivo no R, por exemplo com reg &lt;- read.delim(\"dados/speciesLink.txt\"). Os nomes das colunas podem mudar um pouco (por exemplo, monthcollected em vez de monthCollected). Confira com names(reg) e ajuste a rotina."
+    "objectID": "extensao/rlab/rotinas/fenologia-specieslink.html#passo-a-passo",
+    "href": "extensao/rlab/rotinas/fenologia-specieslink.html#passo-a-passo",
+    "title": "Calendários fenológicos a partir de exsicatas (FenoTree)",
+    "section": "Passo a passo",
+    "text": "Passo a passo\n\n\n\nPasso\nO que fazer\nOnde\n\n\n\n\n1\nAssistir ao vídeo sobre a plataforma speciesLink\nSeção 1\n\n\n2\nEscolher até três espécies\nSeção 2\n\n\n3\nBuscar cada espécie no FenoTree e baixar figuras e tabelas\nSeção 3\n\n\n4\nResponder às perguntas, comparando as espécies\nSeção 4\n\n\n5\nMontar o relatório em Word e entregar no Drive\nSeção 5"
   },
   {
-    "objectID": "extensao/rlab/rotinas/fenologia-specieslink.html#dados-de-exemplo",
-    "href": "extensao/rlab/rotinas/fenologia-specieslink.html#dados-de-exemplo",
-    "title": "Calendário fenológico a partir de registros de herbário (speciesLink)",
-    "section": "2. Dados de exemplo",
-    "text": "2. Dados de exemplo\nPara que esta página funcione sem internet, usamos registros simulados com a mesma estrutura do speciesLink. São 240 registros de uma espécie hipotética com floração concentrada na estação seca e frutificação logo depois, como ocorre em muitos ipês amazônicos.\n\nset.seed(921)\nn &lt;- 240\nmes_fl &lt;- sample(1:12, n, replace = TRUE, prob = c(1, 1, 1, 1, 2, 4, 9, 12, 8, 3, 1, 1))\nfen &lt;- sample(c(\"flor\", \"fruto\", \"esteril\", \"ambos\"), n, replace = TRUE, prob = c(.40, .25, .25, .10))\nmes &lt;- ifelse(fen == \"fruto\", (mes_fl + 1) %% 12 + 1, mes_fl)   # frutos ~2 meses depois\n\nmodelos &lt;- list(\n  flor    = c(\"Árvore 15 m, flores amarelas.\", \"fl. amarelas\", \"Com flores.\", \"Botões e flores abertas.\", \"Floração intensa, sem folhas.\"),\n  fruto   = c(\"Frutos imaturos.\", \"fr. verdes\", \"Árvore com frutos maduros, deiscentes.\", \"Frutificando.\"),\n  ambos   = c(\"Flores e frutos.\", \"fl. e fr. jovens\"),\n  esteril = c(\"Material estéril.\", \"Árvore 20 m, DAP 40 cm.\", \"\", \"Ramo estéril, folhas compostas.\")\n)\nreg &lt;- data.frame(\n  scientificName    = \"Espécie hipotética\",\n  monthCollected    = mes,\n  stateProvince     = sample(c(\"Amazonas\", \"Pará\", \"Acre\", \"Rondônia\", \"Mato Grosso\"), n, replace = TRUE),\n  occurrenceRemarks = vapply(fen, function(f) sample(modelos[[f]], 1), \"\")\n)\nhead(reg)\n\n      scientificName monthCollected stateProvince             occurrenceRemarks\n1 Espécie hipotética              6      Rondônia              Frutos imaturos.\n2 Espécie hipotética              1          Pará Árvore 15 m, flores amarelas.\n3 Espécie hipotética              7   Mato Grosso                  fl. amarelas\n4 Espécie hipotética             10          Acre                    fr. verdes\n5 Espécie hipotética              8      Rondônia                    fr. verdes\n6 Espécie hipotética              9          Acre                  fl. amarelas"
+    "objectID": "extensao/rlab/rotinas/fenologia-specieslink.html#video",
+    "href": "extensao/rlab/rotinas/fenologia-specieslink.html#video",
+    "title": "Calendários fenológicos a partir de exsicatas (FenoTree)",
+    "section": "1. Conheça o speciesLink",
+    "text": "1. Conheça o speciesLink\nO FenoTree usa os dados da rede speciesLink, que reúne os registros de centenas de coleções biológicas, incluindo os principais herbários do Brasil. Antes de começar, assista ao vídeo sobre como a plataforma funciona.\n\n\n\n\n Abrir o vídeo no Google Drive"
   },
   {
-    "objectID": "extensao/rlab/rotinas/fenologia-specieslink.html#identificar-flor-e-fruto-nas-etiquetas",
-    "href": "extensao/rlab/rotinas/fenologia-specieslink.html#identificar-flor-e-fruto-nas-etiquetas",
-    "title": "Calendário fenológico a partir de registros de herbário (speciesLink)",
-    "section": "3. Identificar flor e fruto nas etiquetas",
-    "text": "3. Identificar flor e fruto nas etiquetas\nAs etiquetas não têm um campo padronizado de fenologia. Por isso, procuramos palavras-chave nas anotações. Ajuste a lista conforme o idioma e o estilo das etiquetas da sua espécie.\n\ntxt &lt;- tolower(reg$occurrenceRemarks)\n\ntermos_flor  &lt;- c(\"\\\\bflor\", \"\\\\bfl\\\\.\", \"\\\\bflower\", \"\\\\bbot[aã]o\", \"\\\\bbot[oõ]es\", \"\\\\bflora[cç][aã]o\", \"\\\\bantese\")\ntermos_fruto &lt;- c(\"\\\\bfrut\", \"\\\\bfr\\\\.\", \"\\\\bfruit\")\n\nreg$flor  &lt;- grepl(paste(termos_flor,  collapse = \"|\"), txt)\nreg$fruto &lt;- grepl(paste(termos_fruto, collapse = \"|\"), txt)\n\n# registros sem mês ou sem informação de fenologia não entram no calendário\nreg &lt;- subset(reg, !is.na(monthCollected) & monthCollected %in% 1:12)\nc(total = nrow(reg), com_flor = sum(reg$flor), com_fruto = sum(reg$fruto),\n  sem_info = sum(!reg$flor & !reg$fruto))\n\n    total  com_flor com_fruto  sem_info \n      240       125        82        59 \n\n\n\n\n\n\n\n\nConfira uma amostra à mão! Leia algumas dezenas de etiquetas classificadas e veja se a busca por palavras acertou. Expressões como “sem flores” ou “flor-de-ipê” (nome popular) podem gerar falsos positivos."
+    "objectID": "extensao/rlab/rotinas/fenologia-specieslink.html#especies",
+    "href": "extensao/rlab/rotinas/fenologia-specieslink.html#especies",
+    "title": "Calendários fenológicos a partir de exsicatas (FenoTree)",
+    "section": "2. Escolha as espécies",
+    "text": "2. Escolha as espécies\nEscolha de uma a três espécies (o ideal é comparar duas ou três). Cada espécie precisa atender às três condições:\n\n\n\nCondição\nComo conferir\n\n\n\n\nÉ árvore\nNa Flora e Funga do Brasil, a forma de vida inclui “árvore”.\n\n\nOcorre na Amazônia\nNa Flora e Funga do Brasil, o domínio fitogeográfico inclui “Amazônia”.\n\n\nTem importância comercial\nMadeireira (madeira serrada, laminados, construção) ou não-madeireira (frutos, sementes, óleos, resinas, látex, fibras, uso medicinal). Confirme em pelo menos uma fonte.\n\n\n\nPara a comparação ficar interessante, escolha espécies diferentes em alguma coisa: uma madeireira e uma não-madeireira, de grupos ecológicos diferentes (pioneira × tardia), de terra firme e de várzea ou igapó, com frutos dispersos pelo vento e por animais…\nDicas:\n\nUse o nome científico aceito (gênero e epíteto). Confira a grafia na Flora e Funga do Brasil.\nPrefira espécies bem coletadas: com menos de 30 registros com flor ou fruto, o calendário fica pouco confiável (o FenoTree avisa). Se isso acontecer, troque de espécie."
   },
   {
-    "objectID": "extensao/rlab/rotinas/fenologia-specieslink.html#contar-registros-por-mês",
-    "href": "extensao/rlab/rotinas/fenologia-specieslink.html#contar-registros-por-mês",
-    "title": "Calendário fenológico a partir de registros de herbário (speciesLink)",
-    "section": "4. Contar registros por mês",
-    "text": "4. Contar registros por mês\n\nmeses &lt;- c(\"Jan\", \"Fev\", \"Mar\", \"Abr\", \"Mai\", \"Jun\", \"Jul\", \"Ago\", \"Set\", \"Out\", \"Nov\", \"Dez\")\n\ncalendario &lt;- data.frame(\n  mes   = factor(meses, levels = meses),\n  flor  = tabulate(reg$monthCollected[reg$flor],  nbins = 12),\n  fruto = tabulate(reg$monthCollected[reg$fruto], nbins = 12),\n  total = tabulate(reg$monthCollected,            nbins = 12)\n)\ncalendario\n\n   mes flor fruto total\n1  Jan    2     4     8\n2  Fev    4     4     9\n3  Mar    5     3     7\n4  Abr    0     0     1\n5  Mai    6     2    11\n6  Jun   16     4    19\n7  Jul   36     7    53\n8  Ago   30    16    58\n9  Set   15    18    36\n10 Out    6    14    22\n11 Nov    2     9    12\n12 Dez    3     1     4\n\n\nComo o número de coletas varia muito entre os meses (há mais expedições na estação seca, por exemplo), vale olhar também a proporção de registros férteis em cada mês:\n\ncalendario$prop_flor  &lt;- round(calendario$flor  / calendario$total, 2)\ncalendario$prop_fruto &lt;- round(calendario$fruto / calendario$total, 2)\ncalendario[, c(\"mes\", \"prop_flor\", \"prop_fruto\")]\n\n   mes prop_flor prop_fruto\n1  Jan      0.25       0.50\n2  Fev      0.44       0.44\n3  Mar      0.71       0.43\n4  Abr      0.00       0.00\n5  Mai      0.55       0.18\n6  Jun      0.84       0.21\n7  Jul      0.68       0.13\n8  Ago      0.52       0.28\n9  Set      0.42       0.50\n10 Out      0.27       0.64\n11 Nov      0.17       0.75\n12 Dez      0.75       0.25\n\n\nCuidado com meses com poucos registros: uma única exsicata com flor num mês com duas coletas já dá 50%."
+    "objectID": "extensao/rlab/rotinas/fenologia-specieslink.html#fenotree",
+    "href": "extensao/rlab/rotinas/fenologia-specieslink.html#fenotree",
+    "title": "Calendários fenológicos a partir de exsicatas (FenoTree)",
+    "section": "3. Use o FenoTree",
+    "text": "3. Use o FenoTree\nO FenoTree busca uma espécie por vez. Repita os passos abaixo para cada espécie e use a mesma região para todas, para a comparação ser justa.\n\nAbra o FenoTree. No primeiro acesso do dia, ele pode levar alguns segundos para carregar.\nNo campo Espécie, escreva o nome científico.\nMantenha marcado Incluir sinônimos (Flora e Funga do Brasil): assim entram também as exsicatas identificadas com nomes antigos.\nEscolha onde. Sugestão: Bioma Amazônia ou Amazônia Legal.\n\n\n\n\n\n\n\n\nOpção\nO que entra\n\n\n\n\nTodo o Brasil e exterior\ntodas as exsicatas da espécie\n\n\nBioma Amazônia\nexsicatas com coordenadas dentro do bioma Amazônia\n\n\nAmazônia Legal\nexsicatas com coordenadas dentro da Amazônia Legal\n\n\nPanamazônia\nbioma Amazônia no Brasil + registros da Bolívia, Peru, Equador, Colômbia, Venezuela, Guiana, Suriname e Guiana Francesa\n\n\nEscolher estados\nexsicatas dos estados escolhidos\n\n\n\n\nClique em Buscar no speciesLink e aguarde (até 1 minuto).\nAnote os números das caixas no alto (registros, com mês, com flor, com fruto), explore as abas e baixe as figuras (PNG) e as tabelas (CSV):\n\n\n\n\n\n\n\n\nAba\nO que mostra\n\n\n\n\nCalendário\nregistros com flor e com fruto em cada mês, em número ou em proporção das coletas\n\n\nCircular\ncalendário circular, com seta no mês médio e concentração (r)\n\n\nEsforço de coleta\ntodas as coletas de cada mês, para ver se os picos acompanham só o esforço dos coletores\n\n\nTabelas\nresumo da espécie (mês médio, r) e números de cada mês\n\n\nMapa\nonde as exsicatas foram coletadas e o que cada etiqueta registra (clique num ponto para ver a etiqueta)\n\n\nEtiquetas\no texto das etiquetas e como cada uma foi classificada\n\n\n\n\n\n\n\n\n\nComo o FenoTree identifica flor e fruto?\n\n\n\n\n\nAs etiquetas não têm um campo padronizado de fenologia. O FenoTree procura palavras-chave nas anotações, em português, inglês e espanhol: flor, fl., botão, floração, antese, flower, bud para flor e fruto, fr., fruit, vagem, semente, cápsula, drupa para fruto. Antes, apaga expressões que enganariam a busca, como “sem flores”, “floresta” e “flor-de-…”. Um registro pode ter flor e fruto.\n\n\n\n\n\n\n\n\n\nO que são o mês médio e o r?\n\n\n\n\n\nComo os meses formam um ciclo, a média comum não funciona: a média entre dezembro (12) e janeiro (1) daria junho! O FenoTree usa a média circular: cada registro vira um ângulo no círculo do ano. O mês médio é a direção média, e o r (de 0 a 1) mede a concentração: acima de 0,5, a fenofase está bem concentrada em poucos meses; abaixo de 0,2, praticamente não tem época definida."
   },
   {
-    "objectID": "extensao/rlab/rotinas/fenologia-specieslink.html#calendário-fenológico",
-    "href": "extensao/rlab/rotinas/fenologia-specieslink.html#calendário-fenológico",
-    "title": "Calendário fenológico a partir de registros de herbário (speciesLink)",
-    "section": "5. Calendário fenológico",
-    "text": "5. Calendário fenológico\n\ncores &lt;- c(flor = \"#ffce67\", fruto = \"#78c2ad\")\nbarplot(t(as.matrix(calendario[, c(\"flor\", \"fruto\")])), beside = TRUE,\n        names.arg = meses, col = cores, border = NA, las = 1,\n        ylab = \"Número de registros\", legend.text = c(\"Flor\", \"Fruto\"),\n        args.legend = list(x = \"topright\", bty = \"n\"))\n\n\n\n\nNúmero de registros de herbário com flores e com frutos em cada mês.\n\n\n\n\n\nVersão circular\nO calendário circular deixa claro que dezembro e janeiro são vizinhos:\n\ncalendario_circular &lt;- function(contagem, cor, titulo = \"\") {\n  ang &lt;- pi / 2 - (0:11) * 2 * pi / 12            # janeiro no topo, sentido horário\n  r   &lt;- contagem / max(contagem)\n  plot(NA, xlim = c(-1.25, 1.25), ylim = c(-1.25, 1.25), asp = 1, axes = FALSE,\n       xlab = \"\", ylab = \"\", main = titulo)\n  for (k in c(.25, .5, .75, 1)) symbols(0, 0, circles = k, inches = FALSE, add = TRUE, fg = \"grey85\")\n  for (i in 1:12) {\n    a &lt;- seq(ang[i] + pi / 12, ang[i] - pi / 12, length.out = 20)\n    polygon(c(0, r[i] * cos(a), 0), c(0, r[i] * sin(a), 0), col = cor, border = \"white\")\n  }\n  text(1.15 * cos(ang), 1.15 * sin(ang), meses, cex = 0.8)\n}\n\npar(mfrow = c(1, 2), mar = c(0, 0, 2, 0))\ncalendario_circular(calendario$flor,  cores[\"flor\"],  \"Floração\")\ncalendario_circular(calendario$fruto, cores[\"fruto\"], \"Frutificação\")\n\n\n\n\nCalendário fenológico circular: o comprimento de cada barra é proporcional ao número de registros no mês."
+    "objectID": "extensao/rlab/rotinas/fenologia-specieslink.html#exercicio",
+    "href": "extensao/rlab/rotinas/fenologia-specieslink.html#exercicio",
+    "title": "Calendários fenológicos a partir de exsicatas (FenoTree)",
+    "section": "4. Perguntas",
+    "text": "4. Perguntas\nResponda com base na aula de Fenologia e nos resultados do FenoTree. Na Amazônia Central, a estação mais seca vai, em geral, de junho a outubro e a chuvosa, de dezembro a maio (Aleixo et al. 2023). Como comparar as espécies fica a seu critério: pode ser uma tabela, figuras lado a lado ou um calendário que você mesmo monta.\nConheça as espécies\n\nPara cada espécie: nome científico, família, nome popular, uso comercial (madeireiro ou não-madeireiro; qual produto) e ambiente onde ocorre (terra firme, várzea, igapó).\n\nOs dados\n\nQuantos registros cada espécie tem? Quantos com flor e quantos com fruto? Os dados são suficientes para confiar no calendário?\n\nO calendário de cada espécie\n\nEm que meses cada espécie floresce e frutifica? Quais os meses de pico, o mês médio e o r?\nA floração e a frutificação caem na estação seca ou na chuvosa? As espécies seguem o padrão geral da Amazônia Central visto em aula (a maioria floresce na seca e frutifica nas chuvas) ou alguma é exceção?\n\nComparação e interpretação ecológica\n\nAs espécies têm calendários parecidos ou diferentes? Em quê?\nQue fatores ecológicos podem explicar as semelhanças e diferenças? Pense no que vimos em aula: chuva e seca, luz, pulso de inundação, polinizadores, dispersores (vento × animais) e grupo ecológico.\n\nAplicação\n\nMonte um calendário de coleta: em que meses você iria a campo coletar sementes de cada espécie? E flores, para identificá-las?\nComo esse calendário ajuda no uso comercial das espécies (safra de um produto, coleta de sementes de matrizes, manejo)?\n\nLimitações\n\nNa aba Esforço de coleta, os picos acompanham só os meses com mais coletas? Cite uma limitação dos dados de herbário em comparação com um estudo fenológico de campo."
   },
   {
-    "objectID": "extensao/rlab/rotinas/fenologia-specieslink.html#mês-médio-e-concentração-estatística-circular",
-    "href": "extensao/rlab/rotinas/fenologia-specieslink.html#mês-médio-e-concentração-estatística-circular",
-    "title": "Calendário fenológico a partir de registros de herbário (speciesLink)",
-    "section": "6. Mês médio e concentração (estatística circular)",
-    "text": "6. Mês médio e concentração (estatística circular)\nComo os meses formam um ciclo, a média comum não funciona (a média entre dezembro e janeiro não é junho!). Usamos a média circular: cada registro vira um ângulo, e calculamos o ângulo médio e o comprimento do vetor médio (r), que vai de 0 (fenofase espalhada no ano todo) a 1 (todos os registros no mesmo mês).\n\nmedia_circular &lt;- function(m) {\n  ang &lt;- (m - 0.5) * 2 * pi / 12\n  C &lt;- mean(cos(ang)); S &lt;- mean(sin(ang))\n  ang_medio &lt;- atan2(S, C) %% (2 * pi)\n  c(mes_medio = round(ang_medio * 12 / (2 * pi) + 0.5, 1), r = round(sqrt(C^2 + S^2), 2))\n}\n\nrbind(Floração     = media_circular(reg$monthCollected[reg$flor]),\n      Frutificação = media_circular(reg$monthCollected[reg$fruto]))\n\n             mes_medio    r\nFloração           7.4 0.61\nFrutificação       9.1 0.52\n\n\nUm mes_medio de 8,5 corresponde à segunda quinzena de agosto. Valores de r acima de 0,5 indicam uma fenofase bem concentrada no ano.\n\n\n\n\n\n\nPara discutir na prática\n\n\n\n\nEm que meses você planejaria uma expedição para coletar sementes dessa espécie?\nO padrão muda entre estados (stateProvince)? Repita a análise separando por região.\nQue vieses os dados de herbário têm? Pense em quando e onde os coletores costumam ir a campo e em quais plantas eles preferem coletar."
+    "objectID": "extensao/rlab/rotinas/fenologia-specieslink.html#entrega",
+    "href": "extensao/rlab/rotinas/fenologia-specieslink.html#entrega",
+    "title": "Calendários fenológicos a partir de exsicatas (FenoTree)",
+    "section": "5. Monte o relatório e entregue",
+    "text": "5. Monte o relatório e entregue\nUm documento Word (.docx), de 3 a 5 páginas, com:\n\nIdentificação: nome(s) e matrícula(s).\nIntrodução: quais espécies e por que você as escolheu (o que esperava encontrar).\nMétodos: fonte dos dados (speciesLink, via FenoTree), região escolhida e data da consulta.\nResultados: uma tabela com os números e o mês médio/r de cada espécie e as figuras do calendário (pelo menos uma por espécie), cada uma com legenda.\nDiscussão: respostas às perguntas 2 a 9, em texto corrido.\nConclusão: um parágrafo curto.\nReferências.\n\nSalve como NomeSobrenome_fenologia.docx e coloque na pasta da disciplina no Google Drive até 21/10/2026, às 12h."
+  },
+  {
+    "objectID": "extensao/rlab/rotinas/fenologia-specieslink.html#problemas-comuns",
+    "href": "extensao/rlab/rotinas/fenologia-specieslink.html#problemas-comuns",
+    "title": "Calendários fenológicos a partir de exsicatas (FenoTree)",
+    "section": "Problemas comuns",
+    "text": "Problemas comuns\n\n\n\n\n\n\n“Nenhum registro encontrado”\n\n\n\n\n\nConfira a grafia do nome (gênero com inicial maiúscula e epíteto) e se ele é aceito na Flora e Funga do Brasil. Mantenha marcada a opção de sinônimos. Se escolheu uma região, tente “Todo o Brasil e exterior”.\n\n\n\n\n\n\n\n\n\nO FenoTree está demorando ou não abre\n\n\n\n\n\nNo primeiro acesso, o app precisa “acordar” e pode levar alguns segundos. A busca demora mais para espécies com milhares de registros. Se der erro, recarregue a página e tente de novo.\n\n\n\n\n\n\n\n\n\nPoucos registros com flor ou fruto\n\n\n\n\n\nMuitas exsicatas não têm anotação sobre flor ou fruto. Troque por uma espécie mais coletada.\n\n\n\n\n\n\n\n\n\nQuer ver o código? O FenoTree é aberto e foi feito em R (Shiny) pelo LEDT/UFAM: github.com/ledtufam/fenotree."
   },
   {
     "objectID": "extensao/rlab/rotinas/fenologia-specieslink.html#referências",
     "href": "extensao/rlab/rotinas/fenologia-specieslink.html#referências",
-    "title": "Calendário fenológico a partir de registros de herbário (speciesLink)",
+    "title": "Calendários fenológicos a partir de exsicatas (FenoTree)",
     "section": "Referências",
-    "text": "Referências\n\nMORELLATO, L. P. C. et al. 2016. Linking plant phenology to conservation biology. Biological Conservation 195: 60-72.\nspeciesLink. API do serviço web v1.0. https://specieslink.net/ws/1.0/\nZAR, J. H. Biostatistical Analysis. 5. ed. Upper Saddle River: Prentice Hall, 2010. (capítulos de estatística circular)"
+    "text": "Referências\n\nALEIXO, I. F. et al. 2023. Fenologia: árvores da Amazônia. Manaus: Editora INPA.\nALENCAR, J. C.; ALMEIDA, R. A.; FERNANDES, N. P. 1979. Fenologia de espécies florestais em floresta tropical úmida de terra firme na Amazônia Central. Acta Amazonica 9(1).\nHAUGAASEN, T.; PERES, C. A. 2005. Tree phenology in adjacent Amazonian flooded and unflooded forests. Biotropica 37(4): 620-630.\nLEDT/UFAM. 2026. FenoTree: calendários fenológicos a partir de exsicatas. https://ledtufam.shinyapps.io/fenotree/\nREGO, G. M.; NEGRELLE, R. R. B.; MORELLATO, L. P. C. (eds.). 2007. Fenologia: ferramenta para conservação, melhoramento e manejo de recursos vegetais arbóreos. Colombo: Embrapa Florestas.\nspeciesLink. Rede speciesLink. Centro de Referência em Informação Ambiental (CRIA). https://specieslink.net/"
+  },
+  {
+    "objectID": "identidade-visual.html",
+    "href": "identidade-visual.html",
+    "title": "Identidade visual",
+    "section": "",
+    "text": "Use os arquivos desta página em apresentações, pôsteres, relatórios e materiais de divulgação ligados ao LEDT. Clique em Baixar para salvar o arquivo em alta resolução."
+  },
+  {
+    "objectID": "identidade-visual.html#logos-do-ledt",
+    "href": "identidade-visual.html#logos-do-ledt",
+    "title": "Identidade visual",
+    "section": "Logos do LEDT",
+    "text": "Logos do LEDT\n\n\n\n\n\nHorizontal\nUso preferencial: slides, rodapés, sites.\n Baixar PNG\n\n\n\n\n\n\n\nVertical\nUso: pôsteres, capas, banners.\n Baixar PNG\n\n\n\n\n\n\n\nSímbolo\nUso: espaços pequenos, ícones, redes sociais.\n Baixar PNG\n\n\n\n\n\nCor principal\n\n\nVerde LEDT · HEX #234A18 · RGB 35, 74, 24\n\n\n\nBoas práticas\n\nNão distorça, recorte, gire ou mude as cores do logo.\nMantenha uma margem livre ao redor do logo e use-o sobre fundos claros.\nAo usar o LEDT junto com outras instituições, mantenha os logos com tamanhos visualmente equivalentes."
+  },
+  {
+    "objectID": "identidade-visual.html#logos-institucionais",
+    "href": "identidade-visual.html#logos-institucionais",
+    "title": "Identidade visual",
+    "section": "Logos institucionais",
+    "text": "Logos institucionais\nLogos das instituições às quais o LEDT está vinculado e das parceiras, para uso em apresentações e pôsteres.\n\n\n\n\n\n\n\nCada instituição tem regras próprias para o uso da sua marca. Na dúvida, baixe a versão oficial:\n\nUFAM: Identidade Visual UFAM · Manual de Identidade Visual (Edoc)\nINPA: solicite à Assessoria de Comunicação do INPA ou consulte o portal do INPA"
+  },
+  {
+    "objectID": "pesquisa.html",
+    "href": "pesquisa.html",
+    "title": "Pesquisa",
+    "section": "",
+    "text": "O LEDT desenvolve pesquisas voltadas ao conhecimento, documentação e conservação da biodiversidade amazônica, integrando ecologia, dendrologia, taxonomia e ferramentas inovadoras para o estudo de árvores tropicais.\n\nProjetos\nAtualmente, o laboratório participa dos seguintes projetos de pesquisa:\n\nEcclinusa: Building a near-infrared spectral library to reveal new species of Ecclinusa (Sapotaceae, Chrysophylloideae) in South America | 2025-2026 | IAPT rodada 2025 | PI: Caroline C. Vasconcelos (UFAM, Brasil).\nSpectraPop: Popularização do uso da Assinatura Espectral da Espécie na identificação das árvores do Manejo Florestal Sustentável na Amazônia | 2025-2026 | FAPEAM | 01.02.016301.04984/2024-17 | PI: Flávia Machado Durgante (INPA, Brasil).\nHerbSpectra-Amazônia: Rede de Herbários Espectrais da Amazônia: Espectroscopia e inteligência artificial para a identificação automatizada da biodiversidade em herbários amazônicos | 2025-2027 | CNPq 385465/2025-4 | PI: Flávia Machado Durgante (INPA, Brasil).\nTropecolnet: Characterizing the role of interacting species, the drivers and the structure of plant-frugivore ecological networks along a defaunation gradient in tropical forests | 2023-2026 | PID2022-138272NA-I00 | PI: Ana Benítez-Lopez (MNCN-CSIC, Espanha).\nNeoshortfall: Addressing biodiversity shortfalls in Neotropical hyperdiverse forests to improve our understanding of the effects of defaunation on phenotypic traits, species assemblages and biotic interactions | PI: Ana Benítez-Lopez (MNCN-CSIC, Espanha).\nRevelando os Incógnitos: epífitas, insetos e fungos associados à flora arbórea de várzea na Amazônia oriental | 2024-2027 | CNPq 400738/2024-4 | PI: Marcelino Carneiro Guedes (Embrapa Amapá, Brasil).\n\n\n\nParceiros\n\nGrupo Ecologia, Monitoramento e Uso Sustentável de Áreas Úmidas (MAUA)\nHerbário INPA\nAmazon Tall Tower Observatory (ATTO)\nLaboratório de Sementes/ INPA\nEmbrapa Amapá\nAna Benítez-Lopez Lab\n\n\n\nRedes de colaboração\nO LEDT integra redes nacionais e internacionais dedicadas ao estudo da biodiversidade vegetal, herbários e espectroscopia:\n\nAmazon Tree Diversity Network (ATDN)\nInternational Herbarium Spectral Digitization Working Group (IHerbSpec)\nSapotaceae Taxonomic Expert Network – World Flora Online (TEN/WFO)\nTropical Seed Trait Database (TSTD)"
+  },
+  {
+    "objectID": "pessoas.html",
+    "href": "pessoas.html",
+    "title": "Quem somos",
+    "section": "",
+    "text": "Coordenação\n\n\n\n\n\nCaroline C. Vasconcelos (ela/dela)\nProfessora Assistente, Dra. | Departamento de Ciências Florestais\nUniversidade Federal do Amazonas (UFAM)\nLinhas de pesquisa: Taxonomia integrativa e sistemática; Flora arbórea da Amazônia; Sapotaceae; Digitalização espectral; Herbários; Ecologia Florestal\n\n  \n  \n  \n  \n  \n  \n\n\n\n\n\n\nPesquisadores colaboradores\n\n\n\n\n\nFlávia Machado Durgante (ela/dela)\nPesquisadora, Dra. | Coordenação de Dinâmica Ambiental\nInstituto Nacional de Pesquisas da Amazônia (INPA)\nLinhas de pesquisa: Ecologia e Manejo Florestal\n\n  \n  \n  \n  \n  \n  \n\n\n\n\n\n\n\n\n\nYêda Maria Boaventura Corrêa Arruda (ela/dela)\nProfessora Associada I, Dra. | Departamento de Biologia do Instituto de Ciências Biológicas\nUniversidade Federal do Amazonas (UFAM)\nLinhas de pesquisa: sementes florestais; espécies florestais; Amazônia; espécies nativas; dormência; silvicultura urbana; gestão e planejamento urbano\n\n  \n  \n  \n  \n  \n  \n\n\n\n\n\n\n\n\n\nGabrielly Guabiraba Ribeiro (ela/dela)\nDoutoranda | Programa de Pós-Graduação em Botânica\nInstituto de Pesquisas Jardim Botânico do Rio de Janeiro (JBRJ)\nLinhas de pesquisa: Taxonomia e biogeografia; Ormosia (Leguminosae); Ecologia florestal\n\n  \n  \n  \n  \n  \n  \n\n\n\n\n\n\n\n\n\nSamyra Ramos Chaves (ela/dela)\nPesquisadora bolsista, Dra. | Grupo MAUA\nInstituto Nacional de Pesquisas da Amazônia (INPA)\nLinhas de pesquisa: Biologia reprodutiva; Parkia (Leguminosae); Digitalização espectral; Herbários\n\n  \n  \n  \n  \n  \n  \n\n\n\n\n\n\n\n\n\nKaio Cesar Marinho da Cunha (ele/dele)\nPesquisador bolsista, Me. | Grupo MAUA\nInstituto Nacional de Pesquisas da Amazônia (INPA)\nLinhas de pesquisa: Taxonomia integrativa e sistemática; Sapotaceae; Digitalização espectral; Herbários\n\n  \n  \n  \n  \n  \n  \n\n\n\n\n\n\nAlunos\n\nPós-graduação\n\n\n\n\n\nTúlio Alex Martins da Silva (ele/dele)\nDoutorando | Programa de Pós-Graduação em Botânica\nInstituto Nacional de Pesquisas da Amazônia (INPA)\nLinhas de pesquisa: Taxonomia e sistemática; Biologia reprodutiva; Euphorbiaceae\n\n  \n  \n  \n  \n  \n  \n\n\n\n\n\n\n\n\n\nMaria Clara A. M. de O. Ramos Ferro (ela/dela)\nMestranda | Programa de Pós-Graduação em Botânica\nInstituto Nacional de Pesquisas da Amazônia (INPA)\nLinhas de pesquisa: Espectroscopia NIR como ferramenta para a taxonomia botânica\n\n  \n  \n  \n  \n  \n  \n\n\n\n\n\n\nIniciação científica (voluntários)\n\n\n\n\n\nAna Graciela Oliveira Mayo (ela/dela)\nGraduanda | Engenharia Florestal\nUniversidade Federal do Amazonas (UFAM)\nLinhas de pesquisa: Espectroscopia aplicada à identificação de árvores comerciais; Herbários\n\n  \n  \n  \n  \n  \n  \n\n\n\n\n\n\n\n\n\nAynê Carolyne Silva Sá (ela/dela)\nGraduanda | Engenharia Florestal\nUniversidade Federal do Amazonas (UFAM)\nLinhas de pesquisa: Ecologia e Dendrologia; trilha didática; espécies florestais\n\n  \n  \n  \n  \n  \n  \n\n\n\n\n\n\n\n\n\nAndré Luiz da Silva Melo (ele/dele)\nGraduando | Engenharia Florestal\nUniversidade Federal do Amazonas (UFAM)\nLinhas de pesquisa: Dendrologia\n\n  \n  \n  \n  \n  \n  \n\n\n\n\n\n\n\n\n\nHeyder Loureiro Pinagé Neto (ele/dele)\nGraduando | Engenharia Florestal\nUniversidade Federal do Amazonas (UFAM)\nLinhas de pesquisa: Dendrologia\n\n  \n  \n  \n  \n  \n  \n\n\n\n\n\n\n\n\n\nVitor Hugo Santos Silva (ele/dele)\nGraduando | Engenharia Florestal\nUniversidade Federal do Amazonas (UFAM)\nLinhas de pesquisa: Dendrologia\n\n  \n  \n  \n  \n  \n  \n\n\n\n\n\n\nIniciação científica (bolsistas)\n\n\n\n\n\nEliandra Rodrigues Ferreira (ela/dela)\nGraduanda | Ciências Biológicas\nUniversidade Federal do Amazonas (UFAM)\nLinhas de pesquisa: Espectroscopia aplicada à identificação de plantas; Herbários; Meliaceae; Fabaceae; Espécies CITES\n\n  \n  \n  \n  \n  \n  \n\n\n\n\n\n\n\n\n\nYasmin Jéssica G. Guedes (ela/dela)\nGraduanda | Licenciatura em Ciências Biológicas\nUniversidade Federal do Amazonas (UFAM)\nLinhas de pesquisa: Espectroscopia aplicada à identificação de plantas; Herbários; Bignoniaceae; Espécies CITES\n\n  \n  \n  \n  \n  \n  \n\n\n\n\n\n\n\n\n\nCassia Sousa Ataide (ela/dela)\nGraduanda | Engenharia da Computação\nUniversidade Federal do Amazonas (UFAM)\nLinhas de pesquisa: Espectroscopia aplicada à identificação de plantas; Herbários; Ecclinusa; Machine learning"
+  },
+  {
+    "objectID": "sobre.html",
+    "href": "sobre.html",
+    "title": "Sobre",
+    "section": "",
+    "text": "Nossa missão\nO Laboratório de Ecologia e Dendrologia Tropical (LEDT) está vinculado ao Departamento de Ciências Florestais da Faculdade de Ciências Agrárias da Universidade Federal do Amazonas (UFAM), sediado em Manaus, Brasil.\nNosso laboratório dedica-se ao estudo da diversidade, ecologia, taxonomia e funcionamento das florestas tropicais, com ênfase na Amazônia. Desenvolvemos pesquisas que integram trabalho de campo, coleções biológicas, espectroscopia, monitoramento ecológico e ferramentas analíticas para compreender a biodiversidade amazônica e suas respostas às mudanças climáticas.\n\n\nO que fazemos\nNossas pesquisas abrangem diferentes escalas da biodiversidade vegetal, desde a identificação taxonômica de espécies até a compreensão dos processos ecológicos que estruturam as florestas amazônicas.\n\n\nAtuamos principalmente nas seguintes áreas:\n\nDendrologia, taxonomia e sistemática de árvores tropicais;\nEcologia de comunidades, ecologia funcional e monitoramento de florestas;\nEspectroscopia aplicada à identificação de plantas;\nHerbários, coleções científicas e documentação da biodiversidade amazônica;\nDistribuição de espécies, mudanças climáticas e conservação da flora amazônica.\n\n\n\nNossa abordagem\nAcreditamos que responder aos desafios científicos da Amazônia exige uma abordagem interdisciplinar.\nPor isso, combinamos diferentes fontes de informação, incluindo:\n\nInventários florísticos;\nParcelas permanentes;\nHerbários;\nEspectroscopia;\nMorfologia e taxonomia;\nEstatística, aprendizado de máquina e ciência de dados.\n\nEssa integração permite compreender desde a identidade das espécies até os processos ecológicos responsáveis pela manutenção da biodiversidade amazônica.\n\n\nEnsino e formação\nO LEDT participa ativamente da formação de recursos humanos em diferentes níveis, recebendo estudantes de graduação, iniciação científica, mestrado e doutorado.\nNosso objetivo é formar profissionais capazes de integrar conhecimentos clássicos da botânica e ecologia com ferramentas quantitativas e tecnologias emergentes.\n\n\nColaboração\nO laboratório mantém colaboração com pesquisadores e instituições nacionais e internacionais, contribuindo para redes de pesquisa voltadas ao conhecimento, documentação e conservação da biodiversidade amazônica.\nEstamos sempre abertos a novas parcerias científicas, projetos colaborativos e intercâmbio de estudantes e pesquisadores."
+  },
+  {
+    "objectID": "publicacoes.html",
+    "href": "publicacoes.html",
+    "title": "Publicações",
+    "section": "",
+    "text": "Produção científica do LEDT, organizada por ano. Nomes em negrito são membros do laboratório. Os selos mostram a atenção online (Altmetric) e as citações (Dimensions) de cada trabalho, quando houver.\n10 publicações"
+  },
+  {
+    "objectID": "publicacoes.html#section",
+    "href": "publicacoes.html#section",
+    "title": "Publicações",
+    "section": "2026",
+    "text": "2026\n\nPreprint White, D.M.; Durgante, F.M.; Austin, M.; …; Vasconcelos, C.C.; et al. (2026). A Protocol for Standardizing Measurements and Enabling Global Harmonization of Herbarium Leaf Reflectance Spectra. EcoEvoRxiv.\n DOI: 10.32942/X2SD4D  \n\n\nGuia de campo Ureta-Adrianzen, M.; Vasconcelos, C.C.; Rivera-Parada, L.; Franco-León, P.J.; Cunha, K.C.M.; Andrade, A.; Vicentini, A. (2026). Bark of the Lauraceae Trees of the Biological Dynamics of Forest Fragments Project. Field Museum, 4(1), 1787.\n Acessar\n\n\nArtigo da Cunha, K.C.M.; Durgante, F.M.; Rivera-Parada, L.L.; da Gama, I.G.; Ferreira, G.; Amoêdo, S.C.; Vasconcelos, C.C. (2026). Environmental specialization decouples geographic range and habitat occupancy in Ragala ucuquirana-branca (Sapotaceae) across the Amazon Basin. Plant Ecology and Evolution, 159(2), 444-459.\n DOI: 10.5091/plecevo.185741  \n\n\nPreprint Amoedo, S.; Vasconcelos, C.C.; Ferraz, I. (2026). Integrating morphometric and spectral evidence for species discrimination in Amazonian trees: a case study of Carapa (Meliaceae). EcoEvoRxiv.\n DOI: 10.32942/X2V69V  \n\n\nPreprint Nakamura, S.; Tsendbazar, N.; ter Steege, H.; …; Durgante, F.M.; Vasconcelos, C.C.; et al. (2026). Modeling spatial distribution of Amazonian functional composition and diversity using satellite embeddings. SSRN (preprint).\n DOI: 10.2139/ssrn.7553419  \n\n\nSoftware/Dados Vasconcelos, C.C. (2026). R script and example data to calculate IUCN Red List Criterion B spatial parameters using ConR. Zenodo, v1.0.0.\n DOI: 10.5281/zenodo.22822017  \n\n\nPreprint Durgante, F.M.; Vasconcelos, C.C.; Hadlich, H.L.; …; da Cunha, K.C.M.; Chaves, S.R.; et al. (2026). Species recognition in herbaria and standing trees using an accessible portable spectrometer. EcoEvoRxiv.\n DOI: 10.32942/X2T97T  \n\n\nLivro/Relatório Antonelli, A.; Fry, C.; Smith, R.J.; …; Durgante, F.M.; Vasconcelos, C.C.; et al. (2026). State of the World’s Plants and Fungi 2026. Royal Botanic Gardens, 102.\n DOI: 10.34885/rdzs-ky83  \n\n\nArtigo Oliveira, D.N.; Ordóñez-Parra, C.A.; Chen, S.C.; …; da Cruz Vasconcelos, C.; et al. (2026). Tropical Seed Trait Database: advancing seed functional ecology in the world’s most biodiverse region. New Phytologist, 251(3), 945-958.\n DOI: 10.1111/nph.71268"
+  },
+  {
+    "objectID": "publicacoes.html#section-1",
+    "href": "publicacoes.html#section-1",
+    "title": "Publicações",
+    "section": "2025",
+    "text": "2025\n\nPreprint Vasconcelos, C.C.; Ferreira, G.; Silva, C.B.; …; Cunha, K.C.M.; Guabiraba-Ribeiro, G.; et al. (2025). Tree species natural regeneration in a tidal white-water floodplain forest of the Amazon River estuary. bioRxiv.\n DOI: 10.1101/2025.10.03.680168"
+  },
+  {
+    "objectID": "extensao/rlab/rotinas/diversidade.html",
+    "href": "extensao/rlab/rotinas/diversidade.html",
+    "title": "Diversidade da vegetação: rarefação, estimadores e diversidade beta",
+    "section": "",
+    "text": "Nível: intermediário · Pacotes: apenas R básico · Disciplina: FGD320 - Fitossociologia · Baixar script · Baixar dados caixeta\nNa prática de heterogeneidade, o caixetal da Jureia teve mais espécies (22) que os outros dois (13). Mas ele também foi amostrado com o mesmo esforço? Com menos árvores, esperamos encontrar menos espécies, mesmo que a comunidade seja igualmente rica. Nesta rotina, vemos como comparar a riqueza de forma justa, estimar quantas espécies faltam e separar a diversidade dentro e entre as áreas."
+  },
+  {
+    "objectID": "extensao/rlab/rotinas/diversidade.html#dados",
+    "href": "extensao/rlab/rotinas/diversidade.html#dados",
+    "title": "Diversidade da vegetação: rarefação, estimadores e diversidade beta",
+    "section": "1. Dados",
+    "text": "1. Dados\n\ncx &lt;- read.csv(\"../dados/caixeta.csv\")   # no seu projeto: read.csv(\"dados/caixeta.csv\")\ncx$especie[cx$especie == \"Callophyllum brasiliensis\"] &lt;- \"Calophyllum brasiliensis\"\n\narv &lt;- unique(cx[, c(\"local\", \"parcela\", \"arvore\", \"especie\")])   # uma linha por árvore\narv$parc &lt;- paste(arv$local, arv$parcela, sep = \"_\")\n\nab_parc  &lt;- unclass(table(arv$parc, arv$especie))    # parcela × espécie\nab_local &lt;- unclass(table(arv$local, arv$especie))   # local × espécie\nrowSums(ab_local)                                    # árvores por caixetal\n\nchauas jureia retiro \n   290    178    204"
+  },
+  {
+    "objectID": "extensao/rlab/rotinas/diversidade.html#curva-do-coletor-acumulação-de-espécies",
+    "href": "extensao/rlab/rotinas/diversidade.html#curva-do-coletor-acumulação-de-espécies",
+    "title": "Diversidade da vegetação: rarefação, estimadores e diversidade beta",
+    "section": "2. Curva do coletor (acumulação de espécies)",
+    "text": "2. Curva do coletor (acumulação de espécies)\nA curva do coletor mostra quantas espécies novas aparecem à medida que acrescentamos parcelas. Se ela se estabiliza (assíntota), a amostragem foi suficiente. Como a ordem das parcelas muda o resultado, sorteamos a ordem muitas vezes e usamos a média:\n\ncoletor &lt;- function(m, n_perm = 200) {\n  m &lt;- m &gt; 0\n  res &lt;- replicate(n_perm, {\n    ordem &lt;- sample(nrow(m))\n    sapply(seq_along(ordem), function(k) sum(colSums(m[ordem[1:k], , drop = FALSE]) &gt; 0))\n  })\n  data.frame(parcelas = 1:nrow(m), media = rowMeans(res),\n             inf = apply(res, 1, quantile, 0.025), sup = apply(res, 1, quantile, 0.975))\n}\n\nset.seed(2026)\ncc &lt;- coletor(ab_parc)\ncc\n\n   parcelas  media    inf    sup\n1         1  6.480  2.000 12.000\n2         2 11.095  4.000 19.025\n3         3 15.095  5.975 25.000\n4         4 18.595  9.950 29.000\n5         5 21.715 12.000 31.000\n6         6 24.540 15.975 33.000\n7         7 26.955 18.000 35.000\n8         8 29.545 21.000 37.000\n9         9 31.910 24.000 39.000\n10       10 34.020 25.975 40.000\n11       11 35.945 29.000 41.000\n12       12 37.780 31.975 42.000\n13       13 39.270 33.975 42.000\n14       14 40.730 36.000 42.000\n15       15 42.000 42.000 42.000\n\n\n\nplot(cc$parcelas, cc$media, type = \"n\", ylim = c(0, max(cc$sup) + 5),\n     xlab = \"Número de parcelas (200 m² cada)\", ylab = \"Número de espécies\")\npolygon(c(cc$parcelas, rev(cc$parcelas)), c(cc$inf, rev(cc$sup)), col = \"#78c2ad55\", border = NA)\nlines(cc$parcelas, cc$media, lwd = 2, col = \"#2c7a5e\")\npoints(cc$parcelas, cc$media, pch = 19, col = \"#2c7a5e\")\n\n\n\n\nCurva do coletor das 15 parcelas (média de 200 ordens sorteadas e intervalo de 95 por cento)."
+  },
+  {
+    "objectID": "extensao/rlab/rotinas/diversidade.html#rarefação-comparar-a-riqueza-com-o-mesmo-número-de-indivíduos",
+    "href": "extensao/rlab/rotinas/diversidade.html#rarefação-comparar-a-riqueza-com-o-mesmo-número-de-indivíduos",
+    "title": "Diversidade da vegetação: rarefação, estimadores e diversidade beta",
+    "section": "3. Rarefação: comparar a riqueza com o mesmo número de indivíduos",
+    "text": "3. Rarefação: comparar a riqueza com o mesmo número de indivíduos\nA rarefação (Hurlbert 1971) responde: quantas espécies esperaríamos encontrar se tivéssemos amostrado só \\(n\\) indivíduos? Assim, comparamos as áreas com o mesmo esforço:\n\\[E(S_n) = \\sum_{i=1}^{S} \\left[ 1 - \\frac{\\binom{N - N_i}{n}}{\\binom{N}{n}} \\right]\\]\nem que \\(N\\) = total de indivíduos e \\(N_i\\) = indivíduos da espécie i.\n\nrarefacao &lt;- function(x, n) {\n  x &lt;- x[x &gt; 0]; N &lt;- sum(x)\n  sapply(n, function(k) sum(1 - exp(lchoose(N - x, k) - lchoose(N, k))))\n}\n\nn_min &lt;- min(rowSums(ab_local))          # o menor caixetal (jureia, 178 árvores)\nsapply(rownames(ab_local), function(l) round(rarefacao(ab_local[l, ], n_min), 1))\n\nchauas jureia retiro \n   9.7   22.0   12.4 \n\n\n\ncores &lt;- c(chauas = \"#1b9e77\", jureia = \"#d95f02\", retiro = \"#7570b3\")\nplot(NA, xlim = c(1, max(rowSums(ab_local))), ylim = c(0, 25),\n     xlab = \"Número de árvores\", ylab = \"Número esperado de espécies\")\nfor (l in rownames(ab_local)) {\n  n &lt;- 1:sum(ab_local[l, ])\n  lines(n, rarefacao(ab_local[l, ], n), lwd = 2, col = cores[l])\n}\nabline(v = n_min, lty = 2, col = \"grey50\")\nlegend(\"bottomright\", legend = names(cores), col = cores, lwd = 2, bty = \"n\")\n\n\n\n\nCurvas de rarefação dos três caixetais. A linha tracejada marca o tamanho do menor caixetal."
+  },
+  {
+    "objectID": "extensao/rlab/rotinas/diversidade.html#quantas-espécies-faltam-estimadores-de-riqueza",
+    "href": "extensao/rlab/rotinas/diversidade.html#quantas-espécies-faltam-estimadores-de-riqueza",
+    "title": "Diversidade da vegetação: rarefação, estimadores e diversidade beta",
+    "section": "4. Quantas espécies faltam? Estimadores de riqueza",
+    "text": "4. Quantas espécies faltam? Estimadores de riqueza\nOs estimadores não paramétricos usam as espécies raras para estimar quantas ainda não foram encontradas:\n\n\n\n\n\n\n\n\nEstimador\nFórmula\nBaseado em\n\n\n\n\nChao 1\n\\(S_{obs} + \\frac{F_1(F_1 - 1)}{2(F_2 + 1)}\\)\nsingletons (\\(F_1\\), espécies com 1 indivíduo) e doubletons (\\(F_2\\), com 2)\n\n\nJackknife 1\n\\(S_{obs} + Q_1 \\frac{m - 1}{m}\\)\n\\(Q_1\\) = espécies em uma só parcela; \\(m\\) = número de parcelas\n\n\n\n\nestimadores &lt;- function(m) {          # m = parcela × espécie (abundâncias)\n  x  &lt;- colSums(m); x &lt;- x[x &gt; 0]\n  Sobs &lt;- length(x); F1 &lt;- sum(x == 1); F2 &lt;- sum(x == 2)\n  inc &lt;- colSums(m &gt; 0); inc &lt;- inc[inc &gt; 0]\n  Q1 &lt;- sum(inc == 1); k &lt;- nrow(m)\n  c(S_obs = Sobs, F1 = F1, F2 = F2, Chao1 = Sobs + F1 * (F1 - 1) / (2 * (F2 + 1)),\n    Q1 = Q1, Jack1 = Sobs + Q1 * (k - 1) / k)\n}\n\nest &lt;- rbind(\n  t(sapply(split(as.data.frame(ab_parc), sub(\"_.*\", \"\", rownames(ab_parc))),\n           function(d) estimadores(as.matrix(d)))),\n  total = estimadores(ab_parc))\nknitr::kable(est, digits = 1, caption = \"Riqueza observada e estimada por caixetal e no total.\")\n\n\nRiqueza observada e estimada por caixetal e no total.\n\n\n\nS_obs\nF1\nF2\nChao1\nQ1\nJack1\n\n\n\n\nchauas\n13\n8\n1\n27.0\n9\n20.2\n\n\njureia\n22\n8\n3\n29.0\n8\n28.4\n\n\nretiro\n13\n4\n4\n14.2\n7\n18.6\n\n\ntotal\n42\n18\n8\n59.0\n22\n62.5\n\n\n\n\n\n\n\n\n\n\n\nCom só 5 parcelas por local, os estimadores são pouco precisos. Eles indicam a ordem de grandeza da riqueza que falta, não um valor exato."
+  },
+  {
+    "objectID": "extensao/rlab/rotinas/diversidade.html#diversidade-alfa-beta-e-gama",
+    "href": "extensao/rlab/rotinas/diversidade.html#diversidade-alfa-beta-e-gama",
+    "title": "Diversidade da vegetação: rarefação, estimadores e diversidade beta",
+    "section": "5. Diversidade alfa, beta e gama",
+    "text": "5. Diversidade alfa, beta e gama\nWhittaker (1960) separou a diversidade em três níveis:\n\nalfa (\\(\\alpha\\)): diversidade dentro de cada unidade (média das parcelas ou dos locais);\ngama (\\(\\gamma\\)): diversidade total da região;\nbeta (\\(\\beta\\)): diferença de composição entre as unidades.\n\nNa forma multiplicativa, \\(\\beta = \\gamma / \\bar\\alpha\\) (quantas “unidades completamente diferentes” existem); na forma aditiva, \\(\\beta = \\gamma - \\bar\\alpha\\) (quantas espécies faltam, em média, em cada unidade).\n\nparticao &lt;- function(m) {\n  alfa &lt;- mean(rowSums(m &gt; 0)); gama &lt;- sum(colSums(m) &gt; 0)\n  c(alfa = alfa, gama = gama, beta_mult = gama / alfa, beta_adit = gama - alfa)\n}\n\nrbind(\n  `parcelas dentro de chauas` = particao(ab_parc[grepl(\"chauas\", rownames(ab_parc)), ]),\n  `parcelas dentro de jureia` = particao(ab_parc[grepl(\"jureia\", rownames(ab_parc)), ]),\n  `parcelas dentro de retiro` = particao(ab_parc[grepl(\"retiro\", rownames(ab_parc)), ]),\n  `entre os caixetais`        = particao(ab_local)\n) |&gt; round(2)\n\n                          alfa gama beta_mult beta_adit\nparcelas dentro de chauas  5.0   13      2.60       8.0\nparcelas dentro de jureia  9.0   22      2.44      13.0\nparcelas dentro de retiro  5.4   13      2.41       7.6\nentre os caixetais        16.0   42      2.62      26.0\n\n\nSe a beta entre os caixetais se aproxima de 3 (o número de locais), quase não há espécies em comum: cada caixetal funciona como uma comunidade diferente, apesar de todos serem dominados pela caixeta."
+  },
+  {
+    "objectID": "extensao/rlab/rotinas/diversidade.html#exercícios",
+    "href": "extensao/rlab/rotinas/diversidade.html#exercícios",
+    "title": "Diversidade da vegetação: rarefação, estimadores e diversidade beta",
+    "section": "6. Exercícios",
+    "text": "6. Exercícios\n\n\n\n\n\n\nPara entregar (EE7)\n\n\n\n\nA curva do coletor das 15 parcelas se estabilizou? O que isso diz sobre a suficiência amostral?\nCom o mesmo número de árvores (rarefação), a Jureia continua sendo o caixetal mais rico? A diferença em relação aos outros diminuiu?\nQuantas espécies os estimadores Chao 1 e Jackknife 1 sugerem que ainda faltam em cada caixetal? Qual deles você considera mais adequado para parcelas pequenas?\nCompare a diversidade beta dentro de cada caixetal e entre os caixetais. Onde está a maior parte da diversidade da região?\nComo a padronização dos nomes (morfoespécies que podem ser a mesma espécie) afetaria a diversidade beta?\nEscreva um parágrafo-síntese que una os resultados de estrutura, padrão espacial, similaridade e diversidade dos caixetais. Este parágrafo será o ponto de partida da discussão do relatório.\n\n\n\n\n\n\n\n\n\nPara o relatório (formato de artigo)\n\n\n\nEsta prática gera a Figura 5 (curvas de rarefação) e a Tabela 5 (estimadores e partição da diversidade). O parágrafo-síntese do exercício 6 abre a discussão."
+  },
+  {
+    "objectID": "extensao/rlab/rotinas/diversidade.html#referências",
+    "href": "extensao/rlab/rotinas/diversidade.html#referências",
+    "title": "Diversidade da vegetação: rarefação, estimadores e diversidade beta",
+    "section": "Referências",
+    "text": "Referências\n\nCHAO, A. Nonparametric estimation of the number of classes in a population. Scandinavian Journal of Statistics, v. 11, p. 265-270, 1984.\nGOTELLI, N. J.; COLWELL, R. K. Quantifying biodiversity: procedures and pitfalls in the measurement and comparison of species richness. Ecology Letters, v. 4, p. 379-391, 2001.\nHURLBERT, S. H. The nonconcept of species diversity: a critique and alternative parameters. Ecology, v. 52, p. 577-586, 1971.\nMAGURRAN, A. E. Medindo a diversidade biológica. Curitiba: Ed. UFPR, 2011.\nWHITTAKER, R. H. Vegetation of the Siskiyou Mountains, Oregon and California. Ecological Monographs, v. 30, p. 279-338, 1960.\nVANIN, A. 1999. Dissertação de mestrado (dados caixeta). Dados disponíveis em: https://ecor.ib.usp.br/doku.php?id=dados:dados-caixeta."
+  },
+  {
+    "objectID": "extensao/rlab/rotinas/mapa-ocorrencias.html",
+    "href": "extensao/rlab/rotinas/mapa-ocorrencias.html",
+    "title": "Mapa de ocorrências a partir do GBIF",
+    "section": "",
+    "text": "Nível: intermediário · Pacotes: rgbif, CoordinateCleaner, leaflet · Requer internet · Baixar script"
+  },
+  {
+    "objectID": "extensao/rlab/rotinas/mapa-ocorrencias.html#instale-os-pacotes",
+    "href": "extensao/rlab/rotinas/mapa-ocorrencias.html#instale-os-pacotes",
+    "title": "Mapa de ocorrências a partir do GBIF",
+    "section": "1. Instale os pacotes",
+    "text": "1. Instale os pacotes\n\ninstall.packages(c(\"rgbif\", \"CoordinateCleaner\", \"leaflet\", \"dplyr\"))"
+  },
+  {
+    "objectID": "extensao/rlab/rotinas/mapa-ocorrencias.html#baixe-os-registros",
+    "href": "extensao/rlab/rotinas/mapa-ocorrencias.html#baixe-os-registros",
+    "title": "Mapa de ocorrências a partir do GBIF",
+    "section": "2. Baixe os registros",
+    "text": "2. Baixe os registros\nO occ_search() é bom para explorar até alguns milhares de registros. Para artigos, use occ_download(), que gera um DOI citável para o conjunto de dados.\n\nlibrary(rgbif)\nlibrary(dplyr)\n\nespecie &lt;- \"Ecclinusa guianensis\"\n\nres &lt;- occ_search(\n  scientificName     = especie,\n  hasCoordinate      = TRUE,\n  hasGeospatialIssue = FALSE,\n  limit              = 5000\n)\n\nocc &lt;- res$data |&gt;\n  select(species, decimalLongitude, decimalLatitude, countryCode,\n         institutionCode, catalogNumber, year, basisOfRecord)\n\nnrow(occ)"
+  },
+  {
+    "objectID": "extensao/rlab/rotinas/mapa-ocorrencias.html#limpe-as-coordenadas",
+    "href": "extensao/rlab/rotinas/mapa-ocorrencias.html#limpe-as-coordenadas",
+    "title": "Mapa de ocorrências a partir do GBIF",
+    "section": "3. Limpe as coordenadas",
+    "text": "3. Limpe as coordenadas\nO CoordinateCleaner marca registros suspeitos: coordenadas em capitais, centroides de países, sedes de instituições (herbários!), coordenadas iguais a zero, no mar etc.\n\nlibrary(CoordinateCleaner)\n\nflags &lt;- clean_coordinates(\n  occ,\n  lon = \"decimalLongitude\", lat = \"decimalLatitude\",\n  countries = \"countryCode\", species = \"species\",\n  tests = c(\"capitals\", \"centroids\", \"equal\", \"gbif\",\n            \"institutions\", \"zeros\", \"seas\")\n)\n\nsummary(flags)\nocc_limpo &lt;- occ[flags$.summary, ]       # mantém só os registros aprovados\n\n# Remove duplicatas de coordenadas\nocc_limpo &lt;- distinct(occ_limpo, decimalLongitude, decimalLatitude, .keep_all = TRUE)\n\n\n\n\n\n\n\nDica\n\n\n\nA limpeza automática não substitui o olhar do taxonomista: confira a identificação dos registros fora da distribuição esperada antes de excluí-los ou mantê-los."
+  },
+  {
+    "objectID": "extensao/rlab/rotinas/mapa-ocorrencias.html#mapa-interativo",
+    "href": "extensao/rlab/rotinas/mapa-ocorrencias.html#mapa-interativo",
+    "title": "Mapa de ocorrências a partir do GBIF",
+    "section": "4. Mapa interativo",
+    "text": "4. Mapa interativo\n\nlibrary(leaflet)\n\nleaflet(occ_limpo) |&gt;\n  addProviderTiles(\"Esri.WorldImagery\", group = \"Satélite\") |&gt;\n  addTiles(group = \"Mapa\") |&gt;\n  addCircleMarkers(\n    ~decimalLongitude, ~decimalLatitude,\n    radius = 4, stroke = FALSE, fillOpacity = 0.8, color = \"#f3969a\",\n    popup = ~paste0(\"&lt;b&gt;\", institutionCode, \"&lt;/b&gt; \", catalogNumber,\n                    \"&lt;br&gt;Ano: \", year)\n  ) |&gt;\n  addLayersControl(baseGroups = c(\"Satélite\", \"Mapa\"))"
+  },
+  {
+    "objectID": "extensao/rlab/rotinas/mapa-ocorrencias.html#salve-os-dados",
+    "href": "extensao/rlab/rotinas/mapa-ocorrencias.html#salve-os-dados",
+    "title": "Mapa de ocorrências a partir do GBIF",
+    "section": "5. Salve os dados",
+    "text": "5. Salve os dados\n\nwrite.csv(occ_limpo, \"dados/ocorrencias_limpas.csv\", row.names = FALSE)"
+  },
+  {
+    "objectID": "extensao/rlab/rotinas/mapa-ocorrencias.html#referências",
+    "href": "extensao/rlab/rotinas/mapa-ocorrencias.html#referências",
+    "title": "Mapa de ocorrências a partir do GBIF",
+    "section": "Referências",
+    "text": "Referências\n\nCHAMBERLAIN, S. et al. rgbif: Interface to the Global Biodiversity Information Facility API. https://CRAN.R-project.org/package=rgbif\nZIZKA, A. et al. 2019. CoordinateCleaner: standardized cleaning of occurrence records from biological collection databases. Methods in Ecology and Evolution 10: 744-751."
   },
   {
     "objectID": "extensao/rlab/rotinas/fitossociologia.html",

@@ -1,0 +1,4 @@
+Coloque aqui os arquivos baixados do speciesLink (sem editar).
+Depois rode, com o projeto do site aberto:
+  source("extensao/rlab/dados/fenologia/_preparar-datasets.R")
+Os CSVs limpos serao criados em extensao/rlab/dados/fenologia/.

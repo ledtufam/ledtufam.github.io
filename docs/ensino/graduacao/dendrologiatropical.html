@@ -238,6 +238,7 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#objetivos" id="toc-objetivos" class="nav-link active" data-scroll-target="#objetivos">Objetivos</a></li>
   <li><a href="#ementa" id="toc-ementa" class="nav-link" data-scroll-target="#ementa">Ementa</a></li>
+  <li><a href="#aulas-2026.2" id="toc-aulas-2026.2" class="nav-link" data-scroll-target="#aulas-2026.2">Aulas 2026.2</a></li>
   <li><a href="#aulas-práticas" id="toc-aulas-práticas" class="nav-link" data-scroll-target="#aulas-práticas">Aulas práticas</a></li>
   <li><a href="#roteiros-das-práticas" id="toc-roteiros-das-práticas" class="nav-link" data-scroll-target="#roteiros-das-práticas">Roteiros das práticas</a></li>
   <li><a href="#prancha-dendrológica-para-o-instagram" id="toc-prancha-dendrológica-para-o-instagram" class="nav-link" data-scroll-target="#prancha-dendrológica-para-o-instagram">Prancha dendrológica para o Instagram</a></li>
@@ -317,6 +318,40 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 <p><a href="../../assets/pdf/Engenharia Florestal PPC_Dendrologia tropical.pdf" target="_blank" class="btn btn-outline-success btn-sm"><i class="bi bi-file-pdf-fill"></i> Ementa oficial (PPC)</a></p>
 </section>
+<section id="aulas-2026.2" class="level2">
+<h2 class="anchored" data-anchor-id="aulas-2026.2">Aulas 2026.2</h2>
+<p>Material: <i class="bi bi-file-earmark-pdf"></i> slides da aula e <i class="bi bi-camera-video"></i> videoaula (Google Drive, acesso restrito aos alunos matriculados); <i class="bi bi-laptop"></i> atividade prática.</p>
+<!-- Para publicar a videoaula, troque
+     <span class="text-muted" title="Em breve"><i class="bi bi-camera-video"></i> Vídeo (em breve)</span>
+     por
+     <a href="LINK_DO_DRIVE" target="_blank" title="Videoaula (Google Drive)"><i class="bi bi-camera-video"></i> Vídeo</a> -->
+<table class="table-striped table-hover caption-top table">
+<colgroup>
+<col style="width: 31%">
+<col style="width: 37%">
+<col style="width: 31%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tema</th>
+<th>Material</th>
+<th>Prática</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Grupos ecológicos de árvores</td>
+<td><a href="https://drive.google.com/file/d/1JfTP5pG_PM93zAniqzPpDCD56-UG27hA/view?usp=drive_link" target="_blank" title="Slides da aula (Google Drive)"><i class="bi bi-file-earmark-pdf"></i> Aula</a> · <span class="text-muted" title="Em breve"><i class="bi bi-camera-video"></i> Vídeo (em breve)</span></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Fenologia de espécies florestais</td>
+<td><a href="https://drive.google.com/file/d/1PHsgm46qUCWo0m9o6N_-97M__Nrs84Xy/view?usp=drive_link" target="_blank" title="Slides da aula (Google Drive)"><i class="bi bi-file-earmark-pdf"></i> Aula</a> · <span class="text-muted" title="Em breve"><i class="bi bi-camera-video"></i> Vídeo (em breve)</span></td>
+<td><a href="../../extensao/rlab/rotinas/fenologia-specieslink.html" title="Atividade: calendários fenológicos com o FenoTree"><i class="bi bi-laptop"></i> Atividade FenoTree</a> · <a href="https://drive.google.com/file/d/1yNFipCTIZdCO44F_zQFxL_i81gK_4Nv_/view?usp=drive_link" target="_blank" title="Vídeo: como usar o speciesLink (Google Drive)"><i class="bi bi-camera-video"></i> Vídeo speciesLink</a></td>
+</tr>
+</tbody>
+</table>
+</section>
 <section id="aulas-práticas" class="level2">
 <h2 class="anchored" data-anchor-id="aulas-práticas">Aulas práticas</h2>
 <p>As aulas práticas acontecem no campus da UFAM e no herbário. Os alunos aplicam o <a href="../..\assets/pdf/FGD921_Roteiro_Descricao_Dendrologica.pdf" target="_blank">roteiro de descrição padronizado</a> para descrever caracteres dendrológicos das árvores do campus. Esses dados vão compor o <strong>e-book da flórula do campus da UFAM</strong>.</p>
@@ -361,8 +396,8 @@ O que levar para o campo
 </tr>
 <tr class="even">
 <td>Calendários fenológicos com registros do speciesLink</td>
+<td><a href="../../extensao/rlab/rotinas/fenologia-specieslink.html">FenoTree (on-line)</a></td>
 <td>–</td>
-<td><a href="../../extensao/rlab/rotinas/fenologia-specieslink.html">Rotina em R</a></td>
 </tr>
 </tbody>
 </table>
@@ -1041,7 +1076,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"loop":false,"closeEffect":"zoom","descPosition":"bottom","openEffect":"zoom","selector":".lightbox"});
+<script>var lightboxQuarto = GLightbox({"loop":false,"closeEffect":"zoom","openEffect":"zoom","selector":".lightbox","descPosition":"bottom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
