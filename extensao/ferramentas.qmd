@@ -18,12 +18,12 @@ Aplicativos on-line, abertos e gratuitos, desenvolvidos pelo LEDT para apoiar o 
 
 O FenoTree busca os registros de herbário de uma espécie na rede [speciesLink](https://specieslink.net/){target="_blank"}, incluindo os sinônimos da [Flora e Funga do Brasil](https://floradobrasil.jbrj.gov.br/){target="_blank"}, identifica flores e frutos nas anotações das etiquetas e monta o calendário de floração e frutificação da espécie.
 
-<a href="https://ledtufam.shinyapps.io/fenotree/" target="_blank" class="btn btn-success btn-sm"><i class="bi bi-box-arrow-up-right"></i> Abrir o FenoTree</a> <a href="/extensao/rlab/rotinas/fenologia-specieslink.qmd" class="btn btn-outline-success btn-sm"><i class="bi bi-mortarboard"></i> Atividade de Dendrologia</a> <a href="https://github.com/ledtufam/fenotree" target="_blank" class="btn btn-outline-success btn-sm"><i class="bi bi-github"></i> Código</a>
+<a href="https://ledtufam.shinyapps.io/fenotree/" target="_blank" class="btn btn-success btn-sm"><i class="bi bi-box-arrow-up-right"></i> Abrir o FenoTree</a> <a href="https://ledtufam.shinyapps.io/fenotree/?lang=en" target="_blank" class="btn btn-outline-success btn-sm"><i class="bi bi-translate"></i> English</a> <a href="https://ledtufam.shinyapps.io/fenotree/?lang=es" target="_blank" class="btn btn-outline-success btn-sm"><i class="bi bi-translate"></i> Español</a> <a href="/extensao/rlab/rotinas/fenologia-specieslink.qmd" class="btn btn-outline-success btn-sm"><i class="bi bi-mortarboard"></i> Atividade de Dendrologia</a> <a href="https://github.com/ledtufam/fenotree" target="_blank" class="btn btn-outline-success btn-sm"><i class="bi bi-github"></i> Código</a>
 :::
 :::
 
 ::: {.callout-note appearance="simple" icon="false"}
-**Versão:** 1.0.0 (20/10/2026) \| **Feito em:** R (Shiny) \| **Dados:** rede speciesLink (CRIA) \| **Licença:** MIT
+**Versão:** 1.2.0 (22/10/2026) \| **Idiomas:** português, inglês e espanhol \| **Feito em:** R (Shiny) \| **Dados:** rede speciesLink (CRIA) \| **Licença:** MIT
 :::
 
 ### O que o FenoTree faz
@@ -46,4 +46,4 @@ Dados de herbário não são um monitoramento fenológico: o esforço de coleta 
 
 ### Como citar
 
-LEDT/UFAM. *FenoTree: calendários fenológicos a partir de exsicatas*. Versão 1.0.0. Laboratório de Ecologia e Dendrologia Tropical, Universidade Federal do Amazonas, 2026. Disponível em: <https://ledtufam.shinyapps.io/fenotree/>. Dados: rede speciesLink (CRIA).
+LEDT/UFAM. *FenoTree: calendários fenológicos a partir de exsicatas*. Versão 1.2.0. Laboratório de Ecologia e Dendrologia Tropical, Universidade Federal do Amazonas, 2026. Disponível em: <https://ledtufam.shinyapps.io/fenotree/>. Dados: rede speciesLink (CRIA).
